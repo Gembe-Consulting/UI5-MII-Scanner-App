@@ -1,0 +1,280 @@
+{
+	"_version": "1.4.0",
+	"sap.app": {
+		"id": "com.mii.scanner",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"dataSources": {
+			"illuminatorService": {
+				"uri": "/XMII/IlluminatorOData/"
+			}
+		},
+		"sourceTemplate": {
+			"id": "sap.ui.ui5-template-plugin.1worklist",
+			"version": "1.42.0"
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "sap-icon://task",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": [
+			"sap_belize"
+		]
+	},
+	"sap.ui5": {
+		"rootView": {
+			"viewName": "com.mii.scanner.view.App",
+			"type": "XML",
+			"id": "app"
+		},
+		"dependencies": {
+			"minUI5Version": "1.42.0",
+			"libs": {
+				"sap.ui.core": {
+					"minVersion": "1.42.0"
+				},
+				"sap.m": {
+					"minVersion": "1.42.0"
+				},
+				"sap.f": {
+					"minVersion": "1.46"
+				}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "com.mii.scanner.i18n.i18n"
+				}
+			},
+			"user": {
+				"dataSource": "illuminatorService",
+				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=MII-PROJECT/path/to/UserData&Content-Type=text/json",
+				"type": "com.mii.scanner.controller.MIIQueryModel"
+			}
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "com.mii.scanner.view",
+				"controlId": "app",
+				"controlAggregation": "pages",
+				"bypassed": {
+					"target": [
+						"notFound"
+					]
+				},
+				"async": true
+			},
+			"routes": [
+				{
+					"pattern": "",
+					"name": "default",
+					"target": [
+						"login"
+					]
+				},
+				{
+					"pattern": "Anmeldung",
+					"name": "login",
+					"target": [
+						"login"
+					]
+				},
+				{
+					"pattern": "Start",
+					"name": "home",
+					"target": [
+						"home"
+					]
+				},
+				{
+					"pattern": "Start/Statusmeldung",
+					"name": "statusChange",
+					"target": [
+						"SC"
+					]
+				},
+				{
+					"pattern": "Start/Materialbewegung",
+					"name": "goodsMovement",
+					"target": [
+						"GM"
+					]
+				},
+				{
+					"pattern": "Start/Materialbewegung/WE",
+					"name": "goodsReceipt",
+					"target": [
+						"GR"
+					]
+				},
+				{
+					"pattern": "Start/Materialbewegung/WA",
+					"name": "goodsIssue",
+					"target": [
+						"GI"
+					]
+				},
+				{
+					"pattern": "Start/Materialbewegung/UL",
+					"name": "stockTransfer",
+					"target": [
+						"ST"
+					]
+				},
+				{
+					"pattern": "Start/Materialbewegung/ROL",
+					"name": "rollerConveyor",
+					"target": [
+						"RC"
+					]
+				},
+				{
+					"pattern": "Start/Statusmeldung/VS",
+					"name": "startOperation",
+					"target": [
+						"SO"
+					]
+				},
+				{
+					"pattern": "Start/Statusmeldung/VU",
+					"name": "interruptOperation",
+					"target": [
+						"IO"
+					]
+				},
+				{
+					"pattern": "Start/Statusmeldung/VW",
+					"name": "resumeOperation",
+					"target": [
+						"RO"
+					]
+				},
+				{
+					"pattern": "Start/Statusmeldung/VB",
+					"name": "finishOperation",
+					"target": [
+						"FO"
+					]
+				}
+			],
+			"targets": {
+				"login": {
+					"viewName": "Login",
+					"viewId": "login",
+					"viewLevel": 1,
+					"title": "{i18n>titleLogin}"
+				},
+				"home": {
+					"viewName": "Home",
+					"viewPath": "com.mii.scanner.view.nav",
+					"viewId": "home",
+					"viewLevel": 1,
+					"title": "{i18n>titleHome}"
+				},
+				"SC": {
+					"viewName": "StatusChange",
+					"viewPath": "com.mii.scanner.view.nav",
+					"viewId": "statusChange",
+					"viewLevel": 2,
+					"title": "Statuswechsel erfassen"
+				},
+				"GM": {
+					"viewName": "GoodsMovement",
+					"viewPath": "com.mii.scanner.view.nav",
+					"viewId": "goodsMovement",
+					"viewLevel": 2,
+					"title": "Warenbewegung erfassen"
+				},
+				"GR": {
+					"viewName": "GoodsReceipt",
+					"viewPath": "com.mii.scanner.view.action",
+					"viewId": "goodsReceipt",
+					"viewLevel": 3,
+					"title": "Wareneingang buchen"
+				},
+				"GI": {
+					"viewName": "GoodsIssue",
+					"viewPath": "com.mii.scanner.view.action",
+					"viewId": "goodsIssue",
+					"viewLevel": 3,
+					"title": "Warenausgang buchen"
+				},
+				"ST": {
+					"viewName": "StockTransfer",
+					"viewPath": "com.mii.scanner.view.action",
+					"viewId": "stockTransfer",
+					"viewLevel": 3,
+					"title": "Umlagerung buchen"
+				},
+				"RC": {
+					"viewName": "RollerConveyor",
+					"viewPath": "com.mii.scanner.view.action",
+					"viewId": "rollerConveyor",
+					"viewLevel": 3,
+					"title": "Umbuchung Rollenbahn"
+				},
+				"SO": {
+					"viewName": "StartOperation",
+					"viewPath": "com.mii.scanner.view.action",
+					"viewId": "startOperation",
+					"viewLevel": 3,
+					"title": "Vorgang starten"
+				},
+				"IO": {
+					"viewName": "InterruptOperation",
+					"viewPath": "com.mii.scanner.view.action",
+					"viewId": "interruptOperation",
+					"viewLevel": 3,
+					"title": "Vorgang unterbrechen"
+				},
+				"RO": {
+					"viewName": "ResumeOperation",
+					"viewPath": "com.mii.scanner.view.action",
+					"viewId": "resumeOperation",
+					"viewLevel": 3,
+					"title": "Vorgang wiederaufnehmen"
+				},
+				"FO": {
+					"viewName": "FinishOperation",
+					"viewPath": "com.mii.scanner.view.action",
+					"viewId": "finishOperation",
+					"viewLevel": 3,
+					"title": "Vorgang beenden"
+				},
+				"notFound": {
+					"viewName": "NotFound",
+					"viewId": "notFound"
+				}
+			}
+		}
+	},
+	"sap.platform.hcp": {
+		"uri": "webapp",
+		"_version": "1.1.0"
+	}
+}

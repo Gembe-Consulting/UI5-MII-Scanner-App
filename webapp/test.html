@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Scanner</title>
+
+		<!-- Bootstrap the UI5 core library -->
+		<script id="sap-ui-bootstrap"
+				src="../resources/sap-ui-core-dbg.js"
+				data-sap-ui-libs="sa.ui.core, sap.m, sap.ui.layout"
+				data-sap-ui-theme="sap_belize"
+				data-sap-ui-compatVersion="edge"
+				data-sap-ui-preload="async"
+				data-sap-ui-frameOptions='allow'> 	// NON-SECURE setting for testing environment
+		</script>
+
+		<script>
+			sap.ui.getCore().attachInit(function() {
+				sap.ui.require([
+					"com/mii/scanner/localService/mockserver"
+				], function (mockserver) {
+					// set up test service for local testing
+					mockserver.init();
+
+				});
+			});
+		</script>
+
+	</head>
+
+	<!-- UI Content -->
+	<body class="sapUiBody" id="content">
+	</body>
+</html>

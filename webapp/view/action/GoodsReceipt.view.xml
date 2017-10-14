@@ -1,0 +1,42 @@
+<mvc:View controllerName="com.mii.scanner.controller.action.ActionBaseController" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
+	<Page title="{i18n>titleGoodsReceipt}" showNavButton="true" navButtonPress="onNavBack">
+		<content>
+			<f:SimpleForm title="{i18n>titleFormGoodsReceipt}" editable="true" layout="ResponsiveGridLayout" >
+				<f:content>
+					<Label text="{i18n>lableTextFormGoodsReceiptPallet}"/>
+					<Input value="{LE}"/>
+					
+					<Label text="{i18n>lableTextFormGoodsReceiptQuantity}"/>
+					<Input value="{MENGE}"></Input>
+					<Input value="{ME}" editable="false">
+						<layoutData>
+							<l:GridData span="XL2 L1 M3 S4"/>
+						</layoutData>
+					</Input>
+					
+					<Label text="{i18n>lableTextFormGoodsReceiptOrder}"/>
+					<Input value="{ORDER}">
+						<layoutData>
+							<l:GridData span="XL2 L1 M3 S4"/>
+						</layoutData>
+					</Input>
+					
+					<Label text="{i18n>lableTextFormGoodsReceiptStorageLocation}"/>
+					<Input value="{LGORT}"/>
+					
+					<Label text="{i18n>lableTextFormGoodsReceiptStorageLocation}"/>
+					<TextArea value="{INFO}"></TextArea>
+					
+				</f:content>
+			</f:SimpleForm>
+		</content>
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Button type="Accept" text="{i18n>textButtonSaveGoodsReceipt}" press="onSave" />
+				<Button type="Reject" text="{i18n>textButtonCancelGoodsReceipt}" press="onCancelAction" />
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

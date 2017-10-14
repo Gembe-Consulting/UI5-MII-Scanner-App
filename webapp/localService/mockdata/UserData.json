@@ -1,0 +1,49 @@
+{
+	"d": {
+		"results": [{
+			"__metadata": {
+				"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Rowsets('SUMISA_TEST/services/GetUserData')",
+				"type": "QueryTemplate.Rowsets"
+			},
+			"DateCreated": "\/Date(1506533807000)\/",
+			"EndDate": "\/Date(1506533807000)\/",
+			"StartDate": "\/Date(1506530207000)\/",
+			"Version": "14.0 SP7 Patch 15 (Jan 13, 2016)",
+			"QueryTemplate": "SUMISA_TEST/services/GetUserData",
+			"Rowset": {
+				"results": [{
+					"__metadata": {
+						"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Rowset(QueryTemplate='SUMISA_TEST/services/GetUserData',RowsetId=1)",
+						"type": "QueryTemplate.Rowset"
+					},
+					"RowsetId": 1,
+					"QueryTemplate": "SUMISA_TEST/services/GetUserData",
+					"Column": {
+						"results": [{
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('USER_ID')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "USER_ID",
+							"Description": "USER_ID",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "USER_ID"
+						}]
+					},
+					"Row": {
+						"results": [{
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"USER_ID": "PHIGEM",
+							"RowId": 1
+						}]
+					}
+				}]
+			}
+		}]
+	}
+}

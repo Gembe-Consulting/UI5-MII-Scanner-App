@@ -1,0 +1,43 @@
+<mvc:View controllerName="com.mii.scanner.controller.App" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc">
+	<Page title="{i18n>titleHome}" showNavButton="true" navButtonPress="onNavBack">
+		<content>
+			<List footerText="{i18n>footerTextUserName} '{user>/USER_ID}' {i18n>footerTextLoggedOn}" mode="None" width="100%">
+				<items>
+					<CustomListItem type="Navigation" press="onNavForwardEvent" class="sapUiSmallMarginTop">
+						<content>
+							<HBox alignItems="Center" class="sapUiLargeMarginTopBottom sapUiSmallMarginBegin">
+								<c:Icon src="sap-icon://product" size="3rem" color="#330066" alt="WABE" class="sapUiMediumMarginEnd"/>
+								<Label text="{i18n>itemTextGoodsMovement}" design="Bold" class="sapUiLargeMarginBegin"/>
+							</HBox>
+						</content>
+						<customData>
+							<c:CustomData key="target" value="goodsMovement"/>
+						</customData>
+					</CustomListItem>
+					<CustomListItem type="Navigation" press="onNavForwardEvent" class="sapUiSmallMarginTop sapUiLargeMarginTopBottom">
+						<content>
+							<HBox alignItems="Center" class="sapUiLargeMarginTopBottom sapUiSmallMarginBegin">
+								<c:Icon src="sap-icon://journey-change" size="3rem" color="#007700" alt="STATUS" class="sapUiMediumMarginEnd"/>
+								<Label text="{i18n>itemTextStatusChange}" design="Bold" class="sapUiLargeMarginBegin"/>
+							</HBox>
+						</content>
+						<customData>
+							<c:CustomData key="target" value="statusChange"/>
+						</customData>
+					</CustomListItem>
+					<CustomListItem type="Active" press="onNavForwardEvent" class="sapUiLargeMarginTop sapUiSmallMarginBottom">
+						<content>
+							<HBox alignItems="Center" class="sapUiMediumMarginTopBottom sapUiSmallMarginBegin">
+								<c:Icon src="sap-icon://log" size="2rem" color="#ee0000" alt="LOGOUT" class="sapUiMediumMarginEnd"/>
+								<Label text="{i18n>itemTextLogout}" class="sapUiLargeMarginBegin"/>
+							</HBox>
+						</content>
+						<customData>
+							<c:CustomData key="target" value="login"/>
+						</customData>
+					</CustomListItem>
+				</items>
+			</List>
+		</content>
+	</Page>
+</mvc:View>

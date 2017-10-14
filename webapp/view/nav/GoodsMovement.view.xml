@@ -1,0 +1,76 @@
+<mvc:View controllerName="com.mii.scanner.controller.App"  xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc">
+	<Page title="{i18n>titleGoodsMovement}" showNavButton="true" navButtonPress="onNavBack">
+		<content>
+			<List footerText="{i18n>footerTextUserName} '{user>/USER_ID}' {i18n>footerTextLoggedOn}" mode="None" width="100%" >
+				<items>
+					
+					<CustomListItem type="Active" press="onNavForwardEvent" class="sapUiSmallMarginTop">
+						<content>
+							<HBox alignItems="Center" class="sapUiMediumMarginTopBottom sapUiSmallMarginBegin">
+								<c:Icon src="sap-icon://inbox" size="3rem" color="#1F35DE" alt="GR"/>
+								<c:Icon src="sap-icon://bar-code" size="2rem" color="#1F35DE" alt="WITH_LE" class="sapUiMediumMarginEnd"/>
+								<Label text="{i18n>itemLabelTextGoodsReceipt}" design="Bold" class="sapUiLargeMarginBegin"/>
+							</HBox>
+						</content>
+						<customData>
+							<c:CustomData key="target" value="goodsReceipt"/>
+						</customData>
+					</CustomListItem>
+	
+						<CustomListItem type="Active" press="onNavForwardEvent" class="sapUiSmallMarginTopBottom">
+						<content>
+							<HBox alignItems="Center" class="sapUiMediumMarginTopBottom sapUiSmallMarginBegin">
+								<c:Icon src="sap-icon://outbox" size="3rem" color="#BB07FF" alt="GI"/>
+								<c:Icon src="sap-icon://bar-code" size="2rem" color="#BB07FF" alt="WITH_LE" class="sapUiMediumMarginEnd"/>
+								<Label text="{i18n>itemLabelTextGoodsIssueWithLE}" design="Bold" class="sapUiLargeMarginBegin"/>
+							</HBox>
+						</content>
+						<customData>
+							<c:CustomData key="target" value="goodsIssue"/>
+						</customData>
+					</CustomListItem>
+					
+					<CustomListItem type="Active" press="onNavForwardEvent" class="sapUiSmallMarginTopBottom">
+						<content>
+							<HBox alignItems="Center" class="sapUiMediumMarginTopBottom sapUiSmallMarginBegin">
+								<c:Icon src="sap-icon://outbox" size="3rem" color="#BB07FF" alt="GI"/>
+								<c:Icon src="sap-icon://filter" size="2rem" color="#BB07FF" alt="WITHOUT_LE" class="sapUiMediumMarginEnd"/>
+								<Label text="{i18n>itemLabelTextGoodsIssueNonLE}" design="Bold" class="sapUiLargeMarginBegin"/>
+							</HBox>
+						</content>
+						<customData>
+							<c:CustomData key="target" value="goodsIssue"/>
+						</customData>
+					</CustomListItem>
+
+					<CustomListItem type="Active" press="onNavForwardEvent" class="sapUiSmallMarginTopBottom">
+						<content>
+							<HBox alignItems="Center" class="sapUiMediumMarginTopBottom sapUiSmallMarginBegin">
+								<c:Icon src="sap-icon://offsite-work" size="3rem" color="#05B074" alt="ST" />
+								<c:Icon src="sap-icon://shipping-status" size="2rem" color="#05B074" alt="ST" class="sapUiMediumMarginEnd"/>
+								<Label text="{i18n>itemLabelTextStockTransfer}" design="Bold" class="sapUiLargeMarginBegin"/>
+							</HBox>
+						</content>
+						<customData>
+							<c:CustomData key="target" value="stockTransfer"/>
+						</customData>
+					</CustomListItem>
+
+					<CustomListItem type="Active" press="onNavForwardEvent" class="sapUiSmallMarginTopBottom">
+						<content>
+							<HBox alignItems="Center" class="sapUiMediumMarginTopBottom sapUiSmallMarginBegin">
+								<c:Icon src="sap-icon://instance" size="3rem" color="#FFAC00" alt="RC"/>
+								<c:Icon src="sap-icon://process" size="2rem" color="#FFAC00" alt="RC" class="sapUiMediumMarginEnd"/>
+								<Label text="{i18n>itemLabelTextRollerConveyor}" design="Bold" class="sapUiLargeMarginBegin"/>
+							</HBox>
+						</content>
+						<customData>
+							<c:CustomData key="target" value="rollerConveyor"/>
+						</customData>
+					</CustomListItem>
+					
+				</items>
+			</List>
+		</content>
+	</Page>
+</mvc:View>

@@ -1,0 +1,21 @@
+<mvc:View controllerName="com.mii.scanner.controller.action.ActionBaseController" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
+	<Page title="{i18n>titleStartOperation}" showNavButton="true" navButtonPress="onNavBack">
+		<content>
+			<f:SimpleForm title="{i18n>titleFormStartOperation}" editable="true" layout="ResponsiveGridLayout" >
+				<f:content>
+					<Label text="{i18n>lableTextFormStartOperationOrderNumber}"/>
+					<Input value="{ORDERID}"/>
+					
+				</f:content>
+			</f:SimpleForm>
+		</content>
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Button type="Accept" text="{i18n>textButtonSaveStartOperation}" press="onSave" />
+				<Button type="Reject" text="{i18n>textButtonCancelStartOperation}" press="onCancelAction" />
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

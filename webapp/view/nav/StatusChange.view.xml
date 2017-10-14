@@ -1,0 +1,59 @@
+<mvc:View controllerName="com.mii.scanner.controller.App"  xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc">
+	<Page title="{i18n>titleStatusChange}" showNavButton="true" navButtonPress="onNavBack">
+		<content>
+			<List footerText="{i18n>footerTextUserName} '{user>/USER_ID}' {i18n>footerTextLoggedOn}" mode="None" width="100%" >
+				<items>
+					
+					<CustomListItem type="Active" press="onNavForwardEvent" class="sapUiSmallMarginTop">
+						<content>
+							<HBox alignItems="Center" class="sapUiMediumMarginTopBottom sapUiSmallMarginBegin">
+								<c:Icon src="sap-icon://begin" size="3rem" color="#330066" alt="START" class="sapUiMediumMarginEnd"/>
+								<Label text="{i18n>itemLabelTextStartOperation}" design="Bold" class="sapUiLargeMarginBegin"/>
+							</HBox>
+						</content>
+						<customData>
+							<c:CustomData key="target" value="startOperation"/>
+						</customData>
+					</CustomListItem>
+	
+						<CustomListItem type="Active" press="onNavForwardEvent" class="sapUiSmallMarginTopBottom">
+						<content>
+							<HBox alignItems="Center" class="sapUiMediumMarginTopBottom sapUiSmallMarginBegin">
+								<c:Icon src="sap-icon://error" size="3rem" color="#FFAC00" alt="INTERRUPT" class="sapUiMediumMarginEnd"/>
+								<Label text="{i18n>itemLabelTextInterruptOperation}" design="Bold" class="sapUiLargeMarginBegin"/>
+							</HBox>
+						</content>
+						<customData>
+							<c:CustomData key="target" value="interruptOperation"/>
+						</customData>
+					</CustomListItem>
+					
+					<CustomListItem type="Active" press="onNavForwardEvent" class="sapUiSmallMarginTopBottom">
+						<content>
+							<HBox alignItems="Center" class="sapUiMediumMarginTopBottom sapUiSmallMarginBegin">
+								<c:Icon src="sap-icon://restart" size="3rem" color="#BB07FF" alt="RESUME" class="sapUiMediumMarginEnd"/>
+								<Label text="{i18n>itemLabelTextContinueOperation}" design="Bold" class="sapUiLargeMarginBegin"/>
+							</HBox>
+						</content>
+						<customData>
+							<c:CustomData key="target" value="resumeOperation"/>
+						</customData>
+					</CustomListItem>
+
+					<CustomListItem type="Active" press="onNavForwardEvent" class="sapUiSmallMarginTopBottom">
+						<content>
+							<HBox alignItems="Center" class="sapUiMediumMarginTopBottom sapUiSmallMarginBegin">
+								<c:Icon src="sap-icon://complete" size="3rem" color="#05b074" alt="FINISH" class="sapUiMediumMarginEnd"/>
+								<Label text="{i18n>itemLabelFinishOperation}" design="Bold" class="sapUiLargeMarginBegin"/>
+							</HBox>
+						</content>
+						<customData>
+							<c:CustomData key="target" value="finishOperation"/>
+						</customData>
+					</CustomListItem>
+
+				</items>
+			</List>
+		</content>
+	</Page>
+</mvc:View>
