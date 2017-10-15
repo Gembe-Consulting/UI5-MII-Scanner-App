@@ -28,23 +28,67 @@ sap.ui.define([
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
 
+			this.setupUserModel();
+
 			// create the views based on the url/hash
 			this.getRouter().initialize();
+
+			this.getRouter().attachRouteMatched(function(oEvent) {
+
+				if (!this._oOwner.isUserLoggedIn()) {
+					//Set last denied hash, if last denied hash is still initial (first unauthorizes attempt)
+					this._lastDeniedIntendetHash = this._lastDeniedIntendetHash ? this._lastDeniedIntendetHash : this.oHashChanger.getHash();
+					this.oHashChanger.setHash("Anmeldung");
+				} else {
+					this._oOwner.getModel("user").updateBindings( /*force=*/ true);
+
+					if (this._lastDeniedIntendetHash) {
+						this.oHashChanger.setHash(this._lastDeniedIntendetHash);
+						this._lastDeniedIntendetHash = null;
+					}
+
+				}
+			});
 
 			// set the browser page title based on sNavigation
 			this.getRouter().attachTitleChanged(function(oEvent) {
 				document.title = oEvent.getParameter("title");
 			});
 		},
-		checkMandatoryUserLogin: function() {
-			var oModel = this.getModel("user");
+		/**
+		 * This method checks if there is an url parameter containing the user object.
+		 * If this is the case, we will load the "user" model data from MII.
+		 * We then try to redirect to the intendet page.
+		 */
+		setupUserModel: function() {
+			var oRemoteModel = this.prepareRemoteUserModel(),
+				oParams,
+				oModel;
 
-			if (!oModel || !oModel.getProperty("/USER_ID") || oModel.getProperty("/USER_ID") === "") {
-				jQuery.sap.log.error("User nicht angemeldet", "this.getModel(\"user\") undefined or USER_ID not given.", this.toString());
-				return false;
+			if (oRemoteModel) {
+				oParams = {
+					"QueryTemplate": "MII-PROJECT/path/to/UserDataXac",
+					"Content-Type": "text/json"
+				};
+				oModel = this.getModel("user");
+				oModel.loadData(oModel._sUrl, oParams);
 			}
+		},
 
-			return true;
+		prepareRemoteUserModel: function() {
+
+			var oParameters = jQuery.sap.getUriParameters(window.location.href),
+				sRemoteUserId = oParameters.get("IllumLoginName"),
+				oRemoteUserData;
+
+			if (sRemoteUserId && sRemoteUserId !== "") {
+				oRemoteUserData = {
+					remoteUserId: sRemoteUserId
+				};
+				return new sap.ui.model.json.JSONModel(oRemoteUserData);
+			} else {
+				return null;
+			}
 		},
 
 		/**
@@ -57,6 +101,21 @@ sap.ui.define([
 			this._oErrorHandler.destroy();
 			// call the base component's destroy function
 			UIComponent.prototype.destroy.apply(this, arguments);
+		},
+
+
+		/** 
+		 * Checks if the current navigatin is allowed based on the user model
+		 */
+		isUserLoggedIn: function() {
+			var oModel = this.getModel("user");
+
+			if (!oModel || !oModel.getProperty("/IllumLoginName") || oModel.getProperty("/IllumLoginName") === "") {
+				jQuery.sap.log.error("User nicht angemeldet", "this.getModel(\"user\") undefined or IllumLoginName not given.", this.toString());
+				return false;
+			}
+
+			return true;
 		},
 
 		/**

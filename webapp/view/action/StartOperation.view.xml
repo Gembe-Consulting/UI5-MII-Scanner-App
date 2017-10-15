@@ -6,6 +6,7 @@
 				<f:content>
 					<Label text="{i18n>lableTextFormStartOperationOrderNumber}"/>
 					<Input value="{ORDERID}"/>
+					<DateTimePicker />
 					
 				</f:content>
 			</f:SimpleForm>

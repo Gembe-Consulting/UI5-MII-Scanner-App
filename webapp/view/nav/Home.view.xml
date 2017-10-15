@@ -1,35 +1,40 @@
 <mvc:View controllerName="com.mii.scanner.controller.App" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc">
 	<Page title="{i18n>titleHome}" showNavButton="true" navButtonPress="onNavBack">
 		<content>
-			<List footerText="{i18n>footerTextUserName} '{user>/USER_ID}' {i18n>footerTextLoggedOn}" mode="None" width="100%">
+			<List
+				footerText="{i18n>footerTextUserName} '{user>/IllumLoginName}' {i18n>footerTextLoggedOn} {path: 'user>/lastLoginTimestamp', type: 'sap.ui.model.type.DateTime', formatOptions: { relative: true } }"
+				mode="None" width="100%" class="sapUiSmallMarginTop" inset="{= !${device>/system/phone} }">
 				<items>
-					<CustomListItem type="Navigation" press="onNavForwardEvent" class="sapUiSmallMarginTop">
+					<CustomListItem type="Navigation" press="onNavForward" class="sapUiResponsiveMargin">
 						<content>
-							<HBox alignItems="Center" class="sapUiLargeMarginTopBottom sapUiSmallMarginBegin">
-								<c:Icon src="sap-icon://product" size="3rem" color="#330066" alt="WABE" class="sapUiMediumMarginEnd"/>
-								<Label text="{i18n>itemTextGoodsMovement}" design="Bold" class="sapUiLargeMarginBegin"/>
+							<HBox alignItems="Center" justifyContent="Start" class="sapUiResponsiveMargin">
+								<c:Icon src="sap-icon://product" size="3rem" height="5rem" width="8rem" color="#330066" alt="WABE"/>
+								<Label text="{i18n>itemTextGoodsMovement}" design="Bold"/>
 							</HBox>
 						</content>
 						<customData>
 							<c:CustomData key="target" value="goodsMovement"/>
 						</customData>
 					</CustomListItem>
-					<CustomListItem type="Navigation" press="onNavForwardEvent" class="sapUiSmallMarginTop sapUiLargeMarginTopBottom">
+					<CustomListItem type="Navigation" press="onNavForward" class="sapUiResponsiveMargin">
 						<content>
-							<HBox alignItems="Center" class="sapUiLargeMarginTopBottom sapUiSmallMarginBegin">
-								<c:Icon src="sap-icon://journey-change" size="3rem" color="#007700" alt="STATUS" class="sapUiMediumMarginEnd"/>
-								<Label text="{i18n>itemTextStatusChange}" design="Bold" class="sapUiLargeMarginBegin"/>
+							<HBox alignItems="Center" justifyContent="Start" class="sapUiResponsiveMargin">
+								<c:Icon src="sap-icon://journey-change" size="3rem" height="5rem" width="8rem" color="#007700" alt="STATUS"/>
+								<Label text="{i18n>itemTextStatusChange}" design="Bold"/>
 							</HBox>
 						</content>
 						<customData>
 							<c:CustomData key="target" value="statusChange"/>
 						</customData>
 					</CustomListItem>
-					<CustomListItem type="Active" press="onNavForwardEvent" class="sapUiLargeMarginTop sapUiSmallMarginBottom">
+					<!-- Start Dummy Spacer -->
+					<CustomListItem type="Inactive" class="sapUiResponsiveMargin"/>
+					<!-- End Dummy Spacer -->
+					<CustomListItem type="Active" press="onNavForward" class="sapUiResponsiveMargin">
 						<content>
-							<HBox alignItems="Center" class="sapUiMediumMarginTopBottom sapUiSmallMarginBegin">
-								<c:Icon src="sap-icon://log" size="2rem" color="#ee0000" alt="LOGOUT" class="sapUiMediumMarginEnd"/>
-								<Label text="{i18n>itemTextLogout}" class="sapUiLargeMarginBegin"/>
+							<HBox alignItems="Center" justifyContent="Start" class="sapUiResponsiveMargin">
+								<c:Icon src="sap-icon://log" size="2rem" height="4rem" width="8rem" color="#ee0000" alt="LOGOUT"/>
+								<Label text="{i18n>itemTextLogout}"/>
 							</HBox>
 						</content>
 						<customData>

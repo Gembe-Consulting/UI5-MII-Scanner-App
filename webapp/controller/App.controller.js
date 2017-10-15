@@ -1,13 +1,12 @@
 sap.ui.define([
 	"com/mii/scanner/controller/BaseController",
 	"sap/ui/model/json/JSONModel"
-], function(BaseController,JSONModel) {
+], function(BaseController, JSONModel) {
 	"use strict";
 
 	return BaseController.extend("com.mii.scanner.controller.App", {
 
 		onInit: function() {
-			
 			var oViewModel,
 				iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
 
@@ -21,11 +20,23 @@ sap.ui.define([
 			// apply content density mode to root view
 			this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
 		},
-		onLoginPress: function(oEvent) {
-			//if(this.getOwnerComponent().checkMandatoryUserLogin()){
-			this.getRouter().navTo("home");
-			//}
-		}
+
+		onLogin: function(oEvent) {
+			if (this.performUserLogin()) {
+				this.getRouter().navTo("home");
+			}
+		},
+
+		onLogout: function(oEvent) {
+			var bReplace = true;
+			this.getRouter().navTo("login", {}, bReplace);
+		},
+
+		performUserLogin: function() {
+			var bUserLoggedIn =  this.getModel("user").getProperty("/IllumLoginName") && this.getModel("user").getProperty("/IllumLoginName") !== "";
+
+			return bUserLoggedIn;
+		},
 	});
 
 });

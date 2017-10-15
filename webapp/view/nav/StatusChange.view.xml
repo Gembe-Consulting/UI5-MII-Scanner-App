@@ -1,14 +1,14 @@
 <mvc:View controllerName="com.mii.scanner.controller.App"  xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc">
 	<Page title="{i18n>titleStatusChange}" showNavButton="true" navButtonPress="onNavBack">
 		<content>
-			<List footerText="{i18n>footerTextUserName} '{user>/USER_ID}' {i18n>footerTextLoggedOn}" mode="None" width="100%" >
+			<List footerText="{i18n>footerTextUserName} '{user>/IllumLoginName}' {i18n>footerTextLoggedOn} {path: 'user>/lastLoginTimestamp', type: 'sap.ui.model.type.DateTime', formatOptions: { relative: true } }" mode="None" width="100%" class="sapUiSmallMarginTop" inset="{= !${device>/system/phone} }">
 				<items>
 					
-					<CustomListItem type="Active" press="onNavForwardEvent" class="sapUiSmallMarginTop">
+					<CustomListItem type="Navigation" press="onNavForward" class="sapUiResponsiveMargin">
 						<content>
-							<HBox alignItems="Center" class="sapUiMediumMarginTopBottom sapUiSmallMarginBegin">
-								<c:Icon src="sap-icon://begin" size="3rem" color="#330066" alt="START" class="sapUiMediumMarginEnd"/>
-								<Label text="{i18n>itemLabelTextStartOperation}" design="Bold" class="sapUiLargeMarginBegin"/>
+							<HBox alignItems="Center" justifyContent="Start">
+								<c:Icon src="sap-icon://begin" size="3rem" height="4rem" width="8rem" color="#330066" alt="START" />
+								<Label text="{i18n>itemLabelTextStartOperation}" design="Bold" />
 							</HBox>
 						</content>
 						<customData>
@@ -16,11 +16,11 @@
 						</customData>
 					</CustomListItem>
 	
-						<CustomListItem type="Active" press="onNavForwardEvent" class="sapUiSmallMarginTopBottom">
+						<CustomListItem type="Navigation" press="onNavForward" class="sapUiResponsiveMargin">
 						<content>
-							<HBox alignItems="Center" class="sapUiMediumMarginTopBottom sapUiSmallMarginBegin">
-								<c:Icon src="sap-icon://error" size="3rem" color="#FFAC00" alt="INTERRUPT" class="sapUiMediumMarginEnd"/>
-								<Label text="{i18n>itemLabelTextInterruptOperation}" design="Bold" class="sapUiLargeMarginBegin"/>
+							<HBox alignItems="Center" justifyContent="Start">
+								<c:Icon src="sap-icon://error" size="3rem" height="4rem" width="8rem" color="#FFAC00" alt="INTERRUPT" />
+								<Label text="{i18n>itemLabelTextInterruptOperation}" design="Bold" />
 							</HBox>
 						</content>
 						<customData>
@@ -28,11 +28,11 @@
 						</customData>
 					</CustomListItem>
 					
-					<CustomListItem type="Active" press="onNavForwardEvent" class="sapUiSmallMarginTopBottom">
+					<CustomListItem type="Navigation" press="onNavForward" class="sapUiResponsiveMargin">
 						<content>
-							<HBox alignItems="Center" class="sapUiMediumMarginTopBottom sapUiSmallMarginBegin">
-								<c:Icon src="sap-icon://restart" size="3rem" color="#BB07FF" alt="RESUME" class="sapUiMediumMarginEnd"/>
-								<Label text="{i18n>itemLabelTextContinueOperation}" design="Bold" class="sapUiLargeMarginBegin"/>
+							<HBox alignItems="Center" justifyContent="Start">
+								<c:Icon src="sap-icon://restart" size="3rem" height="4rem" width="8rem" color="#BB07FF" alt="RESUME" />
+								<Label text="{i18n>itemLabelTextContinueOperation}" design="Bold" />
 							</HBox>
 						</content>
 						<customData>
@@ -40,11 +40,11 @@
 						</customData>
 					</CustomListItem>
 
-					<CustomListItem type="Active" press="onNavForwardEvent" class="sapUiSmallMarginTopBottom">
+					<CustomListItem type="Navigation" press="onNavForward" class="sapUiResponsiveMargin">
 						<content>
-							<HBox alignItems="Center" class="sapUiMediumMarginTopBottom sapUiSmallMarginBegin">
-								<c:Icon src="sap-icon://complete" size="3rem" color="#05b074" alt="FINISH" class="sapUiMediumMarginEnd"/>
-								<Label text="{i18n>itemLabelFinishOperation}" design="Bold" class="sapUiLargeMarginBegin"/>
+							<HBox alignItems="Center" justifyContent="Start">
+								<c:Icon src="sap-icon://complete" size="3rem" height="4rem" width="8rem" color="#05b074" alt="FINISH" />
+								<Label text="{i18n>itemLabelFinishOperation}" design="Bold" />
 							</HBox>
 						</content>
 						<customData>

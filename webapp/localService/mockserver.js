@@ -97,7 +97,7 @@ sap.ui.define([
 			//	autoRespondAfter: (oUriParameters.get("serverDelay") || 1000)
 			//});
 
-			jQuery.sap.log.info("Running the app with mock data");
+			jQuery.sap.log.info("Running the app with mock data","","MII-Mockserver");
 		},
 
 		/**

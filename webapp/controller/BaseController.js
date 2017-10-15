@@ -52,11 +52,10 @@ sap.ui.define([
 			onAfterRendering:function(){
 			},
 			
-			onNavForwardEvent:function(oEvent){
+			onNavForward:function(oEvent){
 				var sTarget = oEvent.getSource().data("target");
 				this.getRouter().navTo(sTarget);
 			},
-			
 			
 			onNavBack : function() {
 				var sPreviousHash = History.getInstance().getPreviousHash();
@@ -66,7 +65,7 @@ sap.ui.define([
 					history.go(-1);
 				} else {
 					// There is no history!
-					// Naviate to master page
+					// Naviate to home page
 					this.getRouter().navTo("home", {}, !Device.system.phone);
 				}
 			}
