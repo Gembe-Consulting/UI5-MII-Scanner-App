@@ -5,7 +5,6 @@ sap.ui.define([
 	"use strict";
 
 	return BaseController.extend("com.mii.scanner.controller.App", {
-
 		onInit: function() {
 			var oViewModel,
 				iOriginalBusyDelay = this.getView().getBusyIndicatorDelay();
@@ -19,24 +18,7 @@ sap.ui.define([
 
 			// apply content density mode to root view
 			this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
-		},
-
-		onLogin: function(oEvent) {
-			if (this.performUserLogin()) {
-				this.getRouter().navTo("home");
-			}
-		},
-
-		onLogout: function(oEvent) {
-			var bReplace = true;
-			this.getRouter().navTo("login", {}, bReplace);
-		},
-
-		performUserLogin: function() {
-			var bUserLoggedIn =  this.getModel("user").getProperty("/IllumLoginName") && this.getModel("user").getProperty("/IllumLoginName") !== "";
-
-			return bUserLoggedIn;
-		},
+		}
 	});
 
 });

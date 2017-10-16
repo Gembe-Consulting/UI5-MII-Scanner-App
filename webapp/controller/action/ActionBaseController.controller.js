@@ -1,12 +1,12 @@
 sap.ui.define([
-	"com/mii/scanner/controller/BaseController",
+	"com/mii/scanner/controller/PageBaseController",
 	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox",
 	"sap/m/MessageToast"
-], function(BaseController, JSONModel, MessageBox, MessageToast) {
+], function(PageBaseController, JSONModel, MessageBox, MessageToast) {
 	"use strict";
 
-	return BaseController.extend("com.mii.scanner.controller.action.ActionBaseController", {
+	return PageBaseController.extend("com.mii.scanner.controller.action.ActionBaseController", {
 		onInit: function() {
 			this._bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
 		},

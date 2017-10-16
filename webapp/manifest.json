@@ -188,7 +188,7 @@
 					"viewId": "login",
 					"viewLevel": 1,
 					"title": "{i18n>titleLogin}",
-					"transition" : "flip"
+					"transition": "flip"
 				},
 				"home": {
 					"viewName": "Home",

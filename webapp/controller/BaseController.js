@@ -4,7 +4,7 @@ sap.ui.define([
 		"sap/ui/Device"
 	], function (Controller, History, Device) {
 		"use strict";
-
+		
 		return Controller.extend("com.mii.scanner.controller.BaseController", {
 			/**
 			 * Convenience method for accessing the router.
@@ -49,9 +49,6 @@ sap.ui.define([
 				return this.getResourceBundle().getText(sResourceString);
 			},
 			
-			onAfterRendering:function(){
-			},
-			
 			onNavForward:function(oEvent){
 				var sTarget = oEvent.getSource().data("target");
 				this.getRouter().navTo(sTarget);
@@ -69,8 +66,6 @@ sap.ui.define([
 					this.getRouter().navTo("home", {}, !Device.system.phone);
 				}
 			}
-
 		});
-
 	}
 );

@@ -32,23 +32,33 @@ sap.ui.define([
 
 			// create the views based on the url/hash
 			this.getRouter().initialize();
-
+/*
 			this.getRouter().attachRouteMatched(function(oEvent) {
+				var bForce = true,
+					sCurrentHash = this.oHashChanger.getHash(),
+					sDefaultHash = this._oOwner._getDefaultRoutePattern("login");
 
 				if (!this._oOwner.isUserLoggedIn()) {
-					//Set last denied hash, if last denied hash is still initial (first unauthorizes attempt)
-					this._lastDeniedIntendetHash = this._lastDeniedIntendetHash ? this._lastDeniedIntendetHash : this.oHashChanger.getHash();
-					this.oHashChanger.setHash("Anmeldung");
-				} else {
-					this._oOwner.getModel("user").updateBindings( /*force=*/ true);
-
-					if (this._lastDeniedIntendetHash) {
+					if(sDefaultHash !== sCurrentHash){
+						//Set last denied hash, if last denied hash is still initial (first unauthorizes attempt)
+						this._lastDeniedIntendetHash = this._lastDeniedIntendetHash ? this._lastDeniedIntendetHash : sCurrentHash;
+						// redirect to login page, if we are not already on it
+						this.oHashChanger.setHash(sDefaultHash);
+					}
+				}
+				
+				if (this._oOwner.isUserLoggedIn()) {
+				
+					//update user model to reflect login time
+					this._oOwner.getModel("user").updateBindings(bForce);
+					// restore previous hash, if its not login page
+					if (this._lastDeniedIntendetHash && (sDefaultHash !== sCurrentHash)) {
 						this.oHashChanger.setHash(this._lastDeniedIntendetHash);
 						this._lastDeniedIntendetHash = null;
 					}
-
 				}
 			});
+*/
 
 			// set the browser page title based on sNavigation
 			this.getRouter().attachTitleChanged(function(oEvent) {
@@ -103,19 +113,22 @@ sap.ui.define([
 			UIComponent.prototype.destroy.apply(this, arguments);
 		},
 
-
 		/** 
 		 * Checks if the current navigatin is allowed based on the user model
 		 */
-		isUserLoggedIn: function() {
+		_isUserLoggedIn: function(sUserName) {
 			var oModel = this.getModel("user");
 
 			if (!oModel || !oModel.getProperty("/IllumLoginName") || oModel.getProperty("/IllumLoginName") === "") {
-				jQuery.sap.log.error("User nicht angemeldet", "this.getModel(\"user\") undefined or IllumLoginName not given.", this.toString());
+				jQuery.sap.log.warning("User nicht angemeldet", "this.getModel(\"user\") undefined or property IllumLoginName not given or empty.", this.toString());
 				return false;
 			}
 
 			return true;
+		},
+
+		_getDefaultRoutePattern: function(sRouteName) {
+			return this.getRouter().getRoute(sRouteName).getPattern();
 		},
 
 		/**
