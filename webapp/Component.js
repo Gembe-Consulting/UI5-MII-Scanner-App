@@ -27,6 +27,8 @@ sap.ui.define([
 
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
+			
+			this.setupSpaceAndTime();
 
 			this.setupUserModel();
 
@@ -83,6 +85,24 @@ sap.ui.define([
 				oModel = this.getModel("user");
 				oModel.loadData(oModel._sUrl, oParams);
 			}
+		},
+		
+		/**
+		 * Set the current Language Code / Locale
+		 * SAPUI5 has the notion of a current language. It is determined during the SAPUI5 bootstrap from the following sources of information. 
+		 * The sources are ordered increasingly by priority and the last available user language/locale wins:
+		 * 1. Hard-coded SAPUI5 default locale en
+		 * 2. Potentially configured browser language (window.navigator.browserLanguage); for Internet Explorer this is the language of the operating system
+		 * 3. Potentially configured user language (window.navigator.userLanguage); for Internet Explorer this is the language in the region settings
+		 * 4. General language information from the browser (window.navigator.language)
+		 * 5. Android: Language contained in the user agent string (window.navigator.userAgent)
+		 * 6. First language from the list of the user’s preferred languages (window.navigator.languages[0])
+		 * 7. Locale configured in the application coding (see API Reference:  sap.ui.core.Configuration)
+		 * 8. Locale configured via URL parameters sap-ui-language
+		 */
+		setupSpaceAndTime: function() {
+			var sCurrentLocale = sap.ui.getCore().getConfiguration().getLanguage();
+			moment.locale(sCurrentLocale);
 		},
 
 		prepareRemoteUserModel: function() {
