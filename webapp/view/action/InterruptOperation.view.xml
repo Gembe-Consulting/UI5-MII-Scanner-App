@@ -1,6 +1,7 @@
 <mvc:View controllerName="com.mii.scanner.controller.action.ActionBaseController" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
 	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
-	<Page title="{i18n>titleInterruptOperation}" showNavButton="true" navButtonPress="onNavBack">
+	<Page title="{i18n>titleInterruptOperation}" showNavButton="true" navButtonPress="onNavBack"
+	showSubHeader="{= !${device>/system/phone} }">
 		<content>
 			<f:SimpleForm title="{i18n>titleFormInterruptOperation}" editable="true" layout="ResponsiveGridLayout" >
 				<f:content>

@@ -1,8 +1,15 @@
-<mvc:View controllerName="com.mii.scanner.controller.action.ActionBaseController" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
-	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
-	<Page title="{i18n>titleResumeOperation}" showNavButton="true" navButtonPress="onNavBack">
+<mvc:View controllerName="com.mii.scanner.controller.action.ActionBaseController" xmlns="sap.m" xmlns:c="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
+	<Page title="{i18n>titleResumeOperation}" showNavButton="true" navButtonPress="onNavBack" showSubHeader="{= !${device>/system/phone} }">
+		<subHeader>
+			<Bar>
+				<contentMiddle>
+					<Label text="Aktueller Status: Störung STEL seit 9 Stunden (10.12.17 15:11)"/>
+				</contentMiddle>
+			</Bar>
+		</subHeader>
 		<content>
-			<f:SimpleForm title="{i18n>titleFormResumeOperation}" editable="true" layout="ResponsiveGridLayout" >
+			<f:SimpleForm title="{i18n>titleFormResumeOperation}" editable="true" layout="ResponsiveGridLayout">
 				<f:content>
 					<Label text="{i18n>lableTextFormResumeOperationOrderNumber}"/>
 					<Input value="{ORDERID}"/>
@@ -14,8 +21,8 @@
 		<footer>
 			<Toolbar>
 				<ToolbarSpacer/>
-				<Button type="Accept" text="{i18n>textButtonSaveResumeOperation}" press="onSave" />
-				<Button type="Reject" text="{i18n>textButtonCancelResumeOperation}" press="onCancelAction" />
+				<Button type="Accept" text="{i18n>textButtonSaveResumeOperation}" press="onSave"/>
+				<Button type="Reject" text="{i18n>textButtonCancelResumeOperation}" press="onCancelAction"/>
 			</Toolbar>
 		</footer>
 	</Page>
