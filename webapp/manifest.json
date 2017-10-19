@@ -231,8 +231,27 @@
 		},
 		"resources": {
 			"js": [{
-				"uri": "resource/moment-with-locales.min.js"
-			}]
+				"uri": "libs/momentjs/moment-with-locales.min.js",
+				"name": "moment-with-locales.min.js",
+				"version": "2.19.1"
+			}, {
+				"uri": "libs/momentjs/moment.min.js",
+				"name": "moment.min.js",
+				"version": "2.19.1"
+			}, {
+				"uri": "libs/moment-timezone/moment-timezone-with-data.min.js",
+				"name": "moment-timezone-with-data.min.js",
+				"version": "0.5.13"
+			}, {
+				"uri": "libs/moment-timezone/moment-timezone.min.js",
+				"name": "moment-timezone.min.js",
+				"version": "0.5.13"
+			}, {
+				"uri": "libs/lodashjs/lodash.min.js",
+				"name": "lodash.min.js",
+				"version": "4.17.4"
+			}],
+			"css": []
 		}
 	},
 	"sap.platform.hcp": {
