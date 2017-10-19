@@ -3,7 +3,9 @@
 		<content>
 			<HBox alignItems="Center" justifyContent="Center" class="sapUiLargeMarginTopBottom">
 				<Label text="{i18n>userNameLableText}" labelFor="userIdInput" class="sapUiSmallMarginEnd"/>
-				<Input value="{user>/IllumLoginName}" id="userIdInput" required="true" change="onLogin" placeholder="{i18n>userNameInputPlaceholder}"/>
+				<Input id="userIdInput"
+					value="{path: 'user>/IllumLoginName', type: 'sap.ui.model.type.String', constraints: {minLength: 3, maxLength: 12} }"
+					required="true" change="onLogin" placeholder="{i18n>userNameInputPlaceholder}"/>
 			</HBox>
 			<Button text="{i18n>loginButtonText}" press="onLogin" width="100%"/>
 		</content>

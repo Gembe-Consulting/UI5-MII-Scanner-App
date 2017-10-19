@@ -55,7 +55,8 @@
 				},
 				"sap.ui.layout": {
 					"minVersion": ""
-				}
+				},
+				"mii.util": {}
 			}
 		},
 		"contentDensities": {
@@ -71,8 +72,8 @@
 			},
 			"user": {
 				"dataSource": "illuminatorService",
-				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=MII-PROJECT/path/to/UserData&Content-Type=text/json",
-				"type": "com.mii.scanner.controller.MIIQueryModel"
+				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/user/FindScannerUserQry",
+				"type": "mii.util.MIIQueryModel"
 			}
 		},
 		"routing": {

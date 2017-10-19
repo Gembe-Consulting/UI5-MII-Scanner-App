@@ -219,6 +219,7 @@
 		"no-this-before-super": 0
 	},
 	"globals": {
+		"moment":true,
 		"com": true,
 		"oData": false,
 		"sakp": false,

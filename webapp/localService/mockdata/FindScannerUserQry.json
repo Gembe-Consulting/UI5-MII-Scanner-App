@@ -1,0 +1,78 @@
+{
+	"d": {
+		"results": [{
+			"__metadata": {
+				"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Rowsets('SAPUI5/services/user/sql_FindUser')",
+				"type": "QueryTemplate.Rowsets"
+			},
+			"DateCreated": "\/Date(1508429586000)\/",
+			"EndDate": "\/Date(1508429586000)\/",
+			"StartDate": "\/Date(1508425986000)\/",
+			"Version": "14.0 SP7 Patch 15 (Jan 13, 2016)",
+			"QueryTemplate": "SAPUI5/services/user/sql_FindUser",
+			"Rowset": {
+				"results": [{
+					"__metadata": {
+						"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Rowset(QueryTemplate='SAPUI5/services/user/sql_FindUser',RowsetId=1)",
+						"type": "QueryTemplate.Rowset"
+					},
+					"RowsetId": 1,
+					"QueryTemplate": "SAPUI5/services/user/sql_FindUser",
+					"Column": {
+						"results": [{
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('USERLOGIN')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "USERLOGIN",
+							"Description": "USERLOGIN",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "USERLOGIN"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('USERNNAME')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "USERNNAME",
+							"Description": "USERNNAME",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "USERNNAME"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('USERVNAME')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "USERVNAME",
+							"Description": "USERVNAME",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "USERVNAME"
+						}]
+					},
+					"Row": {
+						"results": [{
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"USERLOGIN": "PHIGEM",
+							"USERNNAME": null,
+							"USERVNAME": null,
+							"RowId": 1
+						}]
+					}
+				}]
+			},
+			"Messages": {
+				"results": [
+
+				]
+			}
+		}]
+	}
+}

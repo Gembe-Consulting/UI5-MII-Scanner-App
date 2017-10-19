@@ -2,7 +2,7 @@
 	<Page title="{i18n>titleHome}" showNavButton="true" navButtonPress="onNavBack">
 		<content>
 			<List
-				footerText="{i18n>footerTextUserName} '{user>/IllumLoginName}' {i18n>footerTextLoggedOn} {path: 'user>/lastLoginTimestamp', type: 'sap.ui.model.type.DateTime', formatOptions: { relative: true } }"
+				footerText="{i18n>footerTextUserName} '{user>/d/results/0/Rowset/results/0/Row/results/0/USERLOGIN}' {i18n>footerTextLoggedOn} {path: 'user>/lastLoginTimestamp', type: 'sap.ui.model.type.DateTime', formatOptions: { relative: true } }"
 				mode="None" width="100%" class="sapUiSmallMarginTop" inset="{= !${device>/system/phone} }">
 				<items>
 					<CustomListItem type="Navigation" press="onNavForward" class="sapUiResponsiveMargin">

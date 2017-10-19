@@ -5,14 +5,44 @@ sap.ui.define([
 
 	return BaseController.extend("com.mii.scanner.controller.Login", {
 
-		onLogin: function(oEvent) {
-			
-			if(!this.getOwnerComponent()._isUserLoggedIn()){
+		onInit: function() {
+
+			var oModel = this.getOwnerComponent().getModel("user"),
+				sUserNameByUrl = oModel.getProperty("/d/results/0/Rowset/results/0/Row/results/0/USERLOGIN");
+
+			if (sUserNameByUrl) {
+				this._doAutoLogin(sUserNameByUrl);
+			}
+
+		},
+
+		_doAutoLogin: function(sUserNameByUrl) {
+			if (!sUserNameByUrl) {
 				return;
 			}
+			this.getView().byId("userIdInput").setValue(sUserNameByUrl);
 			
-			if (this.performUserLogin()) {
+			this.onLogin();
+		},
+
+		onLogin: function(oEvent) {
+			var sUserInput = this.getView().byId("userIdInput").getValue(),
+				sUpperUserInput;
+
+			//prevent login, if user did not enter an username into login input
+			if (!sUserInput && sUserInput.length <= 0) {
+				return;
+			}
+
+			sUpperUserInput = sUserInput.toUpperCase();
+
+			// check if provides username exists in MII
+			if (this.testUserLoginName(sUpperUserInput)) {
 				this.getRouter().navTo("home");
+			} else {
+				this.getView().byId("userIdInput").setValueState(sap.ui.core.ValueState.Error);
+				this.getView().byId("userIdInput").setValueStateText("Benutzername '" + sUserInput +
+					"' existiert nicht.");
 			}
 		},
 
@@ -24,12 +54,38 @@ sap.ui.define([
 			this.getRouter().navTo("login", {}, bReplace);
 		},
 
-		performUserLogin: function() {
-			var bUserLoggedIn =  this.getModel("user").getProperty("/IllumLoginName") && this.getModel("user").getProperty("/IllumLoginName") !== "";
+		testUserLoginName: function(sUserInput) {
+			var bUserLoggedIn,
+				oUser;
 
-			return bUserLoggedIn;
+			oUser = this._getUserLogin(sUserInput);
+
+			return this._validateUserData(oUser, sUserInput);
+		},
+
+		/**
+		 * @return an illuminator Row containig user data {__metadata: {…}, USERLOGIN: string, USERNNAME: string || null, USERVNAME: string || null, RowId: int}
+		 * if no user has been found, 'undefined' is returned
+		 */
+		_getUserLogin: function(sUserInput) {
+			var oModel = this.getOwnerComponent().getModel("user"),
+				oParam = {
+					"Param.1": sUserInput
+				},
+				bAsync = false;
+
+			oModel.loadData(oModel._sUrl, oParam, bAsync);
+
+			return oModel.getProperty("/d/results/0/Rowset/results/0/Row/results/0/");
+		},
+
+		/**
+		 * Compares the USERLOGIN against user input
+		 */
+		_validateUserData: function(oUser, sUserInput) {
+			return oUser.USERLOGIN === sUserInput;
 		}
-		
+
 	});
 
 });

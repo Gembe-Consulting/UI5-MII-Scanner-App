@@ -2,9 +2,8 @@ sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
 	"com/mii/scanner/model/models",
-	"com/mii/scanner/controller/ErrorHandler",
-	"com/mii/scanner/libs/momentjs/moment"
-], function(UIComponent, Device, models, ErrorHandler, moment) {
+	"com/mii/scanner/controller/ErrorHandler"
+], function(UIComponent, Device, models, ErrorHandler) {
 	"use strict";
 
 	return UIComponent.extend("com.mii.scanner.Component", {
@@ -74,18 +73,24 @@ sap.ui.define([
 		 * We then try to redirect to the intendet page.
 		 */
 		setupUserModel: function() {
-			var oRemoteModel = this.prepareRemoteUserModel(),
+			var sRemoteUserId = this.getRemoteUsername(),
 				oParams,
 				oModel;
 
-			if (oRemoteModel) {
+			if (sRemoteUserId) {
 				oParams = {
-					"QueryTemplate": "MII-PROJECT/path/to/UserDataXac",
-					"Content-Type": "text/json"
+					"Param.1": sRemoteUserId
 				};
 				oModel = this.getModel("user");
-				oModel.loadData(oModel._sUrl, oParams);
+				oModel.loadData(oModel._sUrl, oParams, false);
 			}
+		},
+
+		getRemoteUsername: function() {
+			var oParameters = jQuery.sap.getUriParameters(window.location.href),
+				sRemoteUserId = oParameters.get("IllumLoginName");
+
+			return sRemoteUserId;
 		},
 
 		/**
@@ -106,22 +111,6 @@ sap.ui.define([
 			moment.locale(sCurrentLocale);
 		},
 
-		prepareRemoteUserModel: function() {
-
-			var oParameters = jQuery.sap.getUriParameters(window.location.href),
-				sRemoteUserId = oParameters.get("IllumLoginName"),
-				oRemoteUserData;
-
-			if (sRemoteUserId && sRemoteUserId !== "") {
-				oRemoteUserData = {
-					remoteUserId: sRemoteUserId
-				};
-				return new sap.ui.model.json.JSONModel(oRemoteUserData);
-			} else {
-				return null;
-			}
-		},
-
 		/**
 		 * The component is destroyed by UI5 automatically.
 		 * In this method, the ErrorHandler is destroyed.
@@ -140,8 +129,10 @@ sap.ui.define([
 		_isUserLoggedIn: function(sUserName) {
 			var oModel = this.getModel("user");
 
-			if (!oModel || !oModel.getProperty("/IllumLoginName") || oModel.getProperty("/IllumLoginName") === "") {
-				jQuery.sap.log.warning("User nicht angemeldet", "this.getModel(\"user\") undefined or property IllumLoginName not given or empty.",
+			if (!oModel || !oModel.getProperty("/d/results/0/Rowset/results/0/Row/results/0/USERLOGIN") || oModel.getProperty(
+					"/d/results/0/Rowset/results/0/Row/results/0/USERLOGIN") === "") {
+				jQuery.sap.log.warning("User nicht angemeldet",
+					"this.getModel(\"user\") undefined or property /d/results/0/Rowset/results/0/Row/results/0/ not given or empty.",
 					this.toString());
 				return false;
 			}
