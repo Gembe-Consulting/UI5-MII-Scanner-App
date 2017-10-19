@@ -34,7 +34,9 @@
 			"tablet": true,
 			"phone": true
 		},
-		"supportedThemes": ["sap_belize"]
+		"supportedThemes": [
+			"sap_belize"
+		]
 	},
 	"sap.ui5": {
 		"rootView": {
@@ -45,14 +47,14 @@
 		"dependencies": {
 			"minUI5Version": "1.42.0",
 			"libs": {
-				"sap.ui.core": {
-					"minVersion": "1.42.0"
-				},
 				"sap.m": {
 					"minVersion": "1.42.0"
 				},
-				"sap.f": {
-					"minVersion": "1.46"
+				"sap.ui.core": {
+					"minVersion": "1.42.0"
+				},
+				"sap.ui.layout": {
+					"minVersion": ""
 				}
 			}
 		},
@@ -81,62 +83,90 @@
 				"controlId": "app",
 				"controlAggregation": "pages",
 				"bypassed": {
-					"target": ["notFound"]
+					"target": [
+						"notFound"
+					]
 				},
 				"async": true
 			},
 			"routes": [{
 				"pattern": "",
 				"name": "default",
-				"target": ["login"]
+				"target": [
+					"login"
+				]
 			}, {
 				"pattern": "Anmeldung",
 				"name": "login",
-				"target": ["login"]
+				"target": [
+					"login"
+				]
 			}, {
 				"pattern": "Start",
 				"name": "home",
-				"target": ["home"]
+				"target": [
+					"home"
+				]
 			}, {
 				"pattern": "Start/Statusmeldung",
 				"name": "statusChange",
-				"target": ["SC"]
+				"target": [
+					"SC"
+				]
 			}, {
 				"pattern": "Start/Materialbewegung",
 				"name": "goodsMovement",
-				"target": ["GM"]
+				"target": [
+					"GM"
+				]
 			}, {
 				"pattern": "Start/Materialbewegung/WE",
 				"name": "goodsReceipt",
-				"target": ["GR"]
+				"target": [
+					"GR"
+				]
 			}, {
 				"pattern": "Start/Materialbewegung/WA",
 				"name": "goodsIssue",
-				"target": ["GI"]
+				"target": [
+					"GI"
+				]
 			}, {
 				"pattern": "Start/Materialbewegung/UL",
 				"name": "stockTransfer",
-				"target": ["ST"]
+				"target": [
+					"ST"
+				]
 			}, {
 				"pattern": "Start/Materialbewegung/ROL",
 				"name": "rollerConveyor",
-				"target": ["RC"]
+				"target": [
+					"RC"
+				]
 			}, {
 				"pattern": "Start/Statusmeldung/VS",
 				"name": "startOperation",
-				"target": ["SO"]
+				"target": [
+					"SO"
+				]
 			}, {
 				"pattern": "Start/Statusmeldung/VU",
 				"name": "interruptOperation",
-				"target": ["IO"]
+				"target": [
+					"IO"
+				]
 			}, {
 				"pattern": "Start/Statusmeldung/VW",
 				"name": "resumeOperation",
-				"target": ["RO"]
+				"target": [
+					"RO"
+				]
 			}, {
 				"pattern": "Start/Statusmeldung/VB",
 				"name": "finishOperation",
-				"target": ["FO"]
+				"target": [
+					"FO"
+				]
 			}],
 			"targets": {
 				"login": {

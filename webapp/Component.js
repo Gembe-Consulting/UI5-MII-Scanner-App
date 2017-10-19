@@ -2,8 +2,10 @@ sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
 	"com/mii/scanner/model/models",
-	"com/mii/scanner/controller/ErrorHandler"
-], function(UIComponent, Device, models, ErrorHandler) {
+	"com/mii/scanner/controller/ErrorHandler",
+	"./libs/momentjs/moment",
+	"./libs/momentjs/locale/de"
+], function(UIComponent, Device, models, ErrorHandler, moment, momentLocaleDe) {
 	"use strict";
 
 	return UIComponent.extend("com.mii.scanner.Component", {
@@ -27,40 +29,40 @@ sap.ui.define([
 
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
-			
+
 			this.setupSpaceAndTime();
 
 			this.setupUserModel();
 
 			// create the views based on the url/hash
 			this.getRouter().initialize();
-/*
-			this.getRouter().attachRouteMatched(function(oEvent) {
-				var bForce = true,
-					sCurrentHash = this.oHashChanger.getHash(),
-					sDefaultHash = this._oOwner._getDefaultRoutePattern("login");
+			/*
+						this.getRouter().attachRouteMatched(function(oEvent) {
+							var bForce = true,
+								sCurrentHash = this.oHashChanger.getHash(),
+								sDefaultHash = this._oOwner._getDefaultRoutePattern("login");
 
-				if (!this._oOwner.isUserLoggedIn()) {
-					if(sDefaultHash !== sCurrentHash){
-						//Set last denied hash, if last denied hash is still initial (first unauthorizes attempt)
-						this._lastDeniedIntendetHash = this._lastDeniedIntendetHash ? this._lastDeniedIntendetHash : sCurrentHash;
-						// redirect to login page, if we are not already on it
-						this.oHashChanger.setHash(sDefaultHash);
-					}
-				}
-				
-				if (this._oOwner.isUserLoggedIn()) {
-				
-					//update user model to reflect login time
-					this._oOwner.getModel("user").updateBindings(bForce);
-					// restore previous hash, if its not login page
-					if (this._lastDeniedIntendetHash && (sDefaultHash !== sCurrentHash)) {
-						this.oHashChanger.setHash(this._lastDeniedIntendetHash);
-						this._lastDeniedIntendetHash = null;
-					}
-				}
-			});
-*/
+							if (!this._oOwner.isUserLoggedIn()) {
+								if(sDefaultHash !== sCurrentHash){
+									//Set last denied hash, if last denied hash is still initial (first unauthorizes attempt)
+									this._lastDeniedIntendetHash = this._lastDeniedIntendetHash ? this._lastDeniedIntendetHash : sCurrentHash;
+									// redirect to login page, if we are not already on it
+									this.oHashChanger.setHash(sDefaultHash);
+								}
+							}
+							
+							if (this._oOwner.isUserLoggedIn()) {
+							
+								//update user model to reflect login time
+								this._oOwner.getModel("user").updateBindings(bForce);
+								// restore previous hash, if its not login page
+								if (this._lastDeniedIntendetHash && (sDefaultHash !== sCurrentHash)) {
+									this.oHashChanger.setHash(this._lastDeniedIntendetHash);
+									this._lastDeniedIntendetHash = null;
+								}
+							}
+						});
+			*/
 
 			// set the browser page title based on sNavigation
 			this.getRouter().attachTitleChanged(function(oEvent) {
@@ -86,7 +88,7 @@ sap.ui.define([
 				oModel.loadData(oModel._sUrl, oParams);
 			}
 		},
-		
+
 		/**
 		 * Set the current Language Code / Locale
 		 * SAPUI5 has the notion of a current language. It is determined during the SAPUI5 bootstrap from the following sources of information. 
@@ -140,7 +142,8 @@ sap.ui.define([
 			var oModel = this.getModel("user");
 
 			if (!oModel || !oModel.getProperty("/IllumLoginName") || oModel.getProperty("/IllumLoginName") === "") {
-				jQuery.sap.log.warning("User nicht angemeldet", "this.getModel(\"user\") undefined or property IllumLoginName not given or empty.", this.toString());
+				jQuery.sap.log.warning("User nicht angemeldet", "this.getModel(\"user\") undefined or property IllumLoginName not given or empty.",
+					this.toString());
 				return false;
 			}
 
