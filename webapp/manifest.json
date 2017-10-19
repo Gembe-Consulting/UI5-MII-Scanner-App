@@ -261,12 +261,12 @@
 		},
 		"resources": {
 			"js": [{
-				"uri": "libs/lodashjs/lodash.min.js",
-				"name": "lodash.min.js",
+				"uri": "libs/lodashjs/lodash.js",
+				"name": "lodash.js",
 				"version": "4.17.4"
 			}, {
-				"uri": "libs/momentjs/moment.min.js",
-				"name": "moment.min.js",
+				"uri": "libs/momentjs/moment.js",
+				"name": "moment.js",
 				"version": "2.19.1"
 			}, {
 				"uri": "libs/momentjs/locale/de.js",
