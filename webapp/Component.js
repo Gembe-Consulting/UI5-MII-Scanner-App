@@ -2,8 +2,9 @@ sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
 	"com/mii/scanner/model/models",
-	"com/mii/scanner/controller/ErrorHandler"
-], function(UIComponent, Device, models, ErrorHandler) {
+	"com/mii/scanner/controller/ErrorHandler",
+	"com/mii/scanner/libs/momentjs/moment"
+], function(UIComponent, Device, models, ErrorHandler, moment) {
 	"use strict";
 
 	return UIComponent.extend("com.mii.scanner.Component", {
@@ -102,16 +103,7 @@ sap.ui.define([
 		 */
 		setupSpaceAndTime: function() {
 			var sCurrentLocale = sap.ui.getCore().getConfiguration().getLanguage();
-			//moment.locale(sCurrentLocale);
-			
-			sap.ui.require(['com/mii/scanner/libs/momentjs/moment','com/mii/scanner/libs/momentjs/locale/de'], function(moment, localeModule) {
-			    // here the locale is loaded, but not yet in use
-			    console.log(moment().format('LLLL'));  // 'Friday, June 24, 2016 1:42 AM'
-			
-			    moment.locale('de');
-			    // Use moment now that the locale has been properly set.
-			    console.log(moment().format('LLLL')); // 'Freitag, 24. Juni 2016 01:42'
-			  })
+			moment.locale(sCurrentLocale);
 		},
 
 		prepareRemoteUserModel: function() {
