@@ -230,7 +230,11 @@
 			}
 		},
 		"resources": {
-			"js": [],
+			"js": [{
+				"uri": "libs/lodashjs/lodash.min.js",
+				"name": "lodash.min.js",
+				"version": "4.17.4"
+			}],
 			"css": []
 		}
 	},
