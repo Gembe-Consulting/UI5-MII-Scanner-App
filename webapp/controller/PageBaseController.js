@@ -9,7 +9,7 @@ sap.ui.define([
 			var oThis = this;
 			this.getView().addEventDelegate({
 				"onBeforeShow": function(oEvent) {
-					if (!this.getOwnerComponent()._isUserLoggedIn()) {
+					if (!this.getOwnerComponent().isUserLoggedIn()) {
 						jQuery.sap.log.warning("User not logged in.", "Login status", this.toString());
 						// redirect to login imidiatily
 						this.getRouter().navTo("login", {}, true);

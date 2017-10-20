@@ -10,6 +10,12 @@ sap.ui.define([
 				var oModel = new JSONModel(Device);
 				oModel.setDefaultBindingMode("OneWay");
 				return oModel;
+			},
+			
+			prepareUserModel : function () {
+				var oModel = this.getOwnercvomponent().getModel("user");
+				oModel.setProperty("/d/results/0/Rowset/results/0/Row/results/0/", {});
+				return oModel;
 			}
 
 		};

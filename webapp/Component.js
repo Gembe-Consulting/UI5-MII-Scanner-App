@@ -25,15 +25,20 @@ sap.ui.define([
 			// initialize the error handler with the component
 			this._oErrorHandler = new ErrorHandler(this);
 
+			this.S_USERLOGIN_PARAM_NAME = "USERLOGIN";
+
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
 
 			this.setupSpaceAndTime();
 
-			this.setupUserModel();
-
 			// create the views based on the url/hash
 			this.getRouter().initialize();
+			
+			// note: must run after Router initialization!
+			this.checkRemoteUserLoginByUrlParam();
+
+
 			/*
 						this.getRouter().attachRouteMatched(function(oEvent) {
 							var bForce = true,
@@ -64,7 +69,7 @@ sap.ui.define([
 
 			// set the browser page title based on sNavigation
 			this.getRouter().attachTitleChanged(function(oEvent) {
-				document.title = oEvent.getParameter("title");
+					document.title = oEvent.getParameter("title");
 			});
 		},
 		/**
@@ -72,26 +77,64 @@ sap.ui.define([
 		 * If this is the case, we will load the "user" model data from MII.
 		 * We then try to redirect to the intendet page.
 		 */
-		setupUserModel: function() {
-			var sRemoteUserId = this.getRemoteUsername(),
+		checkRemoteUserLoginByUrlParam: function() {
+			var sRemoteUserId = this._getRemoteUsername(),
 				oParams,
 				oModel;
 
+			// If remote user was given, we load the data of our user Model, and check if the given parameter is a valid MII user
+			// This is not security!
+			
 			if (sRemoteUserId) {
-				oParams = {
-					"Param.1": sRemoteUserId
-				};
-				oModel = this.getModel("user");
-				oModel.loadData(oModel._sUrl, oParams, false);
+				if(this.testUserLoginName(sRemoteUserId)){
+					//this._navigateTo
+					//this.getRouter().navTo("home");
+				}else{
+					this.getRouter().navTo("login", {}, true);
+				}
 			}
 		},
 
-		getRemoteUsername: function() {
+		_getRemoteUsername: function() {
 			var oParameters = jQuery.sap.getUriParameters(window.location.href),
-				sRemoteUserId = oParameters.get("IllumLoginName");
+				sRemoteUserId = oParameters.get(this.S_USERLOGIN_PARAM_NAME);
 
 			return sRemoteUserId;
 		},
+		
+		testUserLoginName: function(sUserInput) {
+			var sUserInputUpper = sUserInput.toUpperCase(),
+				bUserLoggedIn,
+				oUser;
+
+			oUser = this._getUserLogin(sUserInputUpper);
+
+			return this._validateUserData(oUser, sUserInputUpper);
+		},
+
+		/**
+		 * @return an illuminator Row containig user data {__metadata: {…}, USERLOGIN: string, USERNNAME: string || null, USERVNAME: string || null, RowId: int}
+		 * if no user has been found, 'undefined' is returned
+		 */
+		_getUserLogin: function(sUserInput) {
+			var oModel = this.getModel("user"),
+				oParam = {
+					"Param.1": sUserInput
+				},
+				bAsync = false;
+
+			oModel.loadData(oModel._sUrl, oParam, bAsync);
+
+			return oModel.getProperty("/d/results/0/Rowset/results/0/Row/results/0/");
+		},
+
+		/**
+		 * Compares the USERLOGIN against user input
+		 */
+		_validateUserData: function(oUser, sUserInput) {
+			return oUser.USERLOGIN === sUserInput;
+		},
+
 
 		/**
 		 * Set the current Language Code / Locale
@@ -108,6 +151,7 @@ sap.ui.define([
 		 */
 		setupSpaceAndTime: function() {
 			var sCurrentLocale = sap.ui.getCore().getConfiguration().getLanguage();
+			
 			moment.locale(sCurrentLocale);
 		},
 
@@ -126,14 +170,11 @@ sap.ui.define([
 		/** 
 		 * Checks if the current navigatin is allowed based on the user model
 		 */
-		_isUserLoggedIn: function(sUserName) {
+		isUserLoggedIn: function(sUserName) {
 			var oModel = this.getModel("user");
 
-			if (!oModel || !oModel.getProperty("/d/results/0/Rowset/results/0/Row/results/0/USERLOGIN") || oModel.getProperty(
-					"/d/results/0/Rowset/results/0/Row/results/0/USERLOGIN") === "") {
-				jQuery.sap.log.warning("User nicht angemeldet",
-					"this.getModel(\"user\") undefined or property /d/results/0/Rowset/results/0/Row/results/0/ not given or empty.",
-					this.toString());
+			if (!oModel || !oModel.getProperty("/d/results/0/Rowset/results/0/Row/results/0/" + this.S_USERLOGIN_PARAM_NAME) || oModel.getProperty("/d/results/0/Rowset/results/0/Row/results/0/" + this.S_USERLOGIN_PARAM_NAME) === "") {
+				jQuery.sap.log.warning("User nicht angemeldet", "this.getModel(\"user\") undefined or property " + this.S_USERLOGIN_PARAM_NAME + " not given or empty.", this.toString());
 				return false;
 			}
 
@@ -153,7 +194,9 @@ sap.ui.define([
 		getContentDensityClass: function() {
 			if (this._sContentDensityClass === undefined) {
 				// check whether FLP has already set the content density class; do nothing in this case
-				if (jQuery(document.body).hasClass("sapUiSizeCozy") || jQuery(document.body).hasClass("sapUiSizeCompact")) {
+				if (jQuery(document.body)
+					.hasClass("sapUiSizeCozy") || jQuery(document.body)
+					.hasClass("sapUiSizeCompact")) {
 					this._sContentDensityClass = "";
 				} else if (!Device.support.touch) { // apply "compact" mode if touch is not supported
 					this._sContentDensityClass = "sapUiSizeCompact";

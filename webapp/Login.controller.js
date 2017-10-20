@@ -5,7 +5,25 @@ sap.ui.define([
 
 	return BaseController.extend("com.mii.scanner.controller.Login", {
 
-		onInit: function() {},
+		onInit: function() {
+
+			// var oModel = this.getOwnerComponent().getModel("user"),
+			// 	sUserNameByUrl = oModel.getProperty("/USERLOGIN");
+
+			// if (sUserNameByUrl) {
+			// 	this._doAutoLogin(sUserNameByUrl);
+			// }
+
+		},
+
+		_doAutoLogin: function(sUserNameByUrl) {
+			if (!sUserNameByUrl) {
+				return;
+			}
+			this.getView().byId("userIdInput").setValue(sUserNameByUrl);
+
+			this.onLogin();
+		},
 
 		onLogin: function(oEvent) {
 			var oInputControl = this.getView().byId("userIdInput"),

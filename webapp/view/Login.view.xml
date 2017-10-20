@@ -4,8 +4,8 @@
 			<HBox alignItems="Center" justifyContent="Center" class="sapUiLargeMarginTopBottom">
 				<Label text="{i18n>userNameLableText}" labelFor="userIdInput" class="sapUiSmallMarginEnd"/>
 				<Input id="userIdInput"
-					value="{path: 'user>/IllumLoginName', type: 'sap.ui.model.type.String', constraints: {minLength: 3, maxLength: 12} }"
-					required="true" change="onLogin" placeholder="{i18n>userNameInputPlaceholder}"/>
+					value="{path: 'user>/d/results/0/Rowset/results/0/Row/results/0/USERLOGIN', type: 'sap.ui.model.type.String', constraints: {minLength: 3, maxLength: 12} }"
+					required="true" change="onLogin" submit="onLogin" placeholder="{i18n>userNameInputPlaceholder}"/>
 			</HBox>
 			<Button text="{i18n>loginButtonText}" press="onLogin" width="100%"/>
 		</content>
