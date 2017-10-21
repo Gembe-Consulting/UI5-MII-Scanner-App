@@ -132,7 +132,8 @@ sap.ui.define([
 		 * Compares the USERLOGIN against user input
 		 */
 		_validateUserData: function(oUser, sUserInput) {
-			return oUser.USERLOGIN === sUserInput;
+			// if user was not found, oUser is undefined
+			return oUser && oUser.USERLOGIN === sUserInput;
 		},
 
 

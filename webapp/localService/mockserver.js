@@ -10,7 +10,7 @@ sap.ui.define([
 	 * @private returns an parameter object to setup a mockserver
 	 * @returns {Object} Config object
 	 */
-	var _createMockServer = function(sMockServerUrl, sJsonFilesUrl) {
+	var _createMockServer = function(sMockServerUrl, sJsonFilesUrl, oRef) {
 		// Create mockserver object
 		if (!sMockServerUrl || !sJsonFilesUrl) {
 			return;
@@ -31,6 +31,13 @@ sap.ui.define([
 						mHeaders = {
 							"Content-Type": "application/json;charset=utf-8"
 						};
+						
+					if(oRef[sQueryTemplateName] && oRef[sQueryTemplateName] instanceof Function){
+						jQuery.sap.log.debug("Post-Processing data with"+JSON.stringify(oRef[sQueryTemplateName]), "MII-Mockserver");
+						oResponse.data = oRef.sQueryTemplateName(oResponse.data);
+					}else{
+						jQuery.sap.log.debug("NoPost-Processing of data", "MII-Mockserver");
+					}
 
 					oXhr.respond(200, mHeaders, JSON.stringify(oResponse.data));
 
@@ -65,7 +72,7 @@ sap.ui.define([
 				// ensure there is a trailing slash
 				sMockServerUrl = /.*\/$/.test(oDataSource.uri) ? oDataSource.uri : oDataSource.uri + "/";
 
-				var oMockServerConfig = _createMockServer(sMockServerUrl, sJsonFilesUrl);
+				var oMockServerConfig = _createMockServer(sMockServerUrl, sJsonFilesUrl, this);
 
 				oMockServer = new MockServer(oMockServerConfig);
 
