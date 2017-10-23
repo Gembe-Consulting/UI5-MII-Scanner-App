@@ -70,7 +70,7 @@
 			"user": {
 				"dataSource": "illuminatorService",
 				"uri": "/XMII/IlluminatorOData/QueryTemplate",
-				"type": "mii.util.MIIQueryModel",
+				"type": "mii.util.model.illum.QueryTemplateModel",
 				"settings":{
 					"preventInitialLoad":true,
 					"QueryTemplate": "SAPUI5/services/user/FindScannerUserQry",
