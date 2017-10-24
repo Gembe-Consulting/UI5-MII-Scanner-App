@@ -34,10 +34,9 @@ sap.ui.define([
 
 			// create the views based on the url/hash
 			this.getRouter().initialize();
-			
+
 			// note: must run after Router initialization!
 			this.checkRemoteUserLoginByUrlParam();
-
 
 			/*
 						this.getRouter().attachRouteMatched(function(oEvent) {
@@ -69,7 +68,7 @@ sap.ui.define([
 
 			// set the browser page title based on sNavigation
 			this.getRouter().attachTitleChanged(function(oEvent) {
-					document.title = oEvent.getParameter("title");
+				document.title = oEvent.getParameter("title");
 			});
 		},
 		/**
@@ -84,12 +83,12 @@ sap.ui.define([
 
 			// If remote user was given, we load the data of our user Model, and check if the given parameter is a valid MII user
 			// This is not security!
-			
+
 			if (sRemoteUserId) {
-				if(this.testUserLoginName(sRemoteUserId)){
+				if (this.testUserLoginName(sRemoteUserId)) {
 					//this._navigateTo
 					//this.getRouter().navTo("home");
-				}else{
+				} else {
 					this.getRouter().navTo("login", {}, true);
 				}
 			}
@@ -101,31 +100,45 @@ sap.ui.define([
 
 			return sRemoteUserId;
 		},
-		
+
 		testUserLoginName: function(sUserInput) {
 			var sUserInputUpper = sUserInput.toUpperCase(),
-				bUserLoggedIn,
-				oUser;
+				oUserPromise;
+			var that = this;
+			this.showBusyIndicator();
 
-			oUser = this._getUserLogin(sUserInputUpper);
+			return new Promise(function(resolve, reject) {
 
-			return this._validateUserData(oUser, sUserInputUpper);
+				//check if user is allowed
+				this._getUserLogin(sUserInputUpper).then(function(oUser) {
+					resolve(that._validateUserData(oUser, sUserInputUpper));
+				}, function() {
+					reject(false);
+				}).then(that.hideBusyIndicator);
+
+				//resolve(true);//oUserPromise = this._getUserLogin(sUserInputUpper).then(fnResolveUserLogin, fnRejectUserLogin).then(this.hideBusyIndicator);
+			}.bind(this));
 		},
 
 		/**
-		 * @return an illuminator Row containig user data {__metadata: {…}, USERLOGIN: string, USERNNAME: string || null, USERVNAME: string || null, RowId: int}
+		 * @return an illuminator Row as Promise containig user data {__metadata: {…}, USERLOGIN: string, USERNNAME: string || null, USERVNAME: string || null, RowId: int}
 		 * if no user has been found, 'undefined' is returned
 		 */
 		_getUserLogin: function(sUserInput) {
 			var oModel = this.getModel("user"),
 				oParam = {
 					"Param.1": sUserInput
-				},
-				bAsync = false;
+				};
 
-			oModel.loadData(oModel._sUrl, oParam, bAsync);
+			var fnSuccess = function() {
+				return oModel.getProperty("/d/results/0/Rowset/results/0/Row/results/0/");
+			}.bind(this);
 
-			return oModel.getProperty("/d/results/0/Rowset/results/0/Row/results/0/");
+			var fnError = function() {
+				return undefined;
+			}.bind(this);
+
+			return oModel.loadData(oModel._sServiceUrl, oParam).then(fnSuccess, fnError);
 		},
 
 		/**
@@ -135,7 +148,6 @@ sap.ui.define([
 			// if user was not found, oUser is undefined
 			return oUser && oUser.USERLOGIN === sUserInput;
 		},
-
 
 		/**
 		 * Set the current Language Code / Locale
@@ -152,7 +164,7 @@ sap.ui.define([
 		 */
 		setupSpaceAndTime: function() {
 			var sCurrentLocale = sap.ui.getCore().getConfiguration().getLanguage();
-			
+
 			moment.locale(sCurrentLocale);
 		},
 
@@ -207,7 +219,16 @@ sap.ui.define([
 				}
 			}
 			return this._sContentDensityClass;
-		}
+		},
+
+		hideBusyIndicator: function() {
+			sap.ui.core.BusyIndicator.hide();
+		},
+
+		showBusyIndicator: function(iDelay) {
+			iDelay = iDelay || 0;
+			sap.ui.core.BusyIndicator.show(iDelay);
+		},
 
 	});
 

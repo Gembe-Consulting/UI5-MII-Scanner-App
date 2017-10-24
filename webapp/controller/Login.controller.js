@@ -16,14 +16,38 @@ sap.ui.define([
 				return;
 			}
 
+			this.getOwnerComponent().testUserLoginName(sUserInput).then(
+				function(bLoginSuccess) {
+					if (bLoginSuccess) {
+						// Remove error
+						oInputControl.setValueState(sap.ui.core.ValueState.None);
+						// Remove user input
+						oInputControl.setValue("");
+						// Navigate to homepage
+						this.getRouter().navTo("home");
+					} else {
+						oInputControl.setValueState(sap.ui.core.ValueState.Error)
+							.setValueStateText("Benutzername '" + sUserInput + "' existiert nicht.");
+					}
+				}.bind(this),
+				function(e) {
+					alert(e);
+				});
+
 			// check if provides username exists in MII
+			/*
 			if (this.getOwnerComponent().testUserLoginName(sUserInput)) {
+				// Remove error
 				oInputControl.setValueState(sap.ui.core.ValueState.None);
+				// Remove user input
+				oInputControl.setValue("");
+				// Navigate to homepage
 				this.getRouter().navTo("home");
 			} else {
 				oInputControl.setValueState(sap.ui.core.ValueState.Error)
 					.setValueStateText("Benutzername '" + sUserInput + "' existiert nicht.");
 			}
+			*/
 		},
 
 		onLogout: function(oEvent) {

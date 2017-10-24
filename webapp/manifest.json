@@ -67,12 +67,10 @@
 			},
 			"user": {
 				"dataSource": "illuminatorService",
-				"uri": "/XMII/IlluminatorOData/QueryTemplate",
+				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/user/FindScannerUserQry",
 				"type": "mii.util.model.illum.QueryTemplateModel",
 				"settings": {
-					"preventInitialLoad": true,
-					"QueryTemplate": "SAPUI5/services/user/FindScannerUserQry",
-					"Param.1": "test"
+					"preventInitialLoad": true
 				}
 			}
 		},

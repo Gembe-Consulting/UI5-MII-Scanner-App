@@ -20,22 +20,36 @@ sap.ui.define([
 			rootUri: sMockServerUrl,
 			requests: [{
 				method: "GET",
-				path: new RegExp(/(QueryTemplate)(.*)/),
+				path: /(QueryTemplate)(.*)$/,
 				response: function(oXhr, sMiiServiceName, oUrlParameters) {
 					jQuery.sap.log.debug("MockServer: incoming request for url:", oXhr.url, "MII-Mockserver");
 
 					var mUrlParams = jQuery.sap.getUriParameters(oXhr.url),
 						sQueryTemplatePath = mUrlParams.get(sMiiServiceName),
 						sQueryTemplateName = sQueryTemplatePath.substr(sQueryTemplatePath.lastIndexOf("/") + 1),
-						oResponse = jQuery.sap.syncGetJSON(sJsonFilesUrl + "/" + sQueryTemplateName + ".json"),
+						oResponse = jQuery.sap.syncGetJSON(sJsonFilesUrl + "/" + sQueryTemplateName + ".json", {
+							"_": new Date().getTime()
+						}),
 						mHeaders = {
 							"Content-Type": "application/json;charset=utf-8"
-						};
-						
-					if(oRef[sQueryTemplateName] && oRef[sQueryTemplateName] instanceof Function){
-						jQuery.sap.log.debug("Post-Processing data with"+JSON.stringify(oRef[sQueryTemplateName]), "MII-Mockserver");
-						oResponse.data = oRef.sQueryTemplateName(oResponse.data);
-					}else{
+						},
+						sMessage, sStatusCode,
+						fnServiceDataProcessing = "fn" + sQueryTemplateName;
+
+					if (!oResponse.success) {
+						sMessage = Response.status + ": " + oResponse.error || "Fatal application exception.";
+						sStatusCode = oResponse.statusCode || "999";
+						oXhr.respond(sStatusCode, mHeaders, sMessage);
+
+						jQuery.sap.log.debug("MockServer: response sent with: " + sStatusCode + ": " + sMessage, JSON.stringify(oResponse.data), "MII-Mockserver");
+
+						return false;
+					}
+
+					if (oRef[fnServiceDataProcessing] && oRef[fnServiceDataProcessing] instanceof Function) {
+						jQuery.sap.log.debug("Post-Processing data with" + JSON.stringify(oRef[fnServiceDataProcessing]), "MII-Mockserver");
+						oResponse.data = oRef[fnServiceDataProcessing](oResponse.data, mUrlParams);
+					} else {
 						jQuery.sap.log.debug("NoPost-Processing of data", "MII-Mockserver");
 					}
 
@@ -66,16 +80,24 @@ sap.ui.define([
 				sJsonFilesUrl = jQuery.sap.getModulePath(_sJsonFilesModulePath),
 				sManifestUrl = jQuery.sap.getModulePath(_sAppModulePath + "manifest", ".json"),
 				oManifest = jQuery.sap.syncGetJSON(sManifestUrl).data,
-				aDataSources = oManifest["sap.app"].dataSources;
+				aDataSources = oManifest["sap.app"].dataSources,
+				oDataSource = aDataSources.illuminatorService;
 
-			jQuery.each(aDataSources, function(index, oDataSource) {
-				// ensure there is a trailing slash
-				sMockServerUrl = /.*\/$/.test(oDataSource.uri) ? oDataSource.uri : oDataSource.uri + "/";
+			// ensure there is a trailing slash
+			sMockServerUrl = /.*\/$/.test(oDataSource.uri) ? oDataSource.uri : oDataSource.uri + "/";
 
-				var oMockServerConfig = _createMockServer(sMockServerUrl, sJsonFilesUrl, this);
+			// configure mock server with a delay of 1s
+			MockServer.config({
+				autoRespond: true,
+				autoRespondAfter: (oUriParameters.get("serverDelay") || 2500)
+			});
 
-				oMockServer = new MockServer(oMockServerConfig);
+			var oMockServerConfig = _createMockServer(sMockServerUrl, sJsonFilesUrl, this);
 
+			oMockServer = new MockServer(oMockServerConfig);
+
+			// handling request errors
+			if (sErrorParam) {
 				var aRequests = oMockServer.getRequests();
 
 				var fnResponse = function(iErrCode, sMessage, aRequest) {
@@ -86,25 +108,16 @@ sap.ui.define([
 					};
 				};
 
-				// handling request errors
-				if (sErrorParam) {
-					aRequests.forEach(function(aEntry) {
-						if (aEntry.path.toString().indexOf(sEntity) > -1) {
-							fnResponse(iErrorCode, sErrorParam, aEntry);
-						}
-					});
-				}
+				aRequests.forEach(function(aEntry) {
+					if (aEntry.path.toString().indexOf(sEntity) > -1) {
+						fnResponse(iErrorCode, sErrorParam, aEntry);
+					}
+				});
+			}
 
-				oMockServer.start();
-			}.bind(this));
+			oMockServer.start();
 
-			// configure mock server with a delay of 1s
-			//MockServer.config({
-			//	autoRespond: true,
-			//	autoRespondAfter: (oUriParameters.get("serverDelay") || 1000)
-			//});
-
-			jQuery.sap.log.info("Running the app with mock data","","MII-Mockserver");
+			jQuery.sap.log.info("Running the app with mock data", "", "MII-Mockserver");
 		},
 
 		/**
@@ -113,6 +126,10 @@ sap.ui.define([
 		 */
 		getMockServer: function() {
 			return oMockServer;
+		},
+
+		fnFindScannerUserQry: function(oData, oParams) {
+			return oData;
 		}
 	};
 
