@@ -100,23 +100,38 @@ sap.ui.define([
 
 			return sRemoteUserId;
 		},
-
+		
+		/**
+		 * @ returns a promise, if resolved() contains bUserLoginOk to show if user was loged in correctly
+		 * A promise can be:
+		 *	- fulfilled - The action relating to the promise succeeded
+		 *	- rejected - The action relating to the promise failed
+		 *	- pending - Hasn't fulfilled or rejected yet
+		 *	- settled - Has fulfilled or rejected
+		 */
 		testUserLoginName: function(sUserInput) {
 			var sUserInputUpper = sUserInput.toUpperCase(),
-				oUserPromise;
-			var that = this;
+				that = this;
+			
 			this.showBusyIndicator();
+			
+			var fnUserExists = function(){
+				
+			};
+			
+			var fnUserNonExisting = function(){
+				
+			};
 
 			return new Promise(function(resolve, reject) {
-
-				//check if user is allowed
-				this._getUserLogin(sUserInputUpper).then(function(oUser) {
+				var oPromise = this._getUserLogin(sUserInputUpper);
+				// check if user is allowed
+				oPromise.then(function(oUser) {
 					resolve(that._validateUserData(oUser, sUserInputUpper));
 				}, function() {
 					reject(false);
 				}).then(that.hideBusyIndicator);
 
-				//resolve(true);//oUserPromise = this._getUserLogin(sUserInputUpper).then(fnResolveUserLogin, fnRejectUserLogin).then(this.hideBusyIndicator);
 			}.bind(this));
 		},
 
@@ -129,16 +144,17 @@ sap.ui.define([
 				oParam = {
 					"Param.1": sUserInput
 				};
-
+				
+			// return 
 			var fnSuccess = function() {
-				return oModel.getProperty("/d/results/0/Rowset/results/0/Row/results/0/");
-			}.bind(this);
+				//resolve(oModel.getProperty("/d/results/0/Rowset/results/0/Row/results/0/"));
+			};
 
 			var fnError = function() {
-				return undefined;
-			}.bind(this);
+				//reject();
+			};
 
-			return oModel.loadData(oModel._sServiceUrl, oParam).then(fnSuccess, fnError);
+			return oModel.loadData(oModel._sServiceUrl, oParam);//.then(fnSuccess, fnError);
 		},
 
 		/**

@@ -16,38 +16,33 @@ sap.ui.define([
 				return;
 			}
 
-			this.getOwnerComponent().testUserLoginName(sUserInput).then(
-				function(bLoginSuccess) {
-					if (bLoginSuccess) {
-						// Remove error
-						oInputControl.setValueState(sap.ui.core.ValueState.None);
-						// Remove user input
-						oInputControl.setValue("");
-						// Navigate to homepage
-						this.getRouter().navTo("home");
-					} else {
-						oInputControl.setValueState(sap.ui.core.ValueState.Error)
-							.setValueStateText("Benutzername '" + sUserInput + "' existiert nicht.");
-					}
-				}.bind(this),
-				function(e) {
-					alert(e);
-				});
+			this.getOwnerComponent().testUserLoginName(sUserInput)
+				.then(
+					fnUserNameOk,
+					fnUserNameNotOk
+				);
 
-			// check if provides username exists in MII
-			/*
-			if (this.getOwnerComponent().testUserLoginName(sUserInput)) {
-				// Remove error
-				oInputControl.setValueState(sap.ui.core.ValueState.None);
-				// Remove user input
-				oInputControl.setValue("");
-				// Navigate to homepage
-				this.getRouter().navTo("home");
-			} else {
-				oInputControl.setValueState(sap.ui.core.ValueState.Error)
-					.setValueStateText("Benutzername '" + sUserInput + "' existiert nicht.");
-			}
-			*/
+			// remove error state on control, remove input and trigger navigation
+			var fnUserNameOk = function(bLoginSuccess) {
+				if (bLoginSuccess) {
+					// Remove error
+					oInputControl.setValueState(sap.ui.core.ValueState.None);
+					// Remove user input
+					oInputControl.setValue("");
+					// Navigate to homepage
+					this.getRouter().navTo("home");
+				} else {
+					oInputControl.setValueState(sap.ui.core.ValueState.Error)
+						.setValueStateText("Benutzername '" + sUserInput + "' existiert nicht.");
+				}
+			}.bind(this);
+
+			// Show error state and error text on control
+			var fnUserNameNotOk = function() {
+				oInputControl.setValueState(sap.ui.core.ValueState.Error);
+				oInputControl.setValueStateText("Benutzername '" + sUserInput + "' existiert nicht.");
+			}.bind(this);
+
 		},
 
 		onLogout: function(oEvent) {
