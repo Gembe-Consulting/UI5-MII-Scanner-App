@@ -9,40 +9,28 @@ sap.ui.define([
 
 		onLogin: function(oEvent) {
 			var oInputControl = this.getView().byId("userIdInput"),
-				sUserInput = oInputControl.getValue();
+				sUserInput = oInputControl.getValue(),
+				that = this;
 
 			//prevent login, if user did not enter an username into login input
 			if (!sUserInput && sUserInput.length <= 0) {
 				return;
 			}
 
-			this.getOwnerComponent().testUserLoginName(sUserInput)
-				.then(
-					fnUserNameOk,
-					fnUserNameNotOk
-				);
-
-			// remove error state on control, remove input and trigger navigation
-			var fnUserNameOk = function(bLoginSuccess) {
-				if (bLoginSuccess) {
-					// Remove error
-					oInputControl.setValueState(sap.ui.core.ValueState.None);
-					// Remove user input
-					oInputControl.setValue("");
-					// Navigate to homepage
-					this.getRouter().navTo("home");
-				} else {
-					oInputControl.setValueState(sap.ui.core.ValueState.Error)
-						.setValueStateText("Benutzername '" + sUserInput + "' existiert nicht.");
-				}
-			}.bind(this);
-
-			// Show error state and error text on control
-			var fnUserNameNotOk = function() {
-				oInputControl.setValueState(sap.ui.core.ValueState.Error);
-				oInputControl.setValueStateText("Benutzername '" + sUserInput + "' existiert nicht.");
-			}.bind(this);
-
+			this.getOwnerComponent().testUserLoginName(sUserInput).then(function(oUser){
+				jQuery.sap.log.info("Welcome " + oUser.USERVNAME +" "+ oUser.USERNNAME);
+				// Remove error
+				oInputControl.setValueState(sap.ui.core.ValueState.None);
+				// Remove user input
+				oInputControl.setValue("");
+				// Navigate to homepage
+				that.getRouter().navTo("home");
+			}, function(err){
+				jQuery.sap.log.warning(err);
+				// set error state and error text
+				oInputControl.setValueState(sap.ui.core.ValueState.Error)
+					.setValueStateText("Benutzername '" + sUserInput + "' existiert nicht.");	
+			});
 		},
 
 		onLogout: function(oEvent) {

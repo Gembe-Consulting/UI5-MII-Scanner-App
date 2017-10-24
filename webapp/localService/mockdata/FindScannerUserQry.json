@@ -61,8 +61,8 @@
 								"type": "QueryTemplate.Row"
 							},
 							"USERLOGIN": "PHIGEM",
-							"USERNNAME": null,
-							"USERVNAME": null,
+							"USERNNAME": "Gembe",
+							"USERVNAME": "Philipp",
 							"RowId": 1
 						}]
 					}

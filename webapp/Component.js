@@ -100,7 +100,7 @@ sap.ui.define([
 
 			return sRemoteUserId;
 		},
-		
+
 		/**
 		 * @ returns a promise, if resolved() contains bUserLoginOk to show if user was loged in correctly
 		 * A promise can be:
@@ -112,27 +112,30 @@ sap.ui.define([
 		testUserLoginName: function(sUserInput) {
 			var sUserInputUpper = sUserInput.toUpperCase(),
 				that = this;
-			
-			this.showBusyIndicator();
-			
-			var fnUserExists = function(){
-				
-			};
-			
-			var fnUserNonExisting = function(){
-				
-			};
 
+			this.showBusyIndicator();
+
+			// create a promise to resolve or reject the given user name
 			return new Promise(function(resolve, reject) {
-				var oPromise = this._getUserLogin(sUserInputUpper);
-				// check if user is allowed
-				oPromise.then(function(oUser) {
-					resolve(that._validateUserData(oUser, sUserInputUpper));
-				}, function() {
-					reject(false);
-				}).then(that.hideBusyIndicator);
+
+				// call a promised method and wait for its resolve or reject
+				this._getUserLogin(sUserInputUpper).then(function() {
+
+					var oLoginUser = this.getModel("user").getProperty("/d/results/0/Rowset/results/0/Row/results/0/");
+
+					if (this._validateUserData(oLoginUser, sUserInputUpper)) {
+
+						resolve(oLoginUser);
+
+					} else {
+
+						reject("Username '" + sUserInput + "' not found!");
+
+					}
+				}.bind(this)).then(this.hideBusyIndicator);
 
 			}.bind(this));
+
 		},
 
 		/**
@@ -144,17 +147,8 @@ sap.ui.define([
 				oParam = {
 					"Param.1": sUserInput
 				};
-				
-			// return 
-			var fnSuccess = function() {
-				//resolve(oModel.getProperty("/d/results/0/Rowset/results/0/Row/results/0/"));
-			};
 
-			var fnError = function() {
-				//reject();
-			};
-
-			return oModel.loadData(oModel._sServiceUrl, oParam);//.then(fnSuccess, fnError);
+			return oModel.loadData(oModel._sServiceUrl, oParam);
 		},
 
 		/**
