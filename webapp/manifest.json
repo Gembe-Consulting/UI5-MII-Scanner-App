@@ -32,9 +32,7 @@
 			"tablet": true,
 			"phone": true
 		},
-		"supportedThemes": [
-			"sap_belize"
-		]
+		"supportedThemes": ["sap_belize"]
 	},
 	"sap.ui5": {
 		"rootView": {
@@ -71,8 +69,8 @@
 				"dataSource": "illuminatorService",
 				"uri": "/XMII/IlluminatorOData/QueryTemplate",
 				"type": "mii.util.model.illum.QueryTemplateModel",
-				"settings":{
-					"preventInitialLoad":true,
+				"settings": {
+					"preventInitialLoad": true,
 					"QueryTemplate": "SAPUI5/services/user/FindScannerUserQry",
 					"Param.1": "test"
 				}
@@ -86,105 +84,63 @@
 				"controlId": "app",
 				"controlAggregation": "pages",
 				"bypassed": {
-					"target": [
-						"notFound"
-					]
+					"target": ["notFound"]
 				},
 				"async": true
 			},
-			"routes": [
-				{
-					"pattern": "",
-					"name": "empty",
-					"target": [
-						"login"
-					]
-				},
-				{
-					"pattern": "Anmeldung",
-					"name": "login",
-					"target": [
-						"login"
-					]
-				},
-				{
-					"pattern": "Start",
-					"name": "home",
-					"target": [
-						"home"
-					]
-				},
-				{
-					"pattern": "Start/Statusmeldung",
-					"name": "statusChange",
-					"target": [
-						"SC"
-					]
-				},
-				{
-					"pattern": "Start/Materialbewegung",
-					"name": "goodsMovement",
-					"target": [
-						"GM"
-					]
-				},
-				{
-					"pattern": "Start/Materialbewegung/WE",
-					"name": "goodsReceipt",
-					"target": [
-						"GR"
-					]
-				},
-				{
-					"pattern": "Start/Materialbewegung/WA",
-					"name": "goodsIssue",
-					"target": [
-						"GI"
-					]
-				},
-				{
-					"pattern": "Start/Materialbewegung/UL",
-					"name": "stockTransfer",
-					"target": [
-						"ST"
-					]
-				},
-				{
-					"pattern": "Start/Materialbewegung/ROL",
-					"name": "rollerConveyor",
-					"target": [
-						"RC"
-					]
-				},
-				{
-					"pattern": "Start/Statusmeldung/VS",
-					"name": "startOperation",
-					"target": [
-						"SO"
-					]
-				},
-				{
-					"pattern": "Start/Statusmeldung/VU",
-					"name": "interruptOperation",
-					"target": [
-						"IO"
-					]
-				},
-				{
-					"pattern": "Start/Statusmeldung/VW",
-					"name": "resumeOperation",
-					"target": [
-						"RO"
-					]
-				},
-				{
-					"pattern": "Start/Statusmeldung/VB",
-					"name": "finishOperation",
-					"target": [
-						"FO"
-					]
-				}
-			],
+			"routes": [{
+				"pattern": "",
+				"name": "empty",
+				"target": ["login"]
+			}, {
+				"pattern": "Anmeldung",
+				"name": "login",
+				"target": ["login"]
+			}, {
+				"pattern": "Start",
+				"name": "home",
+				"target": ["home"]
+			}, {
+				"pattern": "Start/Statusmeldung",
+				"name": "statusChange",
+				"target": ["SC"]
+			}, {
+				"pattern": "Start/Materialbewegung",
+				"name": "goodsMovement",
+				"target": ["GM"]
+			}, {
+				"pattern": "Start/Materialbewegung/WE",
+				"name": "goodsReceipt",
+				"target": ["GR"]
+			}, {
+				"pattern": "Start/Materialbewegung/WA",
+				"name": "goodsIssue",
+				"target": ["GI"]
+			}, {
+				"pattern": "Start/Materialbewegung/UL",
+				"name": "stockTransfer",
+				"target": ["ST"]
+			}, {
+				"pattern": "Start/Materialbewegung/ROL",
+				"name": "rollerConveyor",
+				"target": ["RC"]
+			}, {
+				"pattern": "Start/Statusmeldung/VS",
+				"name": "startOperation",
+				"target": ["SO"]
+			}, {
+				"pattern": "Start/Statusmeldung/VU",
+				"name": "interruptOperation",
+				"target": ["IO"]
+			}, {
+				"pattern": "Start/Statusmeldung/VW",
+				"name": "resumeOperation",
+				"target": ["RO"]
+			}, {
+				"pattern": "Start/Statusmeldung/VB",
+				"name": "finishOperation",
+				"target": ["FO"]
+			}],
 			"targets": {
 				"login": {
 					"viewName": "Login",
@@ -278,23 +234,23 @@
 			}
 		},
 		"resources": {
-			"js": [
-				{
-					"uri": "libs/lodashjs/lodash.js",
-					"name": "lodash.js",
-					"version": "4.17.4"
-				},
-				{
-					"uri": "libs/momentjs/moment.js",
-					"name": "moment.js",
-					"version": "2.19.1"
-				},
-				{
-					"uri": "libs/momentjs/locale/de.js",
-					"name": "locale/de.js",
-					"version": "2.19.1"
-				}
-			],
+			"js": [{
+				"uri": "libs/lodashjs/lodash.js",
+				"name": "lodash.js",
+				"version": "4.17.4"
+			}, {
+				"uri": "libs/momentjs/moment.js",
+				"name": "moment.js",
+				"version": "2.19.1"
+			}, {
+				"uri": "libs/momentjs/locale/de.js",
+				"name": "locale/de.js",
+				"version": "2.19.1"
+			}, {
+				"uri": "libs/ajv/ajv.min.js",
+				"name": "ajv.min.js",
+				"version": "5.2.4"
+			}],
 			"css": []
 		}
 	},
