@@ -6,7 +6,9 @@ sap.ui.define([
 
 	return BaseController.extend("com.mii.scanner.controller.PageBaseController", {
 		onInit: function() {
-			var oThis = this;
+			
+			this._bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
+			
 			this.getView().addEventDelegate({
 				"onBeforeShow": function(oEvent) {
 					if (!this.getOwnerComponent().isUserLoggedIn()) {
@@ -17,7 +19,8 @@ sap.ui.define([
 						jQuery.sap.log.info("User logged in.", "Login status", this.toString());
 					}
 				}
-			}, oThis);
+			}, this);
+			
 		}
 	});
 });

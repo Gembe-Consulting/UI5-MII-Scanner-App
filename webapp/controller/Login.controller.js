@@ -5,8 +5,6 @@ sap.ui.define([
 
 	return BaseController.extend("com.mii.scanner.controller.Login", {
 
-		onInit: function() {},
-
 		onLogin: function(oEvent) {
 			var oInputControl = this.getView().byId("userIdInput"),
 				sUserInput = oInputControl.getValue(),
@@ -16,29 +14,34 @@ sap.ui.define([
 			if (!sUserInput && sUserInput.length <= 0) {
 				return;
 			}
-
-			this.getOwnerComponent().testUserLoginName(sUserInput).then(function(oUser){
-				jQuery.sap.log.info("Welcome " + oUser.USERVNAME +" "+ oUser.USERNNAME);
+			
+			var fnResolveHandler = function(oUser) {
+				jQuery.sap.log.info("Welcome " + oUser.USERVNAME + " " + oUser.USERNNAME);
 				// Remove error
 				oInputControl.setValueState(sap.ui.core.ValueState.None);
 				// Remove user input
 				oInputControl.setValue("");
 				// Navigate to homepage
 				that.getRouter().navTo("home");
-			}, function(err){
-				jQuery.sap.log.warning(err);
+			}.bind(this);
+
+			var fnRejectHandler = function(oError) {
+				jQuery.sap.log.warning("Benutzeranfrage abgelehnt: ", JSON.stringify(oError), this.toString());
 				// set error state and error text
 				oInputControl.setValueState(sap.ui.core.ValueState.Error)
-					.setValueStateText("Benutzername '" + sUserInput + "' existiert nicht.");	
-			});
-		},
+					.setValueStateText("Benutzername '" + sUserInput + "' existiert nicht.");
+			}.bind(this);
 
-		onLogout: function(oEvent) {
-			var bReplace = true;
-			// delete user model
-			this.getModel("user").setProperty("/", {});
-			// navigate to login page
-			this.getRouter().navTo("login", {}, bReplace);
+			/* The following logic relys on a Promise
+			 * A promise is an object which can be returned synchronously from an asynchronous function.
+			 * => this.getOwnerComponent().testUserLoginName() returns the promise
+			 * Promises define a .then() method which you use to pass handlers which can take the resolved or rejected value.
+			 * Because .then() always returns a new promise, it’s possible to chain promises with precise control 
+			 * over how and where errors are handled. 
+			 */
+			this.getOwnerComponent().testUserLoginName(sUserInput)
+				.then(fnResolveHandler, fnRejectHandler);
+
 		}
 
 	});

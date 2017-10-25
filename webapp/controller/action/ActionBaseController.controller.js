@@ -7,10 +7,7 @@ sap.ui.define([
 	"use strict";
 
 	return PageBaseController.extend("com.mii.scanner.controller.action.ActionBaseController", {
-		onInit: function() {
-			this._bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
-		},
-		
+
 		onSave:function(){
 			MessageToast.show("Daten gespeichert!");
 			this.onNavBack();

@@ -89,7 +89,7 @@ sap.ui.define([
 			// configure mock server with a delay of 1s
 			MockServer.config({
 				autoRespond: true,
-				autoRespondAfter: (oUriParameters.get("serverDelay") || 2500)
+				autoRespondAfter: (oUriParameters.get("serverDelay") || 0)
 			});
 
 			var oMockServerConfig = _createMockServer(sMockServerUrl, sJsonFilesUrl, this);
@@ -129,7 +129,14 @@ sap.ui.define([
 		},
 
 		fnFindScannerUserQry: function(oData, oParams) {
+			var sUserName = oParams.get("Param.1");
+			if(sUserName === "PHIGEM"){
+				return oData;	
+			}
+			//("/d/results/0/Rowset/results/0/Row/results/0/");
+			oData.d.results[0].Rowset.results[0].Row.results = [];
 			return oData;
+			
 		}
 	};
 

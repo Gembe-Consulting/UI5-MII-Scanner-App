@@ -65,6 +65,9 @@ sap.ui.define([
 							}
 						});
 			*/
+			this.getRouter().getTarget("login").attachDisplay(function(oEvent){
+				this.getModel("user").setProperty("/", {});
+			}.bind(this ));
 
 			// set the browser page title based on sNavigation
 			this.getRouter().attachTitleChanged(function(oEvent) {
@@ -102,7 +105,9 @@ sap.ui.define([
 		},
 
 		/**
-		 * @ returns a promise, if resolved() contains bUserLoginOk to show if user was loged in correctly
+		 * @return a promise: 
+		 *  - If resolved the user name was found in MII. 
+		 *  - If rejected, user was not found.
 		 * A promise can be:
 		 *	- fulfilled - The action relating to the promise succeeded
 		 *	- rejected - The action relating to the promise failed
@@ -111,36 +116,34 @@ sap.ui.define([
 		 */
 		testUserLoginName: function(sUserInput) {
 			var sUserInputUpper = sUserInput.toUpperCase(),
+				oModel = this.getModel("user"),
+				oLoginUser,
 				that = this;
 
 			this.showBusyIndicator();
 
-			// create a promise to resolve or reject the given user name
-			return new Promise(function(resolve, reject) {
+			return new Promise(function(fulfill, reject) {
 
-				// call a promised method and wait for its resolve or reject
-				this._getUserLogin(sUserInputUpper).then(function() {
-
-					var oLoginUser = this.getModel("user").getProperty("/d/results/0/Rowset/results/0/Row/results/0/");
-
-					if (this._validateUserData(oLoginUser, sUserInputUpper)) {
-
-						resolve(oLoginUser);
-
-					} else {
-
-						reject("Username '" + sUserInput + "' not found!");
-
-					}
-				}.bind(this)).then(this.hideBusyIndicator);
-
+				this._getUserLogin(sUserInputUpper)
+					.then(function(oData) {
+							oLoginUser = oModel.getProperty("/d/results/0/Rowset/results/0/Row/results/0/");
+							if (that._validateUserData(oLoginUser, sUserInputUpper)) {
+								fulfill(oLoginUser);
+							} else {
+								oModel.setProperty("/", {});
+								reject(new Error("Username '" + sUserInput + "' not found!"));
+							}
+						},
+						function(oError) {
+							reject(oError);
+						})
+					.then(this.hideBusyIndicator);
 			}.bind(this));
-
 		},
 
 		/**
-		 * @return an illuminator Row as Promise containig user data {__metadata: {…}, USERLOGIN: string, USERNNAME: string || null, USERVNAME: string || null, RowId: int}
-		 * if no user has been found, 'undefined' is returned
+		 * @return a Promise containig user data {__metadata: {…}, USERLOGIN: string, USERNNAME: string || null, USERVNAME: string || null, RowId: int}
+		 * It may, or may not contain the user data. Its on the caller to check this.
 		 */
 		_getUserLogin: function(sUserInput) {
 			var oModel = this.getModel("user"),
@@ -148,7 +151,8 @@ sap.ui.define([
 					"Param.1": sUserInput
 				};
 
-			return oModel.loadData(oModel._sServiceUrl, oParam);
+			return oModel.loadMiiData(oModel._sServiceUrl, oParam);
+
 		},
 
 		/**
