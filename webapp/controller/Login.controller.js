@@ -3,7 +3,57 @@ sap.ui.define([
 ], function(BaseController) {
 	"use strict";
 
+	var CONST_INPUT_BUFFER_DURATION = 75;
+	var CONST_EMPTY_STRING = "";
+
 	return BaseController.extend("com.mii.scanner.controller.Login", {
+
+		/**
+		 * 	Dient zur Erkennung von Scanner-Eingaben und Unterscheidung ggü. manuelle Eingaben.
+		 *	Gibt das eingegebene Zeichen zurück oder - am Ende des Scanvorgangs - den gescannten Wert.
+		 **/
+
+		checkInputType: function(sInput) {
+
+			// If as been initialied, remove data form input field
+			if (this._sInputString === CONST_EMPTY_STRING) {
+				jQuery.sap.log.debug("this._sInputString is empty => manual user input detected!", "Scanner-Input-Detection");
+				this._sInputString = null; //invalidate
+				return;
+			} else {
+				this._sInputString = sInput;
+			}
+
+			setTimeout(function() {
+				this._sInputString = CONST_EMPTY_STRING;
+				jQuery.sap.log.debug("this._sInputString cleared after " + CONST_INPUT_BUFFER_DURATION + " ms", "Scanner-Input-Detection");
+			}.bind(this), CONST_INPUT_BUFFER_DURATION);
+
+			return sInput;
+		},
+
+		onLiveInput: function(oEvent) {
+			var sCurrentInput = oEvent.getParameter("value"),
+				oInput = oEvent.getSource(),
+				sDetectedInput;
+
+			sDetectedInput = this.checkInputType(sCurrentInput);
+
+			if (sDetectedInput !== sCurrentInput) {
+				oInput.setValue(CONST_EMPTY_STRING);
+				jQuery.sap.log.debug("Cleard Input field.", "Scanner-Input-Detection");
+			}
+
+		},
+
+		preventKeyboardInput: function(oEvent) {
+			var sCurrentInput = oEvent.getParameter("value"),
+				oInput = oEvent.getSource();
+			setTimeout(function() {
+				oInput.setValue(CONST_EMPTY_STRING);
+				jQuery.sap.log.debug("Input " + sCurrentInput + " cleared after " + CONST_INPUT_BUFFER_DURATION + " ms -> no manual input allowed!", "Scanner-Input-Detection");
+			}.bind(this), CONST_INPUT_BUFFER_DURATION);
+		},
 
 		onLogin: function(oEvent) {
 			var oInputControl = this.getView().byId("userIdInput"),
@@ -14,7 +64,7 @@ sap.ui.define([
 			if (!sUserInput && sUserInput.length <= 0) {
 				return;
 			}
-			
+
 			var fnResolveHandler = function(oUser) {
 				jQuery.sap.log.info("Welcome " + oUser.USERVNAME + " " + oUser.USERNNAME);
 				// Remove error
