@@ -9,30 +9,39 @@ sap.ui.define([
 	return BaseController.extend("com.mii.scanner.controller.Login", {
 
 		/**
-		 * 	Dient zur Erkennung von Scanner-Eingaben und Unterscheidung ggü. manuelle Eingaben.
-		 *	Gibt das eingegebene Zeichen zurück oder - am Ende des Scanvorgangs - den gescannten Wert.
-		 **/
-
+		 * Dient zur Erkennung von Scanner-Eingaben und Unterscheidung ggü. manuelle Eingaben.
+		 * Schreibt die aktuelle Zeichenkette in den Puffer. 
+		 * Nach einer Zeitspanne CONST_INPUT_BUFFER_DURATION, wird der Puffer mit CONST_EMPTY_STRING überschrieben.
+		 * Nach der Zeitspanne wird die Funktion null zurückgeben.
+		 * 
+		 * @return	sInput [String] die eingegebene Zeichenkette 
+		 *			oder null wenn der Puffer leer ist
+		 */
 		checkInputType: function(sInput) {
 
-			// If as been initialied, remove data form input field
-			if (this._sInputString === CONST_EMPTY_STRING) {
-				jQuery.sap.log.debug("this._sInputString is empty => manual user input detected!", "Scanner-Input-Detection");
-				this._sInputString = null; //invalidate
+			// If has been initialised, remove data form input field
+			if (this._sInputBuffer === CONST_EMPTY_STRING) {
+				jQuery.sap.log.debug("this._sInputBuffer is empty => manual user input detected!", "Scanner-Input-Detection");
+				this._sInputBuffer = null; //invalidate
 				return;
 			} else {
-				this._sInputString = sInput;
+				this._sInputBuffer = sInput;
 			}
 
 			setTimeout(function() {
-				this._sInputString = CONST_EMPTY_STRING;
-				jQuery.sap.log.debug("this._sInputString cleared after " + CONST_INPUT_BUFFER_DURATION + " ms", "Scanner-Input-Detection");
+				this._sInputBuffer = CONST_EMPTY_STRING;
+				jQuery.sap.log.debug("this._sInputBuffer cleared after " + CONST_INPUT_BUFFER_DURATION + " ms", "Scanner-Input-Detection");
 			}.bind(this), CONST_INPUT_BUFFER_DURATION);
 
 			return sInput;
 		},
 
-		onLiveInput: function(oEvent) {
+		/**
+		 * Aufruf bei jedem keyup-event.
+		 * Prüft den aktullen Wert des Feldes, mit dem Wert im aktuellen Puffer. Sollte der Puffer != Eingabewert sein, gehen wir davon aus,
+		 * dass der Wert per Keyboard eingegeben wurde.
+		 */
+		onInput: function(oEvent) {
 			var sCurrentInput = oEvent.getParameter("value"),
 				oInput = oEvent.getSource(),
 				sDetectedInput;
@@ -46,13 +55,28 @@ sap.ui.define([
 
 		},
 
-		preventKeyboardInput: function(oEvent) {
+		/**
+		 * Löscht die aktuelle Zeichenkette im Einagebfeld nach einer bestimmten Zeitspanne CONST_INPUT_BUFFER_DURATION.
+		 */
+		purgeInputAfterDelay: function(oInput, iDelay) {
+			iDelay = iDelay ? iDelay : CONST_INPUT_BUFFER_DURATION;
+			setTimeout(function() {
+				oInput.setValue("");
+				jQuery.sap.log.debug("Input cleared after " + iDelay + " ms -> no manual input allowed!", "Scanner-Input-Detection");
+			}.bind(this), iDelay);	
+		},
+		
+		/**
+		 * Triggers purging the input value on each input change.
+		 * User has CONST_INPUT_BUFFER_DURATION ms time to complete his input.
+		 * After that duration, input gets removed completly
+		 */
+		onLiveInput: function(oEvent) {
 			var sCurrentInput = oEvent.getParameter("value"),
 				oInput = oEvent.getSource();
-			setTimeout(function() {
-				oInput.setValue(CONST_EMPTY_STRING);
-				jQuery.sap.log.debug("Input " + sCurrentInput + " cleared after " + CONST_INPUT_BUFFER_DURATION + " ms -> no manual input allowed!", "Scanner-Input-Detection");
-			}.bind(this), CONST_INPUT_BUFFER_DURATION);
+			
+			this.purgeInputAfterDelay(oInput);
+			
 		},
 
 		onLogin: function(oEvent) {
