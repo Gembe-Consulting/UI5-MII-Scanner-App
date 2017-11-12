@@ -1,23 +1,38 @@
 sap.ui.require(
 	[
-		"com/mii/scanner/Component"
+		"com/mii/scanner/controller/Login.controller",
+		"sap/m/Input"
 	],
-	function (Component) {
+	function (LoginController, Input) {
 		"use strict";
-		QUnit.module("Login unit");
+
+		QUnit.module("Prevent Login with keyboard entry", {
+
+			beforeEach : function () {
+				this.oLoginController = new LoginController();
+				this.oInput = new Input({
+					value: "foo"
+				}).placeAt("myContent");
+			},
+
+			afterEach : function () {
+				this.oLoginController.destroy();
+				this.oInput.destroy();
+			}
+		});
 
 		function keyboardInputPreventionTestCase(oOptions) {
 			// Act
-			var sState = Component.priceState(oOptions.price);
+			var sState = this.oLoginController.purgeInputAfterDelay(this.oInput);
 			
 			// Assert
 			oOptions.assert.strictEqual(sState, oOptions.expected, "The price state was correct");
 		}
-		QUnit.test("Should format the products with a price lower than 50 to Success", function (assert) {
-			priceStateTestCase.call(this, {
+		QUnit.test("Should keep the value after less than 75 ms to success", function (assert) {
+			keyboardInputPreventionTestCase.call(this, {
 				assert: assert,
-				price: 42,
-				expected: "Success"
+				price: 70,
+				expected: "foo"
 			});
 		});
 	}
