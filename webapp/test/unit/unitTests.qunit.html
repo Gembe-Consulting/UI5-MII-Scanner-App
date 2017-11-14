@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Unit tests for Bulletin Board</title>
+	<title>Unit tests for Scanner App</title>
 	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 	<meta charset="utf-8">
 
 	<script id="sap-ui-bootstrap"
 			src="../../../resources/sap-ui-core.js"
 			data-sap-ui-resourceroots='{
-				"com.mii.scanner" : "./", 
+				"com.mii.scanner" : "../../", 
 				"mii.util" : "../../../ui5miiutilities/mii/util/",
 				"test.unit": "./"
 		}'
@@ -20,6 +20,7 @@
 		jQuery.sap.require("sap.ui.thirdparty.qunit");
 		jQuery.sap.require("sap.ui.qunit.qunit-junit");
 		jQuery.sap.require("sap.ui.qunit.qunit-coverage");
+		jQuery.sap.require("sap.ui.qunit.QUnitUtils");
 
 		QUnit.config.autostart = false;
 
@@ -34,6 +35,6 @@
 </head>
 <body>
 <ol id="qunit-tests"></ol>
-<div id="qunit-fixture"></div>
+<div id="content"></div>
 </body>
 </html>

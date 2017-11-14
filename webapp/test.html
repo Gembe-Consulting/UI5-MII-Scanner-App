@@ -1,43 +1,20 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Scanner</title>
-
-		<!-- Bootstrap the UI5 core library -->
-		<script id="sap-ui-bootstrap"
-			src="../resources/sap-ui-core-dbg.js"
-			data-sap-ui-libs="sap.ui.core, sap.ui.layout, sap.m"
-			data-sap-ui-theme="sap_belize"
-			data-sap-ui-compatVersion="edge"
-			data-sap-ui-preload="async"
-			data-sap-ui-resourceroots='{
-				"com.mii.scanner" : "./", 
-				"mii.util" : "../ui5miiutilities/mii/util/"
-			}'
-			data-sap-ui-frameOptions='allow'> 	// NON-SECURE setting for testing environment
-		</script>
-		<script>
-			sap.ui.getCore().attachInit(function() {
-				sap.ui.require([
-					"com/mii/scanner/localService/mockserver"
-				], function (mockserver) {
-					// set up test service for local testing
-					mockserver.init();
-					
-					new sap.ui.core.ComponentContainer({
-						name : "com.mii.scanner"
-					}).placeAt("content");
-					
-				});
-			});
-		</script>
-
+		<title>Testing Overview</title>
+		<!--  try to load the basic UI5 styles -->
+		<link rel="stylesheet" type="text/css" href="../resources/sap/ui/core/themes/sap_belize/library.css">
 	</head>
+	<body class="sapUiBody sapUiMediumMargin sapUiForceWidthAuto">
+		<h1>Testing Overview</h1>
+		<p>This is an overview page of various ways to test the generated app during development.<br/>
+			Choose one of the access points below to launch the app as a standalone application.</p>
 
-	<!-- UI Content -->
-	<body class="sapUiBody" id="content">
+		<ul>
+			<li><a href="test/mockServer.html">test/mockServer.html</a> - start the app (with local mock data)</li>			
+			<li><a href="test/testsuite.qunit.html">test/testsuite.qunit.html</a> - run all the tests</li>
+			<li><a href="test/unit/unitTests.qunit.html">test/unit/unitTests.qunit.html</a> - run all unit tests</li>
+			<li><a href="test/integration/opaTests.qunit.html">test/integration/opaTests.qunit.html</a> - run all integration tests</li>
+		</ul>
 	</body>
 </html>
