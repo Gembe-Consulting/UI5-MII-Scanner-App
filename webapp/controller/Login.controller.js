@@ -61,8 +61,9 @@ sap.ui.define([
 		purgeInputAfterDelay: function(oInput, iDelay) {
 			iDelay = iDelay ? iDelay : CONST_INPUT_BUFFER_DURATION;
 			setTimeout(function() {
+				var sOldValue =	oInput.getValue();
 				oInput.setValue("");
-				jQuery.sap.log.debug("Input cleared after " + iDelay + " ms -> no manual input allowed!", "Scanner-Input-Detection");
+				jQuery.sap.log.debug("Input '" + sOldValue + "' cleared after " + iDelay + " ms -> no manual input allowed!", "Scanner-Input-Detection");
 			}.bind(this), iDelay);	
 		},
 		

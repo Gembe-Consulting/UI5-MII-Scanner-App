@@ -26,10 +26,17 @@ sap.ui.define([
 			iStartApp: function(oOptions) {
 				var sUrlParameters;
 				oOptions = oOptions || {
-					delay: 0
+					delay: 0,
+					mobile: false,
+					illumLoginName: ""
 				};
 
 				sUrlParameters = "serverDelay=" + oOptions.delay;
+				
+				if(oOptions.illumLoginName !== ""){
+					sUrlParameters = sUrlParameters + "&IllumLoginName=" + oOptions.illumLoginName;
+				}
+				
 
 				this.iStartMyAppInAFrame(getFrameUrl(oOptions.hash, sUrlParameters));
 			},
