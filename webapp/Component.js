@@ -26,6 +26,7 @@ sap.ui.define([
 			this._oErrorHandler = new ErrorHandler(this);
 
 			this.S_USERLOGIN_PARAM_NAME = "USERLOGIN";
+			this.S_ILLUMLOGINNAME_URL_PARAM_NAME = "IllumLoginName";
 
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
@@ -34,45 +35,63 @@ sap.ui.define([
 
 			// create the views based on the url/hash
 			this.getRouter().initialize();
-
+			
 			// note: must run after Router initialization!
-			this.checkRemoteUserLoginByUrlParam();
+			//this.checkRemoteUserLoginByUrlParam();
+			
+			// this.getRouter().attachRouteMatched(function(oEvent) {
+			// 	var bForce = true,
+			// 		sCurrentHash = this.oHashChanger.getHash(),
+			// 		sDefaultHash = this._oOwner._getDefaultRoutePattern("login");
 
-			/*
-						this.getRouter().attachRouteMatched(function(oEvent) {
-							var bForce = true,
-								sCurrentHash = this.oHashChanger.getHash(),
-								sDefaultHash = this._oOwner._getDefaultRoutePattern("login");
+			// 	if (!this._oOwner.isUserLoggedIn()) {
+			// 		if (sDefaultHash !== sCurrentHash) {
+			// 			//Set last denied hash, if last denied hash is still initial (first unauthorizes attempt)
+			// 			this._lastDeniedIntendetHash = this._lastDeniedIntendetHash ? this._lastDeniedIntendetHash : sCurrentHash;
+			// 			// redirect to login page, if we are not already on it
+			// 			this.oHashChanger.setHash(sDefaultHash);
+			// 		}
+			// 	}
 
-							if (!this._oOwner.isUserLoggedIn()) {
-								if(sDefaultHash !== sCurrentHash){
-									//Set last denied hash, if last denied hash is still initial (first unauthorizes attempt)
-									this._lastDeniedIntendetHash = this._lastDeniedIntendetHash ? this._lastDeniedIntendetHash : sCurrentHash;
-									// redirect to login page, if we are not already on it
-									this.oHashChanger.setHash(sDefaultHash);
-								}
-							}
-							
-							if (this._oOwner.isUserLoggedIn()) {
-							
-								//update user model to reflect login time
-								this._oOwner.getModel("user").updateBindings(bForce);
-								// restore previous hash, if its not login page
-								if (this._lastDeniedIntendetHash && (sDefaultHash !== sCurrentHash)) {
-									this.oHashChanger.setHash(this._lastDeniedIntendetHash);
-									this._lastDeniedIntendetHash = null;
-								}
-							}
-						});
-			*/
-			this.getRouter().getTarget("login").attachDisplay(function(oEvent){
+			// 	if (this._oOwner.isUserLoggedIn()) {
+
+			// 		//update user model to reflect login time
+			// 		this._oOwner.getModel("user").updateBindings(bForce);
+			// 		// restore previous hash, if its not login page
+			// 		if (this._lastDeniedIntendetHash && (sDefaultHash !== sCurrentHash)) {
+			// 			this.oHashChanger.setHash(this._lastDeniedIntendetHash);
+			// 			this._lastDeniedIntendetHash = null;
+			// 		}
+			// 	}
+			// });
+			
+			
+			//purge username from user modele, once login page is displayed
+			// remove username from URL parameters
+			this.getRouter().getTarget("login").attachDisplay(function(oEvent) {
+				var sUserName = this._getRemoteUsername(),
+					sUrlParam,
+					sUrlCleaned;
 				this.getModel("user").setProperty("/", {});
-			}.bind(this ));
+				
+				if(sUserName){
+					sUrlParam = this.S_ILLUMLOGINNAME_URL_PARAM_NAME + "=" +sUserName;
+					sUrlCleaned = window.location.href.replace(sUrlParam, "");
+					
+					window.history.replaceState({}, document.title, sUrlCleaned);
+					
+				//	window.location.href = ;
+				}
 
-			// set the browser page title based on sNavigation
+			}.bind(this));
+
+			// set the browser page title based on navigation
 			this.getRouter().attachTitleChanged(function(oEvent) {
 				document.title = oEvent.getParameter("title");
 			});
+			
+
+
 		},
 		/**
 		 * This method checks if there is an url parameter containing the user object.
@@ -87,19 +106,20 @@ sap.ui.define([
 			// If remote user was given, we load the data of our user Model, and check if the given parameter is a valid MII user
 			// This is not security!
 
-			if (sRemoteUserId) {
-				if (this.testUserLoginName(sRemoteUserId)) {
-					//this._navigateTo
-					//this.getRouter().navTo("home");
-				} else {
-					this.getRouter().navTo("login", {}, true);
-				}
+			if (sRemoteUserId) { //.then(fnResolveHandler, fnRejectHandler)
+				this.testUserLoginName(sRemoteUserId).then(function() {
+						//continue navigation
+						//this.getRouter().navTo("home");
+					}.bind(this),
+					function() {
+						this.getRouter().navTo("login", {}, true);
+					}.bind(this));
 			}
 		},
 
 		_getRemoteUsername: function() {
 			var oParameters = jQuery.sap.getUriParameters(window.location.href),
-				sRemoteUserId = oParameters.get(this.S_USERLOGIN_PARAM_NAME);
+				sRemoteUserId = oParameters.get(this.S_ILLUMLOGINNAME_URL_PARAM_NAME);
 
 			return sRemoteUserId;
 		},
@@ -115,11 +135,12 @@ sap.ui.define([
 		 *	- settled - Has fulfilled or rejected
 		 */
 		testUserLoginName: function(sUserInput) {
-			var sUserInputUpper = sUserInput.toUpperCase(),
+			var sUserInput = sUserInput ? sUserInput : this._getRemoteUsername(),
+				sUserInputUpper = sUserInput ? sUserInput.toUpperCase() : "",
 				oModel = this.getModel("user"),
 				oLoginUser,
 				that = this;
-
+				
 			this.showBusyIndicator();
 
 			return new Promise(function(fulfill, reject) {
@@ -128,7 +149,8 @@ sap.ui.define([
 					.then(function(oData) {
 							oLoginUser = oModel.getProperty("/d/results/0/Rowset/results/0/Row/results/0/");
 							if (that._validateUserData(oLoginUser, sUserInputUpper)) {
-								fulfill(oLoginUser);
+								// resolve promise
+								fulfill(that._setUserModel(oLoginUser));
 							} else {
 								oModel.setProperty("/", {});
 								reject(new Error("Username '" + sUserInput + "' not found!"));
@@ -139,6 +161,16 @@ sap.ui.define([
 						})
 					.then(this.hideBusyIndicator);
 			}.bind(this));
+		},
+		
+		_setUserModel:function(oLoginUser){
+			var oModel = this.getModel("user");
+			// enhance user Model
+			oLoginUser.lastLoginTimestamp = new Date();
+			// Set user model
+			oModel.setProperty("/", oLoginUser);
+		
+			return oLoginUser;
 		},
 
 		/**
@@ -200,7 +232,7 @@ sap.ui.define([
 		isUserLoggedIn: function(sUserName) {
 			var oModel = this.getModel("user");
 
-			if (!oModel || !oModel.getProperty("/d/results/0/Rowset/results/0/Row/results/0/" + this.S_USERLOGIN_PARAM_NAME) || oModel.getProperty("/d/results/0/Rowset/results/0/Row/results/0/" + this.S_USERLOGIN_PARAM_NAME) === "") {
+			if (!oModel || !oModel.getProperty("/" + this.S_USERLOGIN_PARAM_NAME) || oModel.getProperty("/" + this.S_USERLOGIN_PARAM_NAME) === "") {
 				jQuery.sap.log.warning("User nicht angemeldet", "this.getModel(\"user\") undefined or property " + this.S_USERLOGIN_PARAM_NAME + " not given or empty.", this.toString());
 				return false;
 			}

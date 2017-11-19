@@ -75,7 +75,10 @@ sap.ui.define([
 			var sCurrentInput = oEvent.getParameter("value"),
 				oInput = oEvent.getSource();
 			
-			this.purgeInputAfterDelay(oInput);
+			if(!this.getModel("device").getProperty("/system/desktop")){
+				this.purgeInputAfterDelay(oInput);
+			}
+			
 			
 		},
 
@@ -103,7 +106,7 @@ sap.ui.define([
 				jQuery.sap.log.warning("Benutzeranfrage abgelehnt: ", JSON.stringify(oError), this.toString());
 				// set error state and error text
 				oInputControl.setValueState(sap.ui.core.ValueState.Error)
-					.setValueStateText("Benutzername '" + sUserInput + "' existiert nicht.");
+					.setValueStateText("Benutzername '" + sUserInput + "' ist nicht gültig.");
 			}.bind(this);
 
 			/* The following logic relys on a Promise

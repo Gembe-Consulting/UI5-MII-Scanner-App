@@ -11,13 +11,25 @@ sap.ui.define([
 			
 			this.getView().addEventDelegate({
 				"onBeforeShow": function(oEvent) {
+					
+					//First try to read user model
+					//Next try fetching user from URL
 					if (!this.getOwnerComponent().isUserLoggedIn()) {
-						jQuery.sap.log.warning("User not logged in.", "Login status", this.toString());
-						// redirect to login imidiatily
-						this.getRouter().navTo("login", {}, true);
+						this.getOwnerComponent().testUserLoginName().then(
+							function(oUser){
+								jQuery.sap.log.info("User logged in.", "Login status", this.toString());
+							}.bind(this), 
+							function(oError){
+								jQuery.sap.log.warning(oError.message, "Login status", this.toString());
+								// redirect to login
+								this.getRouter().navTo("login", {}, true);
+							}.bind(this)
+						);
 					} else {
 						jQuery.sap.log.info("User logged in.", "Login status", this.toString());
 					}
+					
+
 				}
 			}, this);
 			
