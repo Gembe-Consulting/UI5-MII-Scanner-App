@@ -276,6 +276,33 @@ sap.ui.require([
 						});
 					}
 				}
+			},
+			onStartOperationPage: {
+				baseClass: Common,
+				actions: {
+					iPressTheBackButton: function() {
+						return this.waitFor({
+							id: "startOperationPage",
+							viewName: "StartOperation",
+							viewNamespace: "com.mii.scanner.view.action.",
+							actions: new Press(),
+							errorMessage: "Did not find the back nav button on page"
+						});
+					}
+				},
+				assertions: {
+					theAppShouldNavigateToStartOperationPage: function(sExpectedValue) {
+						return this.waitFor({
+							id: "startOperationPage",
+							viewName: "StartOperation",
+							viewNamespace: "com.mii.scanner.view.action.",
+							success: function(oSOPage) {
+								Opa5.assert.ok(true, "Start Operation Action Page loaded.");
+							},
+							errorMessage: "Failed to load Start Operation Action Page."
+						});
+					}
+				}
 			}
 		});
 	});
