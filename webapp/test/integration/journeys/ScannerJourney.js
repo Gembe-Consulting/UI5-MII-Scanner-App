@@ -29,7 +29,7 @@ sap.ui.require(
 				and.theAppShouldNotNavigateAndStayOnLoginPage();
 		});
 		
-		opaTest("Should prevent manual user input, if input takes longer than 75ms", function(Given, When, Then) {
+		opaTest("Should prevent login, if input takes longer than 75ms", function(Given, When, Then) {
 			// Arrangements
 			// Actions
 			When.onTheScannerLoginPage.iTypeInUsername("foobar");
@@ -49,7 +49,25 @@ sap.ui.require(
 			Then.onHomePage.theAppShouldNavigateToHomePage();
 		});
 		
-		opaTest("Should do something", function(Given, When, Then) {
+		opaTest("Should find the correct input field for STORAGE BIN", function(Given, When, Then) {
+			// Arrangements
+			// Actions
+			// Assertions
+		});
+		
+		opaTest("Should find the correct input field for PROCESS ORDER / PHASE", function(Given, When, Then) {
+			// Arrangements
+			// Actions
+			// Assertions
+		});
+		
+		opaTest("Should find the correct input field for STORAGE LOCATION", function(Given, When, Then) {
+			// Arrangements
+			// Actions
+			// Assertions
+		});
+		
+		opaTest("Should find the correct input field for INCIDENT REASON", function(Given, When, Then) {
 			// Arrangements
 			// Actions
 			// Assertions

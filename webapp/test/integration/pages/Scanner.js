@@ -35,7 +35,6 @@ sap.ui.require([
 						});
 					},
 					iTypeInUsernameAndSubmitVeryFast: function(sInput) {
-
 						return this.waitFor({
 							id: sUsernameInputId,
 							viewName: sLoginViewName,

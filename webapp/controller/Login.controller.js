@@ -60,27 +60,33 @@ sap.ui.define([
 		 */
 		purgeInputAfterDelay: function(oInput, iDelay) {
 			iDelay = iDelay ? iDelay : CONST_INPUT_BUFFER_DURATION;
+
+			var _tsStart = jQuery.sap.now();
+			var _tsFinish = null;
+
 			setTimeout(function() {
-				var sOldValue =	oInput.getValue();
-				oInput.setValue("");
-				jQuery.sap.log.debug("Input '" + sOldValue + "' cleared after " + iDelay + " ms -> no manual input allowed!", "Scanner-Input-Detection");
-			}.bind(this), iDelay);	
+				var sOldValue = oInput.getValue();
+				if (sOldValue) {
+					oInput.setValue("");
+					_tsFinish = jQuery.sap.now();
+					jQuery.sap.log.debug("Input '" + sOldValue + "' has been purged after " + (_tsFinish - _tsStart) + " ms (target: " + iDelay + " ms", "Scanner-Input-Detection");
+				}
+			}.bind(this), iDelay);
 		},
-		
+
 		/**
 		 * Triggers purging the input value on each input change.
 		 * User has CONST_INPUT_BUFFER_DURATION ms time to complete his input.
-		 * After that duration, input gets removed completly
+		 * After that duration, input gets removed completely
 		 */
 		onLiveInput: function(oEvent) {
 			var sCurrentInput = oEvent.getParameter("value"),
 				oInput = oEvent.getSource();
-			
-			if(!this.getModel("device").getProperty("/system/desktop")){
+
+			if (sCurrentInput.length != 0 && !this.getModel("device").getProperty("/system/desktop")) {
 				this.purgeInputAfterDelay(oInput);
 			}
-			
-			
+
 		},
 
 		onLogin: function(oEvent) {
