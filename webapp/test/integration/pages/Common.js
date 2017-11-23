@@ -1,49 +1,45 @@
-sap.ui.define([
-		'sap/ui/test/Opa5'
-	],
-	function(Opa5) {
-		"use strict";
+sap.ui.define(["sap/ui/test/Opa5"], function(Opa5) {
+	"use strict";
 
-		function getFrameUrl(sHash, sUrlParameters) {
-			sHash = sHash || "";
-			var sUrl = jQuery.sap.getResourcePath("com/mii/scanner/app", ".html");
+	function getFrameUrl(sHash, sUrlParameters) {
+		sHash = sHash || "";
+		var sUrl = jQuery.sap.getResourcePath("com/mii/scanner/app", ".html");
 
-			if (sUrlParameters) {
-				sUrlParameters = "?" + sUrlParameters;
-			}
-
-			return sUrl + sUrlParameters + "#" + sHash;
+		if (sUrlParameters) {
+			sUrlParameters = "?" + sUrlParameters;
 		}
 
-		return Opa5.extend("com.mii.scanner.test.integration.pages.Common", {
+		return sUrl + sUrlParameters + "#" + sHash;
+	}
 
-			constructor: function(oConfig) {
-				Opa5.apply(this, arguments);
+	return Opa5.extend("com.mii.scanner.test.integration.pages.Common", {
 
-				this._oConfig = oConfig;
-			},
+		constructor: function(oConfig) {
+			Opa5.apply(this, arguments);
 
-			iStartApp: function(oOptions) {
-				var sUrlParameters;
-				oOptions = oOptions || {
-					delay: 0,
-					mobile: false,
-					illumLoginName: ""
-				};
+			this._oConfig = oConfig;
+		},
 
-				sUrlParameters = "serverDelay=" + oOptions.delay;
-				
-				if(oOptions.illumLoginName !== ""){
-					sUrlParameters = sUrlParameters + "&IllumLoginName=" + oOptions.illumLoginName;
-				}
-				
+		iStartTheApp: function(oOptions) {
+			var sUrlParameters;
+			oOptions = oOptions || {
+				delay: 0,
+				mobile: false,
+				illumLoginName: ""
+			};
 
-				this.iStartMyAppInAFrame(getFrameUrl(oOptions.hash, sUrlParameters));
-			},
+			sUrlParameters = "serverDelay=" + oOptions.delay;
 
-			iLookAtTheScreen: function() {
-				return this;
+			if (oOptions.illumLoginName !== "") {
+				sUrlParameters = sUrlParameters + "&IllumLoginName=" + oOptions.illumLoginName;
 			}
 
-		});
+			this.iStartMyAppInAFrame(getFrameUrl(oOptions.hash, sUrlParameters));
+		},
+
+		iLookAtTheScreen: function() {
+			return this;
+		}
+
 	});
+});

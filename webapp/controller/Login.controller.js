@@ -90,7 +90,7 @@ sap.ui.define([
 		},
 
 		onLogin: function(oEvent) {
-			var oInputControl = this.getView().byId("userIdInput"),
+			var oInputControl = this.getView().byId("usernameInput"),
 				sUserInput = oInputControl.getValue(),
 				that = this;
 

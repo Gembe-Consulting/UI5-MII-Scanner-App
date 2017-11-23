@@ -9,6 +9,7 @@ sap.ui.require([
 	"sap/ui/test/Opa5",
 	"com/mii/scanner/test/integration/pages/Common",
 	"com/mii/scanner/test/integration/pages/Login",
+	"com/mii/scanner/test/integration/pages/ActionPage",
 	"com/mii/scanner/test/integration/pages/Scanner"
 ], function(Opa5, Common) {
 	"use strict";
