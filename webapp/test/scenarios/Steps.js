@@ -9,9 +9,15 @@ sap.ui.define([
 		init: function() {
 			var opa = new Opa5();
 			
-			this.register(/^I do something more "(.*?)"$/i,
-				function(sUsername, Given, When, Then) {
-					Then.onDummyPage.iShallPass(sUsername);
+			this.register(/^the url parameter "(.*?)" is removed$/i,
+				function(sUrlParameter, Given, When, Then) {
+					Given.urlParameterDoesNotExist(sUrlParameter);
+				}
+			);
+			
+			this.register(/^the url parameter "(.*?)" exists/i,
+				function(sUrlParameter, Given, When, Then) {
+					Given.urlParameterExists(sUrlParameter);
 				}
 			);
 			

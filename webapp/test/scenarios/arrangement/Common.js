@@ -39,19 +39,38 @@ sap.ui.define([
 
 				this.iStartMyAppInAFrame(getFrameUrl(oOptions.hash, sUrlParameters));
 			},
+
+			urlParameterDoesNotExist: function(sUrlParameter) {
+				
+				var bHasParamInUrl = window.location.href.indexOf(sUrlParameter) < 0 ? true : false;
+				
+				return this.waitFor({
+					success: function() {
+						Opa5.assert.ok(bHasParamInUrl, sUrlParameter + " has been removed from window.location.href");
+					},
+					errorMessage: "Could not check window.location.href"
+				});
+			},
 			
-			iDoSomething:function(){
-				debugger;
+			urlParameterExists: function(sUrlParameter) {
+				
+				var bHasParamInUrl = window.location.href.indexOf(sUrlParameter) > 0 ? true : false;
+				
+				return this.waitFor({
+					success: function() {
+						Opa5.assert.ok(bHasParamInUrl, sUrlParameter + " exists in window.location.href");
+					},
+					errorMessage: "Could not check window.location.href"
+				});
 			},
 
 			iNavigateToPage: function(sHash, sViewName, sViewNamespace) {
-				debugger;
 				sViewNamespace = sViewNamespace || "com.mii.scanner.view.nav.";
-				
+
 				var oHashChanger = sap.ui.test.Opa5.getHashChanger();
-				
+
 				oHashChanger.setHash(sHash);
-				
+
 				return this.waitFor({
 					viewName: sViewName,
 					viewNamespace: sViewNamespace,

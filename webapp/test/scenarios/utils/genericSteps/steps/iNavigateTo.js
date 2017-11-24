@@ -11,7 +11,7 @@
 				"I navigate to /Start/GoodsReceipts with {'OrderNumber': '4711'}"
 			]
 		},
-		regexp: new RegExp(["^I navigate to\\s+", "([a-zA-Z0-9\/]+)", "(\\s+with\\s+(.+?)\\s)?$"].join("")),
+		regexp: new RegExp(["^I navigate to\\s+", "(\/[a-zA-Z0-9\/]+)", "(\\s+with\\s+(.+?)\\s)?$"].join("")),
 		icon: "cursor-arrow",
 		action: function(sId, sHash, sObject) {
 			var oWaitForOptions, oObject, that, oHasherChanger;

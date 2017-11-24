@@ -66,7 +66,7 @@ sap.ui.define([
 			// });
 			
 			
-			//purge username from user modele, once login page is displayed
+			// purge username from user modele, once login page is displayed
 			// remove username from URL parameters
 			this.getRouter().getTarget("login").attachDisplay(function(oEvent) {
 				var sUserName = this._getRemoteUsername(),
@@ -79,8 +79,6 @@ sap.ui.define([
 					sUrlCleaned = window.location.href.replace(sUrlParam, "");
 					
 					window.history.replaceState({}, document.title, sUrlCleaned);
-					
-				//	window.location.href = ;
 				}
 
 			}.bind(this));
