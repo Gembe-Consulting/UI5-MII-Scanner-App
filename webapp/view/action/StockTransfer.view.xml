@@ -1,4 +1,4 @@
-<mvc:View controllerName="com.mii.scanner.controller.action.ActionBaseController" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+<mvc:View controllerName="com.mii.scanner.controller.action.StockTransfer" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
 	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
 	<Page title="{i18n>titleStockTransfer}" showNavButton="true" navButtonPress="onNavBack">
 		<content>
