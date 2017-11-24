@@ -17,6 +17,28 @@ sap.ui.define([
 				return this;
 			}
 		}),
+		assertions: new Opa5({
+			theUrlShouldNotContainParameter: function(sUrlParameter) {
+				var oWindowWithinFrame = sap.ui.test.Opa5.getWindow();
+				var bHasParamInUrl = oWindowWithinFrame.location.href.indexOf(sUrlParameter) < 0 ? true : false;
+				return this.waitFor({
+					success: function() {
+						Opa5.assert.ok(bHasParamInUrl, sUrlParameter + " has been removed from window.location.href");
+					},
+					errorMessage: "Could not check window.location.href"
+				});
+			},
+			theUrlShouldContainParameter: function(sUrlParameter) {
+				var oWindowWithinFrame = sap.ui.test.Opa5.getWindow();
+				var bHasParamInUrl = oWindowWithinFrame.location.href.indexOf(sUrlParameter) > 0 ? true : false;
+				return this.waitFor({
+					success: function() {
+						Opa5.assert.ok(bHasParamInUrl, sUrlParameter + " exists in window.location.href");
+					},
+					errorMessage: "Could not check window.location.href"
+				});
+			}
+		}),
 		viewNamespace : "com.mii.scanner.view.",
 		autoWait: true
 	});

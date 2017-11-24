@@ -1,6 +1,6 @@
 Feature: External Login using deep linking
 	Users can login from an external application by passing 
-	URL parameter "illumLoginName" and the desired hash.
+	URL parameter "IllumLoginName" and the desired hash.
 	The app should check if the user exists and redirect to the desired page.
 	If the user does not exists, he should be redirected to login page.
 

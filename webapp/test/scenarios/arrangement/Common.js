@@ -40,41 +40,9 @@ sap.ui.define([
 				this.iStartMyAppInAFrame(getFrameUrl(oOptions.hash, sUrlParameters));
 			},
 
-			urlParameterDoesNotExist: function(sUrlParameter) {
-				var oWindowWithinFrame = sap.ui.test.Opa5.getWindow();
-				var bHasParamInUrl = oWindowWithinFrame.location.href.indexOf(sUrlParameter) < 0 ? true : false;
-				
-				return this.waitFor({
-					success: function() {
-						Opa5.assert.ok(bHasParamInUrl, sUrlParameter + " has been removed from window.location.href");
-					},
-					errorMessage: "Could not check window.location.href"
-				});
-			},
-			
-			urlParameterExists: function(sUrlParameter) {
-				
-				var oWindowWithinFrame = sap.ui.test.Opa5.getWindow();
-				var bHasParamInUrl = oWindowWithinFrame.location.href.indexOf(sUrlParameter) > 0 ? true : false;
-				
-				return this.waitFor({
-					success: function() {
-						Opa5.assert.ok(bHasParamInUrl, sUrlParameter + " exists in window.location.href");
-					},
-					errorMessage: "Could not check window.location.href"
-				});
-			},
-
 			iNavigateToPage: function(sHash) {
 				var oHashChanger = sap.ui.test.Opa5.getHashChanger();
 				oHashChanger.setHash(sHash);
-
-/*				return this.waitFor({
-					success: function() {
-						Opa5.assert.strictEquals(oHashChanger.getHash(), sHash, "Navigation complete to: " + sHash);
-					},
-					errorMessage: "Could not set hash " + sHash
-				});*/
 			}
 		});
 	});

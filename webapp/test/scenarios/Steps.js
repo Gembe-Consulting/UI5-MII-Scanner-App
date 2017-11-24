@@ -11,13 +11,13 @@ sap.ui.define([
 			
 			this.register(/^the url parameter "(.*?)" is removed$/i,
 				function(sUrlParameter, Given, When, Then) {
-					Given.urlParameterDoesNotExist(sUrlParameter);
+					Then.theUrlShouldNotContainParameter(sUrlParameter);
 				}
 			);
 			
 			this.register(/^the url parameter "(.*?)" exists/i,
 				function(sUrlParameter, Given, When, Then) {
-					Given.urlParameterExists(sUrlParameter);
+					Then.theUrlShouldContainParameter(sUrlParameter);
 				}
 			);
 			
