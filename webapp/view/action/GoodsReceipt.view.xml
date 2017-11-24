@@ -5,7 +5,7 @@
 			<f:SimpleForm title="{i18n>titleFormGoodsReceipt}" editable="true" layout="ResponsiveGridLayout" >
 				<f:content>
 					<Label text="{i18n>lableTextFormGoodsReceiptPallet}"/>
-					<Input id="storegeBinInput" value="{LE}"/>
+					<Input id="storageBinInput" value="{LE}"/>
 					
 					<Label text="{i18n>lableTextFormGoodsReceiptQuantity}"/>
 					<Input id="quantityInput" value="{MENGE}"></Input>
@@ -23,7 +23,7 @@
 					</Input>
 					
 					<Label text="{i18n>lableTextFormGoodsReceiptStorageLocation}"/>
-					<Input id="storegeLocationInput" value="{LGORT}"/>
+					<Input id="storageLocationInput" value="{LGORT}"/>
 					
 					<Label text="{i18n>lableTextFormGoodsReceiptStorageLocation}"/>
 					<TextArea id="infoTestArea" value="{INFO}"></TextArea>
