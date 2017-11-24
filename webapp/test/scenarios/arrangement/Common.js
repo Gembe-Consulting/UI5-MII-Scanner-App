@@ -41,8 +41,8 @@ sap.ui.define([
 			},
 
 			urlParameterDoesNotExist: function(sUrlParameter) {
-				
-				var bHasParamInUrl = window.location.href.indexOf(sUrlParameter) < 0 ? true : false;
+				var oWindowWithinFrame = sap.ui.test.Opa5.getWindow();
+				var bHasParamInUrl = oWindowWithinFrame.location.href.indexOf(sUrlParameter) < 0 ? true : false;
 				
 				return this.waitFor({
 					success: function() {
@@ -54,7 +54,8 @@ sap.ui.define([
 			
 			urlParameterExists: function(sUrlParameter) {
 				
-				var bHasParamInUrl = window.location.href.indexOf(sUrlParameter) > 0 ? true : false;
+				var oWindowWithinFrame = sap.ui.test.Opa5.getWindow();
+				var bHasParamInUrl = oWindowWithinFrame.location.href.indexOf(sUrlParameter) > 0 ? true : false;
 				
 				return this.waitFor({
 					success: function() {
