@@ -51,8 +51,12 @@
 				},
 				"sap.ui.layout": {
 					"minVersion": "1.42.0"
-				}
+				},
+				"openui5.validator": {}
 			}
+		},
+		"resourceRoots": {
+			"openui5.validator": "./libs/openui5/validator/"
 		},
 		"contentDensities": {
 			"compact": true,
