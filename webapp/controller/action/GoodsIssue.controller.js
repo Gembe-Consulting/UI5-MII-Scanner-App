@@ -4,10 +4,16 @@ sap.ui.define([
 ], function(ActionBaseController, JSONModel, MessageBox, MessageToast) {
 	"use strict";
 
-	return ActionBaseController.extend("com.mii.scanner.controller.action.GoodsIssue", {
+	return ActionBaseController.extend("com.mii.scanner.controller.action.GoodsReceipt", {
 		onInit:function(){
 			var oModel = new JSONModel(),
 				oData = {
+					LE: null,
+					ORDER: null,
+					MENGE: 0,
+					ME: "",
+					LGORT: "",
+					INFO: ""
 				};
 				
 			oModel.setData(oData);
