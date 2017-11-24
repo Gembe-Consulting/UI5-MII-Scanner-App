@@ -51,12 +51,8 @@
 				},
 				"sap.ui.layout": {
 					"minVersion": "1.42.0"
-				},
-				"openui5.validator": {}
+				}
 			}
-		},
-		"resourceRoots": {
-			"openui5.validator": "./libs/openui5/validator/"
 		},
 		"contentDensities": {
 			"compact": true,
@@ -72,6 +68,14 @@
 			"user": {
 				"dataSource": "illuminatorService",
 				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/user/FindScannerUserQry",
+				"type": "mii.util.model.illum.QueryTemplateModel",
+				"settings": {
+					"preventInitialLoad": true
+				}
+			},
+			"storagebin": {
+				"dataSource": "illuminatorService",
+				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/storagebin/ReadPaletteInfoXac",
 				"type": "mii.util.model.illum.QueryTemplateModel",
 				"settings": {
 					"preventInitialLoad": true
@@ -237,10 +241,6 @@
 		},
 		"resources": {
 			"js": [{
-				"uri": "libs/lodashjs/lodash.js",
-				"name": "lodash.js",
-				"version": "4.17.4"
-			}, {
 				"uri": "libs/momentjs/moment.js",
 				"name": "moment.js",
 				"version": "2.19.1"

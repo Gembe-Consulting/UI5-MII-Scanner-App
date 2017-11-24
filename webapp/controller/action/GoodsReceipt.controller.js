@@ -1,44 +1,84 @@
 sap.ui.define([
 	"./ActionBaseController",
-	"sap/ui/model/json/JSONModel",
-	"openui5/validator/Validator"
-], function(ActionBaseController, JSONModel, Validator) {
+	"sap/ui/model/json/JSONModel"
+], function(ActionBaseController, JSONModel) {
 	"use strict";
 
 	var _aDisallowedStorageLocations = ["VG01"];
 
+	var _oInitData = {
+		LE: null,
+		ORDER: null,
+		MENGE: 0.0,
+		ME: null,
+		LGORT: null,
+		INFO: null,
+		bValid: false
+	};
+
 	return ActionBaseController.extend("com.mii.scanner.controller.action.GoodsReceipt", {
 		onInit: function() {
+
 			var oModel = new JSONModel(),
-				oData = {
-					LE: null,
-					ORDER: null,
-					MENGE: 0,
-					ME: "",
-					LGORT: "",
-					INFO: ""
-				};
+				oData = jQuery.extend(_oInitData);
 
 			oModel.setData(oData);
-			this.setModel(oModel);
+			this.setModel(oModel, "data");
+		},
+
+		onStorageBinNumberChange: function(oEvent) {
+			var sStorageBinNumber = oEvent.getParameter("value");
+			
+			sStorageBinNumber = jQuery.sap.padLeft(sStorageBinNumber, "0", 18);
+			
+			jQuery.sap.log.info("Start gathering data for palette " + sStorageBinNumber);
+
+			var fnResolve = function(oData) {
+				debugger;
+			};
+			var fnReject = function(oError) {
+				debugger;
+			};
+
+			this._getStorageBinInfo(sStorageBinNumber).then(fnResolve, fnReject);
 		},
 
 		onSave: function() {
+			this._postGoodsReceipt();
+		},
 
+		/*
+		Resolve: 
+		Materialnummer, Materialkurztext,  Lagerplatz, Lagertyp anzeigen. 
+		Felder Lagerplatz, Charge,  
+		Auftragsnummer, 
+		Soll-Menge und 
+		Mengeneinheit füllen. 
+		 
+		Lagerort "1000" füllen readonly  
+		Auftragsnummer füllen readonly 
+		 
+		Reject: 
+		Fehlermeldung "Palette nicht gefunden" 
+		*/
+		//SUMISA/Scanner/Umlagerung/trx_ReadPaletteInfo 
+		_getStorageBinInfo: function(sStorageBinNumber) {
+			debugger;
+			var oModel = this.getModel("storagebin"),
+				oParam = {
+					"Param.1": sStorageBinNumber
+				};
+
+			return oModel.loadMiiData(oModel._sServiceUrl, oParam);
 		},
 
 		//SUMISA/Production/trx_GoodsMovementToSap 
-		getStorageBinInfo: function(sStorageBinNUmber) {
+		_postGoodsReceipt: function() {
 
 		},
 
-		//SUMISA/Production/trx_GoodsMovementToSap 
-		postGoodsReceipt: function() {
-
-		},
-
-		validateInputData: function() {
-
+		isInputDataValid: function() {
+			return false;
 		},
 
 		/**
@@ -46,6 +86,10 @@ sap.ui.define([
 		 */
 		isStorageLocationAllowed: function(sStorageLocation) {
 			return _aDisallowedStorageLocations.indexOf(sStorageLocation) === -1;
+		},
+
+		onClearFormPress: function() {
+			this.getModel("data").setData(jQuery.extend(_oInitData));
 		}
 	});
 });
