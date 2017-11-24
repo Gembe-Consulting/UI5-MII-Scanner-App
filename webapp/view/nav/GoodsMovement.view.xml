@@ -14,7 +14,7 @@
 								</HBox>
 								<VBox>
 									<Label text="{i18n>itemLabelTextGoodsReceipt}" design="Bold"/>
-									<Label text="{i18n>itemInfoTextGoodsReceipt}" visible="{= !${device>/system/phone} }"/>
+									<Label text="{i18n>itemInfoTextGoodsReceipt}" visible="{= !${device>/system/phone} }" wrapping="true"/>
 								</VBox>
 							</HBox>
 						</content>
@@ -31,7 +31,7 @@
 								</HBox>
 								<VBox>
 									<Label text="{i18n>itemLabelTextGoodsIssueWithLE}" design="Bold"/>
-									<Label text="{i18n>itemInfoTextGoodsIssueWithLE}" visible="{= !${device>/system/phone} }"/>
+									<Label text="{i18n>itemInfoTextGoodsIssueWithLE}" visible="{= !${device>/system/phone} }" wrapping="true"/>
 								</VBox>
 							</HBox>
 						</content>
@@ -48,7 +48,7 @@
 								</HBox>
 								<VBox>
 									<Label text="{i18n>itemLabelTextGoodsIssueNonLE}" design="Bold"/>
-									<Label text="{i18n>itemInfoTextGoodsIssueNonLE}" visible="{= !${device>/system/phone} }"/>
+									<Label text="{i18n>itemInfoTextGoodsIssueNonLE}" visible="{= !${device>/system/phone} }" wrapping="true"/>
 								</VBox>
 							</HBox>
 						</content>
@@ -65,7 +65,7 @@
 								</HBox>
 								<VBox>
 									<Label text="{i18n>itemLabelTextStockTransfer}" design="Bold"/>
-									<Label text="{i18n>itemInfoTextStockTransfer}" visible="{= !${device>/system/phone} }"/>
+									<Label text="{i18n>itemInfoTextStockTransfer}" visible="{= !${device>/system/phone} }" wrapping="true"/>
 								</VBox>
 							</HBox>
 						</content>
@@ -82,7 +82,7 @@
 								</HBox>
 								<VBox>
 									<Label text="{i18n>itemLabelTextRollerConveyor}" design="Bold"/>
-									<Label text="{i18n>itemInfoTextRollerConveyor}" visible="{= !${device>/system/phone} }"/>
+									<Label text="{i18n>itemInfoTextRollerConveyor}" visible="{= !${device>/system/phone} }" wrapping="true"/>
 								</VBox>
 							</HBox>
 						</content>
