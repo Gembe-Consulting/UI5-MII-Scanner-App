@@ -12,7 +12,7 @@
 									<c:Icon src="sap-icon://inbox" size="3rem" height="4rem" color="#1F35DE" alt="GR"/>
 									<c:Icon src="sap-icon://bar-code" size="2rem" color="#1F35DE" alt="WITH_LE"/>
 								</HBox>
-								<VBox>
+								<VBox width="100%">
 									<Label text="{i18n>itemLabelTextGoodsReceipt}" design="Bold"/>
 									<Label text="{i18n>itemInfoTextGoodsReceipt}" visible="{= !${device>/system/phone} }" wrapping="true"/>
 								</VBox>
@@ -29,7 +29,7 @@
 									<c:Icon src="sap-icon://outbox" size="3rem" height="4rem" color="#BB07FF" alt="GI"/>
 									<c:Icon src="sap-icon://bar-code" size="2rem" color="#BB07FF" alt="WITH_LE"/>
 								</HBox>
-								<VBox>
+								<VBox width="100%">
 									<Label text="{i18n>itemLabelTextGoodsIssueWithLE}" design="Bold"/>
 									<Label text="{i18n>itemInfoTextGoodsIssueWithLE}" visible="{= !${device>/system/phone} }" wrapping="true"/>
 								</VBox>
@@ -46,7 +46,7 @@
 									<c:Icon src="sap-icon://outbox" size="3rem" height="4rem" color="#BB07FF" alt="GI"/>
 									<c:Icon src="sap-icon://filter" size="2rem" color="#BB07FF" alt="WITHOUT_LE"/>
 								</HBox>
-								<VBox>
+								<VBox width="100%">
 									<Label text="{i18n>itemLabelTextGoodsIssueNonLE}" design="Bold"/>
 									<Label text="{i18n>itemInfoTextGoodsIssueNonLE}" visible="{= !${device>/system/phone} }" wrapping="true"/>
 								</VBox>
@@ -63,7 +63,7 @@
 									<c:Icon src="sap-icon://offsite-work" size="3rem" height="4rem" color="#05B074" alt="ST"/>
 									<c:Icon src="sap-icon://shipping-status" size="2rem" color="#05B074" alt="ST"/>
 								</HBox>
-								<VBox>
+								<VBox width="100%">
 									<Label text="{i18n>itemLabelTextStockTransfer}" design="Bold"/>
 									<Label text="{i18n>itemInfoTextStockTransfer}" visible="{= !${device>/system/phone} }" wrapping="true"/>
 								</VBox>
@@ -80,7 +80,7 @@
 									<c:Icon src="sap-icon://instance" size="3rem" height="4rem" color="#FFAC00" alt="RC"/>
 									<c:Icon src="sap-icon://process" size="2rem" color="#FFAC00" alt="RC"/>
 								</HBox>
-								<VBox>
+								<VBox width="100%">
 									<Label text="{i18n>itemLabelTextRollerConveyor}" design="Bold"/>
 									<Label text="{i18n>itemInfoTextRollerConveyor}" visible="{= !${device>/system/phone} }" wrapping="true"/>
 								</VBox>

@@ -9,7 +9,7 @@
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<c:Icon src="sap-icon://begin" size="3rem" height="4rem" width="8rem" color="#330066" alt="START"/>
-								<VBox>
+								<VBox width="100%">
 									<Label text="{i18n>itemLabelTextStartOperation}" design="Bold"/>
 									<Label text="{i18n>itemInfoTextStartOperation}" visible="{= !${device>/system/phone} }" wrapping="true"/>
 								</VBox>
@@ -23,7 +23,7 @@
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<c:Icon src="sap-icon://error" size="3rem" height="4rem" width="8rem" color="#FFAC00" alt="INTERRUPT"/>
-								<VBox>
+								<VBox width="100%">
 									<Label text="{i18n>itemLabelTextInterruptOperation}" design="Bold"/>
 									<Label text="{i18n>itemInfoTextInterruptOperation}" visible="{= !${device>/system/phone} }" wrapping="true"/>
 								</VBox>
@@ -37,7 +37,7 @@
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<c:Icon src="sap-icon://restart" size="3rem" height="4rem" width="8rem" color="#BB07FF" alt="RESUME"/>
-								<VBox>
+								<VBox width="100%">
 									<Label text="{i18n>itemLabelTextContinueOperation}" design="Bold"/>
 									<Label text="{i18n>itemInfoTextContinueOperation}" visible="{= !${device>/system/phone} }" wrapping="true"/>
 								</VBox>
@@ -51,7 +51,7 @@
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<c:Icon src="sap-icon://complete" size="3rem" height="4rem" width="8rem" color="#05b074" alt="FINISH"/>
-								<VBox>
+								<VBox width="100%">
 									<Label text="{i18n>itemLabelTextFinishOperation}" design="Bold"/>
 									<Label text="{i18n>itemInfoTextFinishOperation}" visible="{= !${device>/system/phone} }" wrapping="true"/>
 								</VBox>
