@@ -244,10 +244,6 @@
 				"uri": "libs/momentjs/locale/de.js",
 				"name": "locale/de.js",
 				"version": "2.19.1"
-			}, {
-				"uri": "libs/ajv/ajv.min.js",
-				"name": "ajv.min.js",
-				"version": "5.2.4"
 			}],
 			"css": []
 		}

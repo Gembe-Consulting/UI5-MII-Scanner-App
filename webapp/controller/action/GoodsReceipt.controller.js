@@ -1,7 +1,8 @@
 sap.ui.define([
 	"./ActionBaseController",
-	"sap/ui/model/json/JSONModel"
-], function(ActionBaseController, JSONModel, MessageBox, MessageToast) {
+	"sap/ui/model/json/JSONModel",
+	"openui5/validator/Validator"
+], function(ActionBaseController, JSONModel, Validator) {
 	"use strict";
 
 	var _aDisallowedStorageLocations = ["VG01"];

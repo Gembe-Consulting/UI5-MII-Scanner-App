@@ -1,9 +1,8 @@
 sap.ui.define([
 	"com/mii/scanner/controller/PageBaseController",
-	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox",
 	"sap/m/MessageToast"
-], function(PageBaseController, JSONModel, MessageBox, MessageToast) {
+], function(PageBaseController, MessageBox, MessageToast) {
 	"use strict";
 
 	return PageBaseController.extend("com.mii.scanner.controller.action.ActionBaseController", {
