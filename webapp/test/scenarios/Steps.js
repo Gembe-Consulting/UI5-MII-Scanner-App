@@ -21,6 +21,12 @@ sap.ui.define([
 				}
 			);
 			
+			this.register(/^I navigate to "(.*?)"/i,
+				function(sHash, Given, When, Then) {
+					Given.iNavigateToPage(sHash);
+				}
+			);
+			
 			this.register(/^I start the app on "(.*?)" using remote user "(.*?)"$/i,
 				function(sHash, sUsername, Given, When, Then) {
 					Given.iStartTheApp({

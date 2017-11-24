@@ -64,21 +64,16 @@ sap.ui.define([
 				});
 			},
 
-			iNavigateToPage: function(sHash, sViewName, sViewNamespace) {
-				sViewNamespace = sViewNamespace || "com.mii.scanner.view.nav.";
-
+			iNavigateToPage: function(sHash) {
 				var oHashChanger = sap.ui.test.Opa5.getHashChanger();
-
 				oHashChanger.setHash(sHash);
 
-				return this.waitFor({
-					viewName: sViewName,
-					viewNamespace: sViewNamespace,
+/*				return this.waitFor({
 					success: function() {
-						Opa5.assert.ok(true, "Navigation complete to: " + sViewName);
+						Opa5.assert.strictEquals(oHashChanger.getHash(), sHash, "Navigation complete to: " + sHash);
 					},
-					errorMessage: "Page " + sViewName + " not found in namespace " + sViewNamespace
-				});
+					errorMessage: "Could not set hash " + sHash
+				});*/
 			}
 		});
 	});

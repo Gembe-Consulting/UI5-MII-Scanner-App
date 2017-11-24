@@ -21,12 +21,12 @@ Feature: External Login using deep linking
 
 	Scenario: url parameter is removed on logout
 		Given I start the app on "/Start" using remote user "phigem"
-		Given the url parameter "illumLoginName" exists
+		Given the url parameter "IllumLoginName" exists
 		When I click on navLogoutItem in nav.Home view
 		Then I can see loginPage in Login view
-		And the url parameter "illumLoginName" is removed
-#		When I navigate to "/Start"
-#		Then I can see loginPage in Login view
+		And the url parameter "IllumLoginName" is removed
+		Given I navigate to "/Start"
+		Then I can see loginPage in Login view
 		
 	Scenario: User can perform login and open deep page for goods movement
 		Given I start the app on "/Start/Materialbewegung" using remote user "phigem"
