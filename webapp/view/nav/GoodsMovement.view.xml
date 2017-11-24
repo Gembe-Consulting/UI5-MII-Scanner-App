@@ -5,7 +5,7 @@
 				footerText="{i18n>footerTextUserName} '{user>/USERLOGIN}' {i18n>footerTextLoggedOn} {path: 'user>/lastLoginTimestamp', type: 'sap.ui.model.type.DateTime', formatOptions: { relative: true } }"
 				mode="None" width="100%" class="sapUiResponsiveMargin" inset="{= !${device>/system/phone} }">
 				<items>
-					<CustomListItem type="Navigation" press="onNavForward" class="sapUiResponsiveMargin">
+					<CustomListItem id="goodsReceiptItem" type="Navigation" press="onNavForward" class="sapUiResponsiveMargin">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<HBox width="8rem" justifyContent="Center">
