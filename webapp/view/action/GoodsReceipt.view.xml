@@ -5,28 +5,28 @@
 			<f:SimpleForm title="{i18n>titleFormGoodsReceipt}" editable="true" layout="ResponsiveGridLayout" >
 				<f:content>
 					<Label text="{i18n>lableTextFormGoodsReceiptPallet}"/>
-					<Input value="{LE}"/>
+					<Input id="storegeBinInput" value="{LE}"/>
 					
 					<Label text="{i18n>lableTextFormGoodsReceiptQuantity}"/>
-					<Input value="{MENGE}"></Input>
-					<Input value="{ME}" editable="false">
+					<Input id="quantityInput" value="{MENGE}"></Input>
+					<Input id="unitOfMeasureInput" value="{ME}" editable="false">
 						<layoutData>
 							<l:GridData span="XL2 L1 M3 S4"/>
 						</layoutData>
 					</Input>
 					
 					<Label text="{i18n>lableTextFormGoodsReceiptOrder}"/>
-					<Input value="{ORDER}">
+					<Input id="orderNumberInput" value="{ORDER}">
 						<layoutData>
 							<l:GridData span="XL2 L1 M3 S4"/>
 						</layoutData>
 					</Input>
 					
 					<Label text="{i18n>lableTextFormGoodsReceiptStorageLocation}"/>
-					<Input value="{LGORT}"/>
+					<Input id="storegeLocationInput" value="{LGORT}"/>
 					
 					<Label text="{i18n>lableTextFormGoodsReceiptStorageLocation}"/>
-					<TextArea value="{INFO}"></TextArea>
+					<TextArea id="infoTestArea" value="{INFO}"></TextArea>
 					
 				</f:content>
 			</f:SimpleForm>
@@ -34,8 +34,8 @@
 		<footer>
 			<Toolbar>
 				<ToolbarSpacer/>
-				<Button type="Accept" text="{i18n>textButtonSaveGoodsReceipt}" press="onSave" />
-				<Button type="Reject" text="{i18n>textButtonCancelGoodsReceipt}" press="onCancelAction" />
+				<Button id="saveButton" type="Accept" text="{i18n>textButtonSaveGoodsReceipt}" press="onSave" />
+				<Button id="cancelButton" type="Reject" text="{i18n>textButtonCancelGoodsReceipt}" press="onCancelAction" />
 			</Toolbar>
 		</footer>
 	</Page>
