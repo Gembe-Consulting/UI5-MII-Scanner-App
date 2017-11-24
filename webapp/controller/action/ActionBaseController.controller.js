@@ -9,7 +9,7 @@ sap.ui.define([
 	return PageBaseController.extend("com.mii.scanner.controller.action.ActionBaseController", {
 
 		onSave:function(){
-			MessageToast.show("Daten gespeichert!");
+			MessageToast.show(this.getResourceText("messageSuccessBaseActionController"));
 			this.onNavBack();
 		},
 		
