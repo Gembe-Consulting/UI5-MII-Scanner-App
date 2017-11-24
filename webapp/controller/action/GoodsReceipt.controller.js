@@ -1,14 +1,23 @@
 sap.ui.define([
 	"./ActionBaseController",
-	"sap/ui/model/json/JSONModel",
-	"sap/m/MessageBox",
-	"sap/m/MessageToast"
+	"sap/ui/model/json/JSONModel"
 ], function(ActionBaseController, JSONModel, MessageBox, MessageToast) {
 	"use strict";
 
 	return ActionBaseController.extend("com.mii.scanner.controller.action.GoodsReceipt", {
 		onInit:function(){
-			
+			var oModel = new JSONModel(),
+				oData = {
+					LE: null,
+					ORDER: null,
+					MENGE: 0,
+					ME: "",
+					LGORT: "",
+					INFO: ""
+				};
+				
+			oModel.setData(oData);
+			this.setModel(oModel);
 		}
 	});
 
