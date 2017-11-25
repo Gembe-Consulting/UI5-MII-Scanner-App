@@ -5,39 +5,42 @@
 			<Button icon="sap-icon://redo" press="onClearFormPress"/>
 		</headerContent>
 		<content>
-			<f:SimpleForm title="{i18n>titleFormGoodsReceipt}" editable="true" layout="ResponsiveGridLayout">
+			<f:SimpleForm title="{i18n>titleFormGoodsReceipt}" editable="true" layout="ResponsiveGridLayout" columnsXL="1" columnsL="1" columnsM="1">
 				<f:content>
-					<Label text="{i18n>lableTextFormGoodsReceiptStorageBin}"/>
-					<Input id="storageBinInput" 
-						change="onStorageBinNumberChange"
-						value="{path: 'data>/LE', type:'sap.ui.model.type.Integer', formatOptions: { emptyString: null}}">
-					</Input>
 					
-					<Label text="{i18n>lableTextFormGoodsReceiptQuantity}"/>
+					<Label text="{i18n>lableTextFormGoodsReceiptStorageBin}"/>
+					<Input id="storageBinInput" change="onStorageBinNumberChange"
+						value="{path: 'data>/LENUM', type:'sap.ui.model.type.Integer', formatOptions: { emptyString: null}}"
+						editable="{=${data>/LGORT}==='1000' || ${data>/LGORT}===''}"></Input>
+						
+					<Label text="{i18n>lableTextFormGoodsReceiptQuantity} / {i18n>lableTextFormGoodsReceiptUnit}"/>
 					<HBox>
-						<Input id="quantityInput" 
-							value="{path: 'data>/MENGE', type:'sap.ui.model.type.Float', formatOptions: { minFractionDigits: 3, maxFractionDigits: 3}}">
-						</Input>
-						<Input id="unitOfMeasureInput" width="75px"
-							value="{data>/ME}" 
-							editable="{=${data>/LE}===null}">
-						</Input>
+						<Input id="quantityInput" width="150px"
+							value="{path: 'data>/SOLLME', type:'sap.ui.model.type.Float', formatOptions: { minFractionDigits: 3, maxFractionDigits: 3}}"></Input>
+						<Input id="unitOfMeasureInput" width="75px" value="{data>/MEINH}" editable="{=${data>/LENUM}===null}"></Input>
 					</HBox>
 					
-					<Label text="{i18n>lableTextFormGoodsReceiptOrder}"/>
-					<Input id="orderNumberInput" width="150px"
-						value="{path: 'data>/ORDER', type:'sap.ui.model.type.Integer', formatOptions: { emptyString: null}}"
-						editable="{=${data>/LE}===null}">
-					</Input>
-						
-					<Label text="{i18n>lableTextFormGoodsReceiptStorageLocation}"/>
-					<Input id="storageLocationInput" width="150px"
-						value="{path: 'data>/LGORT', type:'sap.ui.model.type.String'}"
-						editable="{=${data>/LE}===null}">
-					</Input>
+					<Label text="{i18n>lableTextFormGoodsReceiptOrder} / {i18n>lableTextFormGoodsReceiptStorageLocation}"/>
+					<HBox>
+						<Input id="orderNumberInput" width="150px"
+							value="{path: 'data>/AUFNR', type:'sap.ui.model.type.Integer', formatOptions: { emptyString: null }}" editable="{=${data>/LENUM}===null}"></Input>
+						<Input id="storageLocationInput" width="75px" value="{path: 'data>/LGORT', type:'sap.ui.model.type.String'}"
+							editable="{=${data>/LENUM}===null}"></Input>
+					</HBox>
 					
+					<c:Title text="Palettendaten:"/>
+					<Label text="Material"/>
+					<Text text="{data>/MATNR} / {data>/MAKTX}"/>
+					<Label text="Lagerplatz / Lagertyp"/>
+					<Text text="{data>/LGPLA} / {data>/LGTYP}"/>
+					<Label text="Transportmittel"/>
+					<Text text="{data>/LETYT}"/>
+					<Label text="Charge / Verfallsdatum(MHD)"/>
+					<Text text="{data>/CHARG} / {path: 'data>/VFDAT', type:'sap.ui.model.type.Date', formatOptions: { source: { pattern: 'MM-dd-yyyy' }}}"/>
+					<!--
 					<Label text="{i18n>lableTextFormGoodsReceiptAdditionalData}"/>
-					<TextArea id="infoTestArea" value="{data>/INFO}" editable="false"></TextArea>
+					<TextArea id="infoTestArea" value="{data>/INFO}" editable="false"></TextArea> 
+					-->
 				</f:content>
 			</f:SimpleForm>
 		</content>
@@ -45,7 +48,7 @@
 			<Toolbar>
 				<ToolbarSpacer/>
 				<Button id="saveButton" type="Accept" text="{i18n>textButtonSaveGoodsReceipt}" press="onSave" enabled="data>/bValid"/>
-				<Button id="cancelButton" type="Reject" text="{i18n>textButtonCancelGoodsReceipt}" press="onCancelAction" />
+				<Button id="cancelButton" type="Reject" text="{i18n>textButtonCancelGoodsReceipt}" press="onCancelAction"/>
 			</Toolbar>
 		</footer>
 	</Page>

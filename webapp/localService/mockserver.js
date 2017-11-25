@@ -133,10 +133,19 @@ sap.ui.define([
 			if(sUserName === "PHIGEM"){
 				return oData;	
 			}
-			//("/d/results/0/Rowset/results/0/Row/results/0/");
+
 			oData.d.results[0].Rowset.results[0].Row.results = [];
 			return oData;
-			
+		},
+		
+		fnxac_ReadPaletteInfo: function(oData, oParams) {
+			var sLeNum = oParams.get("Param.1");
+			if(sLeNum === "00000000109330000001"){
+				return oData;	
+			}
+
+			oData.d.results[0].Rowset.results[0].Row.results = [];
+			return oData;
 		}
 	};
 

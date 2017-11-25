@@ -1,0 +1,270 @@
+{
+	"d": {
+		"results": [{
+			"__metadata": {
+				"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Rowsets('SUMISA/Scanner/Umlagerung/xac_ReadPaletteInfo')",
+				"type": "QueryTemplate.Rowsets"
+			},
+			"DateCreated": "\/Date(1511545735000)\/",
+			"EndDate": "\/Date(1511545735000)\/",
+			"StartDate": "\/Date(1511542135000)\/",
+			"Version": "14.0 SP7 Patch 15 (Jan 13, 2016)",
+			"QueryTemplate": "SUMISA/Scanner/Umlagerung/xac_ReadPaletteInfo",
+			"Rowset": {
+				"results": [{
+					"__metadata": {
+						"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Rowset(QueryTemplate='SUMISA/Scanner/Umlagerung/xac_ReadPaletteInfo',RowsetId=1)",
+						"type": "QueryTemplate.Rowset"
+					},
+					"RowsetId": 1,
+					"QueryTemplate": "SUMISA/Scanner/Umlagerung/xac_ReadPaletteInfo",
+					"Column": {
+						"results": [{
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('LENUM')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "LENUM",
+							"Description": "Palette",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 1,
+							"SourceColumn": "LENUM"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('AUFNR')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "AUFNR",
+							"Description": "",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 1,
+							"SourceColumn": "AUFNR"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('LGPLA')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "LGPLA",
+							"Description": "Lagerplatz",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 1,
+							"SourceColumn": "LGPLA"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('LGTYP')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "LGTYP",
+							"Description": "Lagertyp",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 1,
+							"SourceColumn": "LGTYP"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('MATNR')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "MATNR",
+							"Description": "Material",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 1,
+							"SourceColumn": "MATNR"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('MAKTX')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "MAKTX",
+							"Description": "Materialtext",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 1,
+							"SourceColumn": "MAKTX"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('GESME')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "GESME",
+							"Description": "Soll Menge",
+							"MaxRange": 0,
+							"MinRange": 0,
+							"SQLDataType": 8,
+							"SourceColumn": "GESME"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('LETYT')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "LETYT",
+							"Description": "Packungstext",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 1,
+							"SourceColumn": "LETYT"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('MEINH')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "MEINH",
+							"Description": "Packung",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 1,
+							"SourceColumn": "MEINH"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('UMREZ')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "UMREZ",
+							"Description": "Packungseinheit",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 1,
+							"SourceColumn": "UMREZ"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('GEWEI')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "GEWEI",
+							"Description": "Mengeneinheit",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 1,
+							"SourceColumn": "GEWEI"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('MGEWI')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "MGEWI",
+							"Description": "IST-Menge",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 8,
+							"SourceColumn": "MGEWI"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('CHARG')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "CHARG",
+							"Description": "Charge",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 1,
+							"SourceColumn": "CHARG"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('SOLLME')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "SOLLME",
+							"Description": "Soll Menge",
+							"MaxRange": 0,
+							"MinRange": 0,
+							"SQLDataType": 8,
+							"SourceColumn": "SOLLME"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('ISTME')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "ISTME",
+							"Description": "IST Menge",
+							"MaxRange": 0,
+							"MinRange": 0,
+							"SQLDataType": 8,
+							"SourceColumn": "ISTME"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('TARGETME')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "TARGETME",
+							"Description": "",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 8,
+							"SourceColumn": "TARGETME"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('BESTQ')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "BESTQ",
+							"Description": "Bestandsqualifikation",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 1,
+							"SourceColumn": "BESTQ"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('VFDAT')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "VFDAT",
+							"Description": "Mindesthaltbarkeitsdatum",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 1,
+							"SourceColumn": "VFDAT"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('LGORT')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "LGORT",
+							"Description": "Lagerort",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 1,
+							"SourceColumn": "LGORT"
+						}]
+					},
+					"Row": {
+						"results": [{
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"LENUM": "00000000109330000001",
+							"AUFNR": "1093300",
+							"LGPLA": "PRODUKTION",
+							"LGTYP": "900",
+							"MATNR": "1700948-030",
+							"MAKTX": "Zucker-Fett-VBT V185 RSPO-MB 600, BB",
+							"GESME": "0.0010",
+							"LETYT": "EuroPalette",
+							"MEINH": "KG",
+							"UMREZ": "1",
+							"GEWEI": "KG",
+							"MGEWI": "0.0010",
+							"CHARG": "0109330001",
+							"SOLLME": "600.0",
+							"ISTME": "0.0010",
+							"TARGETME": "600.0",
+							"BESTQ": "0",
+							"VFDAT": "03-05-2018",
+							"LGORT": "1000",
+							"RowId": 1
+						}]
+					}
+				}]
+			},
+			"Messages": {
+				"results": [
+
+				]
+			}
+		}]
+	}
+}

@@ -75,7 +75,7 @@
 			},
 			"storagebin": {
 				"dataSource": "illuminatorService",
-				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/storagebin/ReadPaletteInfoXac",
+				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SUMISA/Scanner/Umlagerung/xac_ReadPaletteInfo",
 				"type": "mii.util.model.illum.QueryTemplateModel",
 				"settings": {
 					"preventInitialLoad": true

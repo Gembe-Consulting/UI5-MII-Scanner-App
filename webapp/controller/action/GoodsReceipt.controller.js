@@ -7,11 +7,11 @@ sap.ui.define([
 	var _aDisallowedStorageLocations = ["VG01"];
 
 	var _oInitData = {
-		LE: null,
-		ORDER: null,
-		MENGE: 0.0,
-		ME: null,
-		LGORT: null,
+		LENUM: null,
+		AUFNR: null,
+		SOLLME: 0.0,
+		MEINH: null,
+		LGORT: '',
 		INFO: null,
 		bValid: false
 	};
@@ -28,17 +28,20 @@ sap.ui.define([
 
 		onStorageBinNumberChange: function(oEvent) {
 			var sStorageBinNumber = oEvent.getParameter("value");
-			
-			sStorageBinNumber = jQuery.sap.padLeft(sStorageBinNumber, "0", 18);
-			
+
+			sStorageBinNumber = jQuery.sap.padLeft(sStorageBinNumber, "0", 20);
+
 			jQuery.sap.log.info("Start gathering data for palette " + sStorageBinNumber);
 
 			var fnResolve = function(oData) {
-				debugger;
-			};
+				this.getModel("data").setProperty("/bValid", this.isInputDataValid());
+				var oStorageBin = oData.d.results[0].Rowset.results[0].Row.results[0];
+				this.getModel("data").setData(oStorageBin);
+			}.bind(this);
+			
 			var fnReject = function(oError) {
 				debugger;
-			};
+			}.bind(this);
 
 			this._getStorageBinInfo(sStorageBinNumber).then(fnResolve, fnReject);
 		},
@@ -63,7 +66,7 @@ sap.ui.define([
 		*/
 		//SUMISA/Scanner/Umlagerung/trx_ReadPaletteInfo 
 		_getStorageBinInfo: function(sStorageBinNumber) {
-			debugger;
+
 			var oModel = this.getModel("storagebin"),
 				oParam = {
 					"Param.1": sStorageBinNumber
@@ -78,7 +81,10 @@ sap.ui.define([
 		},
 
 		isInputDataValid: function() {
-			return false;
+			var oData = this.getModel("data").getData();
+
+			return oData.ORDER && oData.MENGE && oData.LGORT && oData.ME && ((oData.LENUM && oData.LGORT === "1000") || (!oData.LENUM && oData.LGORT !== "1000"));
+
 		},
 
 		/**
