@@ -24,20 +24,20 @@
 					<Label text="{i18n>lableTextFormGoodsReceiptStorageUnit}"/>
 					<Input id="storageBinInput"  maxLength="20" 
 						change="onStorageUnitNumberChange"
-						value="{path: 'data>/LENUM', type:'sap.ui.model.type.Integer', formatOptions: { emptyString: null}}"
+						value="{path: 'data>/LENUM', type:'.sapType.LENUM'}"
 						editable="{=${data>/LGORT}==='1000' || ${data>/LGORT}===''}"></Input>
 						
 					<Label text="{i18n>lableTextFormGoodsReceiptQuantity}, {i18n>lableTextFormGoodsReceiptUnit}"/>
-					<Input id="quantityInput"  textAlign="End" 
+					<Input id="quantityInput" textAlign="End" 
 						change="onQuantityChange"
-						value="{path: 'data>/SOLLME', type:'sap.ui.model.type.Float', formatOptions: { minFractionDigits: 3, maxFractionDigits: 3}}">
+						value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}">
 						<layoutData>
 							<l:GridData span="XL2 L3 M4 S8" />
 						</layoutData>
 					</Input>
 					<Input id="unitOfMeasureInput" 
 						change="onUnitOfMeasureChange"
-						value="{data>/MEINH}" 
+						value="{path: 'data>/MEINH', type:'.sapType.MEINS'}" 
 						editable="{=${data>/LENUM}===null}">
 						<layoutData>
 							<l:GridData span="XL1 L1 M2 S4" />
@@ -47,13 +47,13 @@
 					<Label text="{i18n>lableTextFormGoodsReceiptOrder}"/>
 					<Input id="orderNumberInput" maxLength="7" 
 						change="onOrderNumbeChange"
-						value="{path: 'data>/AUFNR', type:'sap.ui.model.type.Integer', formatOptions: { emptyString: null }}" 
+						value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}" 
 						editable="{=${data>/LENUM}===null}"></Input>
 						
 					<Label text="{i18n>lableTextFormGoodsReceiptStorageLocation}"/>
 					<Input id="storageLocationInput" maxLength="4" 
 						change="onStorageLocationChange"
-						value="{path: 'data>/LGORT', type:'sap.ui.model.type.String'}"
+						value="{path: 'data>/LGORT', type:'.sapType.LGORT'}"
 						editable="{=${data>/LENUM}===null}"></Input>
 						
 				</f:content>
