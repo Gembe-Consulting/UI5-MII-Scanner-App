@@ -77,7 +77,7 @@ sap.ui.define([
 		//SUMISA/Scanner/Umlagerung/trx_ReadPaletteInfo 
 		_getStorageUnitInfo: function(sStorageUnitNumber) {
 
-			var oModel = this.getModel("storagebin"),
+			var oModel = this.getModel("storageUnit"),
 				oParam = {
 					"Param.1": sStorageUnitNumber
 				};
