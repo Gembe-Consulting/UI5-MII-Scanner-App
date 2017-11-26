@@ -4,14 +4,23 @@ sap.ui.define([
 ], function(ActionBaseController, JSONModel, MessageBox, MessageToast) {
 	"use strict";
 
+	var _oInitData = {
+		LENUM: null,
+		AUFNR: null,
+		SOLLME: 0.0,
+		MEINH: null,
+		LGORT: '',
+		INFO: null,
+		bValid: false
+	};
+
 	return ActionBaseController.extend("com.mii.scanner.controller.action.GoodsIssue", {
-		onInit:function(){
+		onInit: function() {
 			var oModel = new JSONModel(),
-				oData = {
-				};
-				
+				oData = jQuery.extend(_oInitData);
+
 			oModel.setData(oData);
-			this.setModel(oModel);
+			this.setModel(oModel, "data");
 		}
 	});
 

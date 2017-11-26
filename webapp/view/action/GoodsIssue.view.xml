@@ -2,14 +2,17 @@
 	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
 	<Page title="{i18n>titleGoodsIssue}" showNavButton="true" navButtonPress="onNavBack">
 		<content>
-			<f:SimpleForm title="{i18n>titleFormGoodsIssue}" editable="true" layout="ResponsiveGridLayout" >
+			<f:SimpleForm editable="true" layout="ResponsiveGridLayout" 
+				breakpointM="400" 
+				labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" 
+				emptySpanXL="5"  emptySpanL="4" emptySpanM="2" emptySpanS="0">
 				<f:content>
-					<Label text="{i18n>lableTextFormGoodsIssuePallet}"/>
-					<Input value="{LE}"/>
+					<Label text="{i18n>lableTextFormGoodsIssueStorageUnit}"/>
+					<Input value="{data>/LENUM}"/>
 					
 					<Label text="{i18n>lableTextFormGoodsIssueQuantity}"/>
-					<Input value="{MENGE}"></Input>
-					<Input value="{ME}" editable="false">
+					<Input value="{data>/MENGE}"></Input>
+					<Input value="{data>/MEINH}" editable="false">
 						<layoutData>
 							<l:GridData span="XL2 L1 M3 S4"/>
 						</layoutData>

@@ -1,28 +1,32 @@
 sap.ui.define([
 	"./ActionBaseController",
 	"sap/ui/model/json/JSONModel",
-	"sap/m/MessageBox"
-], function(ActionBaseController, JSONModel, MessageBox) {
+	"sap/m/MessageBox",
+	"com/mii/scanner/model/sapType"
+], function(ActionBaseController, JSONModel, MessageBox, sapType) {
 	"use strict";
 
-	var _aDisallowedStorageLocations = ["VG01"];
-
-	var _oInitData = {
-		LENUM: null,
-		AUFNR: null,
-		SOLLME: 0.0,
-		MEINH: null,
-		LGORT: '',
-		INFO: null,
-		bValid: false
-	};
-
 	return ActionBaseController.extend("com.mii.scanner.controller.action.GoodsReceipt", {
+
+		sapType: sapType,
+
 		onInit: function() {
-
 			var oModel = new JSONModel(),
-				oData = jQuery.extend(_oInitData);
-
+				oData;
+			
+			this._aDisallowedStorageLocations = ["VG01"];
+			
+			this._oInitData = {
+				LENUM: null,
+				AUFNR: null,
+				SOLLME: 0.0,
+				MEINH: null,
+				LGORT: '',
+				INFO: null,
+				bValid: false
+			};
+			
+			oData = jQuery.extend(this._oInitData);
 			oModel.setData(oData);
 			this.setModel(oModel, "data");
 		},
@@ -102,7 +106,7 @@ sap.ui.define([
 		 * Check is a given storage location is allowed for posting
 		 */
 		isStorageLocationAllowed: function(sStorageLocation) {
-			return _aDisallowedStorageLocations.indexOf(sStorageLocation) === -1;
+			return this._aDisallowedStorageLocations.indexOf(sStorageLocation) === -1;
 		},
 		onOrderNumberChange: function(oEvent) {
 			this.updateViewControls();
@@ -124,7 +128,7 @@ sap.ui.define([
 		},
 
 		onClearFormPress: function() {
-			this.getModel("data").setData(jQuery.extend(_oInitData));
+			this.getModel("data").setData(jQuery.extend(this._oInitData));
 		}
 	});
 });
