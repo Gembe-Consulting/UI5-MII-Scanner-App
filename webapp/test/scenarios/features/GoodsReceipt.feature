@@ -18,18 +18,27 @@ Feature: Creating goods receipt posting to SAP ERP
 		 And I can see unitOfMeasureInput in action.GoodsReceipt view
 		 And I can see orderNumberInput in action.GoodsReceipt view
 		 And I can see storageLocationInput in action.GoodsReceipt view
-		 And I can see infoTestArea in action.GoodsReceipt view
 		 And I can see saveButton in action.GoodsReceipt view
 		 And I can see cancelButton in action.GoodsReceipt view
 		
 	Scenario: User enters a storge bin number
-		When I enter '012365479789' into storageBinInput in action.GoodsReceipt view
-		Then I can see storageBinInput with value '012365479789' in action.GoodsReceipt view
-		 And I can see quantityInput with value '200' in action.GoodsReceipt view
+		When I enter '00000000109330000001' into storageBinInput in action.GoodsReceipt view
+		Then I can see storageBinInput with value '109330000001' in action.GoodsReceipt view
+		 And I can see quantityInput with value '600,000' in action.GoodsReceipt view
 		 And I can see unitOfMeasureInput with value 'KG' in action.GoodsReceipt view
-		 And I can see storageLocationInput with value '100' in action.GoodsReceipt view
+		 And I can see unitOfMeasureInput with editable 'false' in action.GoodsReceipt view
+		 And I can see storageLocationInput with value '1000' in action.GoodsReceipt view
 		 And I can see storageLocationInput with editable 'false' in action.GoodsReceipt view
+		 And I can see orderNumberInput with value '1093300' in action.GoodsReceipt view
+		 And I can see orderNumberInput with editable 'false' in action.GoodsReceipt view
+		 And I can see saveButton with enabled 'true' in action.GoodsReceipt view
 		
+	Scenario: User enters a storge bin number
+		When I enter '1093300' into orderNumberInput in action.GoodsReceipt view
+		Then I can see storageBinInput with value '' in action.GoodsReceipt view
+		 And I can see storageBinInput with editable 'false' in action.GoodsReceipt view
+		 And I can see unitOfMeasureInput with editable 'true' in action.GoodsReceipt view
+		 
 	Scenario: User enters storage location VG01
 		When I enter 'VG01' into storageLocationInput in action.GoodsReceipt view
 		Then I can see the error message

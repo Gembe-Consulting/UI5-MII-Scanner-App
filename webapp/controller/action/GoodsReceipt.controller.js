@@ -1,7 +1,8 @@
 sap.ui.define([
 	"./ActionBaseController",
-	"sap/ui/model/json/JSONModel"
-], function(ActionBaseController, JSONModel) {
+	"sap/ui/model/json/JSONModel",
+	"sap/m/MessageBox"
+], function(ActionBaseController, JSONModel, MessageBox) {
 	"use strict";
 
 	var _aDisallowedStorageLocations = ["VG01"];
@@ -25,6 +26,14 @@ sap.ui.define([
 			oModel.setData(oData);
 			this.setModel(oModel, "data");
 		},
+		
+		updateViewControls:function(){
+			var oModel = this.getModel("data"),
+				bReadyForPosting;
+			bReadyForPosting = this.isInputDataValid(oModel.getData());
+			
+			oModel.setProperty("/bValid", bReadyForPosting);
+		},
 
 		onStorageBinNumberChange: function(oEvent) {
 			var sStorageBinNumber = oEvent.getParameter("value");
@@ -36,11 +45,14 @@ sap.ui.define([
 			var fnResolve = function(oData) {
 				this.getModel("data").setProperty("/bValid", this.isInputDataValid());
 				var oStorageBin = oData.d.results[0].Rowset.results[0].Row.results[0];
+
 				this.getModel("data").setData(oStorageBin);
+				
+				this.updateViewControls();
 			}.bind(this);
 			
 			var fnReject = function(oError) {
-				debugger;
+				MessageBox.error("Lagereinheit "+ sStorageBinNumber + " ist unbekannt.\nBitte korrigieren!");
 			}.bind(this);
 
 			this._getStorageBinInfo(sStorageBinNumber).then(fnResolve, fnReject);
@@ -80,11 +92,8 @@ sap.ui.define([
 
 		},
 
-		isInputDataValid: function() {
-			var oData = this.getModel("data").getData();
-
-			return oData.ORDER && oData.MENGE && oData.LGORT && oData.ME && ((oData.LENUM && oData.LGORT === "1000") || (!oData.LENUM && oData.LGORT !== "1000"));
-
+		isInputDataValid: function(oData) {
+			return !!oData.AUFNR && !!oData.SOLLME && !!oData.MEINH && !!oData.LGORT && ((!!oData.LENUM && oData.LGORT === "1000") || (!oData.LENUM && oData.LGORT !== "1000"));
 		},
 
 		/**
@@ -92,6 +101,18 @@ sap.ui.define([
 		 */
 		isStorageLocationAllowed: function(sStorageLocation) {
 			return _aDisallowedStorageLocations.indexOf(sStorageLocation) === -1;
+		},
+		onOrderNumberChange:function(oEvent){this.updateViewControls();},
+		onQuantityChange:function(oEvent){this.updateViewControls();},
+		onUnitOfMeasureChange:function(oEvent){this.updateViewControls();},
+		onStorageLocationChange:function(oEvent){
+			var sStorageLocation = oEvent.getParameter("value");
+			if(!this.isStorageLocationAllowed(sStorageLocation)){
+				oEvent.getSource().setValue("");
+				MessageBox.error("Lagerort "+ sStorageLocation + " ist nicht für Buchungen vorgesenen.\nBitte korrigieren!");
+			}
+			
+			this.updateViewControls();
 		},
 
 		onClearFormPress: function() {

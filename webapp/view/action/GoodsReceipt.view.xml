@@ -9,24 +9,33 @@
 				<f:content>
 					
 					<Label text="{i18n>lableTextFormGoodsReceiptStorageBin}"/>
-					<Input id="storageBinInput" change="onStorageBinNumberChange"
+					<Input id="storageBinInput" width="200px" maxLength="20" 
+						change="onStorageBinNumberChange"
 						value="{path: 'data>/LENUM', type:'sap.ui.model.type.Integer', formatOptions: { emptyString: null}}"
 						editable="{=${data>/LGORT}==='1000' || ${data>/LGORT}===''}"></Input>
 						
 					<Label text="{i18n>lableTextFormGoodsReceiptQuantity} / {i18n>lableTextFormGoodsReceiptUnit}"/>
 					<HBox>
-						<Input id="quantityInput" width="150px"
+						<Input id="quantityInput" width="100px" textAlign="End" 
+							change="onQuantityChange"
 							value="{path: 'data>/SOLLME', type:'sap.ui.model.type.Float', formatOptions: { minFractionDigits: 3, maxFractionDigits: 3}}"></Input>
-						<Input id="unitOfMeasureInput" width="75px" value="{data>/MEINH}" editable="{=${data>/LENUM}===null}"></Input>
-					</HBox>
-					
-					<Label text="{i18n>lableTextFormGoodsReceiptOrder} / {i18n>lableTextFormGoodsReceiptStorageLocation}"/>
-					<HBox>
-						<Input id="orderNumberInput" width="150px"
-							value="{path: 'data>/AUFNR', type:'sap.ui.model.type.Integer', formatOptions: { emptyString: null }}" editable="{=${data>/LENUM}===null}"></Input>
-						<Input id="storageLocationInput" width="75px" value="{path: 'data>/LGORT', type:'sap.ui.model.type.String'}"
+						<Input id="unitOfMeasureInput" width="40px"
+							change="onUnitOfMeasureChange"
+							value="{data>/MEINH}" 
 							editable="{=${data>/LENUM}===null}"></Input>
 					</HBox>
+					
+					<Label text="{i18n>lableTextFormGoodsReceiptOrder}"/>
+					<Input id="orderNumberInput" width="100px" maxLength="7" 
+						change="onOrderNumbeChange"
+						value="{path: 'data>/AUFNR', type:'sap.ui.model.type.Integer', formatOptions: { emptyString: null }}" 
+						editable="{=${data>/LENUM}===null}"></Input>
+						
+					<Label text="{i18n>lableTextFormGoodsReceiptStorageLocation}"/>
+					<Input id="storageLocationInput" width="100px" maxLength="4" 
+						change="onStorageLocationChange"
+						value="{path: 'data>/LGORT', type:'sap.ui.model.type.String'}"
+						editable="{=${data>/LENUM}===null}"></Input>
 					
 					<c:Title text="Palettendaten:"/>
 					<Label text="Material"/>
@@ -47,7 +56,7 @@
 		<footer>
 			<Toolbar>
 				<ToolbarSpacer/>
-				<Button id="saveButton" type="Accept" text="{i18n>textButtonSaveGoodsReceipt}" press="onSave" enabled="data>/bValid"/>
+				<Button id="saveButton" type="Accept" text="{i18n>textButtonSaveGoodsReceipt}" press="onSave" enabled="{data>/bValid}"/>
 				<Button id="cancelButton" type="Reject" text="{i18n>textButtonCancelGoodsReceipt}" press="onCancelAction"/>
 			</Toolbar>
 		</footer>

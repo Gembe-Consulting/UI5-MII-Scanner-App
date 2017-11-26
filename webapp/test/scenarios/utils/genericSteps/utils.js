@@ -77,6 +77,14 @@
 	}
 
 	function testTextValue(sOperand, sText, sValue) {
+		
+		//don't be too strict when it comes to stringified types
+		if(sValue === "true"){
+			sValue = true;
+		}else if(sValue === "false"){
+			sValue = false;
+		}
+		
 		switch (sOperand) {
 			case "containing":
 				return sText.indexOf(sValue) >= 0;
@@ -89,7 +97,7 @@
 				return iPosition > -1 && iPosition + sValue.length === sText.length;
 
 			case "equal to":
-				return sText === sValue;
+				return sText === sValue; 
 
 			default:
 				throw new Error("Invalid operand for text value check: '" + sOperand + "'");
