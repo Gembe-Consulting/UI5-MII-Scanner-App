@@ -5,15 +5,15 @@
 	<f:content>
 		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentMaterial}"/>
 		<Text text="{data>/MATNR} - {data>/MAKTX}"/>
-		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentStorageUnit"/>
+		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentStorageBin}"/>
 		<Text text="{data>/LGPLA}"/>
-		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentStorageType"/>
+		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentStorageType}"/>
 		<Text text="{data>/LGTYP}"/>
-		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentStorageUnitType"/>
+		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentStorageUnitType}"/>
 		<Text text="{data>/LETYT}"/>
-		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentBatch"/>
+		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentBatch}"/>
 		<Text text="{data>/CHARG}"/>
-		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentExpirationDate"/>
+		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentExpirationDate}"/>
 		<Text text="{path: 'data>/VFDAT', type:'sap.ui.model.type.Date', formatOptions: { source: { pattern: 'MM-dd-yyyy' }}}"/>
 	</f:content>
 </f:SimpleForm>
