@@ -1,5 +1,7 @@
 <f:SimpleForm xmlns:f="sap.ui.layout.form" xmlns="sap.m" 
-	editable="false" layout="ResponsiveGridLayout" breakpointM="250" 
+	visible="{=${data>/LENUM}!==null}"
+	editable="false" 
+	layout="ResponsiveGridLayout" breakpointM="250" 
 	labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
 	emptySpanXL="4" emptySpanL="4" emptySpanM="2" emptySpanS="0">
 	<f:content>
