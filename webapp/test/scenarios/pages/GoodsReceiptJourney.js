@@ -25,7 +25,7 @@ sap.ui.require(
 			Then.onTheGoodsReceiptPage.iCanSeeTheBackButton().
 				and.iCanSeeTheSaveButton().
 				and.iCanSeeTheCancelButton().
-				and.iCanSeeTheStorageBinNumberInput().
+				and.iCanSeeTheStorageUnitNumberInput().
 				and.iCanSeeTheOrderNumberInput().
 				and.iCanSeeTheQuantityInput().
 				and.iCanSeeTheUnitOfMeasureLabel().

@@ -26,36 +26,34 @@ sap.ui.define([
 			oModel.setData(oData);
 			this.setModel(oModel, "data");
 		},
-		
-		updateViewControls:function(){
+
+		updateViewControls: function() {
 			var oModel = this.getModel("data"),
 				bReadyForPosting;
 			bReadyForPosting = this.isInputDataValid(oModel.getData());
-			
+
 			oModel.setProperty("/bValid", bReadyForPosting);
 		},
 
-		onStorageBinNumberChange: function(oEvent) {
-			var sStorageBinNumber = oEvent.getParameter("value");
+		onStorageUnitNumberChange: function(oEvent) {
+			var sStorageUnitNumber = oEvent.getParameter("value");
 
-			sStorageBinNumber = jQuery.sap.padLeft(sStorageBinNumber, "0", 20);
+			sStorageUnitNumber = jQuery.sap.padLeft(sStorageUnitNumber, "0", 20);
 
-			jQuery.sap.log.info("Start gathering data for palette " + sStorageBinNumber);
+			jQuery.sap.log.info("Start gathering data for palette " + sStorageUnitNumber);
 
 			var fnResolve = function(oData) {
-				this.getModel("data").setProperty("/bValid", this.isInputDataValid());
-				var oStorageBin = oData.d.results[0].Rowset.results[0].Row.results[0];
+				var oStorageUnit = oData.d.results[0].Rowset.results[0].Row.results[0];
+				this.getModel("data").setData(oStorageUnit);
 
-				this.getModel("data").setData(oStorageBin);
-				
 				this.updateViewControls();
 			}.bind(this);
-			
+
 			var fnReject = function(oError) {
-				MessageBox.error("Lagereinheit "+ sStorageBinNumber + " ist unbekannt.\nBitte korrigieren!");
+				MessageBox.error("Lagereinheit " + sStorageUnitNumber + " ist unbekannt.\nBitte korrigieren!");
 			}.bind(this);
 
-			this._getStorageBinInfo(sStorageBinNumber).then(fnResolve, fnReject);
+			this._getStorageUnitInfo(sStorageUnitNumber).then(fnResolve, fnReject);
 		},
 
 		onSave: function() {
@@ -77,11 +75,11 @@ sap.ui.define([
 		Fehlermeldung "Palette nicht gefunden" 
 		*/
 		//SUMISA/Scanner/Umlagerung/trx_ReadPaletteInfo 
-		_getStorageBinInfo: function(sStorageBinNumber) {
+		_getStorageUnitInfo: function(sStorageUnitNumber) {
 
 			var oModel = this.getModel("storagebin"),
 				oParam = {
-					"Param.1": sStorageBinNumber
+					"Param.1": sStorageUnitNumber
 				};
 
 			return oModel.loadMiiData(oModel._sServiceUrl, oParam);
@@ -93,7 +91,11 @@ sap.ui.define([
 		},
 
 		isInputDataValid: function(oData) {
-			return !!oData.AUFNR && !!oData.SOLLME && !!oData.MEINH && !!oData.LGORT && ((!!oData.LENUM && oData.LGORT === "1000") || (!oData.LENUM && oData.LGORT !== "1000"));
+			if (oData) {
+				return !!oData.AUFNR && !!oData.SOLLME && !!oData.MEINH && !!oData.LGORT && ((!!oData.LENUM && oData.LGORT === "1000") || (!oData.LENUM && oData.LGORT !== "1000"));
+			} else {
+				return false;
+			}
 		},
 
 		/**
@@ -102,16 +104,22 @@ sap.ui.define([
 		isStorageLocationAllowed: function(sStorageLocation) {
 			return _aDisallowedStorageLocations.indexOf(sStorageLocation) === -1;
 		},
-		onOrderNumberChange:function(oEvent){this.updateViewControls();},
-		onQuantityChange:function(oEvent){this.updateViewControls();},
-		onUnitOfMeasureChange:function(oEvent){this.updateViewControls();},
-		onStorageLocationChange:function(oEvent){
+		onOrderNumberChange: function(oEvent) {
+			this.updateViewControls();
+		},
+		onQuantityChange: function(oEvent) {
+			this.updateViewControls();
+		},
+		onUnitOfMeasureChange: function(oEvent) {
+			this.updateViewControls();
+		},
+		onStorageLocationChange: function(oEvent) {
 			var sStorageLocation = oEvent.getParameter("value");
-			if(!this.isStorageLocationAllowed(sStorageLocation)){
+			if (!this.isStorageLocationAllowed(sStorageLocation)) {
 				oEvent.getSource().setValue("");
-				MessageBox.error("Lagerort "+ sStorageLocation + " ist nicht für Buchungen vorgesenen.\nBitte korrigieren!");
+				MessageBox.error("Lagerort " + sStorageLocation + " ist nicht für Buchungen vorgesenen.\nBitte korrigieren!");
 			}
-			
+
 			this.updateViewControls();
 		},
 

@@ -5,53 +5,62 @@
 			<Button icon="sap-icon://redo" press="onClearFormPress"/>
 		</headerContent>
 		<content>
-			<f:SimpleForm title="{i18n>titleFormGoodsReceipt}" editable="true" layout="ResponsiveGridLayout" columnsXL="1" columnsL="1" columnsM="1">
+			<!--
+			Kleine SimpleForm Kunde: nach dem ResponsiveGridLayout:
+				- XL, L, M, S gibt einen bestimmten "Zustand" wieder in dem sich das Display befindet
+				- breakpoint: Anzahl Pixel ab dem ein bestimmter "Zustand" eintritt
+				- Form ist unterteilt in 12 Spalten
+				- labelSpan gibt an, wieviele Spalten für das Label reserviert werden
+				~~~~~~~~~~~~~~~~~
+				Beispiel:
+					labelSpanS="12" => auf kleinen devices wird die Lablezeile auf die komplette Zeile gespannt
+			-->
+			<f:SimpleForm editable="true" layout="ResponsiveGridLayout" 
+				breakpointM="400" 
+				labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" 
+				emptySpanXL="5"  emptySpanL="4" emptySpanM="2" emptySpanS="0">
 				<f:content>
 					
-					<Label text="{i18n>lableTextFormGoodsReceiptStorageBin}"/>
-					<Input id="storageBinInput" width="200px" maxLength="20" 
-						change="onStorageBinNumberChange"
+					<Label text="{i18n>lableTextFormGoodsReceiptStorageUnit}"/>
+					<Input id="storageBinInput"  maxLength="20" 
+						change="onStorageUnitNumberChange"
 						value="{path: 'data>/LENUM', type:'sap.ui.model.type.Integer', formatOptions: { emptyString: null}}"
 						editable="{=${data>/LGORT}==='1000' || ${data>/LGORT}===''}"></Input>
 						
-					<Label text="{i18n>lableTextFormGoodsReceiptQuantity} / {i18n>lableTextFormGoodsReceiptUnit}"/>
-					<HBox>
-						<Input id="quantityInput" width="100px" textAlign="End" 
-							change="onQuantityChange"
-							value="{path: 'data>/SOLLME', type:'sap.ui.model.type.Float', formatOptions: { minFractionDigits: 3, maxFractionDigits: 3}}"></Input>
-						<Input id="unitOfMeasureInput" width="40px"
-							change="onUnitOfMeasureChange"
-							value="{data>/MEINH}" 
-							editable="{=${data>/LENUM}===null}"></Input>
-					</HBox>
+					<Label text="{i18n>lableTextFormGoodsReceiptQuantity}, {i18n>lableTextFormGoodsReceiptUnit}"/>
+					<Input id="quantityInput"  textAlign="End" 
+						change="onQuantityChange"
+						value="{path: 'data>/SOLLME', type:'sap.ui.model.type.Float', formatOptions: { minFractionDigits: 3, maxFractionDigits: 3}}">
+						<layoutData>
+							<l:GridData span="XL2 L3 M4 S8" />
+						</layoutData>
+					</Input>
+					<Input id="unitOfMeasureInput" 
+						change="onUnitOfMeasureChange"
+						value="{data>/MEINH}" 
+						editable="{=${data>/LENUM}===null}">
+						<layoutData>
+							<l:GridData span="XL1 L1 M2 S4" />
+						</layoutData>
+					</Input>
 					
 					<Label text="{i18n>lableTextFormGoodsReceiptOrder}"/>
-					<Input id="orderNumberInput" width="100px" maxLength="7" 
+					<Input id="orderNumberInput" maxLength="7" 
 						change="onOrderNumbeChange"
 						value="{path: 'data>/AUFNR', type:'sap.ui.model.type.Integer', formatOptions: { emptyString: null }}" 
 						editable="{=${data>/LENUM}===null}"></Input>
 						
 					<Label text="{i18n>lableTextFormGoodsReceiptStorageLocation}"/>
-					<Input id="storageLocationInput" width="100px" maxLength="4" 
+					<Input id="storageLocationInput" maxLength="4" 
 						change="onStorageLocationChange"
 						value="{path: 'data>/LGORT', type:'sap.ui.model.type.String'}"
 						editable="{=${data>/LENUM}===null}"></Input>
-					
-					<c:Title text="Palettendaten:"/>
-					<Label text="Material"/>
-					<Text text="{data>/MATNR} / {data>/MAKTX}"/>
-					<Label text="Lagerplatz / Lagertyp"/>
-					<Text text="{data>/LGPLA} / {data>/LGTYP}"/>
-					<Label text="Transportmittel"/>
-					<Text text="{data>/LETYT}"/>
-					<Label text="Charge / Verfallsdatum(MHD)"/>
-					<Text text="{data>/CHARG} / {path: 'data>/VFDAT', type:'sap.ui.model.type.Date', formatOptions: { source: { pattern: 'MM-dd-yyyy' }}}"/>
-					<!--
-					<Label text="{i18n>lableTextFormGoodsReceiptAdditionalData}"/>
-					<TextArea id="infoTestArea" value="{data>/INFO}" editable="false"></TextArea> 
-					-->
+						
 				</f:content>
 			</f:SimpleForm>
+			
+			<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML" />
+
 		</content>
 		<footer>
 			<Toolbar>

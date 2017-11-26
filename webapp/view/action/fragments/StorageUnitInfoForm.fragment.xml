@@ -1,0 +1,19 @@
+<f:SimpleForm xmlns:f="sap.ui.layout.form" xmlns="sap.m" 
+	editable="false" layout="ResponsiveGridLayout" breakpointM="250" 
+	labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+	emptySpanXL="4" emptySpanL="4" emptySpanM="2" emptySpanS="0">
+	<f:content>
+		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentMaterial}"/>
+		<Text text="{data>/MATNR} - {data>/MAKTX}"/>
+		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentStorageUnit"/>
+		<Text text="{data>/LGPLA}"/>
+		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentStorageType"/>
+		<Text text="{data>/LGTYP}"/>
+		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentStorageUnitType"/>
+		<Text text="{data>/LETYT}"/>
+		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentBatch"/>
+		<Text text="{data>/CHARG}"/>
+		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentExpirationDate"/>
+		<Text text="{path: 'data>/VFDAT', type:'sap.ui.model.type.Date', formatOptions: { source: { pattern: 'MM-dd-yyyy' }}}"/>
+	</f:content>
+</f:SimpleForm>
