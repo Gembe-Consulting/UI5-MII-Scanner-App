@@ -1,44 +1,53 @@
 <mvc:View controllerName="com.mii.scanner.controller.action.GoodsIssue" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
 	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
-	<Page title="{i18n>titleGoodsIssue}" showNavButton="true" navButtonPress="onNavBack">
+	<Page id="doodsIssuePage" title="{i18n>titleGoodsIssue}" showNavButton="true" navButtonPress="onNavBack">
 		<content>
-			<f:SimpleForm editable="true" layout="ResponsiveGridLayout" 
-				breakpointM="400" 
-				labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" 
-				emptySpanXL="5"  emptySpanL="4" emptySpanM="2" emptySpanS="0">
+			<f:SimpleForm editable="true" layout="ResponsiveGridLayout" breakpointM="400" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+				emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
 				<f:content>
 					<Label text="{i18n>lableTextFormGoodsIssueStorageUnit}"/>
 					<Input value="{data>/LENUM}"/>
-					
 					<Label text="{i18n>lableTextFormGoodsIssueQuantity}"/>
-					<Input value="{data>/MENGE}"></Input>
-					<Input value="{data>/MEINH}" editable="false">
+					<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}">
 						<layoutData>
-							<l:GridData span="XL2 L1 M3 S4"/>
+							<l:GridData span="XL2 L3 M4 S8"/>
 						</layoutData>
 					</Input>
-					
+					<Input id="unitOfMeasureInput" change="onUnitOfMeasureChange" value="{path: 'data>/MEINH', type:'.sapType.MEINS'}"
+						editable="{=${data>/LENUM}===null}">
+						<layoutData>
+							<l:GridData span="XL1 L1 M2 S4"/>
+						</layoutData>
+					</Input>
 					<Label text="{i18n>lableTextFormGoodsIssueOrder}"/>
-					<Input value="{ORDER}">
-						<layoutData>
-							<l:GridData span="XL2 L1 M3 S4"/>
-						</layoutData>
-					</Input>
-					
+					<Input id="orderNumberInput" maxLength="7" change="onOrderNumbeChange" value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}"
+						editable="{=${data>/LENUM}===null}"></Input>
+						
 					<Label text="{i18n>lableTextFormGoodsIssueStorageLocation}"/>
-					<Input value="{LGORT}"/>
-					
-					<Label text="{i18n>lableTextFormGoodsIssueStorageLocation}"/>
-					<TextArea value="{INFO}"></TextArea>
-					
+					<Input id="storageLocationInput" maxLength="4" 
+						change="onStorageLocationChange"
+						value="{path: 'data>/LGORT', type:'.sapType.LGORT'}"
+						editable="{=${data>/LENUM}===null}"></Input>
+						
+					<Label text="{i18n>lableTextFormGoodsIssueMaterial}"/>
+					<Input id="materialNumberInput"
+						change="onMaterialNumbeChange"
+						value="{path: 'data>/MATNR', type:'.sapType.MATNR'}" 
+						editable="{=${data>/LENUM}===null}"></Input>
+						
+					<Label text="{i18n>lableTextFormGoodsIssueBulkMaterial}"/>
+					<CheckBox id="bulkMaterialCheckBox"></CheckBox>
+						
+					<Label text="{i18n>lableTextFormGoodsIssue}"/>
 				</f:content>
 			</f:SimpleForm>
+			<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>
 		</content>
 		<footer>
 			<Toolbar>
 				<ToolbarSpacer/>
-				<Button type="Accept" text="{i18n>textButtonSaveGoodsIssue}" press="onSave" />
-				<Button type="Reject" text="{i18n>textButtonCancelGoodsIssue}" press="onCancelAction" />
+				<Button id="saveButton" type="Accept" text="{i18n>textButtonSaveGoodsIssue}" press="onSave" enabled="{data>/bValid}"/>
+				<Button id="cancelButton" type="Reject" text="{i18n>textButtonCancelGoodsIssue}" press="onCancelAction"/>
 			</Toolbar>
 		</footer>
 	</Page>
