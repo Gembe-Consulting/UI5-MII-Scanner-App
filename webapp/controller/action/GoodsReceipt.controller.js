@@ -13,9 +13,9 @@ sap.ui.define([
 		onInit: function() {
 			var oModel = new JSONModel(),
 				oData;
-			
+
 			this._aDisallowedStorageLocations = ["VG01"];
-			
+
 			this._oInitData = {
 				LENUM: null,
 				AUFNR: null,
@@ -25,7 +25,7 @@ sap.ui.define([
 				INFO: null,
 				bValid: false
 			};
-			
+
 			oData = jQuery.extend(this._oInitData);
 			oModel.setData(oData);
 			this.setModel(oModel, "data");

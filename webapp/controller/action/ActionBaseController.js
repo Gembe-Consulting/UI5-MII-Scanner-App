@@ -1,7 +1,6 @@
 sap.ui.define([
 	"com/mii/scanner/controller/PageBaseController",
 	"sap/m/MessageBox",
-
 	"sap/m/MessageToast"
 ], function(PageBaseController, MessageBox, MessageToast) {
 	"use strict";
