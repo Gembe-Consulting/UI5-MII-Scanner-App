@@ -1,8 +1,10 @@
 <mvc:View controllerName="com.mii.scanner.controller.action.GoodsIssue" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
 	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
-	<Page id="doodsIssuePage" title="{i18n>titleGoodsIssue}" showNavButton="true" navButtonPress="onNavBack">
+	<Page id="goodsIssuePage" title="{i18n>titleGoodsIssue}" showNavButton="true" navButtonPress="onNavBack">
 		<content>
-			<f:SimpleForm editable="true" layout="ResponsiveGridLayout" breakpointM="400" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+			<f:SimpleForm editable="true" layout="ResponsiveGridLayout" 
+				breakpointM="400" 
+				labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
 				emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
 				<f:content>
 					<Label text="{i18n>lableTextFormGoodsIssueStorageUnit}"/>
