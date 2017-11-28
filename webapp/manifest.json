@@ -119,7 +119,7 @@
 				"name": "goodsReceipt",
 				"target": ["GR"]
 			}, {
-				"pattern": "Start/Materialbewegung/WA",
+				"pattern": "Start/Materialbewegung/WA:?query:",
 				"name": "goodsIssue",
 				"target": ["GI"]
 			}, {
