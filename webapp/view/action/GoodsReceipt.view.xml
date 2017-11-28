@@ -22,7 +22,7 @@
 				<f:content>
 					
 					<Label text="{i18n>lableTextFormGoodsReceiptStorageUnit}"/>
-					<Input id="storageBinInput"  maxLength="20" 
+					<Input id="storageUnitInput"  maxLength="20" 
 						change="onStorageUnitNumberChange"
 						value="{path: 'data>/LENUM', type:'.sapType.LENUM'}"
 						editable="{=${data>/LGORT}==='1000' || ${data>/LGORT}===''}"></Input>
