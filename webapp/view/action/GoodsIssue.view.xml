@@ -8,7 +8,7 @@
 				emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
 				<f:content>
 					<Label text="{i18n>lableTextFormGoodsIssueStorageUnit}"/>
-					<Input value="{data>/LENUM}"/>
+					<Input value="{data>/LENUM}" visible="{=${view>/type}!=='nonLE'}"/>
 					<Label text="{i18n>lableTextFormGoodsIssueQuantity}"/>
 					<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}">
 						<layoutData>

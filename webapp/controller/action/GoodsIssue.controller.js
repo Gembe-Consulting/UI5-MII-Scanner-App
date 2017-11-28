@@ -22,7 +22,7 @@ sap.ui.define([
 			oModel.setData(oData);
 			this.setModel(oModel, "data");
 			
-			this.setModel(new JSONModel({type:""}), "view");
+			this.setModel(new JSONModel({type:null}), "view");
 
 			this.getRouter().getRoute("goodsIssue").attachMatched(this._onRouteMatched, this);
 		},
@@ -34,10 +34,9 @@ sap.ui.define([
 			oQuery = oArgs["?query"];
 			if (oQuery && oQuery.type) {
 				oView.getModel("view").setProperty("/type", oQuery.type);
-
 			} 
-			if (oQuery && oQuery.lenum) {
-				oView.getModel("data").setProperty("/LENUM", oQuery.lenum);
+			if (oQuery && oQuery.LENUM) {
+				oView.getModel("data").setProperty("/LENUM", oQuery.LENUM);
 			} 
 		}
 	});
