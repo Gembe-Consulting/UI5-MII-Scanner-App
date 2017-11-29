@@ -115,7 +115,7 @@
 				"name": "goodsMovement",
 				"target": ["GM"]
 			}, {
-				"pattern": "Start/Materialbewegung/WE",
+				"pattern": "Start/Materialbewegung/WE:?query:",
 				"name": "goodsReceipt",
 				"target": ["GR"]
 			}, {
@@ -123,27 +123,27 @@
 				"name": "goodsIssue",
 				"target": ["GI"]
 			}, {
-				"pattern": "Start/Materialbewegung/UL",
+				"pattern": "Start/Materialbewegung/UL:?query:",
 				"name": "stockTransfer",
 				"target": ["ST"]
 			}, {
-				"pattern": "Start/Materialbewegung/ROL",
+				"pattern": "Start/Materialbewegung/ROL:?query:",
 				"name": "rollerConveyor",
 				"target": ["RC"]
 			}, {
-				"pattern": "Start/Statusmeldung/VS",
+				"pattern": "Start/Statusmeldung/VS:?query:",
 				"name": "startOperation",
 				"target": ["SO"]
 			}, {
-				"pattern": "Start/Statusmeldung/VU",
+				"pattern": "Start/Statusmeldung/VU:?query:",
 				"name": "interruptOperation",
 				"target": ["IO"]
 			}, {
-				"pattern": "Start/Statusmeldung/VW",
+				"pattern": "Start/Statusmeldung/VW:?query:",
 				"name": "resumeOperation",
 				"target": ["RO"]
 			}, {
-				"pattern": "Start/Statusmeldung/VB",
+				"pattern": "Start/Statusmeldung/VB:?query:",
 				"name": "finishOperation",
 				"target": ["FO"]
 			}],
