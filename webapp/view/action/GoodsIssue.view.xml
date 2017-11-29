@@ -30,17 +30,18 @@
 						change="onStorageLocationChange"
 						value="{path: 'data>/LGORT', type:'.sapType.LGORT'}"
 						editable="{=${data>/LENUM}===null}"
-						visible="{=${view>/type}!=='nonLE'}"></Input>
+						visible="{=${view>/type}==='nonLE'}"></Input>
 						
 					<Label text="{i18n>lableTextFormGoodsIssueMaterial}"/>
 					<Input id="materialNumberInput"
 						change="onMaterialNumbeChange"
 						value="{path: 'data>/MATNR', type:'.sapType.MATNR'}" 
 						editable="{=${data>/LENUM}===null}"
-						visible="{=${view>/type}!=='nonLE'}"></Input>
+						visible="{=${view>/type}==='nonLE'}"></Input>
 						
 					<Label text="{i18n>lableTextFormGoodsIssueBulkMaterial}"/>
-					<CheckBox id="bulkMaterialCheckBox"></CheckBox>
+					<CheckBox id="bulkMaterialCheckBox"
+						visible="{=${view>/type}==='nonLE'}"></CheckBox>
 						
 					<Label text="{i18n>lableTextFormGoodsIssue}"/>
 				</f:content>
