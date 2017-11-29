@@ -40,8 +40,8 @@
 						visible="{=${view>/type}==='nonLE'}"></Input>
 						
 					<Label text="{i18n>lableTextFormGoodsIssueBulkMaterial}"/>
-					<CheckBox id="bulkMaterialCheckBox"
-						visible="{=${view>/type}==='nonLE'}"></CheckBox>
+					<Switch id="bulkMaterialSwitch"
+						visible="{=${view>/type}==='nonLE'}"></Switch>
 						
 					<Label text="{i18n>lableTextFormGoodsIssue}"/>
 				</f:content>

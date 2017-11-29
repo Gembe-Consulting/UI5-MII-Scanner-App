@@ -27,7 +27,7 @@
 						<c:ListItem key="04" text="Palettierer le. Palette" additionalText="PALE"/>
 					</ComboBox>
 					<Label text="{i18n>lableTextFormRollerConveyorStorageStretcher}"/>
-					<Switch state="{data>/STRETCH}"></Switch>
+					<Switch id="stretcherActiveSwitch" state="{data>/STRETCH}"></Switch>
 				</f:content>
 			</f:SimpleForm>
 			<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>
