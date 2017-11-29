@@ -7,7 +7,7 @@
 				<f:content>
 					<Label text="{i18n>lableTextFormRollerConveyorStorageUnit}"/>
 					<Input value="{data>/LENUM}"/>
-					<Label text="{i18n>lableTextFormRollerConveyorQuantity}"/>
+					<Label text="{i18n>lableTextFormRollerConveyorQuantity}, {i18n>lableTextFormRollerConveyorUnitOfMeasure}"/>
 					<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}">
 						<layoutData>
 							<l:GridData span="XL2 L3 M4 S8"/>

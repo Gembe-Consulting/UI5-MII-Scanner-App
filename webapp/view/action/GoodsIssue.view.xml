@@ -9,7 +9,7 @@
 				<f:content>
 					<Label text="{i18n>lableTextFormGoodsIssueStorageUnit}"/>
 					<Input value="{data>/LENUM}" visible="{=${view>/type}!=='nonLE'}"/>
-					<Label text="{i18n>lableTextFormGoodsIssueQuantity}"/>
+					<Label text="{i18n>lableTextFormGoodsIssueQuantity}, {i18n>lableTextFormGoodsIssueUnitOfMeasure}"/>
 					<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}">
 						<layoutData>
 							<l:GridData span="XL2 L3 M4 S8"/>

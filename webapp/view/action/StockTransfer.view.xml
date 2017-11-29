@@ -13,7 +13,7 @@
 					</ComboBox>
 					<Label text="{i18n>lableTextFormStockTransferStorageUnit}"/>
 					<Input value="{data>/LENUM}"/>
-					<Label text="{i18n>lableTextFormStockTransferQuantity}"/>
+					<Label text="{i18n>lableTextFormStockTransferQuantity}, {i18n>lableTextFormStockTransferUnitOfMeasure}"/>
 					<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}">
 						<layoutData>
 							<l:GridData span="XL2 L3 M4 S8"/>
