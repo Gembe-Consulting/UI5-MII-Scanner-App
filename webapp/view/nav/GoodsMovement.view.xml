@@ -37,6 +37,7 @@
 						</content>
 						<customData>
 							<c:CustomData key="target" value="goodsIssue"/>
+							<c:CustomData key="type" value="withLE"/>
 						</customData>
 					</CustomListItem>
 					<CustomListItem type="Navigation" press="onNavForward" class="sapUiResponsiveMargin">
@@ -54,6 +55,7 @@
 						</content>
 						<customData>
 							<c:CustomData key="target" value="goodsIssue"/>
+							<c:CustomData key="type" value="nonLE"/>
 						</customData>
 					</CustomListItem>
 					<CustomListItem type="Navigation" press="onNavForward" class="sapUiResponsiveMargin">

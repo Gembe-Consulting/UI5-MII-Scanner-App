@@ -50,8 +50,19 @@ sap.ui.define([
 		},
 
 		onNavForward: function(oEvent) {
-			var sTarget = oEvent.getSource().data("target");
-			this.getRouter().navTo(sTarget);
+			var sNavTarget = oEvent.getSource().data("target"),
+				sNavType = oEvent.getSource().data("type"),
+				oType = {};
+
+			if (sNavType) {
+				oType = {
+					query: {
+						type: sNavType
+					}
+				};
+			}
+
+			this.getRouter().navTo(sNavTarget, oType);
 		},
 
 		onNavBack: function() {

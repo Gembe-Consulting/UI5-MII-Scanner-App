@@ -29,13 +29,15 @@
 					<Input id="storageLocationInput" maxLength="4" 
 						change="onStorageLocationChange"
 						value="{path: 'data>/LGORT', type:'.sapType.LGORT'}"
-						editable="{=${data>/LENUM}===null}"></Input>
+						editable="{=${data>/LENUM}===null}"
+						visible="{=${view>/type}!=='nonLE'}"></Input>
 						
 					<Label text="{i18n>lableTextFormGoodsIssueMaterial}"/>
 					<Input id="materialNumberInput"
 						change="onMaterialNumbeChange"
 						value="{path: 'data>/MATNR', type:'.sapType.MATNR'}" 
-						editable="{=${data>/LENUM}===null}"></Input>
+						editable="{=${data>/LENUM}===null}"
+						visible="{=${view>/type}!=='nonLE'}"></Input>
 						
 					<Label text="{i18n>lableTextFormGoodsIssueBulkMaterial}"/>
 					<CheckBox id="bulkMaterialCheckBox"></CheckBox>
