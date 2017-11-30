@@ -40,7 +40,7 @@
 						visible="{=${view>/type}==='nonLE'}"></Input>
 						
 					<Label text="{i18n>lableTextFormGoodsIssueBulkMaterial}"/>
-					<Switch id="bulkMaterialSwitch"
+					<Switch id="bulkMaterialSwitch" customTextOn="{i18n>switchCustomOnYes}" customTextOff="{i18n>switchCustomOffNo}"
 						visible="{=${view>/type}==='nonLE'}"></Switch>
 						
 					<Label text="{i18n>lableTextFormGoodsIssue}"/>
