@@ -26,7 +26,13 @@
 						change="onStorageUnitNumberChange"
 						value="{path: 'data>/LENUM', type:'.sapType.LENUM'}"
 						editable="{=${data>/LGORT}==='1000' || ${data>/LGORT}===''}"></Input>
-						
+					
+					<Label text="{i18n>lableTextFormGoodsReceiptOrder}"/>
+					<Input id="orderNumberInput" maxLength="7" 
+						change="onOrderNumbeChange"
+						value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}" 
+						editable="{=${data>/LENUM}===null}"></Input>
+
 					<Label text="{i18n>lableTextFormGoodsReceiptQuantity}, {i18n>lableTextFormGoodsReceiptUnitOfMeasure}"/>
 					<Input id="quantityInput" textAlign="End" 
 						change="onQuantityChange"
@@ -43,13 +49,7 @@
 							<l:GridData span="XL1 L1 M2 S4" />
 						</layoutData>
 					</Input>
-					
-					<Label text="{i18n>lableTextFormGoodsReceiptOrder}"/>
-					<Input id="orderNumberInput" maxLength="7" 
-						change="onOrderNumbeChange"
-						value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}" 
-						editable="{=${data>/LENUM}===null}"></Input>
-						
+	
 					<Label text="{i18n>lableTextFormGoodsReceiptStorageLocation}"/>
 					<Input id="storageLocationInput" maxLength="4" 
 						change="onStorageLocationChange"

@@ -22,8 +22,7 @@ sap.ui.define([
 				SOLLME: 0.0,
 				MEINH: null,
 				LGORT: '',
-				INFO: null,
-				bValid: false
+				INFO: null
 			};
 
 			oData = jQuery.extend(this._oInitData);
@@ -32,7 +31,7 @@ sap.ui.define([
 		},
 
 		updateViewControls: function() {
-			var oModel = this.getModel("data"),
+			var oModel = this.getModel("view"),
 				bReadyForPosting;
 			bReadyForPosting = this.isInputDataValid(oModel.getData());
 
@@ -129,6 +128,7 @@ sap.ui.define([
 
 		onClearFormPress: function() {
 			this.getModel("data").setData(jQuery.extend(this._oInitData));
+			this.updateViewControls();
 		}
 	});
 });

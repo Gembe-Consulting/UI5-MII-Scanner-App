@@ -9,6 +9,11 @@
 				<f:content>
 					<Label text="{i18n>lableTextFormGoodsIssueStorageUnit}"/>
 					<Input value="{data>/LENUM}" visible="{=${view>/type}!=='nonLE'}"/>
+					
+					<Label text="{i18n>lableTextFormGoodsIssueOrder}"/>
+					<Input id="orderNumberInput" maxLength="7" change="onOrderNumbeChange" value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}"
+						editable="{=${data>/LENUM}===null}"></Input>
+						
 					<Label text="{i18n>lableTextFormGoodsIssueQuantity}, {i18n>lableTextFormGoodsIssueUnitOfMeasure}"/>
 					<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}">
 						<layoutData>
@@ -21,10 +26,7 @@
 							<l:GridData span="XL1 L1 M2 S4"/>
 						</layoutData>
 					</Input>
-					<Label text="{i18n>lableTextFormGoodsIssueOrder}"/>
-					<Input id="orderNumberInput" maxLength="7" change="onOrderNumbeChange" value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}"
-						editable="{=${data>/LENUM}===null}"></Input>
-						
+					
 					<Label text="{i18n>lableTextFormGoodsIssueStorageLocation}"/>
 					<Input id="storageLocationInput" maxLength="4" 
 						change="onStorageLocationChange"
@@ -42,8 +44,6 @@
 					<Label text="{i18n>lableTextFormGoodsIssueBulkMaterial}"/>
 					<Switch id="bulkMaterialSwitch" customTextOn="{i18n>switchCustomOnYes}" customTextOff="{i18n>switchCustomOffNo}"
 						visible="{=${view>/type}==='nonLE'}"></Switch>
-						
-					<Label text="{i18n>lableTextFormGoodsIssue}"/>
 				</f:content>
 			</f:SimpleForm>
 			<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>
