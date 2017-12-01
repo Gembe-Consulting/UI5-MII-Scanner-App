@@ -2,7 +2,7 @@
 	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
 	<Page id="goodsReceiptPage" title="{i18n>titleGoodsReceipt}" showNavButton="true" navButtonPress="onNavBack">
 		<headerContent>
-			<Button icon="sap-icon://redo" press="onClearFormPress"/>
+			<Button id="clearFormButton" icon="sap-icon://redo" press="onClearFormPress"/>
 		</headerContent>
 		<content>
 			<!--

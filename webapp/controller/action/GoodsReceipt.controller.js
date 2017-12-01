@@ -21,7 +21,7 @@ sap.ui.define([
 				AUFNR: null,
 				SOLLME: 0.0,
 				MEINH: null,
-				LGORT: '',
+				LGORT: null,
 				INFO: null
 			};
 
@@ -34,12 +34,12 @@ sap.ui.define([
 			}), "view");
 		},
 
-		updateViewControls: function() {
-			var oModel = this.getModel("view"),
+		updateViewControls: function(oData) {
+			var oViewModel = this.getModel("view"),
 				bReadyForPosting;
-			bReadyForPosting = this.isInputDataValid(oModel.getData());
+			bReadyForPosting = this.isInputDataValid(oData);
 
-			oModel.setProperty("/bValid", bReadyForPosting);
+			oViewModel.setProperty("/bValid", bReadyForPosting);
 		},
 
 		onStorageUnitNumberChange: function(oEvent) {
@@ -66,7 +66,7 @@ sap.ui.define([
 
 					this.getModel("data").setData(oStorageUnit);
 
-					this.updateViewControls();
+					this.updateViewControls(this.getModel("data").getData());
 
 				} catch (err) {
 					MessageBox.error(oBundle.getText("messageTextStorageUnitNotFound", [sStorageUnitNumber]), {
@@ -149,13 +149,13 @@ sap.ui.define([
 			return this._aDisallowedStorageLocations.indexOf(sStorageLocation) === -1;
 		},
 		onOrderNumberChange: function(oEvent) {
-			this.updateViewControls();
+			this.updateViewControls(this.getModel("data").getData());
 		},
 		onQuantityChange: function(oEvent) {
-			this.updateViewControls();
+			this.updateViewControls(this.getModel("data").getData());
 		},
 		onUnitOfMeasureChange: function(oEvent) {
-			this.updateViewControls();
+			this.updateViewControls(this.getModel("data").getData());
 		},
 		onStorageLocationChange: function(oEvent) {
 			var sStorageLocation = oEvent.getParameter("value").toUpperCase(),
@@ -165,12 +165,12 @@ sap.ui.define([
 				MessageBox.error(oBundle.getText("messageTextWrongStorageLocation", [sStorageLocation]));
 			}
 
-			this.updateViewControls();
+			this.updateViewControls(this.getModel("data").getData());
 		},
 
 		onClearFormPress: function() {
 			this.getModel("data").setData(jQuery.extend(this._oInitData));
-			this.updateViewControls();
+			this.updateViewControls(this.getModel("data").getData());
 		},
 
 		_padStorageUnitNumber: function(sStorageUnitNumber) {

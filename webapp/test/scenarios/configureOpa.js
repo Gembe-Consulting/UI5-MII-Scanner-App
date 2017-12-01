@@ -12,6 +12,7 @@ sap.ui.define([
 	"use strict";
 
 	Opa5.extendConfig({
+		
 		arrangements : new Common(),
 		actions: new Opa5({
 			iLookAtTheScreen : function () {
