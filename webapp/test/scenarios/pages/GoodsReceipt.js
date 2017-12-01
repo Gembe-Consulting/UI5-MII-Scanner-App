@@ -8,16 +8,35 @@ sap.ui.require([
 	],
 	function(Opa5, Interactable, Properties, PropertyStrictEquals, Press, EnterText) {
 		"use strict";
-		var sViewName = "GoodsReceipt";
+		var sViewName = "action.GoodsReceipt";
 
 		Opa5.createPageObjects({
-			
-			onTheGoodsReceiptPage:{
-				actions:{
-					
+
+			onTheGoodsReceiptPage: {
+				actions: {
+					iRestoreAllInput: function() {
+
+					}
 				},
 				assertions: {
+					iCanSeeTheErrorMessage: function() {
+						var sErrorMessage = "Lagerort VG01 ist nicht für Buchungen vorgesenen.\nBitte korrigieren!";
+						this.waitFor({
+							//searchOpenDialogs: true,
+							//controlType: "sap.m.MessageBox",
+							viewName: "sap.m.MessageBox",
+							// check: function() {debugger;
+							// 	return !!sap.ui.test.Opa5.getJQuery()(".sapMMessageBoxError").length && sap.ui.test.Opa5.getJQuery()(".sapMMessageBoxError").find(".sapMMsgBoxText ").text() === sErrorMessage;
+							// },
+							success: function(oMessageBox){
+								debugger;
+							},
+							errorMessage: "Did not find the Error Message Box"
 
+						});
+						return this;
+
+					}
 				}
 			}
 		});

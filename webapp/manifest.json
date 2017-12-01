@@ -35,6 +35,7 @@
 		"supportedThemes": ["sap_belize"]
 	},
 	"sap.ui5": {
+		"handleValidation": true,
 		"rootView": {
 			"viewName": "com.mii.scanner.view.App",
 			"type": "XML",

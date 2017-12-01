@@ -53,7 +53,7 @@
 					<Label text="{i18n>lableTextFormGoodsReceiptStorageLocation}"/>
 					<Input id="storageLocationInput" maxLength="4" 
 						change="onStorageLocationChange"
-						value="{path: 'data>/LGORT', type:'.sapType.LGORT'}"
+						value="{path: 'data>/LGORT', type: 'sap.ui.model.type.String', constraints: {search:'^((?!VG01|vg01).)*$'} }"
 						editable="{=${data>/LENUM}===null}"></Input>
 						
 				</f:content>
@@ -65,7 +65,7 @@
 		<footer>
 			<Toolbar>
 				<ToolbarSpacer/>
-				<Button id="saveButton" type="Accept" text="{i18n>textButtonSaveGoodsReceipt}" press="onSave" enabled="{data>/bValid}"/>
+				<Button id="saveButton" type="Accept" text="{i18n>textButtonSaveGoodsReceipt}" press="onSave" enabled="{view>/bValid}"/>
 				<Button id="cancelButton" type="Reject" text="{i18n>textButtonCancelGoodsReceipt}" press="onCancelAction"/>
 			</Toolbar>
 		</footer>

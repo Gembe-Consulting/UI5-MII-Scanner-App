@@ -20,7 +20,10 @@ sap.ui.define([
 			this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
 
 			// Register the view with the message manager
-			sap.ui.getCore().getMessageManager().registerObject(this.getView(), true);
+			// for now, we do this in manifest file
+			//sap.ui.getCore().getMessageManager().registerObject(this.getView(), true);
+			
+			
 		}
 	});
 

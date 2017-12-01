@@ -28,6 +28,10 @@ sap.ui.define([
 			oData = jQuery.extend(this._oInitData);
 			oModel.setData(oData);
 			this.setModel(oModel, "data");
+
+			this.setModel(new JSONModel({
+				bValid: false
+			}), "view");
 		},
 
 		updateViewControls: function() {
@@ -39,24 +43,61 @@ sap.ui.define([
 		},
 
 		onStorageUnitNumberChange: function(oEvent) {
-			var sStorageUnitNumber = oEvent.getParameter("value");
+			var sStorageUnitNumber = oEvent.getParameter("value"),
+				oBundle = this.getResourceBundle();
 
-			sStorageUnitNumber = jQuery.sap.padLeft(sStorageUnitNumber, "0", 20);
+			sStorageUnitNumber = this._padStorageUnitNumber(sStorageUnitNumber);
 
 			jQuery.sap.log.info("Start gathering data for palette " + sStorageUnitNumber);
 
 			var fnResolve = function(oData) {
-				var oStorageUnit = oData.d.results[0].Rowset.results[0].Row.results[0];
-				this.getModel("data").setData(oStorageUnit);
+				var oStorageUnit,
+					sResultList;
 
-				this.updateViewControls();
+				try {
+
+					sResultList = oData.d.results[0].Rowset.results[0].Row.results;
+					if (sResultList.length === 1) {
+						oStorageUnit = this._formatStorageUnitData(oData.d.results[0].Rowset.results[0].Row.results[0]);
+					} else {
+
+						throw oBundle.getText("messageTitleStorageUnitNotFound");
+					}
+
+					this.getModel("data").setData(oStorageUnit);
+
+					this.updateViewControls();
+
+				} catch (err) {
+					MessageBox.error(oBundle.getText("messageTextStorageUnitNotFound", [sStorageUnitNumber]), {
+						title: err
+					});
+
+				} finally {}
+
 			}.bind(this);
 
 			var fnReject = function(oError) {
-				MessageBox.error("Lagereinheit " + sStorageUnitNumber + " ist unbekannt.\nBitte korrigieren!");
+
 			}.bind(this);
 
 			this._getStorageUnitInfo(sStorageUnitNumber).then(fnResolve, fnReject);
+		},
+
+		_formatStorageUnitData: function(oStorageUnit) {
+
+			if (!oStorageUnit) {
+				return null;
+			}
+
+			var fnNumberOrDefault = function(vAttr, vDefault) {
+				return jQuery.isNumeric(vAttr) ? Number(vAttr) : vDefault;
+			};
+
+			oStorageUnit.LENUM = fnNumberOrDefault(oStorageUnit.LENUM, null);
+			oStorageUnit.SOLLME = fnNumberOrDefault(oStorageUnit.SOLLME, 0.0);
+
+			return oStorageUnit;
 		},
 
 		onSave: function() {
@@ -117,10 +158,11 @@ sap.ui.define([
 			this.updateViewControls();
 		},
 		onStorageLocationChange: function(oEvent) {
-			var sStorageLocation = oEvent.getParameter("value");
+			var sStorageLocation = oEvent.getParameter("value").toUpperCase(),
+				oBundle = this.getResourceBundle();
 			if (!this.isStorageLocationAllowed(sStorageLocation)) {
-				oEvent.getSource().setValue("");
-				MessageBox.error("Lagerort " + sStorageLocation + " ist nicht für Buchungen vorgesenen.\nBitte korrigieren!");
+				//oEvent.getSource().setValue("");
+				MessageBox.error(oBundle.getText("messageTextWrongStorageLocation", [sStorageLocation]));
 			}
 
 			this.updateViewControls();
@@ -129,6 +171,11 @@ sap.ui.define([
 		onClearFormPress: function() {
 			this.getModel("data").setData(jQuery.extend(this._oInitData));
 			this.updateViewControls();
+		},
+
+		_padStorageUnitNumber: function(sStorageUnitNumber) {
+			return jQuery.sap.padLeft(sStorageUnitNumber, "0", 20);
 		}
+
 	});
 });
