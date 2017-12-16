@@ -23,7 +23,7 @@ Feature: Creating goods receipt posting to SAP ERP
 		Then on the Goods Receipt Page: I should see the save button is disabled
 		Then on the Goods Receipt Page: I should see all input fields are initial
 		
-	Scenario: User enters a storge unit number
+	Scenario: User enters a storge unit number and sees the storge unit data
 		When I enter '00000000109330000001' into storageUnitInput in action.GoodsReceipt view
 		Then I can see storageUnitInput with value '109330000001' in action.GoodsReceipt view
 		 And I can see quantityInput with value '600,000' in action.GoodsReceipt view
@@ -58,12 +58,23 @@ Feature: Creating goods receipt posting to SAP ERP
 		When I enter '4711' into storageLocationInput in action.GoodsReceipt view
 		 And I enter '600,000' into quantityInput in action.GoodsReceipt view
 		 And I enter 'KG' into unitOfMeasureInput in action.GoodsReceipt view
-		 And I enter '4712' into storageLocationInput in action.GoodsReceipt view
+		 And I enter '1093300' into orderNumberInput in action.GoodsReceipt view
 		Then on the Goods Receipt Page: I should see the save button is enabled
 		When I click on clearFormButton in action.GoodsReceipt view 
 		Then on the Goods Receipt Page: I should see the save button is disabled
 		Then on the Goods Receipt Page: I should see all input fields are initial
-
+	
+	Scenario: User enters a storage unit with zero quantity
+		When I enter '00000000109330000002' into storageUnitInput in action.GoodsReceipt view
+		Then I can see quantityInput with value '0,000' in action.GoodsReceipt view
+		 And I can see messageStrip with text 'LE '00000000109330000002' wurde bereits gebucht!' in action.GoodsReceipt view
+		Then on the Goods Receipt Page: I should see the save button is disabled
+		 And I can see quantityInput with editable 'false' in action.GoodsReceipt view
+		When I click on clearFormButton in action.GoodsReceipt view 
+		Then on the Goods Receipt Page: I should see the save button is disabled
+		Then on the Goods Receipt Page: I should see all input fields are initial
+		 And I can see quantityInput with editable 'true' in action.GoodsReceipt view
+	
 	Scenario: User enters storage location VG01
 		When I enter 'VG01' into storageLocationInput in action.GoodsReceipt view
 		Then on the Goods Receipt Page: I can see the error message

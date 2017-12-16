@@ -1,0 +1,71 @@
+{
+	"d": {
+		"results": [{
+			"__metadata": {
+				"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Rowsets('SAPUI5/services/goodsmovement/GoodsMovementCreateXac')",
+				"type": "QueryTemplate.Rowsets"
+			},
+			"DateCreated": "\/Date(1512214755000)\/",
+			"EndDate": "\/Date(1512214754000)\/",
+			"StartDate": "\/Date(1512211154000)\/",
+			"Version": "14.0 SP7 Patch 15 (Jan 13, 2016)",
+			"QueryTemplate": "SAPUI5/services/goodsmovement/GoodsMovementCreateXac",
+			"Rowset": {
+				"results": [{
+					"__metadata": {
+						"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Rowset(QueryTemplate='SAPUI5/services/goodsmovement/GoodsMovementCreateXac',RowsetId=1)",
+						"type": "QueryTemplate.Rowset"
+					},
+					"RowsetId": 1,
+					"QueryTemplate": "SAPUI5/services/goodsmovement/GoodsMovementCreateXac",
+					"Column": {
+						"results": [{
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('LENUM')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "LENUM",
+							"Description": "Storage Unit Number",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 4,
+							"SourceColumn": "LENUM"
+						}]
+					},
+					"Row": {
+						"results": [
+
+						]
+					}
+				}]
+			},
+			"Messages": {
+				"results": [{
+					"__metadata": {
+						"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Messages('Message')",
+						"type": "QueryTemplate.Messages"
+					},
+					"Message": "Warenbewegung 5000583969 angelegt (SZMII_MESSAGES001)"
+				}, {
+					"__metadata": {
+						"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Messages('Message')",
+						"type": "QueryTemplate.Messages"
+					},
+					"Message": "Transportauftrag 0104931431 (Korrekturbuchung) angelegt (SZMII_MESSAGES012)"
+				}, {
+					"__metadata": {
+						"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Messages('Message')",
+						"type": "QueryTemplate.Messages"
+					},
+					"Message": "Transportauftrag 0104931432 (Umbuchung auf Nachlagertyp 998) angelegt (SZMII_MESSAGES009)"
+				}, {
+					"__metadata": {
+						"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Messages('Message')",
+						"type": "QueryTemplate.Messages"
+					},
+					"Message": "Rückmeldung Wareneingang zu Auftrag 1093300 erfolgreich! (SZMII_MESSAGES101)"
+				}]
+			}
+		}]
+	}
+}

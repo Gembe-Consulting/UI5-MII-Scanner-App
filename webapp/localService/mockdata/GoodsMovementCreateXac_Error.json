@@ -1,0 +1,26 @@
+{
+	"d": {
+		"results": [{
+			"__metadata": {
+				"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Rowsets('SAPUI5/services/goodsmovement/GoodsMovementCreateXac')",
+				"type": "QueryTemplate.Rowsets"
+			},
+			"FatalError": "PostingErrorException::Posting error: -Im Lagertyp 900 sind keine negativen Bestände vorgesehen",
+			"DateCreated": "\/Date(1512214279000)\/",
+			"EndDate": "\/Date(1512214273000)\/",
+			"StartDate": "\/Date(1512210673000)\/",
+			"Version": "14.0 SP7 Patch 15 (Jan 13, 2016)",
+			"QueryTemplate": "SAPUI5/services/goodsmovement/GoodsMovementCreateXac",
+			"Rowset": {
+				"results": [
+
+				]
+			},
+			"Messages": {
+				"results": [
+
+				]
+			}
+		}]
+	}
+}

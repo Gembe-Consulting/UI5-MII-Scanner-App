@@ -34,6 +34,10 @@ sap.ui.require([
 							visible: false,
 							controlType: "sap.m.Button",
 							viewName: sViewName,
+							matchers: new PropertyStrictEquals({
+								name: "enabled",
+								value: false
+							}),
 							success: function(oButton) {
 								Opa5.assert.ok(oButton.getVisible(), "The save button is visible");
 								Opa5.assert.ok(!oButton.getEnabled(), "The save button is disabled");
@@ -47,6 +51,10 @@ sap.ui.require([
 							visible: false,
 							controlType: "sap.m.Button",
 							viewName: sViewName,
+							matchers: new PropertyStrictEquals({
+								name: "enabled",
+								value: true
+							}),
 							success: function(oButton) {
 								Opa5.assert.ok(oButton.getVisible(), "The save button is visible");
 								Opa5.assert.ok(oButton.getEnabled(), "The save button is enabled");

@@ -130,21 +130,23 @@ sap.ui.define([
 
 		fnFindScannerUserQry: function(oData, oParams) {
 			var sUserName = oParams.get("Param.1");
-			if(sUserName === "PHIGEM"){
-				return oData;	
+			if (sUserName === "PHIGEM") {
+				return oData;
 			}
 
 			oData.d.results[0].Rowset.results[0].Row.results = [];
 			return oData;
 		},
-		
-		fnxac_ReadPaletteInfo: function(oData, oParams) {
-			var sLeNum = oParams.get("Param.1");
-			if(sLeNum === "00000000109330000001"){
-				return oData;	
-			}
 
-			oData.d.results[0].Rowset.results[0].Row.results = [];
+		fnxac_ReadPaletteInfo: function(oData, oParams) {
+			var sLENum = oParams.get("Param.1"),
+				aLEList = oData.d.results[0].Rowset.results[0].Row.results;
+
+			aLEList = jQuery.grep(aLEList, function(oLE, index) {
+				return oLE.LENUM === sLENum;
+			});
+
+			oData.d.results[0].Rowset.results[0].Row.results = aLEList;
 			return oData;
 		}
 	};

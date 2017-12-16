@@ -14,13 +14,28 @@ sap.ui.require([
 		onGoodsReceiptPage: {
 			baseClass: Common,
 			actions: {
-				iPressTheBackButton: function() {
+				iPressTheCancelButton: function() {
 					return this.waitFor({
-						id: "goodsReceiptPage",
+						id: "cancelButton",
 						viewName: "GoodsReceipt",
 						viewNamespace: "com.mii.scanner.view.action.",
 						actions: new Press(),
-						errorMessage: "Did not find the back nav button on page"
+						errorMessage: "Did not find the cancel button on page"
+					});
+				},
+				iConfirmTheCancelMessageBox: function() {
+					return this.waitFor({
+						searchOpenDialogs: true,
+						viewName: "sap.m.Button",
+						matchers:new PropertyStrictEquals({
+							name: "text",
+							value: "Ja"
+						}),
+						actions: new Press(),
+						success: function() {
+							Opa5.assert.ok(true, "Message box has been closed");
+						},
+						errorMessage: "Did not find the Message Box"
 					});
 				}
 			},
@@ -43,7 +58,7 @@ sap.ui.require([
 			actions: {
 				iPressTheBackButton: function() {
 					return this.waitFor({
-						id: "startOperationPage",
+						id: "cancelButton",
 						viewName: "StartOperation",
 						viewNamespace: "com.mii.scanner.view.action.",
 						actions: new Press(),

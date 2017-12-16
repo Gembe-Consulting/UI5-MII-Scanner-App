@@ -83,7 +83,7 @@ sap.ui.require(["sap/ui/test/opaQunit"], function(opaTest) {
 	opaTest("Should navigate back to homepage from Goods Movement Page", function(Given, When, Then) {
 		// Arrangements
 		// Actions
-		When.onGoodsReceiptPage.iPressTheBackButton();
+		When.onGoodsReceiptPage.iPressTheCancelButton().and.iConfirmTheCancelMessageBox();
 
 		// Assertions
 		Then.onHomePage.theAppShouldNavigateToHomePage();

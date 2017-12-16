@@ -76,6 +76,10 @@ sap.ui.define([
 				// Naviate to home page
 				this.getRouter().navTo("home", {}, !Device.system.phone);
 			}
-		}
+		},
+
+		onNavHome: function() {
+			this.getRouter().navTo("home");
+		},
 	});
 });

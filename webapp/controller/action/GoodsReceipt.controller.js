@@ -25,19 +25,31 @@ sap.ui.define([
 				INFO: null
 			};
 
-			oData = jQuery.extend(this._oInitData);
+			oData = jQuery.extend({}, this._oInitData);
 			oModel.setData(oData);
 			this.setModel(oModel, "data");
 
-			this.setModel(new JSONModel({
+			this._oInitView = {	
+				bStorageUnitValid: true,
 				bValid: false
-			}), "view");
+			};
+			this.setModel(new JSONModel(jQuery.extend({}, this._oInitView)), "view");
 		},
 
 		updateViewControls: function(oData) {
 			var oViewModel = this.getModel("view"),
+				bInputValuesComplete,
+				bNoErrorMessagesActive,
 				bReadyForPosting;
-			bReadyForPosting = this.isInputDataValid(oData);
+
+			// check if all required input data is present
+			bInputValuesComplete = this.isInputDataValid(oData);
+
+			// check if all input data has proper format
+			bNoErrorMessagesActive = this.isMessageModelClean();
+
+			// we are ready for posting once we have complete and proper formatted input
+			bReadyForPosting = bNoErrorMessagesActive && bInputValuesComplete;
 
 			oViewModel.setProperty("/bValid", bReadyForPosting);
 		},
@@ -49,6 +61,8 @@ sap.ui.define([
 			sStorageUnitNumber = this._padStorageUnitNumber(sStorageUnitNumber);
 
 			jQuery.sap.log.info("Start gathering data for palette " + sStorageUnitNumber);
+
+			this.clearLogMessages();
 
 			var fnResolve = function(oData) {
 				var oStorageUnit,
@@ -62,6 +76,15 @@ sap.ui.define([
 					} else {
 
 						throw oBundle.getText("messageTitleStorageUnitNotFound");
+					}
+
+					if (oStorageUnit.SOLLME <= 0) {
+						this.addLogMessage({
+							text: "LE \'" + sStorageUnitNumber + "\' wurde bereits gebucht!"
+						});
+						this.getModel("view").setProperty("/bStorageUnitValid", false);
+					}else{
+						this.getModel("view").setProperty("/bStorageUnitValid", true);
 					}
 
 					this.getModel("data").setData(oStorageUnit);
@@ -130,8 +153,42 @@ sap.ui.define([
 		},
 
 		//SUMISA/Production/trx_GoodsMovementToSap 
+		//http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/goodsmovement/GoodsMovementCreateXac&$format=json&Param.1=00000000109330000003&Param.2=1093300&Param.4=600&Param.5=KG&Param.10=phigem&Param.11=101
 		_postGoodsReceipt: function() {
+			var werk = EscapeSQLString(document.getElementById("werk").value);
+			var matNr = EscapeSQLString(document.getElementById('matNr').value);
+			var menge = formatDecimalForSAP(document.getElementById('txtMenge').value);
+			var meins = EscapeSQLString(document.getElementById('txtMEINS').value);
+			var auftragNr = document.getElementById("txtAuftrag").value;
+			var paletteNr = EscapeSQLString(document.getElementById("txtPalette").value);
+			var lgort = EscapeSQLString(document.getElementById('txtLgOrt').value);
 
+			var queryString = "/XMII/Runner?Transaction=SUMISA/Production/trx_GoodsMovementToSap";
+			queryString += "&BWART=" + bwArt;
+
+			if (paletteNr === "") {
+				// Keine LE-Nr angegeben
+				queryString += "&AUFNR=" + auftragNr;
+				queryString += "&MATNR=" + matNr;
+				queryString += "&MENGE=" + menge;
+				queryString += "&MEINS=" + meins;
+				queryString += "&LGORT=" + lgort;
+				queryString += "&UNAME=" + loginID;
+				queryString += "&OutputParameter=ERROR";
+				queryString += "&Content-Type=text/xml";
+			} else {
+				// LE-Nr angegeben
+				queryString += "&AUFNR=" + auftragNr;
+				queryString += "&LENUM=" + paletteNr;
+				queryString += "&MATNR=" + document.getElementById('matNrLE').value;
+				queryString += "&MENGE=" + menge;
+				queryString += "&MEINS=" + meins;
+				queryString += "&UNAME=" + loginID;
+				queryString += "&OutputParameter=ERROR";
+				queryString += "&Content-Type=text/xml";
+			}
+
+			return loadXML(queryString);
 		},
 
 		isInputDataValid: function(oData) {
@@ -139,6 +196,17 @@ sap.ui.define([
 				return !!oData.AUFNR && !!oData.SOLLME && !!oData.MEINH && !!oData.LGORT && ((!!oData.LENUM && oData.LGORT === "1000") || (!oData.LENUM && oData.LGORT !== "1000"));
 			} else {
 				return false;
+			}
+		},
+
+		isMessageModelClean: function() {
+			var oMessageModel = sap.ui.getCore().getMessageManager().getMessageModel(),
+				aMessages = oMessageModel.getData();
+
+			if (aMessages && aMessages.length > 0) {
+				return false;
+			} else {
+				return true;
 			}
 		},
 
@@ -160,6 +228,7 @@ sap.ui.define([
 		onStorageLocationChange: function(oEvent) {
 			var sStorageLocation = oEvent.getParameter("value").toUpperCase(),
 				oBundle = this.getResourceBundle();
+
 			if (!this.isStorageLocationAllowed(sStorageLocation)) {
 				//oEvent.getSource().setValue("");
 				MessageBox.error(oBundle.getText("messageTextWrongStorageLocation", [sStorageLocation]));
@@ -169,8 +238,20 @@ sap.ui.define([
 		},
 
 		onClearFormPress: function() {
-			this.getModel("data").setData(jQuery.extend(this._oInitData));
-			this.updateViewControls(this.getModel("data").getData());
+			var oNewInitialData = jQuery.extend({}, this._oInitData),
+				oDataModel = this.getModel("data"),
+				oNewInitialView = jQuery.extend({}, this._oInitView),
+				oViewModel = this.getModel("view");
+
+			oDataModel.setProperty("/", oNewInitialData);
+			// force update to also override invalid values
+			oDataModel.updateBindings(true);
+			
+			oViewModel.setProperty("/", oNewInitialView);
+
+			this.clearLogMessages();
+
+			
 		},
 
 		_padStorageUnitNumber: function(sStorageUnitNumber) {
