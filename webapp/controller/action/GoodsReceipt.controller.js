@@ -29,13 +29,25 @@ sap.ui.define([
 			oModel.setData(oData);
 			this.setModel(oModel, "data");
 
-			this._oInitView = {	
+			this._oInitView = {
 				bStorageUnitValid: true,
 				bValid: false
 			};
 			this.setModel(new JSONModel(jQuery.extend({}, this._oInitView)), "view");
+
+
+			jQuery(document).on("scannerDetectionComplete", jQuery.proxy(this.handleBarcodeScanned, this));
+
+
 		},
 
+		handleBarcodeScanned: function(sScannedString) {
+			var oScannerInputType;
+			
+			oScannerInputType = this.getScannerInputType(sScannedString);
+			
+			alert("Sie haben \'" + oScannerInputType.name + "\' gescannt.\nInhalt: \'"+ sScannedString + "\'");
+		},
 		updateViewControls: function(oData) {
 			var oViewModel = this.getModel("view"),
 				bInputValuesComplete,
@@ -83,7 +95,7 @@ sap.ui.define([
 							text: "LE \'" + sStorageUnitNumber + "\' wurde bereits gebucht!"
 						});
 						this.getModel("view").setProperty("/bStorageUnitValid", false);
-					}else{
+					} else {
 						this.getModel("view").setProperty("/bStorageUnitValid", true);
 					}
 
@@ -246,12 +258,11 @@ sap.ui.define([
 			oDataModel.setProperty("/", oNewInitialData);
 			// force update to also override invalid values
 			oDataModel.updateBindings(true);
-			
+
 			oViewModel.setProperty("/", oNewInitialView);
 
 			this.clearLogMessages();
 
-			
 		},
 
 		_padStorageUnitNumber: function(sStorageUnitNumber) {

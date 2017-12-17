@@ -8,6 +8,10 @@ sap.ui.define([
 
 	return PageBaseController.extend("com.mii.scanner.controller.action.ActionBaseController", {
 
+		getScannerInputType: function(sScannedString) {
+
+		},
+
 		onSave: function() {
 			jQuery.sap.log.error("This onSave function is a placeholder. Please make sure to implement this function in your action page controller!");
 			MessageToast.show(this.getResourceText("messageSuccessBaseActionController"));
@@ -25,10 +29,10 @@ sap.ui.define([
 		addLogMessage: function(oMessage) {
 			var oMessageStripContainer = this.byId("messageStripContainer"),
 				oMsgStrip;
-				
+
 			this.clearLogMessages();
-			
-			oMsgStrip = new MessageStrip(this.createId("messageStrip"),{
+
+			oMsgStrip = new MessageStrip(this.createId("messageStrip"), {
 				text: oMessage.text || "Allgemeiner Fehler",
 				showCloseButton: true,
 				showIcon: true,
@@ -37,16 +41,15 @@ sap.ui.define([
 
 			oMessageStripContainer.addContent(oMsgStrip);
 		},
-		
-		
-		clearLogMessages:function(){
+
+		clearLogMessages: function() {
 			var oMsgStrip = this.byId("messageStrip"),
 				oMessageStripContainer = this.byId("messageStripContainer");
-				
-			if(oMsgStrip){
-				oMsgStrip.destroy();	
+
+			if (oMsgStrip) {
+				oMsgStrip.destroy();
 			}
-			
+
 			oMessageStripContainer.destroyContent();
 		},
 

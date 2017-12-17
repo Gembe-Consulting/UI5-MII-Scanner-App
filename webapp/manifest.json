@@ -249,6 +249,10 @@
 				"uri": "libs/momentjs/locale/de.js",
 				"name": "locale/de.js",
 				"version": "2.19.1"
+			}, {
+				"uri": "libs/scannerdetection/scannerdetection.js",
+				"name": "scannerdetection.js",
+				"version": "2.19.1"
 			}],
 			"css": []
 		}

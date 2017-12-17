@@ -27,9 +27,39 @@ sap.ui.require([
 					return this.waitFor({
 						searchOpenDialogs: true,
 						viewName: "sap.m.Button",
-						matchers:new PropertyStrictEquals({
+						matchers: new PropertyStrictEquals({
 							name: "text",
 							value: "Ja"
+						}),
+						actions: new Press(),
+						success: function() {
+							Opa5.assert.ok(true, "Message box has been closed");
+						},
+						errorMessage: "Did not find the Message Box"
+					});
+				},
+				iScanTheBarcode: function(sBarcodeString) {
+					debugger;
+					return this.waitFor({
+						success: function() {
+							$(document).scannerDetection(sBarcodeString);
+						}
+					});
+					return this.waitFor({
+						id: "cancelButton",
+						viewName: "GoodsReceipt",
+						viewNamespace: "com.mii.scanner.view.action.",
+						actions: new Press(),
+						errorMessage: "Did not find the cancel button on page"
+					});
+				},
+				iConfirmTheMessageBox: function() {
+					return this.waitFor({
+						searchOpenDialogs: true,
+						viewName: "sap.m.Button",
+						matchers: new PropertyStrictEquals({
+							name: "text",
+							value: "Ok"
 						}),
 						actions: new Press(),
 						success: function() {
@@ -47,6 +77,17 @@ sap.ui.require([
 						viewNamespace: "com.mii.scanner.view.action.",
 						success: function(oGRPage) {
 							Opa5.assert.ok(true, "Goods Receipt Action Page loaded.");
+						},
+						errorMessage: "Failed to load Goods Receipt Action Page."
+					});
+				},
+				iShouldSeeTheMessageBox: function(sExpectedMessageText) {
+					debugger;
+					return this.waitFor({
+						searchOpenDialogs: true,
+						viewName: "sap.m.Button",
+						success: function(oMessageBox) {
+							Opa5.assert.ok(true, "Message Box found");
 						},
 						errorMessage: "Failed to load Goods Receipt Action Page."
 					});

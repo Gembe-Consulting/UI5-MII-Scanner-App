@@ -51,13 +51,18 @@ sap.ui.require(["sap/ui/test/opaQunit"], function(opaTest) {
 
 	opaTest("Should find the correct input field for STORAGE BIN", function(Given, When, Then) {
 		// Arrangements
-		Given.iTeardownMyApp().and.iStartTheApp({
+		Given.iTeardownMyApp();
+		Given.iStartTheApp({
 				hash: "/Start/Materialbewegung/WE",
 				illumLoginName: "phigem"
-			});
-		When.onGoodsReceiptPage
+		});
+		
 		// Actions
+		//When.onHomePage.iEnterNewHashToAnotherPage("/Start/Materialbewegung/WE");
+		When.onGoodsReceiptPage.iScanTheBarcode("109330000001");
+		
 		// Assertions
+		Then.onGoodsReceiptPage.iShouldSeeTheMessageBox("Storage Unit 109330000001 scanned");
 	});
 
 	opaTest("Should find the correct input field for PROCESS ORDER / PHASE", function(Given, When, Then) {
