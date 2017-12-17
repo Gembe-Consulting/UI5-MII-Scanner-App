@@ -7,9 +7,43 @@ sap.ui.define([
 	"use strict";
 
 	return PageBaseController.extend("com.mii.scanner.controller.action.ActionBaseController", {
+		constructor: function(sId, mProperties) {
+			this.mScannerInputTypes = {
+				storageUnit: {
+					key: "LENUM",
+					name: "Storage Unit",
+					validationExpression: /^(0{8}|.{0})10\d{10}/gm
+				},
+				storageLocation: {
+					key: "LGORT",
+					name: "Storage Location",
+					validationExpression: /^[a-zA-z0-9]{4}$/gm
+				},
+				userName: {
+					key: "USER",
+					name: "Username",
+					validationExpression: /^[a-zA-z0-9]{8}$/gm
+				},
+				orderNumberOperation: {
+					key: "AUFNR_VORNR",
+					name: "Order Number and Operation",
+					validationExpression: /^1\d{7}\/\d{4}$/gm
+				}
+			};
+		},
 
 		getScannerInputType: function(sScannedString) {
+			var oType;
 
+			jQuery.each(this.mScannerInputTypes, function(sName, oValue) {
+				var regxCheck = new RegExp(oValue.validationExpression);
+				if(regxCheck.test(sScannedString)){
+					oType = oValue;
+					return false;
+				}
+			});
+
+			return oType;
 		},
 
 		onSave: function() {
