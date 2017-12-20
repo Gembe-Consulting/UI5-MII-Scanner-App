@@ -2,8 +2,9 @@ sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
 	"com/mii/scanner/model/models",
-	"com/mii/scanner/controller/ErrorHandler"
-], function(UIComponent, Device, models, ErrorHandler) {
+	"com/mii/scanner/controller/ErrorHandler",
+	"sap/m/MessageBox"
+], function(UIComponent, Device, models, ErrorHandler,MessageBox) {
 	"use strict";
 
 	return UIComponent.extend("com.mii.scanner.Component", {
@@ -195,10 +196,13 @@ sap.ui.define([
 		setupScannerDetection: function() {
 			jQuery(document).scannerDetection({
 				onComplete: function(sString) {
-					alert(sString);
+					jQuery.sap.log.info("Input from Scanner: " + sString, "Event: onComplete", "ScannerDetection");
 				},
-				onError: function(event) { // Callback after detection of a unsuccessfull scanning (scanned string in parameter)
-					jQuery.sap.log.error("Scan war nicht erfolgreich: " + event.toString(), "Event: onError", "ScannerDetection");
+				onError: function(sString) { // Callback after detection of a unsuccessfull scanning (scanned string in parameter)
+					//MessageBox.error("Das Lesen des Barcode entspricht icht den angegebenen Restriktionen.\nInhalt: \'" + sString + "\'", {
+					//	title: "Fehler beim Einlesen des Barcodes"
+					//});
+					jQuery.sap.log.error("Scan war nicht erfolgreich: " + sString, "Event: onError", "ScannerDetection");
 				},
 				onReceive: function(event, a, b, c) { // Callback after receiving and processing a char (scanned char in parameter)
 					jQuery.sap.log.info("Key stroke detected from Scanner: " + event.key + " (" + event.keyCode + ")", "Event: onReceive", "ScannerDetection");
@@ -208,10 +212,10 @@ sap.ui.define([
 				},
 				timeBeforeScanTest: 100, // Wait duration (ms) after keypress event to check if scanning is finished. default: 100
 				avgTimeByChar: 30, // Average time (ms) between 2 chars. Used to do difference between keyboard typing and scanning. default : 30
-				minLength: 6, // Minimum length for a scanning. default: 6
+				minLength: 4, // Minimum length for a scanning. default: 6
 				endChar: [13], // Chars to remove and means end of scanning
 				startChar: [], // Chars to remove and means start of scanning
-				ignoreIfFocusOn: false, // do not handle scans if the currently focused element matches this selector
+				ignoreIfFocusOn: ".noScannerInput", // do not handle scans if the currently focused element matches this selector
 				scanButtonKeyCode: false, // Key code of the scanner hardware button (if the scanner button a acts as a key itself) 
 				scanButtonLongPressThreshold: 3, // How many times the hardware button should issue a pressed event before a barcode is read to detect a longpress
 				onScanButtonLongPressed: false, // Callback after detection of a successfull scan while the scan button was pressed and held down

@@ -79,7 +79,9 @@
 			};
 			self.isFocusOnIgnoredElement = function() {
 				if (!options.ignoreIfFocusOn) return false;
-				if (typeof options.ignoreIfFocusOn === 'string') return $(':focus').is(options.ignoreIfFocusOn);
+				if (typeof options.ignoreIfFocusOn === 'string') {
+					return $(':focus').is(options.ignoreIfFocusOn);
+				}
 				if (typeof options.ignoreIfFocusOn === 'object' && options.ignoreIfFocusOn.length) {
 					var focused = $(':focus');
 					for (var i = 0; i < options.ignoreIfFocusOn.length; i++) {

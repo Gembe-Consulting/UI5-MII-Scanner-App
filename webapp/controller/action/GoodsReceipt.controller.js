@@ -35,18 +35,26 @@ sap.ui.define([
 			};
 			this.setModel(new JSONModel(jQuery.extend({}, this._oInitView)), "view");
 
-
-			jQuery(document).on("scannerDetectionComplete", jQuery.proxy(this.handleBarcodeScanned, this));
-
+			jQuery(document).on("scannerDetectionComplete", this.handleBarcodeScanned.bind(this));
 
 		},
 
-		handleBarcodeScanned: function(sScannedString) {
-			var oScannerInputType;
-			
+		handleBarcodeScanned: function(oEvent, oData) {
+			var sScannedString = oData.string,
+				oScannerInputType;
+
 			oScannerInputType = this.getScannerInputType(sScannedString);
-			
-			alert("Sie haben \'" + oScannerInputType.name + "\' gescannt.\nInhalt: \'"+ sScannedString + "\'");
+
+			if (oScannerInputType) {
+				sap.m.MessageBox.success("Barcode enthält folgende Information: \'" + sScannedString + "\'", {
+					title: "Sie haben \'" + oScannerInputType.name + "\' gescannt."
+				});
+			} else {
+				MessageBox.warning("Ihr Barcode konnte zwar gelesen, aber nicht zugeordnet werden.\nInhalt: \'" + sScannedString + "\'\n\nUm welchen Inhalt handelt es sich hier?", {
+					title: "Barcode Typ nicht erkannt!"
+				});
+			}
+
 		},
 		updateViewControls: function(oData) {
 			var oViewModel = this.getModel("view"),

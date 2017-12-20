@@ -22,12 +22,12 @@ sap.ui.define([
 				userName: {
 					key: "USER",
 					name: "Username",
-					validationExpression: /^[a-zA-z0-9]{8}$/gm
+					validationExpression: /^[a-zA-z0-9]{6,8}$/gm
 				},
 				orderNumberOperation: {
 					key: "AUFNR_VORNR",
 					name: "Order Number and Operation",
-					validationExpression: /^1\d{7}\/\d{4}$/gm
+					validationExpression: /^1\d{6}\/\d{4}$/gm
 				}
 			};
 		},
