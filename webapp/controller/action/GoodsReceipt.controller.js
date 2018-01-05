@@ -41,7 +41,8 @@ sap.ui.define([
 
 		handleBarcodeScanned: function(oEvent, oData) {
 			var sScannedString = oData.string,
-				oScannerInputType;
+				oScannerInputType,
+				oControl;
 
 			oScannerInputType = this.getScannerInputType(sScannedString);
 
@@ -49,6 +50,10 @@ sap.ui.define([
 				sap.m.MessageBox.success("Barcode enthält folgende Information: \'" + sScannedString + "\'", {
 					title: "Sie haben \'" + oScannerInputType.name + "\' gescannt."
 				});
+				debugger;
+				oControl = this.getControlByScannerInputType(oScannerInputType);
+				//oControl.setValue(sScannedString);
+				oControl.fireChangeEvent(sScannedString);
 			} else {
 				MessageBox.warning("Ihr Barcode konnte zwar gelesen, aber nicht zugeordnet werden.\nInhalt: \'" + sScannedString + "\'\n\nUm welchen Inhalt handelt es sich hier?", {
 					title: "Barcode Typ nicht erkannt!"
@@ -56,6 +61,21 @@ sap.ui.define([
 			}
 
 		},
+
+		getControlByScannerInputType: function(oInputType) {
+			return this.getIdByInputType(oInputType);
+		},
+
+		getIdByInputType: function(oInputType) {
+			switch (oInputType.key) {
+				case "LENUM":
+					return this.byId("storageUnitInput");
+					break;
+				default:
+					return null;
+			}
+		},
+
 		updateViewControls: function(oData) {
 			var oViewModel = this.getModel("view"),
 				bInputValuesComplete,
@@ -94,7 +114,6 @@ sap.ui.define([
 					if (sResultList.length === 1) {
 						oStorageUnit = this._formatStorageUnitData(oData.d.results[0].Rowset.results[0].Row.results[0]);
 					} else {
-
 						throw oBundle.getText("messageTitleStorageUnitNotFound");
 					}
 

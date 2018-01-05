@@ -78,12 +78,14 @@
 				$self.unbind('keypress.scannerDetection');
 			};
 			self.isFocusOnIgnoredElement = function() {
-				if (!options.ignoreIfFocusOn) return false;
+				if (!options.ignoreIfFocusOn) {
+					return false;
+				}
 				if (typeof options.ignoreIfFocusOn === 'string') {
-					return $(':focus').is(options.ignoreIfFocusOn);
+					return $(document.activeElement).parent().parent().is(options.ignoreIfFocusOn);
 				}
 				if (typeof options.ignoreIfFocusOn === 'object' && options.ignoreIfFocusOn.length) {
-					var focused = $(':focus');
+					var focused = $(document.activeElement).parent().parent();
 					for (var i = 0; i < options.ignoreIfFocusOn.length; i++) {
 						if (focused.is(options.ignoreIfFocusOn[i])) {
 							return true;
@@ -106,8 +108,11 @@
 				// If all condition are good (length, time...), call the callback and re-initialize the plugin for next scanning
 				// Else, just re-initialize
 				if (stringWriting.length >= options.minLength && lastCharTime - firstCharTime < stringWriting.length * options.avgTimeByChar) {
-					if (options.onScanButtonLongPressed && scanButtonCounter > options.scanButtonLongPressThreshold) options.onScanButtonLongPressed.call(self, stringWriting, scanButtonCounter);
-					else if (options.onComplete) options.onComplete.call(self, stringWriting, scanButtonCounter);
+					if (options.onScanButtonLongPressed && scanButtonCounter > options.scanButtonLongPressThreshold) {
+						options.onScanButtonLongPressed.call(self, stringWriting, scanButtonCounter);
+					} else if (options.onComplete) {
+						options.onComplete.call(self, stringWriting, scanButtonCounter);
+					}
 					$self.trigger('scannerDetectionComplete', {
 						string: stringWriting
 					});
@@ -150,9 +155,15 @@
 				});
 
 			}).bind('keypress.scannerDetection', function(e) {
-				if (this.isFocusOnIgnoredElement()) return;
-				if (options.stopPropagation) e.stopImmediatePropagation();
-				if (options.preventDefault) e.preventDefault();
+				if (this.isFocusOnIgnoredElement()) {
+					return;
+				}
+				if (options.stopPropagation) {
+					e.stopImmediatePropagation();
+				}
+				if (options.preventDefault) {
+					e.preventDefault();
+				}
 
 				if (firstCharTime && options.endChar.indexOf(e.which) !== -1) {
 					e.preventDefault();
