@@ -41,10 +41,11 @@ Feature: Creating goods receipt posting to SAP ERP
 		When I enter '4711' into storageLocationInput in action.GoodsReceipt view
 		Then I can see storageUnitInput with value '' in action.GoodsReceipt view
 		 And I can see storageUnitInput with editable 'false' in action.GoodsReceipt view
-		When I enter '1000' into storageLocationInput in action.GoodsReceipt view
-		Then I can see storageUnitInput with editable 'true' in action.GoodsReceipt view
 		When I enter '600,000' into quantityInput in action.GoodsReceipt view
 		And I enter 'KG' into unitOfMeasureInput in action.GoodsReceipt view
+		Then on the Goods Receipt Page: I should see the save button is enabled
+		When I enter '1000' into storageLocationInput in action.GoodsReceipt view
+		Then I can see storageUnitInput with editable 'true' in action.GoodsReceipt view
 		Then on the Goods Receipt Page: I should see the save button is disabled
 		When I enter '4712' into storageLocationInput in action.GoodsReceipt view
 		Then on the Goods Receipt Page: I should see the save button is enabled

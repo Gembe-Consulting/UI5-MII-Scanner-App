@@ -10,20 +10,20 @@ sap.ui.define([
 
 		sapType: sapType,
 
+		_aDisallowedStorageLocations: ["VG01"],
+
+		_oInitData: {
+			LENUM: null,
+			AUFNR: null,
+			SOLLME: 0.0,
+			MEINH: null,
+			LGORT: null,
+			INFO: null
+		},
+
 		onInit: function() {
 			var oModel = new JSONModel(),
 				oData;
-
-			this._aDisallowedStorageLocations = ["VG01"];
-
-			this._oInitData = {
-				LENUM: null,
-				AUFNR: null,
-				SOLLME: 0.0,
-				MEINH: null,
-				LGORT: null,
-				INFO: null
-			};
 
 			oData = jQuery.extend({}, this._oInitData);
 			oModel.setData(oData);
@@ -47,17 +47,12 @@ sap.ui.define([
 			oScannerInputType = this.getScannerInputType(sScannedString);
 
 			if (oScannerInputType) {
-				sap.m.MessageBox.success("Barcode enthält folgende Information: \'" + sScannedString + "\'", {
-					title: "Sie haben \'" + oScannerInputType.name + "\' gescannt."
-				});
-				debugger;
+				jQuery.sap.log.info("Barcode enthält folgende Information: \'" + sScannedString + "\' Sie haben \'" + oScannerInputType.name + "\' gescannt.");
 				oControl = this.getControlByScannerInputType(oScannerInputType);
 				//oControl.setValue(sScannedString);
 				oControl.fireChangeEvent(sScannedString);
 			} else {
-				MessageBox.warning("Ihr Barcode konnte zwar gelesen, aber nicht zugeordnet werden.\nInhalt: \'" + sScannedString + "\'\n\nUm welchen Inhalt handelt es sich hier?", {
-					title: "Barcode Typ nicht erkannt!"
-				});
+				jQuery.sap.log.warning("Ihr Barcode konnte zwar gelesen, aber nicht zugeordnet werden.\nInhalt: \'" + sScannedString + "\'");
 			}
 
 		},
