@@ -94,8 +94,10 @@ Feature: Creating goods receipt posting to SAP ERP
 		 And I enter '300,000' into quantityInput in action.GoodsReceipt view
 		 And I click on saveButton in action.GoodsReceipt view 
 		Then I can see messageStrip with text 'Warenbewegung wurde erfolgreich gebucht!' in action.GoodsReceipt view 
+		Then on the Goods Receipt Page: I should see the save button is disabled
+		Then on the Goods Receipt Page: I should see all input fields are initial
 		
-	Scenario: User receives error from ERP when posting storage unit
-		When I enter '00000000109330000004' into storageUnitInput in action.GoodsReceipt view
+	Scenario: User receives error when posting an already full storage unit
+		When I enter '00000000109330000002' into storageUnitInput in action.GoodsReceipt view
 		 And I click on saveButton in action.GoodsReceipt view 
 		Then I can see messageStrip with text 'Warenbewegung mit LE '00000000109330000004' konnte nicht gebucht werden!' in action.GoodsReceipt view 

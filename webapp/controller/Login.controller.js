@@ -126,6 +126,10 @@ sap.ui.define([
 			this.getOwnerComponent().testUserLoginName(sUserInput)
 				.then(fnResolveHandler, fnRejectHandler);
 
+		},
+		
+		applicationVersion:function(){
+			return "bla 1.7";
 		}
 
 	});

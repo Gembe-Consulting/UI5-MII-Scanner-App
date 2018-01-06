@@ -163,8 +163,10 @@ sap.ui.define([
 
 		_setUserModel: function(oLoginUser) {
 			var oModel = this.getModel("user");
-			// enhance user Model
-			oLoginUser.lastLoginTimestamp = new Date();
+			
+			// enhance user Model - disabled, because of not requested feature
+			//oLoginUser.lastLoginTimestamp = new Date();
+			
 			// Set user model
 			oModel.setProperty("/", oLoginUser);
 
