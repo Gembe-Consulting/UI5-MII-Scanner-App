@@ -81,7 +81,16 @@
 				"settings": {
 					"preventInitialLoad": true
 				}
+			},
+			"goodsReceipt": {
+				"dataSource": "illuminatorService",
+				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/goodsmovement/GoodsMovementCreateXac",
+				"type": "mii.util.model.illum.QueryTemplateModel",
+				"settings": {
+					"preventInitialLoad": true
+				}
 			}
+			
 		},
 		"routing": {
 			"config": {

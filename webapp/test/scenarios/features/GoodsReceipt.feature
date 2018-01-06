@@ -65,10 +65,10 @@ Feature: Creating goods receipt posting to SAP ERP
 		Then on the Goods Receipt Page: I should see the save button is disabled
 		Then on the Goods Receipt Page: I should see all input fields are initial
 	
-	Scenario: User enters a storage unit with zero quantity
+	Scenario: User enters a storage unit with zero remaining quantity
 		When I enter '00000000109330000002' into storageUnitInput in action.GoodsReceipt view
 		Then I can see quantityInput with value '0,000' in action.GoodsReceipt view
-		 And I can see messageStrip with text 'LE '00000000109330000002' wurde bereits gebucht!' in action.GoodsReceipt view
+		 And I can see messageStrip with text 'Palette '00000000109330000002' wurde bereits gebucht!' in action.GoodsReceipt view
 		Then on the Goods Receipt Page: I should see the save button is disabled
 		 And I can see quantityInput with editable 'false' in action.GoodsReceipt view
 		When I click on clearFormButton in action.GoodsReceipt view 
@@ -81,3 +81,21 @@ Feature: Creating goods receipt posting to SAP ERP
 		Then on the Goods Receipt Page: I can see the error message
 		When on the Goods Receipt Page: I close the error message
 		Then I can see storageLocationInput with valueState 'Error' in action.GoodsReceipt view
+		
+	Scenario: User is successfully posting full storage unit quantity
+		When I enter '00000000109330000001' into storageUnitInput in action.GoodsReceipt view
+		 And I click on saveButton in action.GoodsReceipt view 
+		Then I can see messageStrip with text 'Warenbewegung wurde erfolgreich gebucht!' in action.GoodsReceipt view 
+		Then on the Goods Receipt Page: I should see the save button is disabled
+		Then on the Goods Receipt Page: I should see all input fields are initial
+		
+	Scenario: User is successfully posting partial storage unit quantity
+		When I enter '00000000109330000003' into storageUnitInput in action.GoodsReceipt view
+		 And I enter '300,000' into quantityInput in action.GoodsReceipt view
+		 And I click on saveButton in action.GoodsReceipt view 
+		Then I can see messageStrip with text 'Warenbewegung wurde erfolgreich gebucht!' in action.GoodsReceipt view 
+		
+	Scenario: User receives error from ERP when posting storage unit
+		When I enter '00000000109330000004' into storageUnitInput in action.GoodsReceipt view
+		 And I click on saveButton in action.GoodsReceipt view 
+		Then I can see messageStrip with text 'Warenbewegung mit LE '00000000109330000004' konnte nicht gebucht werden!' in action.GoodsReceipt view 

@@ -63,7 +63,7 @@ sap.ui.require([
 						});
 					},
 					iCanSeeTheErrorMessage: function() {
-						var sErrorMessage = "Lagerort VG01 ist nicht für Buchungen vorgesehen.\nBitte korrigieren sie ihre Eingabe!";
+						var sErrorMessage = "Lagerort 'VG01' ist nicht für Buchungen vorgesehen.\nBitte korrigieren sie ihre Eingabe!";
 						return this.waitFor({
 							searchOpenDialogs: true,
 							viewName: "sap.m.MessageBox",

@@ -39,9 +39,10 @@ sap.ui.define([
 					if (!oResponse.success) {
 						sMessage = Response.status + ": " + oResponse.error || "Fatal application exception.";
 						sStatusCode = oResponse.statusCode || "999";
-						oXhr.respond(sStatusCode, mHeaders, sMessage);
 
 						jQuery.sap.log.debug("MockServer: response sent with: " + sStatusCode + ": " + sMessage, JSON.stringify(oResponse.data), "MII-Mockserver");
+
+						oXhr.respond(sStatusCode, mHeaders, sMessage);
 
 						return false;
 					}
@@ -53,9 +54,9 @@ sap.ui.define([
 						jQuery.sap.log.debug("NoPost-Processing of data", "MII-Mockserver");
 					}
 
-					oXhr.respond(200, mHeaders, JSON.stringify(oResponse.data));
-
 					jQuery.sap.log.debug("MockServer: response sent with: 200:", JSON.stringify(oResponse.data), "MII-Mockserver");
+
+					oXhr.respond(200, mHeaders, JSON.stringify(oResponse.data));
 
 					return true;
 				}
@@ -148,7 +149,19 @@ sap.ui.define([
 
 			oData.d.results[0].Rowset.results[0].Row.results = aLEList;
 			return oData;
-		}
+		},
+
+		fnGoodsMovementCreateXac: function(oData, oParams) {
+			var oUriParameters = jQuery.sap.getUriParameters(),
+				sErrorMessage = oUriParameters.get("applicationError");
+			
+			if(sErrorMessage){
+				oData.d.results[0].FatalError = "Forcefull application error:: \'" + sErrorMessage + "\'";
+			}
+			
+			return oData;
+
+		},
 	};
 
 });
