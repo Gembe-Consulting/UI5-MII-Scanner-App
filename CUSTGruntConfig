@@ -1,0 +1,294 @@
+{
+  "pkg": {
+    "name": "grunt-build",
+    "version": "0.0.1",
+    "description": "Grunt build",
+    "private": true,
+    "devDependencies": {
+      "@sap/grunt-sapui5-bestpractice-build": ""
+    }
+  },
+  "dir": {
+    "appFolder": "webapp",
+    "dist": "dist",
+    "root": "com/mii/scanner",
+    "tmpDir": "dist/tmp",
+    "tmpDirDbg": "dist/tmp-dbg"
+  },
+  "openui5_preload": {
+    "preloadDbg": {
+      "options": {
+        "resources": {
+          "cwd": "dist/tmp-dbg",
+          "src": [
+            "**/*.js",
+            "!test/**",
+            "!localService/**",
+            "!neo-app.json",
+            "!**/node_modules/**",
+            "!test.html"
+          ],
+          "prefix": "com/mii/scanner"
+        },
+        "compress": false,
+        "dest": "dist/tmp-dbg"
+      },
+      "components": true
+    },
+    "preloadTmp": {
+      "options": {
+        "resources": {
+          "cwd": "dist/tmp",
+          "src": [
+            "**/*.js",
+            "**/*.fragment.html",
+            "**/*.fragment.json",
+            "**/*.fragment.xml",
+            "**/*.view.html",
+            "**/*.view.json",
+            "**/*.view.xml",
+            "**/*.properties",
+            "manifest.json",
+            "!test/**",
+            "!**/node_modules/**",
+            "!neo-app.json",
+            "!localService/**"
+          ],
+          "prefix": "com/mii/scanner"
+        },
+        "compress": false,
+        "dest": "dist/tmp"
+      },
+      "components": true
+    },
+    "preloadRootProject": {
+      "options": {
+        "resources": {
+          "cwd": "webapp",
+          "src": [
+            "**/*.js",
+            "**/*.fragment.html",
+            "**/*.fragment.json",
+            "**/*.fragment.xml",
+            "**/*.view.html",
+            "**/*.view.json",
+            "**/*.view.xml",
+            "!test/**",
+            "!**/node_modules/**",
+            "!neo-app.json",
+            "!localService/**"
+          ],
+          "prefix": "com/mii/scanner"
+        },
+        "compress": false,
+        "dest": "webapp"
+      },
+      "components": true
+    }
+  },
+  "clean": {
+    "dist": "dist/"
+  },
+  "copy": {
+    "copyToDbg": {
+      "files": [
+        {
+          "expand": true,
+          "src": [
+            "**/*.js",
+            "!test/**",
+            "!localService/**",
+            "!neo-app.json",
+            "!**/node_modules/**",
+            "!test.html"
+          ],
+          "dest": "dist/tmp-dbg",
+          "cwd": "webapp"
+        },
+        {
+          "expand": true,
+          "src": "**/*.css",
+          "dest": "dist/tmp-dbg",
+          "cwd": "webapp"
+        }
+      ]
+    },
+    "copyToTmp": {
+      "files": [
+        {
+          "expand": true,
+          "src": [
+            "**/*.js",
+            "**/*.fragment.html",
+            "**/*.fragment.json",
+            "**/*.fragment.xml",
+            "**/*.view.html",
+            "**/*.view.json",
+            "**/*.view.xml",
+            "**/*.properties",
+            "manifest.json",
+            "!test/**",
+            "!**/node_modules/**",
+            "!neo-app.json",
+            "!localService/**"
+          ],
+          "dest": "dist/tmp",
+          "cwd": "webapp"
+        },
+        {
+          "expand": true,
+          "src": "**/*.css",
+          "dest": "dist/tmp",
+          "cwd": "webapp"
+        },
+        {
+          "expand": true,
+          "src": "localService/metadata.xml",
+          "dest": "dist/tmp",
+          "cwd": "webapp"
+        },
+        {
+          "expand": true,
+          "src": "**/*",
+          "dest": "dist/tmp",
+          "cwd": "webapp"
+        }
+      ]
+    },
+    "copyDbgToDist": {
+      "files": [
+        {
+          "expand": true,
+          "src": [
+            "**/*.js",
+            "!test/**",
+            "!localService/**",
+            "!neo-app.json",
+            "!**/node_modules/**",
+            "!test.html"
+          ],
+          "dest": "dist",
+          "cwd": "dist/tmp-dbg"
+        },
+        {
+          "expand": true,
+          "src": "**/*.css",
+          "dest": "dist",
+          "cwd": "dist/tmp-dbg"
+        }
+      ]
+    },
+    "copyTmpToDist": {
+      "files": [
+        {
+          "expand": true,
+          "src": "Component-preload.js",
+          "dest": "dist",
+          "cwd": "dist/tmp"
+        },
+        {
+          "expand": true,
+          "src": [
+            "**/*",
+            "!node_modules/**",
+            "!test/**",
+            "!localService/**"
+          ],
+          "dest": "dist",
+          "cwd": "dist/tmp"
+        }
+      ]
+    }
+  },
+  "mkdir": {
+    "dist": {
+      "options": {
+        "create": [
+          "dist"
+        ]
+      }
+    }
+  },
+  "cssmin": {
+    "build": {
+      "files": [
+        {
+          "expand": true,
+          "src": "**/*.css",
+          "dest": "dist",
+          "cwd": "webapp"
+        }
+      ]
+    }
+  },
+  "uglify": {
+    "uglifyTmp": {
+      "files": [
+        {
+          "expand": true,
+          "src": "**/*.js",
+          "dest": "dist/tmp",
+          "cwd": "webapp"
+        }
+      ]
+    },
+    "uglifyPreload": {
+      "files": [
+        {
+          "expand": true,
+          "src": "dist/tmp/Component-preload.js"
+        }
+      ]
+    },
+    "uglifyRootPreload": {
+      "files": [
+        {
+          "expand": true,
+          "src": "webapp/Component-preload.js"
+        }
+      ]
+    }
+  },
+  "codevalidation": {
+    "di.code-validation.js": {
+      "options": {
+        "projectPath": ".",
+        "ignoredPaths": [
+          "node_modules",
+          "dist"
+        ],
+        "reporter": "problems_reporter",
+        "reporterOptions": {
+          "outputFile": "dist/di.code-validation.core_issues.json"
+        },
+        "validators": {
+          "@sap/di.code-validation.js": {
+            "extensions": [
+              ".js"
+            ]
+          }
+        }
+      }
+    },
+    "di.code-validation.xml": {
+      "options": {
+        "projectPath": ".",
+        "ignoredPaths": [
+          "node_modules",
+          "dist"
+        ],
+        "reporter": "problems_reporter",
+        "reporterOptions": {
+          "outputFile": "dist/di.code-validation.core_issues.json"
+        },
+        "validators": {
+          "@sap/di.code-validation.xml": {
+            "extensions": [
+              ".xml"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
