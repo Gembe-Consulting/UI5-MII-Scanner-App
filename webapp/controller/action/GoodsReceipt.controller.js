@@ -190,7 +190,7 @@ sap.ui.define([
 						title: err
 					});
 				} finally {
-					this.onClearFormPress(true /*bKeepMessageStrip*/);
+					this.onClearFormPress({}, true /*bKeepMessageStrip*/);
 				}
 			}.bind(this);
 
@@ -329,7 +329,7 @@ sap.ui.define([
 			this.updateViewControls(this.getModel("data").getData());
 		},
 
-		onClearFormPress: function(bKeepMessageStrip) {
+		onClearFormPress: function(oEvent, bKeepMessageStrip) {
 			var oNewInitialData = jQuery.extend({}, this._oInitData),
 				oDataModel = this.getModel("data"),
 				oNewInitialView = jQuery.extend({}, this._oInitView),
