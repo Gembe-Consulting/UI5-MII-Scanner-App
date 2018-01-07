@@ -26,7 +26,7 @@ sap.ui.define([
 				oData;
 
 			jQuery(document).on("scannerDetectionComplete", this.handleBarcodeScanned.bind(this));
-			
+
 			oData = jQuery.extend({}, this._oInitData);
 			oModel.setData(oData);
 			this.setModel(oModel, "data");
@@ -48,8 +48,9 @@ sap.ui.define([
 			if (oScannerInputType) {
 				jQuery.sap.log.info("Barcode enthält folgende Information: \'" + sScannedString + "\' Sie haben \'" + oScannerInputType.name + "\' gescannt.");
 				oControl = this.getControlByScannerInputType(oScannerInputType);
-				//oControl.setValue(sScannedString);
-				oControl.fireChangeEvent(sScannedString);
+				if (oControl) {
+					oControl.fireChangeEvent(sScannedString);
+				}
 			} else {
 				jQuery.sap.log.warning("Ihr Barcode konnte zwar gelesen, aber nicht zugeordnet werden.\nInhalt: \'" + sScannedString + "\'");
 			}
@@ -190,7 +191,7 @@ sap.ui.define([
 						title: err
 					});
 				} finally {
-					this.onClearFormPress({}, true /*bKeepMessageStrip*/);
+					this.onClearFormPress({}, true /*bKeepMessageStrip*/ );
 				}
 			}.bind(this);
 
@@ -340,9 +341,9 @@ sap.ui.define([
 			oDataModel.updateBindings(true);
 
 			oViewModel.setProperty("/", oNewInitialView);
-			
-			if(!bKeepMessageStrip){
-				this.clearLogMessages();	
+
+			if (!bKeepMessageStrip) {
+				this.clearLogMessages();
 			}
 		},
 
