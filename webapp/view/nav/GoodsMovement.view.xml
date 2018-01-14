@@ -22,7 +22,7 @@
 							<c:CustomData key="target" value="goodsReceipt"/>
 						</customData>
 					</CustomListItem>
-					<CustomListItem type="Navigation" press="onNavForward" class="sapUiResponsiveMargin">
+					<CustomListItem id="goodsIssueWithLEItem" type="Navigation" press="onNavForward" class="sapUiResponsiveMargin">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<HBox width="8rem" justifyContent="Center">
@@ -40,7 +40,7 @@
 							<c:CustomData key="type" value="withLE"/>
 						</customData>
 					</CustomListItem>
-					<CustomListItem type="Navigation" press="onNavForward" class="sapUiResponsiveMargin">
+					<CustomListItem id="goodsIssueNonLEItem" type="Navigation" press="onNavForward" class="sapUiResponsiveMargin">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<HBox width="8rem" justifyContent="Center">

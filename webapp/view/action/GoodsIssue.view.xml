@@ -1,19 +1,18 @@
 <mvc:View controllerName="com.mii.scanner.controller.action.GoodsIssue" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
 	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
 	<Page id="goodsIssuePage" title="{i18n>titleGoodsIssue}" showNavButton="true" navButtonPress="onNavBack">
+		<headerContent>
+			<Button id="clearFormButton" icon="sap-icon://redo" press="onClearFormPress"/>
+		</headerContent>
 		<content>
-			<f:SimpleForm editable="true" layout="ResponsiveGridLayout" 
-				breakpointM="400" 
-				labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+			<f:SimpleForm editable="true" layout="ResponsiveGridLayout" breakpointM="400" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
 				emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
 				<f:content>
 					<Label text="{i18n>lableTextFormGoodsIssueStorageUnit}"/>
-					<Input value="{data>/LENUM}" visible="{=${view>/type}!=='nonLE'}"/>
-					
+					<Input id="storageUnitInput" value="{data>/LENUM}" visible="{=${view>/type}!=='nonLE'}"/>
 					<Label text="{i18n>lableTextFormGoodsIssueOrder}"/>
 					<Input id="orderNumberInput" maxLength="7" change="onOrderNumbeChange" value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}"
 						editable="{=${data>/LENUM}===null}"></Input>
-						
 					<Label text="{i18n>lableTextFormGoodsIssueQuantity}, {i18n>lableTextFormGoodsIssueUnitOfMeasure}"/>
 					<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}">
 						<layoutData>
@@ -26,23 +25,14 @@
 							<l:GridData span="XL1 L1 M2 S4"/>
 						</layoutData>
 					</Input>
-					
 					<Label text="{i18n>lableTextFormGoodsIssueStorageLocation}"/>
-					<Input id="storageLocationInput" maxLength="4" 
-						change="onStorageLocationChange"
-						value="{path: 'data>/LGORT', type:'.sapType.LGORT'}"
-						editable="{=${data>/LENUM}===null}"
-						visible="{=${view>/type}==='nonLE'}"></Input>
-						
+					<Input id="storageLocationInput" maxLength="4" change="onStorageLocationChange" value="{path: 'data>/LGORT', type:'.sapType.LGORT'}"
+						editable="{=${data>/LENUM}===null}" visible="{=${view>/type}==='nonLE'}"></Input>
 					<Label text="{i18n>lableTextFormGoodsIssueMaterial}"/>
-					<Input id="materialNumberInput"
-						change="onMaterialNumbeChange"
-						value="{path: 'data>/MATNR', type:'.sapType.MATNR'}" 
-						editable="{=${data>/LENUM}===null}"
-						visible="{=${view>/type}==='nonLE'}"></Input>
-						
+					<Input id="materialNumberInput" change="onMaterialNumbeChange" value="{path: 'data>/MATNR', type:'.sapType.MATNR'}"
+						editable="{=${data>/LENUM}===null}" visible="{=${view>/type}==='nonLE'}"></Input>
 					<Label text="{i18n>lableTextFormGoodsIssueBulkMaterial}"/>
-					<Switch id="bulkMaterialSwitch" customTextOn="{i18n>switchCustomOnYes}" customTextOff="{i18n>switchCustomOffNo}"
+					<Switch id="bulkMaterialSwitch" state="{data>/BULK}" customTextOn="{i18n>switchCustomOnYes}" customTextOff="{i18n>switchCustomOffNo}"
 						visible="{=${view>/type}==='nonLE'}"></Switch>
 				</f:content>
 			</f:SimpleForm>

@@ -7,7 +7,8 @@ sap.ui.define([
 	"sap/ui/qunit/qunit-coverage",
 	// Page Objects
 	"com/mii/scanner/test/pages/Login",
-	"com/mii/scanner/test/pages/GoodsReceipt"
+	"com/mii/scanner/test/pages/GoodsReceipt",
+	"com/mii/scanner/test/pages/GoodsIssue"
 ], function (Opa5, Common) {
 	"use strict";
 

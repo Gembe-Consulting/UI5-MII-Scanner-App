@@ -24,26 +24,33 @@
 			"com/mii/scanner/test/configureOpa"
 		], function (testHarness, Steps) {
 			"use strict";
-
-			// testHarness.test({
-			// 	featurePath: "com/mii/scanner/test/features/GoodsIssue", 
-			// 	steps: Steps,
-			// 	generateMissingSteps : true
-			// });
-			
-			testHarness.test({
-				featurePath: "com/mii/scanner/test/features/GoodsReceipt", 
-				steps: Steps,
-				generateMissingSteps : true
-			});
 			
 			// testHarness.test({
 			// 	featurePath: "com/mii/scanner/test/features/ExternalLogin", 
 			// 	steps: Steps,
 			// 	generateMissingSteps : true
 			// });
-
+			
+			// testHarness.test({
+			// 	featurePath: "com/mii/scanner/test/features/GoodsReceipt", 
+			// 	steps: Steps,
+			// 	generateMissingSteps : true
+			// });
+			
+			testHarness.test({
+				featurePath: "com/mii/scanner/test/features/GoodsIssueStorageUnit", 
+				steps: Steps,
+				generateMissingSteps : true
+			});
+			
+			testHarness.test({
+				featurePath: "com/mii/scanner/test/features/GoodsIssueStorageLocation", 
+				steps: Steps,
+				generateMissingSteps : true
+			});
+			
 			QUnit.start();
+			
 		});
 	</script>
 
