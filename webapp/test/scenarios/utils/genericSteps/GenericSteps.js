@@ -1,6 +1,15 @@
 /*! openui5-generic-app-testing 2017-11-22 */
 
-sap.ui.define(["jquery.sap.global", "./steps/index", "./utils", "sap/ui/test/actions/Press", "sap/ui/test/actions/EnterText", "sap/ui/test/matchers/AggregationFilled", "sap/ui/test/matchers/AggregationEmpty", "sap/ui/test/matchers/AggregationLengthEquals"], function($, aSteps, oUtils, Press, EnterText, AggregationFilled, AggregationEmpty, AggregationLengthEquals) {
+sap.ui.define([
+	"jquery.sap.global",
+	"./steps/index",
+	"./utils",
+	"sap/ui/test/actions/Press",
+	"sap/ui/test/actions/EnterText",
+	"sap/ui/test/matchers/AggregationFilled",
+	"sap/ui/test/matchers/AggregationEmpty",
+	"sap/ui/test/matchers/AggregationLengthEquals"
+], function($, aSteps, oUtils, Press, EnterText, AggregationFilled, AggregationEmpty, AggregationLengthEquals) {
 	return {
 		register: function(GherkinSteps, oOpaInstance, Opa5) {
 			aSteps.forEach(function(oStep) {

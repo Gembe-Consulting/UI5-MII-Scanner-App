@@ -5,16 +5,16 @@
 	emptySpanXL="4" emptySpanL="4" emptySpanM="2" emptySpanS="0">
 	<f:content>
 		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentMaterial}"/>
-		<Text text="{data>/MATNR} - {data>/MAKTX}"/>
+		<Text id="storageUnitFramgentMaterialInfoText" text="{data>/MATNR} - {data>/MAKTX}"/>
 		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentStorageBin}"/>
-		<Text text="{data>/LGPLA}"/>
+		<Text id="storageUnitFramgentStorageBinText" text="{data>/LGPLA}"/>
 		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentStorageType}"/>
-		<Text text="{data>/LGTYP}"/>
+		<Text id="storageUnitFramgentStorageTypeText" text="{data>/LGTYP}"/>
 		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentStorageUnitType}"/>
-		<Text text="{data>/LETYT}"/>
+		<Text id="storageUnitFramgentStorageUnitTypeText" text="{data>/LETYT}"/>
 		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentBatch}"/>
-		<Text text="{data>/CHARG}"/>
+		<Text id="storageUnitFramgentBatchText" text="{data>/CHARG}"/>
 		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentExpirationDate}"/>
-		<Text text="{path: 'data>/VFDAT', type:'sap.ui.model.type.Date', formatOptions: { source: { pattern: 'MM-dd-yyyy' }}}"/>
+		<Text id="storageUnitFramgentExpirationDateText" text="{path: 'data>/VFDAT', type:'sap.ui.model.type.Date', formatOptions: { source: { pattern: 'MM-dd-yyyy' }}}"/>
 	</f:content>
 </f:SimpleForm>

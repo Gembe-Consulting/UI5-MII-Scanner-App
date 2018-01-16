@@ -18,3 +18,46 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 		Then I can see cancelButton in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
 		Then on the Goods Issue Page: I should see all "with LE" input fields are initial
+
+	Scenario: Should enable save button if all required input fields are populated
+		When I enter '13456789' into storageUnitInput in action.GoodsIssue view
+		Then on the Goods Issue Page: I should see the save button is disabled
+		When I enter '123456' into storageUnitInput in action.GoodsIssue view
+		When I hit 'TAB' in action.GoodsIssue view
+		When I hit 'TAB' in action.GoodsIssue view
+		When I hit 'TAB' in action.GoodsIssue view
+		When I hit 'TAB' in action.GoodsIssue view
+		When I hit 'ENTER' in action.GoodsIssue view
+		Then I can see saveButton with enabled 'true' in action.GoodsIssue view
+
+	Scenario: Should show storage unit data if LE was entered
+		When I enter '789456132' into storageUnitInput in action.GoodsIssue view
+		Then I can see storageUnitFramgentMaterialInfoText with text '1100000-123' in in action.GoodsIssue view
+		 And I can see storageUnitFramgentBatchText with text '0100123369' in in action.GoodsIssue view
+		 And I can see storageUnitFramgentXXText with text 'XX' in in action.GoodsIssue view
+		 And I can see storageUnitFramgentXXXText with text 'XXX' in in action.GoodsIssue view
+		 And I can see storageUnitFramgentXXXXText with text 'XXXX' in in action.GoodsIssue view
+		 And I can see storageUnitFramgentXXXXXText with text 'XXXXX' in in action.GoodsIssue view
+	 
+	Scenario: Should show warning icon if users enter LE with restricted stock (special stock indicator)
+		When I enter '12345678900' into storageUnitInput in action.GoodsIssue view
+		Then I can see storageUnitFramgentXXText with text 'XX' in in action.GoodsIssue view
+		 And I can see specialStockIndicatorIcon in action.GoodsIssue view
+		 
+	Scenario: Should show confirmation popup if users enter material number that is not contained in order component list (Unplanned Withdrawal)
+		When I enter 'XXXX' into storageUnitInput in action.GoodsIssue view
+		 And I enter '##' into orderNumberInput in action.GoodsIssue view
+		Then I can see storageUnitFramgentMaterialInfoText with text 'XXXXX' in in action.GoodsIssue view
+		Then on the Goods Issue Page: I should see the "Unplanned Withdrawal" MessageBox
+		
+	Scenario: Should show error message if users enter material number that is backflushed
+		When I enter 'XXXX' into storageUnitInput in action.GoodsIssue view
+		 And I enter '##' into orderNumberInput in action.GoodsIssue view
+		 Then I can see messageStrip with text 'Komponente '00000000109330000002' word retrograd entnommen!' in action.GoodsReceipt view
+		 Then on the Goods Issue Page: I should see the save button is disabled
+	
+	Scenario: Should show success message if users post goods issue successfully
+		When I enter 'XXXX' into storageUnitInput in action.GoodsIssue view
+		 And I enter 'XXX' into orderNumberInput in action.GoodsIssue view
+		 And I click on saveButton in action.GoodsIssue view
+		Then I can see messageStrip with text 'Warenausgang erfolgreich gebucht!' in action.GoodsReceipt view

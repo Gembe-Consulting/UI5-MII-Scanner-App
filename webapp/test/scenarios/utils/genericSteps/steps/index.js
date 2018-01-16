@@ -9,7 +9,9 @@ sap.ui.define([
 	"./iPressBrowserBack", 
 	"./iStartTheApp", 
 	"./iClickOnNestedItem",
-	"./iNavigateTo"],  function() {
+	"./iNavigateTo",
+	"./iHitKey"
+	],  function() {
 		
 	return Array.prototype.slice.call(arguments, 0);
 	

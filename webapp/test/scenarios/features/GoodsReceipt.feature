@@ -99,5 +99,5 @@ Feature: Creating goods receipt posting to SAP ERP
 		
 	Scenario: User receives error when posting an already full storage unit
 		When I enter '00000000109330000002' into storageUnitInput in action.GoodsReceipt view
-		 And I click on saveButton in action.GoodsReceipt view 
-		Then I can see messageStrip with text 'Warenbewegung mit LE '00000000109330000004' konnte nicht gebucht werden!' in action.GoodsReceipt view 
+		Then I can see messageStrip with text 'Palette '00000000109330000002' wurde bereits gebucht!' in action.GoodsReceipt view
+		Then on the Goods Receipt Page: I should see the save button is disabled
