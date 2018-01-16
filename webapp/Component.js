@@ -4,7 +4,7 @@ sap.ui.define([
 	"com/mii/scanner/model/models",
 	"com/mii/scanner/controller/ErrorHandler",
 	"sap/m/MessageBox"
-], function(UIComponent, Device, models, ErrorHandler,MessageBox) {
+], function(UIComponent, Device, models, ErrorHandler, MessageBox) {
 	"use strict";
 
 	return UIComponent.extend("com.mii.scanner.Component", {
@@ -163,10 +163,10 @@ sap.ui.define([
 
 		_setUserModel: function(oLoginUser) {
 			var oModel = this.getModel("user");
-			
+
 			// enhance user Model - disabled, because of not requested feature
 			//oLoginUser.lastLoginTimestamp = new Date();
-			
+
 			// Set user model
 			oModel.setProperty("/", oLoginUser);
 
@@ -194,36 +194,44 @@ sap.ui.define([
 			// if user was not found, oUser is undefined
 			return oUser && oUser.USERLOGIN === sUserInput;
 		},
-
+		
+		/**
+		 * Adds an jQuery event listener to the html document
+		 * Only if current system is not a desktop device!
+		 */
 		setupScannerDetection: function() {
-			jQuery(document).scannerDetection({
-				onComplete: function(sString) {
-					jQuery.sap.log.info("Input from Scanner: " + sString, "Event: onComplete", "ScannerDetection");
-				},
-				onError: function(sString) { // Callback after detection of a unsuccessfull scanning (scanned string in parameter)
-					//MessageBox.error("Das Lesen des Barcode entspricht icht den angegebenen Restriktionen.\nInhalt: \'" + sString + "\'", {
-					//	title: "Fehler beim Einlesen des Barcodes"
-					//});
-					jQuery.sap.log.error("Scan war nicht erfolgreich: " + sString, "Event: onError", "ScannerDetection");
-				},
-				onReceive: function(event, a, b, c) { // Callback after receiving and processing a char (scanned char in parameter)
-					jQuery.sap.log.info("Key stroke detected from Scanner: " + event.key + " (" + event.keyCode + ")", "Event: onReceive", "ScannerDetection");
-				},
-				onKeyDetect: function(event) { // Callback after detecting a keyDown (key char in parameter) - in contrast to onReceive, this fires for non-character keys like tab, arrows, etc. too!
-					jQuery.sap.log.debug("Key stroke detected: " + event.key + " (" + event.keyCode + ")", "Event: onKeyDetect", "ScannerDetection");
-				},
-				timeBeforeScanTest: 100, // Wait duration (ms) after keypress event to check if scanning is finished. default: 100
-				avgTimeByChar: 30, // Average time (ms) between 2 chars. Used to do difference between keyboard typing and scanning. default : 30
-				minLength: 4, // Minimum length for a scanning. default: 6
-				endChar: [13], // Chars to remove and means end of scanning
-				startChar: [], // Chars to remove and means start of scanning
-				ignoreIfFocusOn: ".noScannerInput", // do not handle scans if the currently focused element matches this selector
-				scanButtonKeyCode: false, // Key code of the scanner hardware button (if the scanner button a acts as a key itself) 
-				scanButtonLongPressThreshold: 3, // How many times the hardware button should issue a pressed event before a barcode is read to detect a longpress
-				onScanButtonLongPressed: false, // Callback after detection of a successfull scan while the scan button was pressed and held down
-				stopPropagation: false, // Stop immediate propagation on keypress event
-				preventDefault: false // Prevent default action on keypress event
-			});
+
+			if (!this.getModel("device").getProperty("/system/desktop")) {
+
+				jQuery(document).scannerDetection({
+					onComplete: function(sString) {
+						jQuery.sap.log.info("Input from Scanner: " + sString, "Event: onComplete", "ScannerDetection");
+					},
+					onError: function(sString) { // Callback after detection of a unsuccessfull scanning (scanned string in parameter)
+						//MessageBox.error("Das Lesen des Barcode entspricht icht den angegebenen Restriktionen.\nInhalt: \'" + sString + "\'", {
+						//	title: "Fehler beim Einlesen des Barcodes"
+						//});
+						jQuery.sap.log.error("Scan war nicht erfolgreich: " + sString, "Event: onError", "ScannerDetection");
+					},
+					onReceive: function(event, a, b, c) { // Callback after receiving and processing a char (scanned char in parameter)
+						jQuery.sap.log.info("Key stroke detected from Scanner: " + event.key + " (" + event.keyCode + ")", "Event: onReceive", "ScannerDetection");
+					},
+					onKeyDetect: function(event) { // Callback after detecting a keyDown (key char in parameter) - in contrast to onReceive, this fires for non-character keys like tab, arrows, etc. too!
+						jQuery.sap.log.debug("Key stroke detected: " + event.key + " (" + event.keyCode + ")", "Event: onKeyDetect", "ScannerDetection");
+					},
+					timeBeforeScanTest: 100, // Wait duration (ms) after keypress event to check if scanning is finished. default: 100
+					avgTimeByChar: 30, // Average time (ms) between 2 chars. Used to do difference between keyboard typing and scanning. default : 30
+					minLength: 4, // Minimum length for a scanning. default: 6
+					endChar: [13], // Chars to remove and means end of scanning
+					startChar: [], // Chars to remove and means start of scanning
+					ignoreIfFocusOn: ".noScannerInput", // do not handle scans if the currently focused element matches this selector
+					scanButtonKeyCode: false, // Key code of the scanner hardware button (if the scanner button a acts as a key itself) 
+					scanButtonLongPressThreshold: 3, // How many times the hardware button should issue a pressed event before a barcode is read to detect a longpress
+					onScanButtonLongPressed: false, // Callback after detection of a successfull scan while the scan button was pressed and held down
+					stopPropagation: false, // Stop immediate propagation on keypress event
+					preventDefault: false // Prevent default action on keypress event
+				});
+			}
 		},
 
 		/**
