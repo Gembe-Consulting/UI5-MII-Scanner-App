@@ -1,8 +1,9 @@
 sap.ui.define([
 	"./ActionBaseController",
 	"sap/ui/model/json/JSONModel",
+	"sap/m/MessageBox",
 	"com/mii/scanner/model/sapType"
-], function(ActionBaseController, JSONModel, sapType) {
+], function(ActionBaseController, JSONModel, MessageBox, sapType) {
 	"use strict";
 
 	return ActionBaseController.extend("com.mii.scanner.controller.action.GoodsIssue", {
@@ -12,14 +13,13 @@ sap.ui.define([
 		_aDisallowedStorageLocations: ["VG01", "1000"],
 
 		_oInitData: {
-			LENUM: null,
-			AUFNR: null,
-			MATNR: null,
-			BULK: false,
 			SOLLME: 0.0,
 			MEINH: null,
+			AUFNR: null,
+			LENUM: null,
 			LGORT: null,
-			INFO: null
+			MATNR: null,
+			BULK: false
 		},
 
 		onInit: function() {
@@ -62,6 +62,25 @@ sap.ui.define([
 				}
 			}
 		},
+
+		updateViewControls: function(oData) {
+			var oViewModel = this.getModel("view"),
+				bInputValuesComplete,
+				bNoErrorMessagesActive,
+				bReadyForPosting;
+
+			// check if all required input data is present
+			bInputValuesComplete = this.isInputDataValid(oData);
+
+			// check if all input data has proper format
+			bNoErrorMessagesActive = this.isMessageModelClean();
+
+			// we are ready for posting once we have complete and proper formatted input
+			bReadyForPosting = bNoErrorMessagesActive && bInputValuesComplete;
+
+			oViewModel.setProperty("/bValid", bReadyForPosting);
+		},
+
 		onStorageUnitNumberChange: function(oEvent) {
 			var sStorageUnitNumber = oEvent.getParameter("value"),
 				oBundle = this.getResourceBundle();
@@ -81,10 +100,26 @@ sap.ui.define([
 					aResultList = oData.d.results[0].Rowset.results[0].Row.results;
 
 					if (aResultList.length === 1) {
-						//oStorageUnit = this._formatStorageUnitData(oData.d.results[0].Rowset.results[0].Row.results[0]);
+						oStorageUnit = this._formatStorageUnitData(oData.d.results[0].Rowset.results[0].Row.results[0]);
 					} else {
 						throw oBundle.getText("messageTitleStorageUnitNotFound");
 					}
+
+					if (oStorageUnit.SOLLME <= 0) {
+						this.addLogMessage({
+							text: oBundle.getText("messageTextStorageUnitIsEmpty", [sStorageUnitNumber])
+						});
+						this.getModel("view").setProperty("/bStorageUnitValid", false);
+					} else {
+						this.getModel("view").setProperty("/bStorageUnitValid", true);
+					}
+
+					// map data from storage unit to main model
+					this.getModel("data").setProperty("/LENUM", oStorageUnit.LENUM);
+					this.getModel("data").setProperty("/SOLLME", oStorageUnit.SOLLME);
+					this.getModel("data").setProperty("/MEINH", oStorageUnit.MEINH);
+
+					this.updateViewControls(this.getModel("data").getData());
 
 				} catch (err) {
 					MessageBox.error(oBundle.getText("messageTextStorageUnitNotFound", [sStorageUnitNumber]), {
@@ -99,7 +134,34 @@ sap.ui.define([
 			}.bind(this);
 
 			this.requestStorageUnitInfoService(sStorageUnitNumber).then(fnResolve, fnReject);
-		}
+		},
+
+		onOrderNumberChange: function(oEvent) {
+			this.updateViewControls(this.getModel("data").getData());
+		},
+		onQuantityChange: function(oEvent) {
+			this.updateViewControls(this.getModel("data").getData());
+		},
+		onUnitOfMeasureChange: function(oEvent) {
+			this.updateViewControls(this.getModel("data").getData());
+		},
+
+		isInputDataValid: function(oData) {
+			if (oData) {
+				switch (this.getModel("view").getProperty("/type")) {
+					case "withLE":
+						return !!oData.SOLLME && !!oData.MEINH && !!oData.AUFNR && !!oData.LENUM;
+						break;
+					case "nonLE":
+						return !!oData.SOLLME && !!oData.MEINH && !!oData.AUFNR && !!oData.LGORT && !!oData.MATNR;
+						break;
+					default:
+						return false;
+				}
+			} else {
+				return false;
+			}
+		},
 
 	});
 

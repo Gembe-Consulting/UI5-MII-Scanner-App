@@ -12,7 +12,7 @@
 					<Label text="{i18n>lableTextFormGoodsIssueStorageUnit}"/>
 					<Input id="storageUnitInput" value="{data>/LENUM}" visible="{=${view>/type}!=='nonLE'}" change="onStorageUnitNumberChange"/>
 					<Label text="{i18n>lableTextFormGoodsIssueOrder}"/>
-					<Input id="orderNumberInput" maxLength="7" change="onOrderNumbeChange" value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}"></Input>
+					<Input id="orderNumberInput" maxLength="7" change="onOrderNumberChange" value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}"></Input>
 					<Label text="{i18n>lableTextFormGoodsIssueQuantity}, {i18n>lableTextFormGoodsIssueUnitOfMeasure}"/>
 					<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}">
 						<layoutData>

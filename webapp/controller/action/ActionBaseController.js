@@ -112,6 +112,17 @@ sap.ui.define([
 			oMessageStripContainer.destroyContent();
 		},
 
+		isMessageModelClean: function() {
+			var oMessageModel = sap.ui.getCore().getMessageManager().getMessageModel(),
+				aMessages = oMessageModel.getData();
+
+			if (aMessages && aMessages.length > 0) {
+				return false;
+			} else {
+				return true;
+			}
+		},
+
 		handleConfirmationMessageBoxPress: function(oEvent) {
 			var sMessage = this.getResourceText("messageConfirmCancelBaseActionController"),
 				sTitle = this.getResourceText("titleConfirmCancelBaseActionController");

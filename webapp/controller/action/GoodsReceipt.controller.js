@@ -251,17 +251,6 @@ sap.ui.define([
 			}
 		},
 
-		isMessageModelClean: function() {
-			var oMessageModel = sap.ui.getCore().getMessageManager().getMessageModel(),
-				aMessages = oMessageModel.getData();
-
-			if (aMessages && aMessages.length > 0) {
-				return false;
-			} else {
-				return true;
-			}
-		},
-
 		/**
 		 * Check is a given storage location is allowed for posting
 		 */

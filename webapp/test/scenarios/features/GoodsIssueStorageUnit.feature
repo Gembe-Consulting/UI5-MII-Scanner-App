@@ -24,11 +24,11 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 		Then on the Goods Issue Page: I should see the save button is disabled
 		When I enter '1093300' into orderNumberInput in action.GoodsIssue view
 		Then I can see saveButton in action.GoodsIssue view
-		When I enter '' into storageUnitInput in action.GoodsIssue view
+		When I enter '0,000' into quantityInput in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
 
 	Scenario: Should show storage unit data if LE was entered
-		When I enter '789456132' into storageUnitInput in action.GoodsIssue view
+		When I enter '00000000109330000001' into storageUnitInput in action.GoodsIssue view
 		Then I can see storageUnitFramgentMaterialInfoText with text '1100000-123' in in action.GoodsIssue view
 		 And I can see storageUnitFramgentBatchText with text '0100123369' in in action.GoodsIssue view
 		 And I can see storageUnitFramgentXXText with text 'XX' in in action.GoodsIssue view
