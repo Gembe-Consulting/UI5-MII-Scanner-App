@@ -113,11 +113,9 @@ sap.ui.define([
 					} else {
 						this.getModel("view").setProperty("/bStorageUnitValid", true);
 					}
-
+					oStorageUnit.AUFNR = null;
 					// map data from storage unit to main model
-					this.getModel("data").setProperty("/LENUM", oStorageUnit.LENUM);
-					this.getModel("data").setProperty("/SOLLME", oStorageUnit.SOLLME);
-					this.getModel("data").setProperty("/MEINH", oStorageUnit.MEINH);
+					this.getModel("data").setData(oStorageUnit);
 
 					this.updateViewControls(this.getModel("data").getData());
 
