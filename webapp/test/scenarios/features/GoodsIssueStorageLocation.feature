@@ -1,4 +1,4 @@
-Feature: Creating goods issue posting to SAP ERP using storage unit number
+Feature: Creating goods issue posting to SAP ERP using storage location
 	Users also can post GIs by entering order number, quantity and storage location.
 	Users can choose to post bulk matrial.
 	
