@@ -9,25 +9,43 @@
 			examples: ["I hit 'ENTER'", "I hit 'F1' in Creation view"]
 		},
 		icon: "edit",
-		regexp: /^I hit '(.+?)'( in ([a-zA-Z0-9\.]+) view)?$/,
-		action: function(sKeyName, sViewPart, sViewName) {
+		regexp: /^I hit '(.+?)' into ([a-zA-Z0-9]+)( in ([a-zA-Z0-9\.]+) view)?$/,
+		action: function(sKey, sControlId, sViewPart, sViewName) {
 			var that = this;
 			var oWaitForOptions = {
-				success: function () {
+				id: sControlId,
+				success: function (oControl) {
                 	var oWindow,
                 		ojQuery,
                 		sQueryKeyCode;
+                		
+                	oWindow = sap.ui.test.Opa5.getWindow();
+                	ojQuery = sap.ui.test.Opa5.getJQuery();
                 	
-                	if(sKeyName){
-                		sQueryKeyCode = jQuery.sap.KeyCodes[sKeyName];
+                	var $ActionDomRef = oWindow.$(oControl),
+						oActionDomRef = $ActionDomRef[0];
+                		
+                		var oUtils =  oControl.getUtils();
+                		
+				oUtils.triggerKeydown(oActionDomRef, $.sap.KeyCodes[sKey]);
+				oUtils.triggerKeyup(oActionDomRef, $.sap.KeyCodes[sKey]);
+				
+ /*               	
+                	if(sKey){
+                		sQueryKeyCode = jQuery.sap.KeyCodes[sKey];
                 		if(sQueryKeyCode){
                 			oWindow = sap.ui.test.Opa5.getWindow();
                 			ojQuery = sap.ui.test.Opa5.getJQuery();
                 			
                 			ojQuery.event.trigger({ type : 'keypress', which : sQueryKeyCode });
+                			
+                			var e = ojQuery.Event("keypress");
+							e.which = sQueryKeyCode; // # Some key code value
+							//$("input").trigger(e);
+							ojQuery(document).trigger(e);
                 		}
                 	}
-                	
+  */             	
         		}
 			};
 			if (sViewPart) {

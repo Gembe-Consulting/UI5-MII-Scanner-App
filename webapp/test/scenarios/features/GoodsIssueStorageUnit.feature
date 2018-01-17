@@ -23,12 +23,9 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 		When I enter '13456789' into storageUnitInput in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
 		When I enter '123456' into storageUnitInput in action.GoodsIssue view
-		When I hit 'TAB' in action.GoodsIssue view
-		When I hit 'TAB' in action.GoodsIssue view
-		When I hit 'TAB' in action.GoodsIssue view
-		When I hit 'TAB' in action.GoodsIssue view
-		When I hit 'ENTER' in action.GoodsIssue view
-		Then I can see saveButton with enabled 'true' in action.GoodsIssue view
+		Then I can see saveButton in action.GoodsIssue view
+		When I enter '13456789' into storageUnitInput in action.GoodsIssue view
+		Then on the Goods Issue Page: I should see the save button is disabled
 
 	Scenario: Should show storage unit data if LE was entered
 		When I enter '789456132' into storageUnitInput in action.GoodsIssue view

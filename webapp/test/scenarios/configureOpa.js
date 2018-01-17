@@ -1,5 +1,6 @@
 sap.ui.define([
 	"sap/ui/test/Opa5",
+	"sap/ui/qunit/QUnitUtils",
 	"com/mii/scanner/test/arrangement/Common",
 	// QUnit additions
 	"sap/ui/qunit/qunit-css",
@@ -9,7 +10,7 @@ sap.ui.define([
 	"com/mii/scanner/test/pages/Login",
 	"com/mii/scanner/test/pages/GoodsReceipt",
 	"com/mii/scanner/test/pages/GoodsIssue"
-], function (Opa5, Common) {
+], function (Opa5,QUnitUtils, Common) {
 	"use strict";
 
 	Opa5.extendConfig({

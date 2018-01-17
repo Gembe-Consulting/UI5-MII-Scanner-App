@@ -1,7 +1,8 @@
 sap.ui.define([
-		'sap/ui/test/Opa5'
+		'sap/ui/test/Opa5',
+		'sap/ui/qunit/QUnitUtils'
 	],
-	function(Opa5) {
+	function(Opa5, QUnitUtils) {
 		"use strict";
 
 		function getFrameUrl(sHash, sUrlParameters) {
@@ -21,6 +22,8 @@ sap.ui.define([
 				Opa5.apply(this, arguments);
 
 				this._oConfig = oConfig;
+				
+				this.oQUnitUtils = QUnitUtils;
 			},
 
 			iStartTheApp: function(oOptions) {
