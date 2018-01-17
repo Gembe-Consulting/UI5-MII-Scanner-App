@@ -18,20 +18,25 @@ sap.ui.define([
 			BULK: false,
 			SOLLME: 0.0,
 			MEINH: null,
-			LGORT: '',
-			INFO: null,
-			bValid: false
+			LGORT: null,
+			INFO: null
 		},
+
 		onInit: function() {
 			var oModel = new JSONModel(),
-				oData = jQuery.extend(this._oInitData);
+				oData;
 
+			//jQuery(document).on("scannerDetectionComplete", this.handleBarcodeScanned.bind(this));
+
+			oData = jQuery.extend({}, this._oInitData);
 			oModel.setData(oData);
 			this.setModel(oModel, "data");
 
-			this.setModel(new JSONModel({
-				type: null
-			}), "view");
+			this._oInitView = {
+				bStorageUnitValid: true,
+				bValid: false
+			};
+			this.setModel(new JSONModel(jQuery.extend({}, this._oInitView)), "view");
 
 			this.getRouter().getRoute("goodsIssue").attachMatched(this._onRouteMatched, this);
 		},
@@ -56,7 +61,46 @@ sap.ui.define([
 					oView.getModel("data").setProperty("/MATNR", oQuery.MATNR);
 				}
 			}
+		},
+		onStorageUnitNumberChange: function(oEvent) {
+			var sStorageUnitNumber = oEvent.getParameter("value"),
+				oBundle = this.getResourceBundle();
+
+			sStorageUnitNumber = this._padStorageUnitNumber(sStorageUnitNumber);
+
+			jQuery.sap.log.info("Start gathering data for palette " + sStorageUnitNumber);
+
+			this.clearLogMessages();
+
+			var fnResolve = function(oData) {
+				var oStorageUnit,
+					aResultList;
+
+				try {
+
+					aResultList = oData.d.results[0].Rowset.results[0].Row.results;
+
+					if (aResultList.length === 1) {
+						//oStorageUnit = this._formatStorageUnitData(oData.d.results[0].Rowset.results[0].Row.results[0]);
+					} else {
+						throw oBundle.getText("messageTitleStorageUnitNotFound");
+					}
+
+				} catch (err) {
+					MessageBox.error(oBundle.getText("messageTextStorageUnitNotFound", [sStorageUnitNumber]), {
+						title: err
+					});
+				} finally {}
+
+			}.bind(this);
+
+			var fnReject = function(oError) {
+				MessageBox.error(oBundle.getText("messageTextGoodsIssueError"));
+			}.bind(this);
+
+			this.requestStorageUnitInfoService(sStorageUnitNumber).then(fnResolve, fnReject);
 		}
+
 	});
 
 });

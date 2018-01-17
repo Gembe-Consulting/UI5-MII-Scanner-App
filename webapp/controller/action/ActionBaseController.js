@@ -32,12 +32,21 @@ sap.ui.define([
 			};
 		},
 
+		requestStorageUnitInfoService: function(sStorageUnitNumber) {
+			var oStorageUnitModel = this.getModel("storageUnit"),
+				oParam = {
+					"Param.1": sStorageUnitNumber
+				};
+
+			return oStorageUnitModel.loadMiiData(oStorageUnitModel._sServiceUrl, oParam);
+		},
+
 		getScannerInputType: function(sScannedString) {
 			var oType;
 
 			jQuery.each(this.mScannerInputTypes, function(sName, oValue) {
 				var regxCheck = new RegExp(oValue.validationExpression);
-				if(regxCheck.test(sScannedString)){
+				if (regxCheck.test(sScannedString)) {
 					oType = oValue;
 					return false;
 				}
@@ -106,6 +115,10 @@ sap.ui.define([
 				this.onClearFormPress();
 				this.onNavBack();
 			}
+		},
+
+		_padStorageUnitNumber: function(sStorageUnitNumber) {
+			return jQuery.sap.padLeft(sStorageUnitNumber, "0", 20);
 		}
 	});
 

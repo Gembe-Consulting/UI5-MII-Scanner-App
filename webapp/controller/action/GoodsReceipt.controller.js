@@ -138,7 +138,7 @@ sap.ui.define([
 				MessageBox.error(oBundle.getText("messageTextGoodsReceiptError"));
 			}.bind(this);
 
-			this._getStorageUnitInfo(sStorageUnitNumber).then(fnResolve, fnReject);
+			this.requestStorageUnitInfoService(sStorageUnitNumber).then(fnResolve, fnReject);
 		},
 
 		_formatStorageUnitData: function(oStorageUnit) {
@@ -201,31 +201,6 @@ sap.ui.define([
 
 			this._postGoodsReceipt().then(fnResolve, fnReject);
 
-		},
-
-		/*
-		Resolve: 
-		Materialnummer, Materialkurztext,  Lagerplatz, Lagertyp anzeigen. 
-		Felder Lagerplatz, Charge,  
-		Auftragsnummer, 
-		Soll-Menge und 
-		Mengeneinheit füllen. 
-		 
-		Lagerort "1000" füllen readonly  
-		Auftragsnummer füllen readonly 
-		 
-		Reject: 
-		Fehlermeldung "Palette nicht gefunden" 
-		*/
-		//SUMISA/Scanner/Umlagerung/trx_ReadPaletteInfo 
-		_getStorageUnitInfo: function(sStorageUnitNumber) {
-
-			var oStorageUnitModel = this.getModel("storageUnit"),
-				oParam = {
-					"Param.1": sStorageUnitNumber
-				};
-
-			return oStorageUnitModel.loadMiiData(oStorageUnitModel._sServiceUrl, oParam);
 		},
 
 		//SUMISA/Production/trx_GoodsMovementToSap 
@@ -345,10 +320,6 @@ sap.ui.define([
 			if (!bKeepMessageStrip) {
 				this.clearLogMessages();
 			}
-		},
-
-		_padStorageUnitNumber: function(sStorageUnitNumber) {
-			return jQuery.sap.padLeft(sStorageUnitNumber, "0", 20);
 		}
 
 	});
