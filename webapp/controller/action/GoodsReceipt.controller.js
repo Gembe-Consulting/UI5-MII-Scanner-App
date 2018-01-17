@@ -141,22 +141,6 @@ sap.ui.define([
 			this.requestStorageUnitInfoService(sStorageUnitNumber).then(fnResolve, fnReject);
 		},
 
-		_formatStorageUnitData: function(oStorageUnit) {
-
-			if (!oStorageUnit) {
-				return null;
-			}
-
-			var fnNumberOrDefault = function(vAttr, vDefault) {
-				return jQuery.isNumeric(vAttr) ? Number(vAttr) : vDefault;
-			};
-
-			oStorageUnit.LENUM = fnNumberOrDefault(oStorageUnit.LENUM, null);
-			oStorageUnit.SOLLME = fnNumberOrDefault(oStorageUnit.SOLLME, 0.0);
-
-			return oStorageUnit;
-		},
-
 		onSave: function() {
 			var oBundle = this.getResourceBundle(),
 				fnResolve,

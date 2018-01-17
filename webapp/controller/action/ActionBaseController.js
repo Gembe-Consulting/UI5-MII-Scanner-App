@@ -41,6 +41,22 @@ sap.ui.define([
 			return oStorageUnitModel.loadMiiData(oStorageUnitModel._sServiceUrl, oParam);
 		},
 
+		_formatStorageUnitData: function(oStorageUnit) {
+
+			if (!oStorageUnit) {
+				return null;
+			}
+
+			var fnNumberOrDefault = function(vAttr, vDefault) {
+				return jQuery.isNumeric(vAttr) ? Number(vAttr) : vDefault;
+			};
+
+			oStorageUnit.LENUM = fnNumberOrDefault(oStorageUnit.LENUM, null);
+			oStorageUnit.SOLLME = fnNumberOrDefault(oStorageUnit.SOLLME, 0.0);
+
+			return oStorageUnit;
+		},
+
 		getScannerInputType: function(sScannedString) {
 			var oType;
 
