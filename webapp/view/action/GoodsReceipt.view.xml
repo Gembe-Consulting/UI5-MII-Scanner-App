@@ -5,8 +5,7 @@
 			<Button id="clearFormButton" icon="sap-icon://redo" press="onClearFormPress"/>
 		</headerContent>
 		<content>
-			<l:VerticalLayout id="messageStripContainer" width="100%">
-			</l:VerticalLayout>
+			<l:VerticalLayout id="messageStripContainer" width="100%"></l:VerticalLayout>
 			<!--
 			Kleine SimpleForm Kunde: nach dem ResponsiveGridLayout:
 				- XL, L, M, S gibt einen bestimmten "Zustand" wieder in dem sich das Display befindet
@@ -21,13 +20,14 @@
 				emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
 				<f:content>
 					<Label text="{i18n>lableTextFormGoodsReceiptStorageUnit}"/>
-					<Input id="storageUnitInput" class="noScannerInput" maxLength="20" change="onStorageUnitNumberChange" value="{path: 'data>/LENUM', type:'.sapType.LENUM'}"
-						editable="{= ${data>/LGORT}==='1000' || ${data>/LGORT}==='' || ${data>/LGORT}===null}"></Input>
+					<Input id="storageUnitInput" class="noScannerInput" maxLength="20" change="onStorageUnitNumberChange"
+						value="{path: 'data>/LENUM', type:'.sapType.LENUM'}" editable="{= ${data>/LGORT}==='1000' || ${data>/LGORT}==='' || ${data>/LGORT}===null}"></Input>
 					<Label text="{i18n>lableTextFormGoodsReceiptOrder}"/>
-					<Input id="orderNumberInput" class="noScannerInput" maxLength="7" change="onOrderNumberChange" value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}"
-						editable="{=${data>/LENUM}===null}"></Input>
+					<Input id="orderNumberInput" class="noScannerInput" maxLength="7" change="onOrderNumberChange"
+						value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}" editable="{=${data>/LENUM}===null}"></Input>
 					<Label text="{i18n>lableTextFormGoodsReceiptQuantity}, {i18n>lableTextFormGoodsReceiptUnitOfMeasure}"/>
-					<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}"  editable="{view>/bStorageUnitValid}">
+					<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}"
+						editable="{view>/bStorageUnitValid}">
 						<layoutData>
 							<l:GridData span="XL2 L3 M4 S8"/>
 						</layoutData>
@@ -44,7 +44,6 @@
 						editable="{=${data>/LENUM}===null}"></Input>
 				</f:content>
 			</f:SimpleForm>
-
 			<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>
 		</content>
 		<footer>

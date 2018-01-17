@@ -14,7 +14,7 @@ Feature: Creating goods receipt posting to SAP ERP
 	Scenario: Should navigate to Goods Receipt Page and see all UI elements
 		Then I can see goodsReceiptPage in action.GoodsReceipt view
 		Then I can see storageUnitInput in action.GoodsReceipt view
-		Then I can see quantityInput in action.GoodsReceipt view
+		Then I can see quantityInput with value '0,000' in action.GoodsReceipt view
 		Then I can see unitOfMeasureInput in action.GoodsReceipt view
 		Then I can see orderNumberInput in action.GoodsReceipt view
 		Then I can see storageLocationInput in action.GoodsReceipt view

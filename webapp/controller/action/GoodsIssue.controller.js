@@ -9,7 +9,7 @@ sap.ui.define([
 
 		sapType: sapType,
 
-		_aDisallowedStorageLocations: ["VG01"],
+		_aDisallowedStorageLocations: ["VG01", "1000"],
 
 		_oInitData: {
 			LENUM: null,

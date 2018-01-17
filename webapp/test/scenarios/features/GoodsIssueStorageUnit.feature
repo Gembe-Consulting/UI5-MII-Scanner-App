@@ -11,7 +11,7 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 	Scenario: Should navigate to Goods Issue Page (with LE) and see all UI elements
 		Then I can see goodsIssuePage in action.GoodsIssue view
 		Then I can see storageUnitInput in action.GoodsIssue view
-		Then I can see quantityInput in action.GoodsIssue view
+		Then I can see quantityInput with value '0,000' in action.GoodsIssue view
 		Then I can see unitOfMeasureInput in action.GoodsIssue view
 		Then I can see orderNumberInput in action.GoodsIssue view
 		Then I can see clearFormButton in action.GoodsIssue view
@@ -20,11 +20,11 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 		Then on the Goods Issue Page: I should see all "with LE" input fields are initial
 
 	Scenario: Should enable save button if all required input fields are populated
-		When I enter '13456789' into storageUnitInput in action.GoodsIssue view
+		When I enter '00000000109330000001' into storageUnitInput in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
-		When I enter '123456' into storageUnitInput in action.GoodsIssue view
+		When I enter '1093300' into orderNumberInput in action.GoodsIssue view
 		Then I can see saveButton in action.GoodsIssue view
-		When I enter '13456789' into storageUnitInput in action.GoodsIssue view
+		When I enter '' into storageUnitInput in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
 
 	Scenario: Should show storage unit data if LE was entered

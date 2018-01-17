@@ -5,32 +5,31 @@
 			<Button id="clearFormButton" icon="sap-icon://redo" press="onClearFormPress"/>
 		</headerContent>
 		<content>
+			<l:VerticalLayout id="messageStripContainer" width="100%"></l:VerticalLayout>
 			<f:SimpleForm editable="true" layout="ResponsiveGridLayout" breakpointM="400" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
 				emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
 				<f:content>
 					<Label text="{i18n>lableTextFormGoodsIssueStorageUnit}"/>
-					<Input id="storageUnitInput" value="{data>/LENUM}" visible="{=${view>/type}!=='nonLE'}"/>
+					<Input id="storageUnitInput" value="{data>/LENUM}" visible="{=${view>/type}!=='nonLE'}" change="onStorageUnitNumberChange"/>
 					<Label text="{i18n>lableTextFormGoodsIssueOrder}"/>
-					<Input id="orderNumberInput" maxLength="7" change="onOrderNumbeChange" value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}"
-						editable="{=${data>/LENUM}===null}"></Input>
+					<Input id="orderNumberInput" maxLength="7" change="onOrderNumbeChange" value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}"></Input>
 					<Label text="{i18n>lableTextFormGoodsIssueQuantity}, {i18n>lableTextFormGoodsIssueUnitOfMeasure}"/>
 					<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}">
 						<layoutData>
 							<l:GridData span="XL2 L3 M4 S8"/>
 						</layoutData>
 					</Input>
-					<Input id="unitOfMeasureInput" change="onUnitOfMeasureChange" value="{path: 'data>/MEINH', type:'.sapType.MEINS'}"
-						editable="{=${data>/LENUM}===null}">
+					<Input id="unitOfMeasureInput" change="onUnitOfMeasureChange" value="{path: 'data>/MEINH', type:'.sapType.MEINS'}" editable="false">
 						<layoutData>
 							<l:GridData span="XL1 L1 M2 S4"/>
 						</layoutData>
 					</Input>
 					<Label text="{i18n>lableTextFormGoodsIssueStorageLocation}"/>
 					<Input id="storageLocationInput" maxLength="4" change="onStorageLocationChange" value="{path: 'data>/LGORT', type:'.sapType.LGORT'}"
-						editable="{=${data>/LENUM}===null}" visible="{=${view>/type}==='nonLE'}"></Input>
+						visible="{=${view>/type}==='nonLE'}"></Input>
 					<Label text="{i18n>lableTextFormGoodsIssueMaterial}"/>
 					<Input id="materialNumberInput" change="onMaterialNumbeChange" value="{path: 'data>/MATNR', type:'.sapType.MATNR'}"
-						editable="{=${data>/LENUM}===null}" visible="{=${view>/type}==='nonLE'}"></Input>
+						visible="{=${view>/type}==='nonLE'}"></Input>
 					<Label text="{i18n>lableTextFormGoodsIssueBulkMaterial}"/>
 					<Switch id="bulkMaterialSwitch" state="{data>/BULK}" customTextOn="{i18n>switchCustomOnYes}" customTextOff="{i18n>switchCustomOffNo}"
 						visible="{=${view>/type}==='nonLE'}"></Switch>
@@ -41,7 +40,7 @@
 		<footer>
 			<Toolbar>
 				<ToolbarSpacer/>
-				<Button id="saveButton" type="Accept" text="{i18n>textButtonSaveGoodsIssue}" press="onSave" enabled="{data>/bValid}"/>
+				<Button id="saveButton" type="Accept" text="{i18n>textButtonSaveGoodsIssue}" press="onSave" enabled="{view>/bValid}"/>
 				<Button id="cancelButton" type="Reject" text="{i18n>textButtonCancelGoodsIssue}" press="onCancelAction"/>
 			</Toolbar>
 		</footer>

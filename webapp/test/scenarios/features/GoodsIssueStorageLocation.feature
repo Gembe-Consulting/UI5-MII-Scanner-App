@@ -11,7 +11,7 @@ Feature: Creating goods issue posting to SAP ERP using storage location
 		
 	Scenario: Should navigate to Goods Issue Page (non LE) and see all UI elements
 		Then I can see goodsIssuePage in action.GoodsIssue view
-		Then I can see quantityInput in action.GoodsIssue view
+		Then I can see quantityInput with value '0,000' in action.GoodsIssue view
 		Then I can see unitOfMeasureInput in action.GoodsIssue view
 		Then I can see orderNumberInput in action.GoodsIssue view
 		Then I can see materialNumberInput in action.GoodsIssue view
