@@ -276,23 +276,6 @@ sap.ui.define([
 			}
 
 			this.updateViewControls(this.getModel("data").getData());
-		},
-
-		onClearFormPress: function(oEvent, bKeepMessageStrip) {
-			var oNewInitialData = jQuery.extend({}, this._oInitData),
-				oDataModel = this.getModel("data"),
-				oNewInitialView = jQuery.extend({}, this._oInitView),
-				oViewModel = this.getModel("view");
-
-			oDataModel.setProperty("/", oNewInitialData);
-			// force update to also override invalid values
-			oDataModel.updateBindings(true);
-
-			oViewModel.setProperty("/", oNewInitialView);
-
-			if (!bKeepMessageStrip) {
-				this.clearLogMessages();
-			}
 		}
 
 	});

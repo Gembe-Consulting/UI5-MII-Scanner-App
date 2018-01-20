@@ -18,6 +18,7 @@ sap.ui.define([
 			AUFNR: null,
 			LENUM: null,
 			LGORT: null,
+			BESTQ: null,
 			MATNR: null,
 			BULK: false
 		},
