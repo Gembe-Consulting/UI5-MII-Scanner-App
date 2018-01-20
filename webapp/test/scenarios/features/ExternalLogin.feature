@@ -9,6 +9,7 @@ Feature: External Login using deep linking
 		When I look at the screen
 		Then I can see loginPage in Login view
 		
+	@wip	
 	Scenario: Should force login on deep linking if username is wrong
 		Given I start the app on "/Start/Materialbewegung/WE" using remote user "wrong_user_name"
 		When I look at the screen
