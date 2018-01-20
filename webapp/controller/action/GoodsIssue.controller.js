@@ -47,6 +47,7 @@ sap.ui.define([
 
 			this.getRouter().getRoute("goodsIssue").attachMatched(this._onRouteMatched, this);
 		},
+
 		_onRouteMatched: function(oEvent) {
 			var oArgs, oView, oQuery;
 			oArgs = oEvent.getParameter("arguments");
@@ -60,12 +61,40 @@ sap.ui.define([
 				}
 				if (oQuery.LENUM) {
 					oView.getModel("data").setProperty("/storageUnitNumber", oQuery.LENUM);
+					this.byId("storageUnitInput").fireChange({
+						value: oQuery.LENUM
+					});
 				}
 				if (oQuery.AUFNR) {
 					oView.getModel("data").setProperty("/orderNumber", oQuery.AUFNR);
+					this.byId("orderNumberInput").fireChange({
+						value: oQuery.AUFNR
+					});
 				}
 				if (oQuery.MATNR) {
 					oView.getModel("data").setProperty("/materialNumber", oQuery.MATNR);
+					this.byId("materialNumberInput").fireChange({
+						value: oQuery.MATNR
+					});
+				}
+				if (oQuery.MEINH) {
+					oView.getModel("data").setProperty("/unitOfMeasure", oQuery.MEINH);
+					this.byId("unitOfMeasureInput").fireChange({
+						value: oQuery.MEINH
+					});
+				}
+				if (oQuery.LGORT) {
+					oView.getModel("data").setProperty("/storageLocation", oQuery.LGORT);
+					this.byId("storageLocationInput").fireChange({
+						value: oQuery.LGORT
+					});
+				}
+				if (oQuery.SCHGT) {
+					oQuery.SCHGT = (oQuery.SCHGT == 'true');
+					oView.getModel("data").setProperty("/bulkMaterialIndicator", oQuery.SCHGT);
+					this.byId("bulkMaterialSwitch").fireChange({
+						value: oQuery.SCHGT
+					});
 				}
 			}
 		},

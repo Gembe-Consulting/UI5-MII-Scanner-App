@@ -38,6 +38,8 @@ sap.ui.define([
 				bValid: false
 			};
 			this.setModel(new JSONModel(jQuery.extend({}, this._oInitView)), "view");
+
+			this.getRouter().getRoute("goodsReceipt").attachMatched(this._onRouteMatched, this);
 		},
 
 		handleBarcodeScanned: function(oEvent, oData) {
@@ -57,6 +59,44 @@ sap.ui.define([
 				jQuery.sap.log.warning("Ihr Barcode konnte zwar gelesen, aber nicht zugeordnet werden.\nInhalt: \'" + sScannedString + "\'");
 			}
 
+		},
+
+		_onRouteMatched: function(oEvent) {
+			var oArgs, oView, oQuery;
+			oArgs = oEvent.getParameter("arguments");
+			oView = this.getView();
+
+			oQuery = oArgs["?query"];
+
+			if (oQuery) {
+				if (oQuery.type) {
+					oView.getModel("view").setProperty("/type", oQuery.type);
+				}
+				if (oQuery.LENUM) {
+					oView.getModel("data").setProperty("/LENUM", oQuery.LENUM);
+					this.byId("storageUnitInput").fireChange({
+						value: oQuery.LENUM
+					});
+				}
+				if (oQuery.AUFNR) {
+					oView.getModel("data").setProperty("/AUFNR", oQuery.AUFNR);
+					this.byId("orderNumberInput").fireChange({
+						value: oQuery.AUFNR
+					});
+				}
+				if (oQuery.MEINH) {
+					oView.getModel("data").setProperty("/MEINH", oQuery.MEINH);
+					this.byId("unitOfMeasureInput").fireChange({
+						value: oQuery.MEINH
+					});
+				}
+				if (oQuery.LGORT) {
+					oView.getModel("data").setProperty("/LGORT", oQuery.LGORT);
+					this.byId("storageLocationInput").fireChange({
+						value: oQuery.LGORT
+					});
+				}
+			}
 		},
 
 		getControlByScannerInputType: function(oInputType) {
