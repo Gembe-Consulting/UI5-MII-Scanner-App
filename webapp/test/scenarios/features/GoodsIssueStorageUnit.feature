@@ -59,19 +59,22 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 		 And I can see messageStrip with text 'Achtung: MHD der Charge 0109331231 ist am 20.12.2010 abgelaufen!' in action.GoodsIssue view 
 		When I enter '1093300' into orderNumberInput in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
-		 
+		
+	@wip	 
 	Scenario: Should show confirmation popup if users enter material number that is not contained in order component list (Unplanned Withdrawal)
 		When I enter 'XXXX' into storageUnitInput in action.GoodsIssue view
 		 And I enter '##' into orderNumberInput in action.GoodsIssue view
 		Then I can see storageUnitFragmentMaterialInfoText with text 'XXXXX' in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the "Unplanned Withdrawal" MessageBox
-		
+	
+	@wip	
 	Scenario: Should show error message if users enter material number that is backflushed
 		When I enter 'XXXX' into storageUnitInput in action.GoodsIssue view
 		 And I enter '##' into orderNumberInput in action.GoodsIssue view
 		 Then I can see messageStrip with text 'Komponente '00000000109330000002' word retrograd entnommen!' in action.GoodsIssue view
 		 Then on the Goods Issue Page: I should see the save button is disabled
 	
+	@wip
 	Scenario: Should show success message if users post goods issue successfully
 		When I enter 'XXXX' into storageUnitInput in action.GoodsIssue view
 		 And I enter 'XXX' into orderNumberInput in action.GoodsIssue view
