@@ -130,7 +130,7 @@ sap.ui.define([
 						bStorageUnitDataValid = false;
 					}
 
-					if (this.pastExpirationDateFormatter(oStorageUnit.VFDAT)) {
+					if (this.formatter.isPastDate(oStorageUnit.VFDAT)) {
 						oExpirationDateFormatted = moment(oStorageUnit.VFDAT, "MM-DD-YYYY");
 						this.addLogMessage({
 							text: oBundle.getText("messageTextStorageUnitHasPastExpirationDate", [oStorageUnit.CHARG, oExpirationDateFormatted.format("L")])

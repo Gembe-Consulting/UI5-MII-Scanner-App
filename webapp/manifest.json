@@ -84,6 +84,14 @@
 					"preventInitialLoad": true
 				}
 			},
+			orderComponent: {
+				"dataSource": "illuminatorService",
+				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/orderdata/GetOrderComponentQry",
+				"type": "mii.util.model.illum.QueryTemplateModel",
+				"settings": {
+					"preventInitialLoad": true
+				}
+			},
 			"goodsReceipt": {
 				"dataSource": "illuminatorService",
 				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/goodsmovement/GoodsMovementCreateXac",
@@ -107,99 +115,85 @@
 				},
 				"async": true
 			},
-			"routes": [
-				{
-					"pattern": "",
-					"name": "empty",
-					"target": [
-						"login"
-					]
-				},
-				{
-					"pattern": "Anmeldung",
-					"name": "login",
-					"target": [
-						"login"
-					]
-				},
-				{
-					"pattern": "Start",
-					"name": "home",
-					"target": [
-						"home"
-					]
-				},
-				{
-					"pattern": "Start/Statusmeldung",
-					"name": "statusChange",
-					"target": [
-						"SC"
-					]
-				},
-				{
-					"pattern": "Start/Materialbewegung",
-					"name": "goodsMovement",
-					"target": [
-						"GM"
-					]
-				},
-				{
-					"pattern": "Start/Materialbewegung/WE:?query:",
-					"name": "goodsReceipt",
-					"target": [
-						"GR"
-					]
-				},
-				{
-					"pattern": "Start/Materialbewegung/WA:?query:",
-					"name": "goodsIssue",
-					"target": [
-						"GI"
-					]
-				},
-				{
-					"pattern": "Start/Materialbewegung/UL:?query:",
-					"name": "stockTransfer",
-					"target": [
-						"ST"
-					]
-				},
-				{
-					"pattern": "Start/Materialbewegung/ROL:?query:",
-					"name": "rollerConveyor",
-					"target": [
-						"RC"
-					]
-				},
-				{
-					"pattern": "Start/Statusmeldung/VS:?query:",
-					"name": "startOperation",
-					"target": [
-						"SO"
-					]
-				},
-				{
-					"pattern": "Start/Statusmeldung/VU:?query:",
-					"name": "interruptOperation",
-					"target": [
-						"IO"
-					]
-				},
-				{
-					"pattern": "Start/Statusmeldung/VW:?query:",
-					"name": "resumeOperation",
-					"target": [
-						"RO"
-					]
-				},
-				{
-					"pattern": "Start/Statusmeldung/VB:?query:",
-					"name": "finishOperation",
-					"target": [
-						"FO"
-					]
-				}
-			],
+			"routes": [{
+				"pattern": "",
+				"name": "empty",
+				"target": [
+					"login"
+				]
+			}, {
+				"pattern": "Anmeldung",
+				"name": "login",
+				"target": [
+					"login"
+				]
+			}, {
+				"pattern": "Start",
+				"name": "home",
+				"target": [
+					"home"
+				]
+			}, {
+				"pattern": "Start/Statusmeldung",
+				"name": "statusChange",
+				"target": [
+					"SC"
+				]
+			}, {
+				"pattern": "Start/Materialbewegung",
+				"name": "goodsMovement",
+				"target": [
+					"GM"
+				]
+			}, {
+				"pattern": "Start/Materialbewegung/WE:?query:",
+				"name": "goodsReceipt",
+				"target": [
+					"GR"
+				]
+			}, {
+				"pattern": "Start/Materialbewegung/WA:?query:",
+				"name": "goodsIssue",
+				"target": [
+					"GI"
+				]
+			}, {
+				"pattern": "Start/Materialbewegung/UL:?query:",
+				"name": "stockTransfer",
+				"target": [
+					"ST"
+				]
+			}, {
+				"pattern": "Start/Materialbewegung/ROL:?query:",
+				"name": "rollerConveyor",
+				"target": [
+					"RC"
+				]
+			}, {
+				"pattern": "Start/Statusmeldung/VS:?query:",
+				"name": "startOperation",
+				"target": [
+					"SO"
+				]
+			}, {
+				"pattern": "Start/Statusmeldung/VU:?query:",
+				"name": "interruptOperation",
+				"target": [
+					"IO"
+				]
+			}, {
+				"pattern": "Start/Statusmeldung/VW:?query:",
+				"name": "resumeOperation",
+				"target": [
+					"RO"
+				]
+			}, {
+				"pattern": "Start/Statusmeldung/VB:?query:",
+				"name": "finishOperation",
+				"target": [
+					"FO"
+				]
+			}],
 			"targets": {
 				"login": {
 					"viewName": "Login",
@@ -293,23 +287,19 @@
 			}
 		},
 		"resources": {
-			"js": [
-				{
-					"uri": "libs/momentjs/moment.js",
-					"name": "moment.js",
-					"version": "2.19.1"
-				},
-				{
-					"uri": "libs/momentjs/locale/de.js",
-					"name": "locale/de.js",
-					"version": "2.19.1"
-				},
-				{
-					"uri": "libs/scannerdetection/scannerdetection.js",
-					"name": "scannerdetection.js",
-					"version": "2.19.1"
-				}
-			],
+			"js": [{
+				"uri": "libs/momentjs/moment.js",
+				"name": "moment.js",
+				"version": "2.19.1"
+			}, {
+				"uri": "libs/momentjs/locale/de.js",
+				"name": "locale/de.js",
+				"version": "2.19.1"
+			}, {
+				"uri": "libs/scannerdetection/scannerdetection.js",
+				"name": "scannerdetection.js",
+				"version": "2.19.1"
+			}],
 			"css": []
 		}
 	},

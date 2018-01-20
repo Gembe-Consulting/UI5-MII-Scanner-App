@@ -247,7 +247,7 @@ sap.ui.define([
 
 		isInputDataValid: function(oData) {
 			if (oData) {
-				return !!oData.AUFNR && !!oData.SOLLME && !!oData.MEINH && !!oData.LGORT && ((!!oData.LENUM && oData.LGORT === "1000") || (!oData.LENUM && oData.LGORT !== "1000"));
+				return !!oData.AUFNR && !!oData.SOLLME && !oData.SOLLME <= 0 && !!oData.MEINH && !!oData.LGORT && ((!!oData.LENUM && oData.LGORT === "1000") || (!oData.LENUM && oData.LGORT !== "1000"));
 			} else {
 				return false;
 			}
