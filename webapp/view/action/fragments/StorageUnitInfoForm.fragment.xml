@@ -12,12 +12,14 @@
 		<Text id="storageUnitFragmentStorageUnitTypeText" text="{data>/LETYT}"/>
 		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentSpecialStockIndicator}"/>
 		<Text id="storageUnitFragmentSpecialStockIndicatorText" text="{data>/BESTQ}"/>
-		<c:Icon id="storageUnitFragmentSpecialStockIndicatorIcon" src="sap-icon://quality-issue" color="#E69A17"
+		<c:Icon id="storageUnitFragmentSpecialStockIndicatorIcon" src="sap-icon://quality-issue" color="#f9a429"
 			visible="{= ${data>/BESTQ}!=='0' &amp;&amp; ${data>/BESTQ}!==null}"/>
 		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentBatch}"/>
 		<Text id="storageUnitFragmentBatchText" text="{data>/CHARG}"/>
 		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentExpirationDate}"/>
 		<Text id="storageUnitFragmentExpirationDateText"
 			text="{path: 'data>/VFDAT', type:'sap.ui.model.type.Date', formatOptions: { source: { pattern: 'MM-dd-yyyy' }}}"/>
+		<c:Icon id="storageUnitFragmentPastExpirationDateIcon" src="sap-icon://quality-issue" color="#ee0000"
+			visible="{path:'data>/VFDAT', formatter:'.pastExpirationDateFormatter'}"/>
 	</f:content>
 </f:SimpleForm>

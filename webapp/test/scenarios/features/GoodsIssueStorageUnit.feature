@@ -40,11 +40,25 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 		 And I can see storageUnitFragmentStorageUnitTypeText with text 'EuroPalette' in action.GoodsIssue view
 		 And I can see storageUnitFragmentExpirationDateText with text '05.03.2018' in action.GoodsIssue view
 	 
+	Scenario: Should not override previously entered quantity if LE was entered afterwards
+		When I enter '100,000' into quantityInput in action.GoodsIssue view
+		 And I enter '00000000109330000001' into storageUnitInput in action.GoodsIssue view
+		Then I can see quantityInput with value '100,000' in action.GoodsIssue view
+		 And I can see unitOfMeasureInput with value 'KG' in action.GoodsIssue view
+		 
 	Scenario: Should show warning icon if users enter LE with restricted stock (special stock indicator)
-		When I enter '00000000109330000002' into storageUnitInput in action.GoodsIssue view
+		When I enter '00000000109330000003' into storageUnitInput in action.GoodsIssue view
 		Then I can see storageUnitFragmentSpecialStockIndicatorText with text 'Q' in action.GoodsIssue view
-		 And I can see storageUnitFragmentSpecialStockIndicatorIcon with color '#E69A17' in action.GoodsIssue view
-		 And I can see specialStockIndicatorIcon with color '#E69A17' in action.GoodsIssue view
+		 And I can see storageUnitFragmentSpecialStockIndicatorIcon with color '#f9a429' in action.GoodsIssue view
+		 And I can see specialStockIndicatorIcon with color '#f9a429' in action.GoodsIssue view
+		 
+	Scenario: Should show warning icon if users enter LE with past expiration date and prevent posting
+		When I enter '00000000109330000004' into storageUnitInput in action.GoodsIssue view
+		Then I can see storageUnitFragmentPastExpirationDateIcon with color '#ee0000' in action.GoodsIssue view
+		 And I can see pastExpirationDateIcon with color '#ee0000' in action.GoodsIssue view
+		 And I can see messageStrip with text 'Achtung: MHD der Charge 0109331231 ist am 20.12.2010 abgelaufen!' in action.GoodsIssue view 
+		When I enter '1093300' into orderNumberInput in action.GoodsIssue view
+		Then on the Goods Issue Page: I should see the save button is disabled
 		 
 	Scenario: Should show confirmation popup if users enter material number that is not contained in order component list (Unplanned Withdrawal)
 		When I enter 'XXXX' into storageUnitInput in action.GoodsIssue view
@@ -55,11 +69,11 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 	Scenario: Should show error message if users enter material number that is backflushed
 		When I enter 'XXXX' into storageUnitInput in action.GoodsIssue view
 		 And I enter '##' into orderNumberInput in action.GoodsIssue view
-		 Then I can see messageStrip with text 'Komponente '00000000109330000002' word retrograd entnommen!' in action.GoodsReceipt view
+		 Then I can see messageStrip with text 'Komponente '00000000109330000002' word retrograd entnommen!' in action.GoodsIssue view
 		 Then on the Goods Issue Page: I should see the save button is disabled
 	
 	Scenario: Should show success message if users post goods issue successfully
 		When I enter 'XXXX' into storageUnitInput in action.GoodsIssue view
 		 And I enter 'XXX' into orderNumberInput in action.GoodsIssue view
 		 And I click on saveButton in action.GoodsIssue view
-		Then I can see messageStrip with text 'Warenausgang erfolgreich gebucht!' in action.GoodsReceipt view
+		Then I can see messageStrip with text 'Warenausgang erfolgreich gebucht!' in action.GoodsIssue view

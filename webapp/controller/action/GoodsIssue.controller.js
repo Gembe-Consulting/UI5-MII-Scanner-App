@@ -13,7 +13,7 @@ sap.ui.define([
 		_aDisallowedStorageLocations: ["VG01", "1000"],
 
 		_oInitData: {
-			SOLLME: 0.0,
+			ISTME: 0.0,
 			MEINH: null,
 			AUFNR: null,
 			LENUM: null,
@@ -82,6 +82,20 @@ sap.ui.define([
 			oViewModel.setProperty("/bValid", bReadyForPosting);
 		},
 
+		checkIfUnplannedComponentWithdrawal: function() {
+
+		},
+
+		pastExpirationDateFormatter: function(sMmddyyyy) {
+			var oToday = moment(),
+				oExpirationDate = moment(sMmddyyyy, "MM-DD-YYYY");
+
+			return oToday.isAfter(oExpirationDate);
+		},
+
+		/*
+		 * bestq === "S" || bestq === "Q" || bestq === "R"
+		 */
 		onStorageUnitNumberChange: function(oEvent) {
 			var sStorageUnitNumber = oEvent.getParameter("value"),
 				oBundle = this.getResourceBundle();
@@ -94,7 +108,9 @@ sap.ui.define([
 
 			var fnResolve = function(oData) {
 				var oStorageUnit,
-					aResultList;
+					aResultList,
+					bStorageUnitDataValid = true,
+					oExpirationDateFormatted;
 
 				try {
 
@@ -106,14 +122,23 @@ sap.ui.define([
 						throw oBundle.getText("messageTitleStorageUnitNotFound");
 					}
 
-					if (oStorageUnit.SOLLME <= 0) {
+					if (oStorageUnit.ISTME <= 0) {
 						this.addLogMessage({
 							text: oBundle.getText("messageTextStorageUnitIsEmpty", [sStorageUnitNumber])
 						});
-						this.getModel("view").setProperty("/bStorageUnitValid", false);
-					} else {
-						this.getModel("view").setProperty("/bStorageUnitValid", true);
+						bStorageUnitDataValid = false;
 					}
+
+					if (this.pastExpirationDateFormatter(oStorageUnit.VFDAT)) {
+						oExpirationDateFormatted = moment(oStorageUnit.VFDAT, "MM-DD-YYYY");
+						this.addLogMessage({
+							text: oBundle.getText("messageTextStorageUnitHasPastExpirationDate", [oStorageUnit.CHARG, oExpirationDateFormatted.format("L")])
+						});
+						bStorageUnitDataValid = false;
+					}
+
+					this.getModel("view").setProperty("/bStorageUnitValid", bStorageUnitDataValid);
+
 					oStorageUnit.AUFNR = null;
 					// map data from storage unit to main model
 					this.getModel("data").setData(oStorageUnit);
@@ -149,10 +174,10 @@ sap.ui.define([
 			if (oData) {
 				switch (this.getModel("view").getProperty("/type")) {
 					case "withLE":
-						return !!oData.SOLLME && !!oData.MEINH && !!oData.AUFNR && !!oData.LENUM;
+						return !!oData.ISTME && !!oData.MEINH && !!oData.AUFNR && !!oData.LENUM && !this.pastExpirationDateFormatter(oData.VFDAT);
 						break;
 					case "nonLE":
-						return !!oData.SOLLME && !!oData.MEINH && !!oData.AUFNR && !!oData.LGORT && !!oData.MATNR;
+						return !!oData.ISTME && !!oData.MEINH && !!oData.AUFNR && !!oData.LGORT && !!oData.MATNR;
 						break;
 					default:
 						return false;

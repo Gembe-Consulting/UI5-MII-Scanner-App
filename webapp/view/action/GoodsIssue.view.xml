@@ -8,8 +8,10 @@
 			<l:VerticalLayout id="messageStripContainer" width="100%"></l:VerticalLayout>
 			<VBox height="100%" width="100%" direction="Column" alignItems="Center" justifyContent="Start">
 				<items>
-					<c:Icon id="specialStockIndicatorIcon" src="sap-icon://quality-issue" color="#E69A17" size="4rem"
+					<c:Icon id="specialStockIndicatorIcon" src="sap-icon://quality-issue" color="#f9a429" size="4rem"
 						visible="{= ${data>/BESTQ}!=='0' &amp;&amp; ${data>/BESTQ}!==null}"></c:Icon>
+					<c:Icon id="pastExpirationDateIcon" src="sap-icon://quality-issue" color="#ee0000" size="4rem"
+						visible="{path:'data>/VFDAT', formatter:'.pastExpirationDateFormatter'}"></c:Icon>
 					<f:SimpleForm editable="true" layout="ResponsiveGridLayout" breakpointM="400" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
 						emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
 						<f:content>
@@ -18,7 +20,7 @@
 							<Label text="{i18n>lableTextFormGoodsIssueOrder}"/>
 							<Input id="orderNumberInput" maxLength="7" change="onOrderNumberChange" value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}"></Input>
 							<Label text="{i18n>lableTextFormGoodsIssueQuantity}, {i18n>lableTextFormGoodsIssueUnitOfMeasure}"/>
-							<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}">
+							<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/ISTME', type:'.sapType.QUAN'}">
 								<layoutData>
 									<l:GridData span="XL2 L3 M4 S8"/>
 								</layoutData>
