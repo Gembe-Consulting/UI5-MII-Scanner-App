@@ -2,13 +2,15 @@ sap.ui.define([
 	"./ActionBaseController",
 	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox",
-	"com/mii/scanner/model/sapType"
-], function(ActionBaseController, JSONModel, MessageBox, sapType) {
+	"com/mii/scanner/model/sapType",
+	"com/mii/scanner/model/formatter"
+], function(ActionBaseController, JSONModel, MessageBox, sapType, formatter) {
 	"use strict";
 
 	return ActionBaseController.extend("com.mii.scanner.controller.action.GoodsReceipt", {
 
 		sapType: sapType,
+		formatter: formatter,
 
 		_aDisallowedStorageLocations: ["VG01"],
 
@@ -18,7 +20,7 @@ sap.ui.define([
 			SOLLME: 0.0,
 			MEINH: null,
 			LGORT: null,
-			INFO: null
+			BESTQ: null
 		},
 
 		onInit: function() {

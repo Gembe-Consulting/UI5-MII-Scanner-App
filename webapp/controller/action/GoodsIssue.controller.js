@@ -2,25 +2,31 @@ sap.ui.define([
 	"./ActionBaseController",
 	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox",
-	"com/mii/scanner/model/sapType"
-], function(ActionBaseController, JSONModel, MessageBox, sapType) {
+	"com/mii/scanner/model/sapType",
+	"com/mii/scanner/model/formatter"
+], function(ActionBaseController, JSONModel, MessageBox, sapType, formatter) {
 	"use strict";
 
 	return ActionBaseController.extend("com.mii.scanner.controller.action.GoodsIssue", {
 
 		sapType: sapType,
+		formatter: formatter,
 
 		_aDisallowedStorageLocations: ["VG01", "1000"],
 
 		_oInitData: {
-			ISTME: 0.0,
-			MEINH: null,
-			AUFNR: null,
+			//entry screen data
+			entryQuantity: 0.0,
+			unitOfMeasure: null,
+			orderNumber: null,
+			storageUnitNumber: null,
+			storageLocation: null,
+			materialNumber: null,
+			bulkMaterialIndicator: false,
+			//storage unit data
 			LENUM: null,
-			LGORT: null,
 			BESTQ: null,
-			MATNR: null,
-			BULK: false
+			VFDAT: null
 		},
 
 		onInit: function() {
@@ -53,13 +59,13 @@ sap.ui.define([
 					oView.getModel("view").setProperty("/type", oQuery.type);
 				}
 				if (oQuery.LENUM) {
-					oView.getModel("data").setProperty("/LENUM", oQuery.LENUM);
+					oView.getModel("data").setProperty("/storageUnitNumber", oQuery.LENUM);
 				}
 				if (oQuery.AUFNR) {
-					oView.getModel("data").setProperty("/AUFNR", oQuery.AUFNR);
+					oView.getModel("data").setProperty("/orderNumber", oQuery.AUFNR);
 				}
 				if (oQuery.MATNR) {
-					oView.getModel("data").setProperty("/MATNR", oQuery.MATNR);
+					oView.getModel("data").setProperty("/materialNumber", oQuery.MATNR);
 				}
 			}
 		},
@@ -86,13 +92,6 @@ sap.ui.define([
 
 		},
 
-		pastExpirationDateFormatter: function(sMmddyyyy) {
-			var oToday = moment(),
-				oExpirationDate = moment(sMmddyyyy, "MM-DD-YYYY");
-
-			return oToday.isAfter(oExpirationDate);
-		},
-
 		/*
 		 * bestq === "S" || bestq === "Q" || bestq === "R"
 		 */
@@ -110,7 +109,9 @@ sap.ui.define([
 				var oStorageUnit,
 					aResultList,
 					bStorageUnitDataValid = true,
-					oExpirationDateFormatted;
+					bMergeData = true,
+					oExpirationDateFormatted,
+					oDataModel = this.getModel("data");
 
 				try {
 
@@ -139,11 +140,19 @@ sap.ui.define([
 
 					this.getModel("view").setProperty("/bStorageUnitValid", bStorageUnitDataValid);
 
-					oStorageUnit.AUFNR = null;
-					// map data from storage unit to main model
-					this.getModel("data").setData(oStorageUnit);
+					// merge data from storage unit with main model
+					oDataModel.setData(oStorageUnit, bMergeData);
 
-					this.updateViewControls(this.getModel("data").getData());
+					// map data from storage unit to main model if neccessary
+					oDataModel.setProperty("/storageLocation", oStorageUnit.LGORT);
+					oDataModel.setProperty("/unitOfMeasure", oStorageUnit.MEINH);
+					oDataModel.setProperty("/materialNumber", oStorageUnit.MATNR);
+					// set actual from storage unit as entry quantity, if nothing has been entered yet
+					if (oDataModel.getProperty("/entryQuantity") === 0.0) {
+						oDataModel.setProperty("/entryQuantity", oStorageUnit.ISTME);
+					}
+
+					this.updateViewControls(oDataModel.getData());
 
 				} catch (err) {
 					MessageBox.error(oBundle.getText("messageTextStorageUnitNotFound", [sStorageUnitNumber]), {
@@ -174,10 +183,10 @@ sap.ui.define([
 			if (oData) {
 				switch (this.getModel("view").getProperty("/type")) {
 					case "withLE":
-						return !!oData.ISTME && !!oData.MEINH && !!oData.AUFNR && !!oData.LENUM && !this.pastExpirationDateFormatter(oData.VFDAT);
+						return !!oData.entryQuantity && !oData.entryQuantity <= 0 && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageUnitNumber && !this.formatter.isPastDate(oData.VFDAT);
 						break;
 					case "nonLE":
-						return !!oData.ISTME && !!oData.MEINH && !!oData.AUFNR && !!oData.LGORT && !!oData.MATNR;
+						return !!oData.entryQuantity && !oData.entryQuantity <= 0 && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageLocation && !!oData.materialNumber;
 						break;
 					default:
 						return false;

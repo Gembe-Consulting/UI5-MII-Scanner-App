@@ -81,13 +81,16 @@ sap.ui.define([
 			var oNewInitialData = jQuery.extend({}, this._oInitData),
 				oDataModel = this.getModel("data"),
 				oNewInitialView = jQuery.extend({}, this._oInitView),
-				oViewModel = this.getModel("view");
+				oViewModel = this.getModel("view"),
+				oStorageUnitModel = this.getModel("storageUnit");
 
 			oDataModel.setProperty("/", oNewInitialData);
 			// force update to also override invalid values
 			oDataModel.updateBindings(true);
 
 			oViewModel.setProperty("/", oNewInitialView);
+
+			//oStorageUnitModel.setProperty("/", null);
 
 			if (!bKeepMessageStrip) {
 				this.clearLogMessages();

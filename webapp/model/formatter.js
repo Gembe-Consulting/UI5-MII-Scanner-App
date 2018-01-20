@@ -2,8 +2,6 @@ sap.ui.define([], function() {
 	"use strict";
 
 	return {
-		
-		
 
 		/**
 		 * Rounds the number unit value to 2 digits
@@ -17,6 +15,21 @@ sap.ui.define([], function() {
 			}
 			return parseFloat(sValue).toFixed(2);
 		},
+
+		/**
+		 * Checks if a given date is before current data
+		 * @public
+		 * @param {string} sDate the date you want to compare to
+		 * @param {string} sFormat the format the date is provided in (default: MM-DD-YYYY)
+		 * @returns {boolean} 
+		 */
+		isPastDate: function(sDate, sFormat) {
+			var oToday = moment(),
+				oDate = moment(sDate, sFormat || "MM-DD-YYYY");
+
+			return oDate.isBefore(oToday);
+		},
+
 		/**
 		 * Defines a value state based on the stock level
 		 *

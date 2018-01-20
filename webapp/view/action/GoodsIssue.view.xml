@@ -11,34 +11,34 @@
 					<c:Icon id="specialStockIndicatorIcon" src="sap-icon://quality-issue" color="#f9a429" size="4rem"
 						visible="{= ${data>/BESTQ}!=='0' &amp;&amp; ${data>/BESTQ}!==null}"></c:Icon>
 					<c:Icon id="pastExpirationDateIcon" src="sap-icon://quality-issue" color="#ee0000" size="4rem"
-						visible="{path:'data>/VFDAT', formatter:'.pastExpirationDateFormatter'}"></c:Icon>
+						visible="{path:'data>/VFDAT', formatter:'.formatter.isPastDate'}"></c:Icon>
 					<f:SimpleForm editable="true" layout="ResponsiveGridLayout" breakpointM="400" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
 						emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
 						<f:content>
 							<Label text="{i18n>lableTextFormGoodsIssueStorageUnit}"/>
-							<Input id="storageUnitInput" value="{data>/LENUM}" visible="{=${view>/type}!=='nonLE'}" change="onStorageUnitNumberChange"/>
+							<Input id="storageUnitInput" value="{data>/storageUnitNumber}" visible="{=${view>/type}!=='nonLE'}" change="onStorageUnitNumberChange"/>
 							<Label text="{i18n>lableTextFormGoodsIssueOrder}"/>
-							<Input id="orderNumberInput" maxLength="7" change="onOrderNumberChange" value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}"></Input>
+							<Input id="orderNumberInput" maxLength="7" change="onOrderNumberChange" value="{path: 'data>/orderNumber', type:'.sapType.AUFNR'}"></Input>
 							<Label text="{i18n>lableTextFormGoodsIssueQuantity}, {i18n>lableTextFormGoodsIssueUnitOfMeasure}"/>
-							<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/ISTME', type:'.sapType.QUAN'}">
+							<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}">
 								<layoutData>
 									<l:GridData span="XL2 L3 M4 S8"/>
 								</layoutData>
 							</Input>
-							<Input id="unitOfMeasureInput" change="onUnitOfMeasureChange" value="{path: 'data>/MEINH', type:'.sapType.MEINS'}" editable="false">
+							<Input id="unitOfMeasureInput" change="onUnitOfMeasureChange" value="{path: 'data>/unitOfMeasure', type:'.sapType.MEINS'}" editable="false">
 								<layoutData>
 									<l:GridData span="XL1 L1 M2 S4"/>
 								</layoutData>
 							</Input>
 							<Label text="{i18n>lableTextFormGoodsIssueStorageLocation}"/>
-							<Input id="storageLocationInput" maxLength="4" change="onStorageLocationChange" value="{path: 'data>/LGORT', type:'.sapType.LGORT'}"
-								visible="{=${view>/type}==='nonLE'}"></Input>
+							<Input id="storageLocationInput" maxLength="4" change="onStorageLocationChange"
+								value="{path: 'data>/storageLocation', type:'.sapType.LGORT'}" visible="{=${view>/type}==='nonLE'}"></Input>
 							<Label text="{i18n>lableTextFormGoodsIssueMaterial}"/>
-							<Input id="materialNumberInput" change="onMaterialNumbeChange" value="{path: 'data>/MATNR', type:'.sapType.MATNR'}"
+							<Input id="materialNumberInput" change="onMaterialNumbeChange" value="{path: 'data>/materialNumber', type:'.sapType.MATNR'}"
 								visible="{=${view>/type}==='nonLE'}"></Input>
 							<Label text="{i18n>lableTextFormGoodsIssueBulkMaterial}"/>
-							<Switch id="bulkMaterialSwitch" state="{data>/BULK}" customTextOn="{i18n>switchCustomOnYes}" customTextOff="{i18n>switchCustomOffNo}"
-								visible="{=${view>/type}==='nonLE'}"></Switch>
+							<Switch id="bulkMaterialSwitch" state="{data>/bulkMaterialIndicator}" customTextOn="{i18n>switchCustomOnYes}"
+								customTextOff="{i18n>switchCustomOffNo}" visible="{=${view>/type}==='nonLE'}"></Switch>
 						</f:content>
 					</f:SimpleForm>
 					<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>

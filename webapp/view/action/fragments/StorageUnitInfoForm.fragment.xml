@@ -20,6 +20,6 @@
 		<Text id="storageUnitFragmentExpirationDateText"
 			text="{path: 'data>/VFDAT', type:'sap.ui.model.type.Date', formatOptions: { source: { pattern: 'MM-dd-yyyy' }}}"/>
 		<c:Icon id="storageUnitFragmentPastExpirationDateIcon" src="sap-icon://quality-issue" color="#ee0000"
-			visible="{path:'data>/VFDAT', formatter:'.pastExpirationDateFormatter'}"/>
+			visible="{path:'data>/VFDAT', formatter:'.formatter.isPastDate'}"/>
 	</f:content>
 </f:SimpleForm>

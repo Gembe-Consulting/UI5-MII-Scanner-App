@@ -20,7 +20,7 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 		Then on the Goods Issue Page: I should see all "with LE" input fields are initial
 
 	Scenario: Should enable save button if all required input fields are populated and should disable save button if form is cleared
-		When I enter '00000000109330000001' into storageUnitInput in action.GoodsIssue view
+		When I enter '00000000109330000002' into storageUnitInput in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
 		When I enter '1093300' into orderNumberInput in action.GoodsIssue view
 		Then I can see saveButton in action.GoodsIssue view
@@ -42,7 +42,7 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 	 
 	Scenario: Should not override previously entered quantity if LE was entered afterwards
 		When I enter '100,000' into quantityInput in action.GoodsIssue view
-		 And I enter '00000000109330000001' into storageUnitInput in action.GoodsIssue view
+		 And I enter '00000000109330000003' into storageUnitInput in action.GoodsIssue view
 		Then I can see quantityInput with value '100,000' in action.GoodsIssue view
 		 And I can see unitOfMeasureInput with value 'KG' in action.GoodsIssue view
 		 
