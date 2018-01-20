@@ -1,0 +1,180 @@
+{
+	"d": {
+		"results": [{
+			"__metadata": {
+				"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Rowsets('SAPUI5/services/orderdata/GetOrderComponentQry')",
+				"type": "QueryTemplate.Rowsets"
+			},
+			"DateCreated": "\/Date(1516470093000)\/",
+			"EndDate": "\/Date(1516470093000)\/",
+			"StartDate": "\/Date(1516466493000)\/",
+			"Version": "14.0 SP7 Patch 15 (Jan 13, 2016)",
+			"QueryTemplate": "SAPUI5/services/orderdata/GetOrderComponentQry",
+			"Rowset": {
+				"results": [{
+					"__metadata": {
+						"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Rowset(QueryTemplate='SAPUI5/services/orderdata/GetOrderComponentQry',RowsetId=1)",
+						"type": "QueryTemplate.Rowset"
+					},
+					"RowsetId": 1,
+					"QueryTemplate": "SAPUI5/services/orderdata/GetOrderComponentQry",
+					"Column": {
+						"results": [{
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('BDMNG')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "BDMNG",
+							"Description": "BDMNG",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 7,
+							"SourceColumn": "BDMNG"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('CHARG')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "CHARG",
+							"Description": "CHARG",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "CHARG"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('EINHEIT')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "EINHEIT",
+							"Description": "EINHEIT",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "EINHEIT"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('LGORT')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "LGORT",
+							"Description": "LGORT",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "LGORT"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('MATNR')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "MATNR",
+							"Description": "MATNR",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "MATNR"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('MAT_TXT')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "MAT_TXT",
+							"Description": "MAT_TXT",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "MAT_TXT"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('ENMNG')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "ENMNG",
+							"Description": "ENMNG",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 7,
+							"SourceColumn": "ENMNG"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('RGEKZ')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "RGEKZ",
+							"Description": "RGEKZ",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "RGEKZ"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('SCHGT')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "SCHGT",
+							"Description": "SCHGT",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "SCHGT"
+						}]
+					},
+					"Row": {
+						"results": [{
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"BDMNG": "188",
+							"CHARG": "0000000000",
+							"EINHEIT": "ST",
+							"LGORT": "1000",
+							"MATNR": "1200666-001",
+							"MAT_TXT": "PEBEU, 500+460x1400, 90µ, blau",
+							"ENMNG": "0",
+							"RGEKZ": null,
+							"SCHGT": null,
+							"RowId": 1
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"BDMNG": "1",
+							"CHARG": "0000000000",
+							"EINHEIT": "ST",
+							"LGORT": "1000",
+							"MATNR": "1200666-002",
+							"MAT_TXT": "RET. PEBEU, 500+460x1400, 90µ, blau",
+							"ENMNG": "0",
+							"RGEKZ": "X",
+							"SCHGT": null,
+							"RowId": 2
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"BDMNG": "1",
+							"CHARG": "0000000000",
+							"EINHEIT": "ST",
+							"LGORT": "1000",
+							"MATNR": "1200666-003",
+							"MAT_TXT": "SCHTG. PEBEU, 500+460x1400, 90µ, blau",
+							"ENMNG": "0",
+							"RGEKZ": null,
+							"SCHGT": "X",
+							"RowId": 3
+						}]
+					}
+				}]
+			},
+			"Messages": {
+				"results": [
+
+				]
+			}
+		}]
+	}
+}

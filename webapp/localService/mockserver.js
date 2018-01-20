@@ -154,14 +154,28 @@ sap.ui.define([
 		fnGoodsMovementCreateXac: function(oData, oParams) {
 			var oUriParameters = jQuery.sap.getUriParameters(),
 				sErrorMessage = oUriParameters.get("applicationError");
-			
-			if(sErrorMessage){
+
+			if (sErrorMessage) {
 				oData.d.results[0].FatalError = "Forcefull application error:: \'" + sErrorMessage + "\'";
 			}
-			
+
 			return oData;
 
 		},
+
+		fnGetOrderComponentQry: function(oData, oParams) {
+			var oUriParameters = jQuery.sap.getUriParameters(),
+				sMaterialNumber = oParams.get("Param.1"),
+				aMaterialNumberList = oData.d.results[0].Rowset.results[0].Row.results;;
+
+			aMaterialNumberList = jQuery.grep(aMaterialNumberList, function(oRow, index) {
+				return oRow.MATNR === sMaterialNumber;
+			});
+
+			oData.d.results[0].Rowset.results[0].Row.results = aMaterialNumberList;
+
+			return oData;
+		}
 	};
 
 });

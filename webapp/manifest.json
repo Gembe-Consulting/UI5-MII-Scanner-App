@@ -84,7 +84,7 @@
 					"preventInitialLoad": true
 				}
 			},
-			orderComponent: {
+			"orderComponent": {
 				"dataSource": "illuminatorService",
 				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/orderdata/GetOrderComponentQry",
 				"type": "mii.util.model.illum.QueryTemplateModel",
