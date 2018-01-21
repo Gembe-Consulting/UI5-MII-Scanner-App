@@ -32,13 +32,17 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 		Then on the Goods Issue Page: I should see the save button is disabled
 
 	Scenario: Should show storage unit data if LE was entered
+		When I look at the screen
+		Then I can see quantityInput with value '0,000' in action.GoodsIssue view
 		When I enter '00000000109330000004' into storageUnitInput in action.GoodsIssue view
 		Then I can see storageUnitFragmentMaterialInfoText with text '1700948-030 - Zucker-Fett-VBT V185 RSPO-MB 600, BB' in action.GoodsIssue view
-		 And I can see storageUnitFragmentBatchText with text '0109330001' in action.GoodsIssue view
+		 And I can see quantityInput with value '217,321' in action.GoodsIssue view
+		 And I can see unitOfMeasureInput with value 'KG' in action.GoodsIssue view
+		 And I can see storageUnitFragmentBatchText with text '0109331231' in action.GoodsIssue view
 		 And I can see storageUnitFragmentStorageBinText with text 'PRODUKTION' in action.GoodsIssue view
 		 And I can see storageUnitFragmentStorageTypeText with text '900' in action.GoodsIssue view
-		 And I can see storageUnitFragmentStorageUnitTypeText with text 'EuroPalette' in action.GoodsIssue view
-		 And I can see storageUnitFragmentExpirationDateText with text '05.03.2018' in action.GoodsIssue view
+		 And I can see storageUnitFragmentStorageUnitTypeText with text 'Industriepalette' in action.GoodsIssue view
+		 And I can see storageUnitFragmentExpirationDateText with text '20.12.2022' in action.GoodsIssue view
 	 
 	Scenario: Should not override previously entered quantity if LE was entered afterwards
 		When I enter '100,000' into quantityInput in action.GoodsIssue view
@@ -47,13 +51,13 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 		 And I can see unitOfMeasureInput with value 'KG' in action.GoodsIssue view
 		 
 	Scenario: Should show warning icon if users enter LE with restricted stock (special stock indicator)
-		When I enter '00000000109330000004' into storageUnitInput in action.GoodsIssue view
+		When I enter '00000000109330000005' into storageUnitInput in action.GoodsIssue view
 		Then I can see storageUnitFragmentSpecialStockIndicatorText with text 'Q' in action.GoodsIssue view
 		 And I can see storageUnitFragmentSpecialStockIndicatorIcon with color '#f9a429' in action.GoodsIssue view
 		 And I can see specialStockIndicatorIcon with color '#f9a429' in action.GoodsIssue view
 		 
-	Scenario: Should show warning icon if users enter LE with past expiration date and prevent posting
-		When I enter '00000000109330000004' into storageUnitInput in action.GoodsIssue view
+	Scenario: Should show error icon and message if users enter LE with past expiration date and prevent posting
+		When I enter '00000000109330000006' into storageUnitInput in action.GoodsIssue view
 		Then I can see storageUnitFragmentPastExpirationDateIcon with color '#ee0000' in action.GoodsIssue view
 		 And I can see pastExpirationDateIcon with color '#ee0000' in action.GoodsIssue view
 		 And I can see messageStrip with text 'Achtung: MHD der Charge 0109331231 ist am 20.12.2010 abgelaufen!' in action.GoodsIssue view 
