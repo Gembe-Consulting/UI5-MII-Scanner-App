@@ -8,10 +8,17 @@
 			<l:VerticalLayout id="messageStripContainer" width="100%"></l:VerticalLayout>
 			<VBox height="100%" width="100%" direction="Column" alignItems="Center" justifyContent="Start">
 				<items>
-					<c:Icon id="specialStockIndicatorIcon" src="sap-icon://quality-issue" color="#f9a429" size="4rem"
-						visible="{= ${data>/BESTQ}!=='0' &amp;&amp; ${data>/BESTQ}!==null}"></c:Icon>
-					<c:Icon id="pastExpirationDateIcon" src="sap-icon://quality-issue" color="#ee0000" size="4rem"
-						visible="{path:'data>/VFDAT', formatter:'.formatter.isPastDate'}"></c:Icon>
+					<HBox visible="{= ${data>/BESTQ}!=='0' &amp;&amp; ${data>/BESTQ}!==null}" alignItems="Center">
+						<c:Icon id="specialStockIndicatorIcon" src="sap-icon://quality-issue" color="#f9a429" size="4rem" class="sapUiMediumMarginBeginEnd"/>
+						<c:Icon id="specialStockRestrictedIcon" src="sap-icon://locked" visible="{= ${data>/BESTQ}==='S'}" color="#f9a429" size="3rem"
+							class="sapUiMediumMarginBeginEnd"/>
+						<c:Icon id="specialStockQualityIcon" src="sap-icon://lab" visible="{= ${data>/BESTQ}==='Q'}" color="#f9a429" size="3rem"
+							class="sapUiMediumMarginBeginEnd"/>
+					</HBox>
+					<HBox visible="{path:'data>/VFDAT', formatter:'.formatter.isPastDate'}" alignItems="Center">
+						<c:Icon id="expirationDateIndicatorIcon" src="sap-icon://quality-issue" color="#ee0000" size="4rem" class="sapUiMediumMarginBeginEnd"/>
+						<c:Icon id="expirationDateOutOfDateIcon" src="sap-icon://cancel" color="#ee0000" size="3rem" class="sapUiMediumMarginBeginEnd"/>
+					</HBox>
 					<f:SimpleForm editable="true" layout="ResponsiveGridLayout" breakpointM="400" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
 						emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
 						<f:content>

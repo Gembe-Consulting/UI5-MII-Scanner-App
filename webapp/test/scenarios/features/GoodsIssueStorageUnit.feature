@@ -50,16 +50,35 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 		Then I can see quantityInput with value '100,000' in action.GoodsIssue view
 		 And I can see unitOfMeasureInput with value 'KG' in action.GoodsIssue view
 		 
-	Scenario: Should show warning icon if users enter LE with restricted stock (special stock indicator)
+	Scenario: Should show warning icon if users enter LE with restricted stock (special stock indicator "S")
+		When I enter '00000000109330000007' into storageUnitInput in action.GoodsIssue view
+		Then I can see storageUnitFragmentSpecialStockIndicatorText with text 'S' in action.GoodsIssue view
+		 And I can see storageUnitFragmentSpecialStockIndicatorIcon with color '#f9a429' in action.GoodsIssue view
+		 And I can see storageUnitFragmentSpecialStockIndicatorIcon with src 'sap-icon://quality-issue' in action.GoodsIssue view
+		 And I can see storageUnitFragmentSpecialStockRestrictedIcon with color '#f9a429' in action.GoodsIssue view
+		 And I can see storageUnitFragmentSpecialStockRestrictedIcon with src 'sap-icon://locked' in action.GoodsIssue view
+		 And I can see specialStockIndicatorIcon with color '#f9a429' in action.GoodsIssue view
+		 And I can see specialStockIndicatorIcon with src 'sap-icon://quality-issue' in action.GoodsIssue view
+		 And I can see specialStockRestrictedIcon with color '#f9a429' in action.GoodsIssue view
+		 And I can see specialStockRestrictedIcon with src 'sap-icon://locked' in action.GoodsIssue view
+		 
+	Scenario: Should show warning icon if users enter LE with quality stock (special stock indicator "Q")
 		When I enter '00000000109330000005' into storageUnitInput in action.GoodsIssue view
 		Then I can see storageUnitFragmentSpecialStockIndicatorText with text 'Q' in action.GoodsIssue view
 		 And I can see storageUnitFragmentSpecialStockIndicatorIcon with color '#f9a429' in action.GoodsIssue view
+		 And I can see storageUnitFragmentSpecialStockIndicatorIcon with src 'sap-icon://quality-issue' in action.GoodsIssue view
+		 And I can see storageUnitFragmentSpecialStockQualityIcon with color '#f9a429' in action.GoodsIssue view
+		 And I can see storageUnitFragmentSpecialStockQualityIcon with src 'sap-icon://lab' in action.GoodsIssue view
 		 And I can see specialStockIndicatorIcon with color '#f9a429' in action.GoodsIssue view
+		 And I can see specialStockIndicatorIcon with src 'sap-icon://quality-issue' in action.GoodsIssue view
+		 And I can see specialStockQualityIcon with color '#f9a429' in action.GoodsIssue view
+		 And I can see specialStockQualityIcon with src 'sap-icon://lab' in action.GoodsIssue view
 		 
 	Scenario: Should show error icon and message if users enter LE with past expiration date and prevent posting
 		When I enter '00000000109330000006' into storageUnitInput in action.GoodsIssue view
 		Then I can see storageUnitFragmentPastExpirationDateIcon with color '#ee0000' in action.GoodsIssue view
-		 And I can see pastExpirationDateIcon with color '#ee0000' in action.GoodsIssue view
+		 And I can see expirationDateIndicatorIcon with color '#ee0000' in action.GoodsIssue view
+		 And I can see expirationDateOutOfDateIcon with color '#ee0000' in action.GoodsIssue view
 		 And I can see messageStrip with text 'Achtung: MHD der Charge 0109331231 ist am 20.12.2010 abgelaufen!' in action.GoodsIssue view 
 		When I enter '1093300' into orderNumberInput in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled

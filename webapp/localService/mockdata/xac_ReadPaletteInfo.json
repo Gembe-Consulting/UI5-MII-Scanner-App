@@ -381,6 +381,31 @@
 							"VFDAT": "12-20-2010",
 							"LGORT": "1000",
 							"RowId": 6
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(2)",
+								"type": "QueryTemplate.Row"
+							},
+							"LENUM": "00000000109330000007",
+							"AUFNR": "1093300",
+							"LGPLA": "PRODUKTION",
+							"LGTYP": "900",
+							"MATNR": "1700948-030",
+							"MAKTX": "Zucker-Fett-VBT V185 RSPO-MB 600, BB",
+							"GESME": "200.0",
+							"LETYT": "Industriepalette",
+							"MEINH": "KG",
+							"UMREZ": "1",
+							"GEWEI": "KG",
+							"MGEWI": "201.7",
+							"CHARG": "0109331231",
+							"SOLLME": "400.0",
+							"ISTME": "217.321",
+							"TARGETME": "600.0",
+							"BESTQ": "S",
+							"VFDAT": "12-20-2022",
+							"LGORT": "1000",
+							"RowId": 7
 						}]
 					}
 				}]
