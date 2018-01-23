@@ -98,10 +98,7 @@ module.exports = function(grunt) {
 					"cwd": "dist/tmp"
 				}, {
 					"expand": true,
-					"src": [
-						"**/*",
-						"!node_modules/**"
-					],
+					"src": "**/*",
 					"dest": "dist",
 					"cwd": "dist/tmp"
 				}]

@@ -234,47 +234,5 @@
         }
       ]
     }
-  },
-  "codevalidation": {
-    "di.code-validation.js": {
-      "options": {
-        "projectPath": ".",
-        "ignoredPaths": [
-          "node_modules",
-          "dist"
-        ],
-        "reporter": "problems_reporter",
-        "reporterOptions": {
-          "outputFile": "dist/di.code-validation.core_issues.json"
-        },
-        "validators": {
-          "@sap/di.code-validation.js": {
-            "extensions": [
-              ".js"
-            ]
-          }
-        }
-      }
-    },
-    "di.code-validation.xml": {
-      "options": {
-        "projectPath": ".",
-        "ignoredPaths": [
-          "node_modules",
-          "dist"
-        ],
-        "reporter": "problems_reporter",
-        "reporterOptions": {
-          "outputFile": "dist/di.code-validation.core_issues.json"
-        },
-        "validators": {
-          "@sap/di.code-validation.xml": {
-            "extensions": [
-              ".xml"
-            ]
-          }
-        }
-      }
-    }
   }
 }
