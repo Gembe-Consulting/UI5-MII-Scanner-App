@@ -23,7 +23,7 @@
 		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentExpirationDate}"/>
 		<Text id="storageUnitFragmentExpirationDateText"
 			text="{path: 'data>/VFDAT', type:'sap.ui.model.type.Date', formatOptions: { source: { pattern: 'MM-dd-yyyy' }}}" width="100px"/>
-		<c:Icon id="storageUnitFragmentExpirationDateOutOfDateIcon" src="sap-icon://cancel" color="#ee0000"
+		<c:Icon id="storageUnitFragmentExpirationDateOutOfDateIcon" src="sap-icon://sys-cancel-2" color="#ee0000"
 			visible="{path:'data>/VFDAT', formatter:'.formatter.isPastDate'}"/>
 		<c:Icon visible="false"/>
 	</f:content>

@@ -166,6 +166,36 @@
 							"RGEKZ": null,
 							"SCHGT": "X",
 							"RowId": 3
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"BDMNG": "999",
+							"CHARG": "0000000000",
+							"EINHEIT": "ST",
+							"LGORT": "1000",
+							"MATNR": "1700948-030",
+							"MAT_TXT": "Zucker-Fett-VBT V185 RSPO-MB 600, BB",
+							"ENMNG": "999",
+							"RGEKZ": null,
+							"SCHGT": null,
+							"RowId": 4
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"BDMNG": "999",
+							"CHARG": "0000000000",
+							"EINHEIT": "ST",
+							"LGORT": "1000",
+							"MATNR": "1200666-004",
+							"MAT_TXT": "Zucker-Fett-VBT V185 RSPO-MB 600, BB",
+							"ENMNG": "999",
+							"RGEKZ": null,
+							"SCHGT": null,
+							"RowId": 5
 						}]
 					}
 				}]

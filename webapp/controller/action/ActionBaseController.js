@@ -32,6 +32,25 @@ sap.ui.define([
 			};
 		},
 
+		requestOrderComponentInfoService: function(sOrderNumber, sMaterialNumber) {
+			if (!sOrderNumber || !sMaterialNumber) {
+				return Promise.reject({
+					message: "Input parameters not complete",
+					statusCode: 0,
+					statusText: "sOrderNumber=" + sOrderNumber + " - sMaterialNumber=" + sMaterialNumber,
+					responseText: "Please provide all input parameters to perform the call!"
+				});
+			}
+
+			var oOrderComponentModel = this.getModel("orderComponent"),
+				oParam = {
+					"Param.1": sOrderNumber,
+					"Param.2": sMaterialNumber
+				};
+
+			return oOrderComponentModel.loadMiiData(oOrderComponentModel._sServiceUrl, oParam);
+		},
+
 		requestStorageUnitInfoService: function(sStorageUnitNumber) {
 			var oStorageUnitModel = this.getModel("storageUnit"),
 				oParam = {

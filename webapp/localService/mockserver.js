@@ -165,7 +165,7 @@ sap.ui.define([
 
 		fnGetOrderComponentQry: function(oData, oParams) {
 			var oUriParameters = jQuery.sap.getUriParameters(),
-				sMaterialNumber = oParams.get("Param.1"),
+				sMaterialNumber = oParams.get("Param.2"),
 				aMaterialNumberList = oData.d.results[0].Rowset.results[0].Row.results;;
 
 			aMaterialNumberList = jQuery.grep(aMaterialNumberList, function(oRow, index) {

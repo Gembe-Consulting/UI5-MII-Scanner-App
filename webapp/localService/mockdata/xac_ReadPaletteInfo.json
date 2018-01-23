@@ -406,6 +406,81 @@
 							"VFDAT": "12-20-2022",
 							"LGORT": "1000",
 							"RowId": 7
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(2)",
+								"type": "QueryTemplate.Row"
+							},
+							"LENUM": "00000000109330000008",
+							"AUFNR": "1093300",
+							"LGPLA": "PRODUKTION",
+							"LGTYP": "900",
+							"MATNR": "0000000-000",
+							"MAKTX": "UNPLANNED WITHDRAWAL of Zucker-Fett-VBT",
+							"GESME": "200.0",
+							"LETYT": "Industriepalette",
+							"MEINH": "KG",
+							"UMREZ": "1",
+							"GEWEI": "KG",
+							"MGEWI": "201.7",
+							"CHARG": "0109331231",
+							"SOLLME": "400.0",
+							"ISTME": "321.132",
+							"TARGETME": "600.0",
+							"BESTQ": "0",
+							"VFDAT": "12-20-2022",
+							"LGORT": "1000",
+							"RowId": 8
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(2)",
+								"type": "QueryTemplate.Row"
+							},
+							"LENUM": "00000000109330000009",
+							"AUFNR": "1093300",
+							"LGPLA": "PRODUKTION",
+							"LGTYP": "900",
+							"MATNR": "1200666-002",
+							"MAKTX": "BACKFLUSH WITHDRAWAL of PEBEU, 500+460x1400, 90µ, blau",
+							"GESME": "200.0",
+							"LETYT": "Industriepalette",
+							"MEINH": "KG",
+							"UMREZ": "1",
+							"GEWEI": "KG",
+							"MGEWI": "201.7",
+							"CHARG": "0109331231",
+							"SOLLME": "400.0",
+							"ISTME": "321.132",
+							"TARGETME": "600.0",
+							"BESTQ": "0",
+							"VFDAT": "12-20-2022",
+							"LGORT": "1000",
+							"RowId": 9
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(2)",
+								"type": "QueryTemplate.Row"
+							},
+							"LENUM": "00000000109330000010",
+							"AUFNR": "1093300",
+							"LGPLA": "PRODUKTION",
+							"LGTYP": "900",
+							"MATNR": "1200666-004",
+							"MAKTX": "PEBEU, 500+460x1400, 90µ, blau",
+							"GESME": "200.0",
+							"LETYT": "Industriepalette",
+							"MEINH": "KGM",
+							"UMREZ": "1",
+							"GEWEI": "KG",
+							"MGEWI": "201.7",
+							"CHARG": "0109331231",
+							"SOLLME": "400.0",
+							"ISTME": "321.132",
+							"TARGETME": "600.0",
+							"BESTQ": "0",
+							"VFDAT": "12-20-2022",
+							"LGORT": "1000",
+							"RowId": 10
 						}]
 					}
 				}]

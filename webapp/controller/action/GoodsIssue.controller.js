@@ -23,6 +23,7 @@ sap.ui.define([
 			storageLocation: null,
 			materialNumber: null,
 			bulkMaterialIndicator: false,
+			backflushMaterialIndicator: false,
 			//storage unit data
 			LENUM: null,
 			BESTQ: null,
@@ -117,8 +118,68 @@ sap.ui.define([
 			oViewModel.setProperty("/bValid", bReadyForPosting);
 		},
 
-		checkIfUnplannedComponentWithdrawal: function() {
+		validateComponentWithdrawal: function(sOrderNumber, sMaterialNumber) {
+			var oBundle = this.getResourceBundle();
 
+			if (!sOrderNumber || !sMaterialNumber) {
+				return null;
+			}
+
+			this.clearLogMessages();
+
+			var fnResolve = function(oData) {
+				var oOrderComponent,
+					aResultList,
+					oDataModel = this.getModel("data"),
+					sComponentUnitOfMeasure,
+					bComponentIsBackflushed = false;
+
+				try {
+					aResultList = oData.d.results[0].Rowset.results[0].Row.results;
+
+					if (aResultList.length === 1) {
+						oOrderComponent = oData.d.results[0].Rowset.results[0].Row.results[0];
+					} else {
+						this.addLogMessage({
+							text: oBundle.getText("messageTextMaterialNotContaintedInOrderComponentList", [sMaterialNumber, sOrderNumber]),
+							type: sap.ui.core.MessageType.Warning
+						});
+					}
+
+					if (oOrderComponent && oOrderComponent.RGEKZ === "X") {
+						this.addLogMessage({
+							text: oBundle.getText("messageTextMaterialBackflushedInOrderComponentList", [sMaterialNumber])
+						});
+						bComponentIsBackflushed = false;
+					}
+
+					if (!!oDataModel.getProperty("/unitOfMeasure") && (oOrderComponent.EINHEIT !== oDataModel.getProperty("/unitOfMeasure"))) {
+						this.addLogMessage({
+							text: oBundle.getText("messageTextOrderComponentHasDeviatingUnitOfMeasure", [oOrderComponent.EINHEIT, oDataModel.getProperty("/unitOfMeasure")])
+						});
+					} else {
+						sComponentUnitOfMeasure = oOrderComponent.EINHEIT;
+					}
+
+					oDataModel.setProperty("/unitOfMeasure", sComponentUnitOfMeasure);
+					oDataModel.setProperty("/backflushMaterialIndicator", bComponentIsBackflushed);
+
+				} catch (err) {
+					MessageBox.error(oBundle.getText("messageTextGoodsIssueError"), {
+						title: err
+					});
+				} finally {
+					this.updateViewControls(this.getModel("data").getData());
+				}
+			}.bind(this);
+
+			var fnReject = function(oError) {
+				MessageBox.error(oError.message, {
+					title: oError.statusText
+				});
+			}.bind(this);
+
+			this.requestOrderComponentInfoService(sOrderNumber, sMaterialNumber).then(fnResolve, fnReject);
 		},
 
 		/*
@@ -167,6 +228,13 @@ sap.ui.define([
 						bStorageUnitDataValid = false;
 					}
 
+					if (!!oDataModel.getProperty("/unitOfMeasure") && (oStorageUnit.MEINH !== oDataModel.getProperty("/unitOfMeasure"))) {
+						this.addLogMessage({
+							text: oBundle.getText("messageTextStorageUnitHasDeviatingUnitOfMeasure", [oStorageUnit.MEINH, oDataModel.getProperty("/unitOfMeasure")])
+						});
+						bStorageUnitDataValid = false;
+					}
+
 					this.getModel("view").setProperty("/bStorageUnitValid", bStorageUnitDataValid);
 
 					// merge data from storage unit with main model
@@ -176,18 +244,19 @@ sap.ui.define([
 					oDataModel.setProperty("/storageLocation", oStorageUnit.LGORT);
 					oDataModel.setProperty("/unitOfMeasure", oStorageUnit.MEINH);
 					oDataModel.setProperty("/materialNumber", oStorageUnit.MATNR);
+
 					// set actual from storage unit as entry quantity, if nothing has been entered yet
 					if (oDataModel.getProperty("/entryQuantity") === 0.0) {
 						oDataModel.setProperty("/entryQuantity", oStorageUnit.ISTME);
 					}
 
-					this.updateViewControls(oDataModel.getData());
-
 				} catch (err) {
 					MessageBox.error(oBundle.getText("messageTextStorageUnitNotFound", [sStorageUnitNumber]), {
 						title: err
 					});
-				} finally {}
+				} finally {
+					this.updateViewControls(oDataModel.getData());
+				}
 
 			}.bind(this);
 
@@ -199,7 +268,8 @@ sap.ui.define([
 		},
 
 		onOrderNumberChange: function(oEvent) {
-			this.updateViewControls(this.getModel("data").getData());
+			var oModel = this.getModel("data");
+			this.validateComponentWithdrawal(oModel.getProperty("/orderNumber"), oModel.getProperty("/materialNumber"));
 		},
 		onQuantityChange: function(oEvent) {
 			this.updateViewControls(this.getModel("data").getData());
@@ -212,10 +282,10 @@ sap.ui.define([
 			if (oData) {
 				switch (this.getModel("view").getProperty("/type")) {
 					case "withLE":
-						return !!oData.entryQuantity && !oData.entryQuantity <= 0 && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageUnitNumber && !this.formatter.isPastDate(oData.VFDAT);
+						return !!oData.entryQuantity && !oData.entryQuantity <= 0 && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageUnitNumber && oData.backflushMaterialIndicator === false && !this.formatter.isPastDate(oData.VFDAT);
 						break;
 					case "nonLE":
-						return !!oData.entryQuantity && !oData.entryQuantity <= 0 && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageLocation && !!oData.materialNumber;
+						return !!oData.entryQuantity && !oData.entryQuantity <= 0 && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageLocation && !!oData.materialNumber && oData.backflushMaterialIndicator === false;
 						break;
 					default:
 						return false;
