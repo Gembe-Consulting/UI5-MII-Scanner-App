@@ -6,16 +6,19 @@
 		<Text id="storageUnitFragmentMaterialInfoText" text="{data>/MATNR} - {data>/MAKTX}"/>
 		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentSpecialStockIndicator}" visible="{= ${data>/BESTQ}!=='0'}"/>
 		<HBox visible="{= ${data>/BESTQ}!=='0'}">
-			<Text id="storageUnitFragmentSpecialStockIndicatorText" text="{data>/BESTQ}" width="100px"/>
+			<Text id="storageUnitFragmentSpecialStockIndicatorText" text="{data>/BESTQ}" width="100px"
+				tooltip="{i18n>labelTextTooltipStorageUnitInfoActionFragmentSpecialStockIndicator}"/>
 			<c:Icon id="storageUnitFragmentSpecialStockRestrictedIcon" src="sap-icon://locked" color="#f9a429" visible="{= ${data>/BESTQ}==='S'}"
-				width="25px"/>
-			<c:Icon id="storageUnitFragmentSpecialStockQualityIcon" src="sap-icon://lab" color="#f9a429" visible="{= ${data>/BESTQ}==='Q'}" width="25px"/>
+				tooltip="{i18n>labelTextTooltipStorageUnitInfoActionFragmentRestricted}" width="25px"/>
+			<c:Icon id="storageUnitFragmentSpecialStockQualityIcon" src="sap-icon://lab" color="#f9a429" visible="{= ${data>/BESTQ}==='Q'}"
+				tooltip="{i18n>labelTextTooltipStorageUnitInfoActionFragmentQuality}" width="25px"/>
 		</HBox>
 		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentBatch}"/>
 		<HBox>
 			<Text id="storageUnitFragmentBatchText" text="{data>/CHARG}" width="100px"/>
 			<c:Icon id="storageUnitFragmentSpecialStockIndicatorIcon" src="sap-icon://quality-issue" color="#f9a429"
-				visible="{= ${data>/BESTQ}!=='0' &amp;&amp; ${data>/BESTQ}!==null}" width="25px"/>
+				visible="{= ${data>/BESTQ}!=='0' &amp;&amp; ${data>/BESTQ}!==null}" width="25px"
+				tooltip="{i18n>labelTextTooltipStorageUnitInfoActionFragmentSpecialStockIndicator}"/>
 			<c:Icon id="storageUnitFragmentPastExpirationDateIcon" src="sap-icon://quality-issue" color="#ee0000"
 				visible="{path:'data>/VFDAT', formatter:'.formatter.isPastDate'}" width="25px"/>
 		</HBox>

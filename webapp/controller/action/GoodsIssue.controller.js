@@ -58,6 +58,7 @@ sap.ui.define([
 
 			if (oQuery) {
 				if (oQuery.type) {
+					this._oInitView.type = oQuery.type; //update initial object
 					oView.getModel("view").setProperty("/type", oQuery.type);
 				}
 				if (oQuery.LENUM) {
@@ -294,6 +295,13 @@ sap.ui.define([
 				return false;
 			}
 		},
+
+		setPageTitle: function(sType) {
+			var oBundle = this.getResourceBundle(),
+				sTitleText = "titleGoodsIssue";
+
+			return oBundle.getText(sTitleText + (sType || ""));
+		}
 
 	});
 

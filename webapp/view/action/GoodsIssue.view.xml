@@ -1,6 +1,6 @@
 <mvc:View controllerName="com.mii.scanner.controller.action.GoodsIssue" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
 	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
-	<Page id="goodsIssuePage" title="{i18n>titleGoodsIssue}">
+	<Page id="goodsIssuePage" title="{path:'view>/type', formatter:'.setPageTitle'}">
 		<headerContent>
 			<Button id="clearFormButton" icon="sap-icon://redo" press="onClearFormPress"/>
 		</headerContent>
