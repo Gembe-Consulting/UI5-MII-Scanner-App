@@ -146,19 +146,21 @@ sap.ui.define([
 						});
 					}
 
-					if (oOrderComponent && oOrderComponent.RGEKZ === "X") {
-						this.addLogMessage({
-							text: oBundle.getText("messageTextMaterialBackflushedInOrderComponentList", [sMaterialNumber])
-						});
-						bComponentIsBackflushed = false;
-					}
+					if (oOrderComponent) {
+						if (oOrderComponent.RGEKZ === "X") {
+							this.addLogMessage({
+								text: oBundle.getText("messageTextMaterialBackflushedInOrderComponentList", [sMaterialNumber])
+							});
+							bComponentIsBackflushed = true;
+						}
 
-					if (!!oDataModel.getProperty("/unitOfMeasure") && (oOrderComponent.EINHEIT !== oDataModel.getProperty("/unitOfMeasure"))) {
-						this.addLogMessage({
-							text: oBundle.getText("messageTextOrderComponentHasDeviatingUnitOfMeasure", [oOrderComponent.EINHEIT, oDataModel.getProperty("/unitOfMeasure")])
-						});
-					} else {
-						sComponentUnitOfMeasure = oOrderComponent.EINHEIT;
+						if (!!oDataModel.getProperty("/unitOfMeasure") && (oOrderComponent.EINHEIT !== oDataModel.getProperty("/unitOfMeasure"))) {
+							this.addLogMessage({
+								text: oBundle.getText("messageTextOrderComponentHasDeviatingUnitOfMeasure", [oOrderComponent.EINHEIT, oDataModel.getProperty("/unitOfMeasure")])
+							});
+						} else {
+							sComponentUnitOfMeasure = oOrderComponent.EINHEIT;
+						}
 					}
 
 					oDataModel.setProperty("/unitOfMeasure", sComponentUnitOfMeasure);

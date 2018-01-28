@@ -120,6 +120,13 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 	Scenario: Should calculate and display remaining quantity if users have entered order number and material number (restmenge = bdmng - enmng)
 	
 	
+	Scenario: Should show error message if entered order number does not exist
+		When I enter '00000000100000100011' into storageUnitInput in action.GoodsIssue view
+		 And I enter '1000001' into orderNumberInput in action.GoodsIssue view
+		Then I can see messageStrip with text 'Achtung: Prozessauftrag '1000001' existiert nicht!' in action.GoodsIssue view
+		 And I can see messageStrip with type 'Error' in action.GoodsIssue view
+		Then on the Goods Issue Page: I should see the save button is disabled
+		
 	@wip
 	Scenario: Should show success message if users post goods issue successfully
 		When I enter 'XXXX' into storageUnitInput in action.GoodsIssue view
