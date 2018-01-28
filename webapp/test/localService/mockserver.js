@@ -4,7 +4,7 @@ sap.ui.define([
 	"use strict";
 	var oMockServer,
 		_sAppModulePath = "com/mii/scanner/",
-		_sJsonFilesModulePath = _sAppModulePath + "localService/mockdata/";
+		_sJsonFilesModulePath = _sAppModulePath + "test/localService/mockdata/";
 
 	/**
 	 * @private returns an parameter object to setup a mockserver
