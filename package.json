@@ -1,9 +1,10 @@
 {
-    "name": "grunt-build",
-    "version": "0.0.1",
-    "description": "Grunt build",
-    "private": true,     
-    "devDependencies": {
-        "@sap/grunt-sapui5-bestpractice-build": ""
-    }
+	"name": "grunt-build",
+	"version": "0.0.1",
+	"description": "Grunt build",
+	"private": true,
+	"devDependencies": {
+		"grunt-text-replace": "",
+		"@sap/grunt-sapui5-bestpractice-build": ""
+	}
 }
