@@ -30,6 +30,14 @@ sap.ui.define([
 			VFDAT: null
 		},
 
+		_oInitView: {
+			bStorageUnitValid: true,
+			bValid: false,
+			storageUnitNumberValueState: sap.ui.core.ValueState.None,
+			orderNumberValueState: sap.ui.core.ValueState.None,
+			materialNumberValueState: sap.ui.core.ValueState.None
+		},
+
 		onInit: function() {
 			var oModel = new JSONModel(),
 				oData;
@@ -40,10 +48,6 @@ sap.ui.define([
 			oModel.setData(oData);
 			this.setModel(oModel, "data");
 
-			this._oInitView = {
-				bStorageUnitValid: true,
-				bValid: false
-			};
 			this.setModel(new JSONModel(jQuery.extend({}, this._oInitView)), "view");
 
 			this.getRouter().getRoute("goodsIssue").attachMatched(this._onRouteMatched, this);
@@ -221,12 +225,14 @@ sap.ui.define([
 			oViewModel.setProperty("/bValid", bReadyForPosting);
 		},
 
-		validateComponentWithdrawal: function(sOrderNumber, sMaterialNumber) {
+		validateComponentWithdrawal: function(sOrderNumber, sMaterialNumber, oSource) {
 			var oBundle = this.getResourceBundle();
 
 			if (!sOrderNumber || !sMaterialNumber) {
 				return null;
 			}
+
+			this.showControlBusyIndicator(oSource);
 
 			this.clearLogMessages();
 
@@ -242,11 +248,13 @@ sap.ui.define([
 
 					if (aResultList.length === 1) {
 						oOrderComponent = oData.d.results[0].Rowset.results[0].Row.results[0];
+						oSource.setValueState(sap.ui.core.ValueState.Success);
 					} else {
 						this.addLogMessage({
 							text: oBundle.getText("messageTextMaterialNotContaintedInOrderComponentList", [sMaterialNumber, sOrderNumber]),
 							type: sap.ui.core.MessageType.Warning
 						});
+						oSource.setValueState(sap.ui.core.ValueState.Warning);
 					}
 
 					if (oOrderComponent) {
@@ -255,6 +263,7 @@ sap.ui.define([
 								text: oBundle.getText("messageTextMaterialBackflushedInOrderComponentList", [sMaterialNumber])
 							});
 							bComponentIsBackflushed = true;
+							oSource.setValueState(sap.ui.core.ValueState.Error);
 						}
 
 						if (!!oDataModel.getProperty("/unitOfMeasure") && (oOrderComponent.EINHEIT !== oDataModel.getProperty("/unitOfMeasure"))) {
@@ -262,7 +271,15 @@ sap.ui.define([
 								text: oBundle.getText("messageTextOrderComponentHasDeviatingUnitOfMeasure", [oOrderComponent.EINHEIT, oDataModel.getProperty("/unitOfMeasure")])
 							});
 							oDataModel.setProperty("/unitOfMeasure", sComponentUnitOfMeasure);
+							oSource.setValueState(sap.ui.core.ValueState.Error);
 						}
+
+						// update entry quantity by remaining open quantity
+						if (this.getModel("view").getProperty("/type") === "nonLE") {
+							oDataModel.setProperty("/entryQuantity", oOrderComponent.BDMNG - oOrderComponent.ENMNG);
+							oSource.setTooltip("Restmenge \'" + (oOrderComponent.BDMNG - oOrderComponent.ENMNG) + "\' = Bedarfsmenge \'" + oOrderComponent.BDMNG + "\' - Entnommene Menge \'" + oOrderComponent.ENMNG + "\'");
+						}
+
 					}
 
 					oDataModel.setProperty("/backflushMaterialIndicator", bComponentIsBackflushed);
@@ -282,19 +299,25 @@ sap.ui.define([
 				});
 			}.bind(this);
 
-			this.requestOrderComponentInfoService(sOrderNumber, sMaterialNumber).then(fnResolve, fnReject);
+			this.requestOrderComponentInfoService(sOrderNumber, sMaterialNumber).then(fnResolve, fnReject).then(function() {
+				this.hideControlBusyIndicator(oSource);
+			}.bind(this));
 		},
 
 		/*
 		 * bestq === "S" || bestq === "Q" || bestq === "R"
 		 */
 		onStorageUnitNumberChange: function(oEvent) {
-			var sStorageUnitNumber = oEvent.getParameter("value"),
+			var oSource = oEvent.getSource(),
+				sStorageUnitNumber = oEvent.getParameter("value"),
 				oBundle = this.getResourceBundle();
 
 			sStorageUnitNumber = this._padStorageUnitNumber(sStorageUnitNumber);
 
 			jQuery.sap.log.info("Start gathering data for palette " + sStorageUnitNumber);
+
+			oSource.setValueState(sap.ui.core.ValueState.None);
+			this.showControlBusyIndicator(oSource);
 
 			this.clearLogMessages();
 
@@ -312,11 +335,13 @@ sap.ui.define([
 
 					if (aResultList.length === 1) {
 						oStorageUnit = this._formatStorageUnitData(oData.d.results[0].Rowset.results[0].Row.results[0]);
+						oSource.setValueState(sap.ui.core.ValueState.Success);
 					} else {
 						throw oBundle.getText("messageTitleStorageUnitNotFound");
 					}
 
 					if (oStorageUnit.ISTME <= 0) {
+						oSource.setValueState(sap.ui.core.ValueState.Error);
 						this.addLogMessage({
 							text: oBundle.getText("messageTextStorageUnitIsEmpty", [sStorageUnitNumber])
 						});
@@ -324,6 +349,7 @@ sap.ui.define([
 					}
 
 					if (this.formatter.isPastDate(oStorageUnit.VFDAT)) {
+						oSource.setValueState(sap.ui.core.ValueState.Error);
 						oExpirationDateFormatted = moment(oStorageUnit.VFDAT, "MM-DD-YYYY");
 						this.addLogMessage({
 							text: oBundle.getText("messageTextStorageUnitHasPastExpirationDate", [oStorageUnit.CHARG, oExpirationDateFormatted.format("L")])
@@ -331,12 +357,12 @@ sap.ui.define([
 						bStorageUnitDataValid = false;
 					}
 					/*
-										if (!!oDataModel.getProperty("/unitOfMeasure") && (oStorageUnit.MEINH !== oDataModel.getProperty("/unitOfMeasure"))) {
-											this.addLogMessage({
-												text: oBundle.getText("messageTextStorageUnitHasDeviatingUnitOfMeasure", [oStorageUnit.MEINH, oDataModel.getProperty("/unitOfMeasure")])
-											});
-											bStorageUnitDataValid = false;
-										}
+					if (!!oDataModel.getProperty("/unitOfMeasure") && (oStorageUnit.MEINH !== oDataModel.getProperty("/unitOfMeasure"))) {
+						this.addLogMessage({
+							text: oBundle.getText("messageTextStorageUnitHasDeviatingUnitOfMeasure", [oStorageUnit.MEINH, oDataModel.getProperty("/unitOfMeasure")])
+						});
+						bStorageUnitDataValid = false;
+					}
 					*/
 					this.getModel("view").setProperty("/bStorageUnitValid", bStorageUnitDataValid);
 
@@ -367,13 +393,17 @@ sap.ui.define([
 				MessageBox.error(oBundle.getText("messageTextGoodsIssueError"));
 			}.bind(this);
 
-			this.requestStorageUnitInfoService(sStorageUnitNumber).then(fnResolve, fnReject);
+			this.requestStorageUnitInfoService(sStorageUnitNumber).then(fnResolve, fnReject).then(function() {
+				this.hideControlBusyIndicator(oSource);
+			}.bind(this));
 		},
 
 		onOrderNumberChange: function(oEvent) {
 			var oSource = oEvent.getSource(),
 				sOrderNumber = oEvent.getParameter("value"),
 				oBundle = this.getResourceBundle();
+
+			oSource.setValueState(sap.ui.core.ValueState.None);
 
 			this.clearLogMessages();
 
@@ -388,12 +418,14 @@ sap.ui.define([
 
 				if (aResultList.length === 1) {
 					oSource.setValueState(sap.ui.core.ValueState.Success);
+
 					oOrderHeader = oData.d.results[0].Rowset.results[0].Row.results[0];
 
-					this.validateComponentWithdrawal(oModel.getProperty("/orderNumber"), oModel.getProperty("/materialNumber"));
+					this.validateComponentWithdrawal(oModel.getProperty("/orderNumber"), oModel.getProperty("/materialNumber"), oSource);
 
 				} else {
 					oSource.setValueState(sap.ui.core.ValueState.Error);
+
 					this.addLogMessage({
 						text: oBundle.getText("messageTextGoodsIssueOrderNumberNotFoundError", [sOrderNumber])
 					});
@@ -412,18 +444,46 @@ sap.ui.define([
 		},
 
 		onQuantityChange: function(oEvent) {
+			var oSource = oEvent.getSource(),
+				fValue = this.getModel("data").getProperty("/entryQuantity");
+
+			if (fValue > 0.0 || fValue < 0.0) {
+
+			}
 			this.updateViewControls(this.getModel("data").getData());
 		},
+
 		onUnitOfMeasureChange: function(oEvent) {
-			//this.getModel("data").setProperty("/unitOfMeasure", oEvent.getParameter("value").toUpperCase());
+			var oSource = oEvent.getSource(),
+				sUnitOfMeasure = oEvent.getParameter("value").toUpperCase(),
+				oDataModel = this.getModel("data");
+
+			oDataModel.setProperty("/unitOfMeasure", sUnitOfMeasure);
+
 			this.updateViewControls(this.getModel("data").getData());
 		},
-		onMaterialNumbeChange: function(oEvent) {
-			this.validateComponentWithdrawal(oModel.getProperty("/orderNumber"), oModel.getProperty("/materialNumber"));
+
+		onMaterialNumberChange: function(oEvent) {
+			var oModel = this.getModel("data"),
+				oSource = oEvent.getSource();
+
+			this.validateComponentWithdrawal(oModel.getProperty("/orderNumber"), oModel.getProperty("/materialNumber"), oSource);
+
 			this.updateViewControls(this.getModel("data").getData());
 		},
+
 		onStorageLocationChange: function(oEvent) {
-			//this.getModel("data").setProperty("/storageLocation", oEvent.getParameter("value").toUpperCase());
+			var oSource = oEvent.getSource(),
+				sStorageLocation = oEvent.getParameter("value").toUpperCase(),
+				oBundle = this.getResourceBundle(),
+				oDataModel = this.getModel("data");
+
+			if (!this.isStorageLocationAllowed(sStorageLocation)) {
+				MessageBox.error(oBundle.getText("messageTextWrongStorageLocation", [sStorageLocation]));
+			} else {
+				oDataModel.setProperty("/storageLocation", sStorageLocation);
+			}
+
 			this.updateViewControls(this.getModel("data").getData());
 		},
 

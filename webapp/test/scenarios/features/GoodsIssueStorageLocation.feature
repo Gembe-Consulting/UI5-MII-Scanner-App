@@ -47,4 +47,19 @@ Feature: Creating goods issue posting to SAP ERP using storage location
 		
 	Scenario: Should validate material number with order number
 		When I enter '1234567' into orderNumberInput in action.GoodsIssue view
-		 And I enter '1200666-005' into materialNumberInput in action.GoodsIssue view
+		Then I can see orderNumberInput with valueState 'Success' in action.GoodsIssue view
+		When I enter '0000000-000' into materialNumberInput in action.GoodsIssue view
+		Then I can see materialNumberInput with valueState 'Warning' in action.GoodsIssue view
+		 And I can see messageStrip with text 'Ungeplante Entnahme: Komponente '0000000-000' für Auftrag '1234567' nicht vorgesehen!' in action.GoodsIssue view
+		When I enter '1200666-004' into materialNumberInput in action.GoodsIssue view
+		Then I can see materialNumberInput with valueState 'Success' in action.GoodsIssue view
+		When I click on clearFormButton in action.GoodsIssue view
+		Then I can see materialNumberInput with valueState 'None' in action.GoodsIssue view
+		Then I can see orderNumberInput with valueState 'None' in action.GoodsIssue view
+		Then I can see materialNumberInput with valueState 'None' in action.GoodsIssue view
+	
+	Scenario: Should calculate remaining open quantity
+		When I enter '1234567' into orderNumberInput in action.GoodsIssue view
+		 And I enter '999,999' into quantityInput in action.GoodsIssue view
+		 And I enter '1200666-006' into materialNumberInput in action.GoodsIssue view
+		Then I can see quantityInput with value '130,000' in action.GoodsIssue view

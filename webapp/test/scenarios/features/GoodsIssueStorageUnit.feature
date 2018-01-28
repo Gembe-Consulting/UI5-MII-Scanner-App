@@ -90,14 +90,14 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 
 	Scenario: Should show confirmation popup if users enter a storage unit with material number that is not contained in order component list (Unplanned Withdrawal)
 		When I enter '00000000109330000008' into storageUnitInput in action.GoodsIssue view
-		 And I enter '1001234' into orderNumberInput in action.GoodsIssue view
+		 And I enter '1234567' into orderNumberInput in action.GoodsIssue view
 		Then I can see storageUnitFragmentMaterialInfoText with text '0000000-000 - UNPLANNED WITHDRAWAL of Zucker-Fett-VBT' in action.GoodsIssue view
-		 And I can see messageStrip with text 'Ungeplante Entnahme: Komponente '0000000-000' für Auftrag '1001234' nicht vorgesehen!' in action.GoodsIssue view
+		 And I can see messageStrip with text 'Ungeplante Entnahme: Komponente '0000000-000' für Auftrag '1234567' nicht vorgesehen!' in action.GoodsIssue view
 		 And I can see messageStrip with type 'Warning' in action.GoodsIssue view
 	
 	Scenario: Should show error message if users enter a storage unit with material number that is backflushed in order
 		When I enter '00000000109330000009' into storageUnitInput in action.GoodsIssue view
-		 And I enter '1001234' into orderNumberInput in action.GoodsIssue view
+		 And I enter '1234567' into orderNumberInput in action.GoodsIssue view
 		Then I can see messageStrip with text 'Achtung: Komponente '1200666-002' wird retrograd entnommen!' in action.GoodsIssue view
 		 And I can see messageStrip with type 'Error' in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
@@ -120,16 +120,15 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 		Wenn ich ein LE mit IST Menge x eingebe, soll die Menge vorgeschlagen werden
 		wenn ich einen Auftrag mit Restmenge Menge y eingebe soll diese Menge vorgeschlagen werden
 	
-	@wip
 	Scenario: Should show error message if entered order number does not exist
 		When I enter '00000000100000100011' into storageUnitInput in action.GoodsIssue view
 		 And I enter '1000001' into orderNumberInput in action.GoodsIssue view
-		Then I can see messageStrip with text 'Achtung: Prozessauftrag '1000001' existiert nicht!' in action.GoodsIssue view
+		Then I can see messageStrip with text 'Achtung: Auftrag '1000001' existiert nicht!' in action.GoodsIssue view
 		 And I can see messageStrip with type 'Error' in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
 		
 	Scenario: Should show success message if users post goods issue successfully
 		When I enter '00000000109330000012' into storageUnitInput in action.GoodsIssue view
-		 And I enter '1234677' into orderNumberInput in action.GoodsIssue view
+		 And I enter '1234567' into orderNumberInput in action.GoodsIssue view
 		 And I click on saveButton in action.GoodsIssue view
-		Then I can see messageStrip with text 'Warenausgang zu Auftrag '1234677' wurde erfolgreich gebucht!' in action.GoodsIssue view
+		Then I can see messageStrip with text 'Warenausgang zu Auftrag '1234567' wurde erfolgreich gebucht!' in action.GoodsIssue view

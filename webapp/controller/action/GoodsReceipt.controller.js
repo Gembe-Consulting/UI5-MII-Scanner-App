@@ -293,12 +293,6 @@ sap.ui.define([
 			}
 		},
 
-		/**
-		 * Check is a given storage location is allowed for posting
-		 */
-		isStorageLocationAllowed: function(sStorageLocation) {
-			return this._aDisallowedStorageLocations.indexOf(sStorageLocation) === -1;
-		},
 		onOrderNumberChange: function(oEvent) {
 			this.updateViewControls(this.getModel("data").getData());
 		},

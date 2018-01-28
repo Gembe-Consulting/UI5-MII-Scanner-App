@@ -85,7 +85,12 @@ sap.ui.define([
 		hideControlBusyIndicator: function(oSource) {
 			return oSource.setBusyIndicatorDelay(0).setBusy(false);
 		},
-
+		/**
+		 * Check is a given storage location is allowed for posting
+		 */
+		isStorageLocationAllowed: function(sStorageLocation) {
+			return this._aDisallowedStorageLocations.indexOf(sStorageLocation) === -1;
+		},
 		_formatStorageUnitData: function(oStorageUnit) {
 
 			if (!oStorageUnit) {
@@ -126,16 +131,13 @@ sap.ui.define([
 			var oNewInitialData = jQuery.extend({}, this._oInitData),
 				oDataModel = this.getModel("data"),
 				oNewInitialView = jQuery.extend({}, this._oInitView),
-				oViewModel = this.getModel("view"),
-				oStorageUnitModel = this.getModel("storageUnit");
+				oViewModel = this.getModel("view");
 
 			oDataModel.setProperty("/", oNewInitialData);
 			// force update to also override invalid values
 			oDataModel.updateBindings(true);
 
 			oViewModel.setProperty("/", oNewInitialView);
-
-			//oStorageUnitModel.setProperty("/", null);
 
 			if (!bKeepMessageStrip) {
 				this.clearLogMessages();

@@ -211,6 +211,21 @@
 							"RGEKZ": null,
 							"SCHGT": null,
 							"RowId": 5
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"BDMNG": "250",
+							"CHARG": "0000000000",
+							"EINHEIT": "KG",
+							"LGORT": "1000",
+							"MATNR": "1200666-006",
+							"MAT_TXT": "Zucker-Fett-VBT V185 RSPO-MB 600, BB",
+							"ENMNG": "120",
+							"RGEKZ": null,
+							"SCHGT": null,
+							"RowId": 6
 						}]
 					}
 				}]

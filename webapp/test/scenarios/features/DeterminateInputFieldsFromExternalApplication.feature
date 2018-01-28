@@ -72,9 +72,9 @@ Feature: Determinate Input Fields from an external Application
 		
 	Scenario: Should open Goods Issue Page (nonLE) with all possible input values
 		Given I start the app on "/Start/Materialbewegung" using remote user "phigem"
-		When I navigate to "/Start/Materialbewegung/WA?type=nonLE&SCHGT=true&AUFNR=1234567&MATNR=1200666-001&LGORT=RB01&MEINH=KG"
+		When I navigate to "/Start/Materialbewegung/WA?type=nonLE&SCHGT=true&AUFNR=1234567&MATNR=1200666-006&LGORT=RB01&MEINH=KG"
 		Then I can see bulkMaterialSwitch with state 'true' in action.GoodsIssue view
 		 And I can see orderNumberInput with value '1234567' in action.GoodsIssue view
-		 And I can see materialNumberInput with value '1200666-001' in action.GoodsIssue view
+		 And I can see materialNumberInput with value '1200666-006' in action.GoodsIssue view
 		 And I can see storageLocationInput with value 'RB01' in action.GoodsIssue view
 		 And I can see unitOfMeasureInput with value 'KG' in action.GoodsIssue view

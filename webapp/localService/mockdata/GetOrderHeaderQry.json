@@ -359,6 +359,37 @@
 							"TMP_EIMNG": null,
 							"WERK": "1000",
 							"RowId": 2
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"AUFNR": "1093300",
+							"ARBID": "00000004",
+							"AUART": "ZP10",
+							"AUTYP": "40",
+							"CHARGE": "0000000000",
+							"CNW_HIST_STARTTRM": "\/Date(1509840000000)\/",
+							"EIMNG": "2223.0",
+							"EINHEIT": "KG",
+							"ENDTERMIN": "\/Date(1510094420000)\/",
+							"GESPEICHERT_AM": "\/Date(1516638719000)\/",
+							"GESPEICHERT_VON": "DANHAR01",
+							"IDOC_ID": "0000000002126300",
+							"ISTEND": "\/Date(1517164739913)\/",
+							"ISTSTART": "\/Date(1517164739913)\/",
+							"LGORT": "1000",
+							"MATNR": "1700948-030",
+							"MAT_TXT": "Zucker-Fett-VBT V185 RSPO-MB 600, BB",
+							"MENGE": "15492.90234375",
+							"PLNNR": "1700948",
+							"STARTTERMIN": "\/Date(1509840000000)\/",
+							"STATUS": "0046",
+							"STATUS_TXT": "Abgeschlossen",
+							"STLNR": "00000613",
+							"TMP_EIMNG": null,
+							"WERK": "1000",
+							"RowId": 3
 						}]
 					}
 				}]
