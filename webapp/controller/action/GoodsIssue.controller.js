@@ -110,7 +110,8 @@ sap.ui.define([
 				var aResults,
 					aMessages,
 					sFatalError,
-					oReturn;
+					oReturn,
+					oDataModel = this.getModel("data");
 
 				try {
 
@@ -120,7 +121,7 @@ sap.ui.define([
 
 					if (!sFatalError) {
 						this.addLogMessage({
-							text: oBundle.getText("messageTextGoodsIssuePostingSuccessfull"),
+							text: oBundle.getText("messageTextGoodsIssuePostingSuccessfull", [oDataModel.getProperty("/orderNumber")]),
 							type: sap.ui.core.MessageType.Success
 						});
 					} else {
@@ -151,6 +152,7 @@ sap.ui.define([
 
 			var sPath = "/",
 				oDataModel = this.getModel("data"),
+				oViewModel = this.getModel("view"),
 				oGoodsIssueModel = this.getModel("goodsMovement"),
 
 				sDefaultPlant = "1000",
@@ -159,19 +161,19 @@ sap.ui.define([
 
 				oParam;
 
-			if (oDataModel.getProperty(sPath + "LENUM")) {
+			if (oDataModel.getProperty(sPath + "storageUnitNumber") && oViewModel.getProperty("/type") === "withLE") {
 				oParam = {
-					"Param.1": oDataModel.getProperty(sPath + "LENUM"),
-					"Param.2": oDataModel.getProperty(sPath + "AUFNR"),
-					//"Param.3": oDataModel.getProperty(sPath + "LGORT"),
-					"Param.4": oDataModel.getProperty(sPath + "SOLLME"),
-					"Param.5": oDataModel.getProperty(sPath + "MEINH") || sDefaultUnitOfMeasure,
-					"Param.6": oDataModel.getProperty(sPath + "MATNR"),
-					//"Param.7": oDataModel.getProperty(sPath + "CHARG"),
-					//"Param.8": oDataModel.getProperty(sPath + "SCHUETT"),
-					//"Param.9": oDataModel.getProperty(sPath + "VORNR"),
-					"Param.11": oDataModel.getProperty(sPath + "BWART") || sDefaultMoveType,
-					//"Param.12": oDataModel.getProperty(sPath + "WERK") || sDefaultPlant,
+					"Param.1": oDataModel.getProperty(sPath + "storageUnitNumber"),
+					"Param.2": oDataModel.getProperty(sPath + "orderNumber"),
+					//"Param.3": oDataModel.getProperty(sPath + "storageLocation"),
+					"Param.4": oDataModel.getProperty(sPath + "entryQuantity"),
+					"Param.5": oDataModel.getProperty(sPath + "unitOfMeasure") || sDefaultUnitOfMeasure,
+					"Param.6": oDataModel.getProperty(sPath + "materialNumber"),
+					//"Param.7": oDataModel.getProperty(sPath + "batchNumber"),
+					//"Param.8": oDataModel.getProperty(sPath + "bulkMaterialIndicator"),
+					//"Param.9": oDataModel.getProperty(sPath + "operationNumber"),
+					"Param.11": oDataModel.getProperty(sPath + "movementType") || sDefaultMoveType,
+					//"Param.12": oDataModel.getProperty(sPath + "plant") || sDefaultPlant,
 					//"Param.13": oDataModel.getProperty(sPath + "LGTYP"),
 					//"Param.14": oDataModel.getProperty(sPath + "LGPLA"),
 					//"Param.15": oDataModel.getProperty(sPath + "NLTYP"),
@@ -179,17 +181,17 @@ sap.ui.define([
 				};
 			} else {
 				oParam = {
-					//"Param.1": oDataModel.getProperty(sPath + "LENUM"),
-					"Param.2": oDataModel.getProperty(sPath + "AUFNR"),
-					"Param.3": oDataModel.getProperty(sPath + "LGORT"),
-					"Param.4": oDataModel.getProperty(sPath + "SOLLME"),
-					"Param.5": oDataModel.getProperty(sPath + "MEINH") || sDefaultUnitOfMeasure,
-					"Param.6": oDataModel.getProperty(sPath + "MATNR"),
-					//"Param.7": oDataModel.getProperty(sPath + "CHARG"),
-					//"Param.8": oDataModel.getProperty(sPath + "SCHUETT"),
-					//"Param.9": oDataModel.getProperty(sPath + "VORNR"),
-					"Param.11": oDataModel.getProperty(sPath + "BWART") || sDefaultMoveType,
-					//"Param.12": oDataModel.getProperty(sPath + "WERK") || sDefaultPlant,
+					//"Param.1": oDataModel.getProperty(sPath + "storageUnitNumber"),
+					"Param.2": oDataModel.getProperty(sPath + "orderNumber"),
+					"Param.3": oDataModel.getProperty(sPath + "storageLocation"),
+					"Param.4": oDataModel.getProperty(sPath + "entryQuantity"),
+					"Param.5": oDataModel.getProperty(sPath + "unitOfMeasure") || sDefaultUnitOfMeasure,
+					"Param.6": oDataModel.getProperty(sPath + "materialNumber"),
+					//"Param.7": oDataModel.getProperty(sPath + "batchNumber"),
+					//"Param.8": oDataModel.getProperty(sPath + "bulkMaterialIndicator"),
+					//"Param.9": oDataModel.getProperty(sPath + "operationNumber"),
+					"Param.11": oDataModel.getProperty(sPath + "movementType") || sDefaultMoveType,
+					//"Param.12": oDataModel.getProperty(sPath + "plant") || sDefaultPlant,
 					//"Param.13": oDataModel.getProperty(sPath + "LGTYP"),
 					//"Param.14": oDataModel.getProperty(sPath + "LGPLA"),
 					//"Param.15": oDataModel.getProperty(sPath + "NLTYP"),
