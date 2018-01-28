@@ -371,21 +371,59 @@ sap.ui.define([
 		},
 
 		onOrderNumberChange: function(oEvent) {
-			var oModel = this.getModel("data");
-			this.validateComponentWithdrawal(oModel.getProperty("/orderNumber"), oModel.getProperty("/materialNumber"));
+			var oSource = oEvent.getSource(),
+				sOrderNumber = oEvent.getParameter("value"),
+				oBundle = this.getResourceBundle();
+
+			this.clearLogMessages();
+
+			this.showControlBusyIndicator(oSource);
+
+			var fnResolve = function(oData) {
+				var aResultList,
+					oOrderHeader,
+					oModel = this.getModel("data");
+
+				aResultList = oData.d.results[0].Rowset.results[0].Row.results;
+
+				if (aResultList.length === 1) {
+					oSource.setValueState(sap.ui.core.ValueState.Success);
+					oOrderHeader = oData.d.results[0].Rowset.results[0].Row.results[0];
+
+					this.validateComponentWithdrawal(oModel.getProperty("/orderNumber"), oModel.getProperty("/materialNumber"));
+
+				} else {
+					oSource.setValueState(sap.ui.core.ValueState.Error);
+					this.addLogMessage({
+						text: oBundle.getText("messageTextGoodsIssueOrderNumberNotFoundError", [sOrderNumber])
+					});
+				}
+
+			}.bind(this);
+
+			var fnReject = function(oError) {
+				MessageBox.error(oBundle.getText("messageTextGoodsIssueError"));
+			}.bind(this);
+
+			this.requestOrderHeaderInfoService(sOrderNumber).then(fnResolve, fnReject).then(function() {
+				this.hideControlBusyIndicator(oSource);
+			}.bind(this));
+
 		},
+
 		onQuantityChange: function(oEvent) {
 			this.updateViewControls(this.getModel("data").getData());
 		},
 		onUnitOfMeasureChange: function(oEvent) {
-			this.getModel("data").setProperty("/unitOfMeasure", oEvent.getParameter("value").toUpperCase());
+			//this.getModel("data").setProperty("/unitOfMeasure", oEvent.getParameter("value").toUpperCase());
 			this.updateViewControls(this.getModel("data").getData());
 		},
 		onMaterialNumbeChange: function(oEvent) {
+			this.validateComponentWithdrawal(oModel.getProperty("/orderNumber"), oModel.getProperty("/materialNumber"));
 			this.updateViewControls(this.getModel("data").getData());
 		},
 		onStorageLocationChange: function(oEvent) {
-			this.getModel("data").setProperty("/storageLocation", oEvent.getParameter("value").toUpperCase());
+			//this.getModel("data").setProperty("/storageLocation", oEvent.getParameter("value").toUpperCase());
 			this.updateViewControls(this.getModel("data").getData());
 		},
 

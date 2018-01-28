@@ -166,13 +166,27 @@ sap.ui.define([
 		fnGetOrderComponentQry: function(oData, oParams) {
 			var oUriParameters = jQuery.sap.getUriParameters(),
 				sMaterialNumber = oParams.get("Param.2"),
-				aMaterialNumberList = oData.d.results[0].Rowset.results[0].Row.results;;
+				aMaterialNumberList = oData.d.results[0].Rowset.results[0].Row.results;
 
 			aMaterialNumberList = jQuery.grep(aMaterialNumberList, function(oRow, index) {
 				return oRow.MATNR === sMaterialNumber;
 			});
 
 			oData.d.results[0].Rowset.results[0].Row.results = aMaterialNumberList;
+
+			return oData;
+		},
+
+		fnGetOrderHeaderQry: function(oData, oParams) {
+			var oUriParameters = jQuery.sap.getUriParameters(),
+				sOrderNumber = oParams.get("Param.1"),
+				aOrderNumberList = oData.d.results[0].Rowset.results[0].Row.results;
+
+			aOrderNumberList = jQuery.grep(aOrderNumberList, function(oRow, index) {
+				return oRow.AUFNR === sOrderNumber;
+			});
+
+			oData.d.results[0].Rowset.results[0].Row.results = aOrderNumberList;
 
 			return oData;
 		}

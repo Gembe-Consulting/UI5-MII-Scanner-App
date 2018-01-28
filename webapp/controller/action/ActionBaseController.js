@@ -32,6 +32,24 @@ sap.ui.define([
 			};
 		},
 
+		requestOrderHeaderInfoService: function(sOrderNumber) {
+			if (!sOrderNumber) {
+				return Promise.reject({
+					message: "Input parameters not complete: Order number missing",
+					statusCode: 0,
+					statusText: "sOrderNumber=" + sOrderNumber,
+					responseText: "Please provide all input parameters to perform the call!"
+				});
+			}
+
+			var oOrderHeaderModel = this.getModel("orderHeader"),
+				oParam = {
+					"Param.1": sOrderNumber
+				};
+
+			return oOrderHeaderModel.loadMiiData(oOrderHeaderModel._sServiceUrl, oParam);
+		},
+
 		requestOrderComponentInfoService: function(sOrderNumber, sMaterialNumber) {
 			if (!sOrderNumber || !sMaterialNumber) {
 				return Promise.reject({
@@ -58,6 +76,14 @@ sap.ui.define([
 				};
 
 			return oStorageUnitModel.loadMiiData(oStorageUnitModel._sServiceUrl, oParam);
+		},
+
+		showControlBusyIndicator: function(oSource) {
+			return oSource.setBusyIndicatorDelay(0).setBusy(true);
+		},
+
+		hideControlBusyIndicator: function(oSource) {
+			return oSource.setBusyIndicatorDelay(0).setBusy(false);
 		},
 
 		_formatStorageUnitData: function(oStorageUnit) {
