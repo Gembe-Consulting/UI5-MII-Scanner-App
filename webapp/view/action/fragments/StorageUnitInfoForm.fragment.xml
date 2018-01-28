@@ -4,27 +4,33 @@
 	<f:content>
 		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentMaterial}"/>
 		<Text id="storageUnitFragmentMaterialInfoText" text="{data>/MATNR} - {data>/MAKTX}"/>
+		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentSpecialStockIndicator}" visible="{= ${data>/BESTQ}!=='0'}"/>
+		<HBox visible="{= ${data>/BESTQ}!=='0'}">
+			<Text id="storageUnitFragmentSpecialStockIndicatorText" text="{data>/BESTQ}" width="100px"/>
+			<c:Icon id="storageUnitFragmentSpecialStockRestrictedIcon" src="sap-icon://locked" color="#f9a429" visible="{= ${data>/BESTQ}==='S'}"
+				width="25px"/>
+			<c:Icon id="storageUnitFragmentSpecialStockQualityIcon" src="sap-icon://lab" color="#f9a429" visible="{= ${data>/BESTQ}==='Q'}" width="25px"/>
+		</HBox>
+		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentBatch}"/>
+		<HBox>
+			<Text id="storageUnitFragmentBatchText" text="{data>/CHARG}" width="100px"/>
+			<c:Icon id="storageUnitFragmentSpecialStockIndicatorIcon" src="sap-icon://quality-issue" color="#f9a429"
+				visible="{= ${data>/BESTQ}!=='0' &amp;&amp; ${data>/BESTQ}!==null}" width="25px"/>
+			<c:Icon id="storageUnitFragmentPastExpirationDateIcon" src="sap-icon://quality-issue" color="#ee0000"
+				visible="{path:'data>/VFDAT', formatter:'.formatter.isPastDate'}" width="25px"/>
+		</HBox>
+		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentExpirationDate}"/>
+		<HBox>
+			<Text id="storageUnitFragmentExpirationDateText"
+				text="{path: 'data>/VFDAT', type:'sap.ui.model.type.Date', formatOptions: { source: { pattern: 'MM-dd-yyyy' }}}" width="100px"/>
+			<c:Icon id="storageUnitFragmentExpirationDateOutOfDateIcon" src="sap-icon://sys-cancel-2" color="#ee0000"
+				visible="{path:'data>/VFDAT', formatter:'.formatter.isPastDate'}" width="25px"/>
+		</HBox>
 		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentStorageBin}"/>
 		<Text id="storageUnitFragmentStorageBinText" text="{data>/LGPLA}"/>
 		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentStorageType}"/>
 		<Text id="storageUnitFragmentStorageTypeText" text="{data>/LGTYP}"/>
 		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentStorageUnitType}"/>
 		<Text id="storageUnitFragmentStorageUnitTypeText" text="{data>/LETYT}"/>
-		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentSpecialStockIndicator}"/>
-		<Text id="storageUnitFragmentSpecialStockIndicatorText" text="{data>/BESTQ}"/>
-		<c:Icon id="storageUnitFragmentSpecialStockRestrictedIcon" src="sap-icon://locked" color="#f9a429" visible="{= ${data>/BESTQ}==='S'}"/>
-		<c:Icon id="storageUnitFragmentSpecialStockQualityIcon" src="sap-icon://lab" color="#f9a429" visible="{= ${data>/BESTQ}==='Q'}"/>
-		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentBatch}"/>
-		<Text id="storageUnitFragmentBatchText" text="{data>/CHARG}" width="100px"/>
-		<c:Icon id="storageUnitFragmentPastExpirationDateIcon" src="sap-icon://quality-issue" color="#ee0000"
-			visible="{path:'data>/VFDAT', formatter:'.formatter.isPastDate'}"/>
-		<c:Icon id="storageUnitFragmentSpecialStockIndicatorIcon" src="sap-icon://quality-issue" color="#f9a429"
-			visible="{= ${data>/BESTQ}!=='0' &amp;&amp; ${data>/BESTQ}!==null}"/>
-		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentExpirationDate}"/>
-		<Text id="storageUnitFragmentExpirationDateText"
-			text="{path: 'data>/VFDAT', type:'sap.ui.model.type.Date', formatOptions: { source: { pattern: 'MM-dd-yyyy' }}}" width="100px"/>
-		<c:Icon id="storageUnitFragmentExpirationDateOutOfDateIcon" src="sap-icon://sys-cancel-2" color="#ee0000"
-			visible="{path:'data>/VFDAT', formatter:'.formatter.isPastDate'}"/>
-		<c:Icon visible="false"/>
 	</f:content>
 </f:SimpleForm>

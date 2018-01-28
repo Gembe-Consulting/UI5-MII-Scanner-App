@@ -158,12 +158,10 @@ sap.ui.define([
 							this.addLogMessage({
 								text: oBundle.getText("messageTextOrderComponentHasDeviatingUnitOfMeasure", [oOrderComponent.EINHEIT, oDataModel.getProperty("/unitOfMeasure")])
 							});
-						} else {
-							sComponentUnitOfMeasure = oOrderComponent.EINHEIT;
+							oDataModel.setProperty("/unitOfMeasure", sComponentUnitOfMeasure);
 						}
 					}
 
-					oDataModel.setProperty("/unitOfMeasure", sComponentUnitOfMeasure);
 					oDataModel.setProperty("/backflushMaterialIndicator", bComponentIsBackflushed);
 
 				} catch (err) {
@@ -229,14 +227,14 @@ sap.ui.define([
 						});
 						bStorageUnitDataValid = false;
 					}
-
-					if (!!oDataModel.getProperty("/unitOfMeasure") && (oStorageUnit.MEINH !== oDataModel.getProperty("/unitOfMeasure"))) {
-						this.addLogMessage({
-							text: oBundle.getText("messageTextStorageUnitHasDeviatingUnitOfMeasure", [oStorageUnit.MEINH, oDataModel.getProperty("/unitOfMeasure")])
-						});
-						bStorageUnitDataValid = false;
-					}
-
+					/*
+										if (!!oDataModel.getProperty("/unitOfMeasure") && (oStorageUnit.MEINH !== oDataModel.getProperty("/unitOfMeasure"))) {
+											this.addLogMessage({
+												text: oBundle.getText("messageTextStorageUnitHasDeviatingUnitOfMeasure", [oStorageUnit.MEINH, oDataModel.getProperty("/unitOfMeasure")])
+											});
+											bStorageUnitDataValid = false;
+										}
+					*/
 					this.getModel("view").setProperty("/bStorageUnitValid", bStorageUnitDataValid);
 
 					// merge data from storage unit with main model

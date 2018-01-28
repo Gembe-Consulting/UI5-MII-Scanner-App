@@ -102,24 +102,23 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 		 And I can see messageStrip with type 'Error' in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
 	
-	@wip	
 	Scenario: Should show error message if unit of measure from LE does not match unit of measure from order component list
 		When I enter '00000000109330000010' into storageUnitInput in action.GoodsIssue view
 		 And I enter '1234567' into orderNumberInput in action.GoodsIssue view
 		Then I can see messageStrip with text 'Achtung: Inkonsistente Mengeneinheiten in Auftragskomponente (ST) und Lagereinheit (KGM)!' in action.GoodsIssue view
 		 And I can see messageStrip with type 'Error' in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
-		When I click on clearFormButton in action.GoodsIssue view
-		 And I enter '1234567' into orderNumberInput in action.GoodsIssue view
-		 And I enter '00000000109330000010' into storageUnitInput in action.GoodsIssue view
-		Then I can see messageStrip with text 'Achtung: Inkonsistente Mengeneinheiten in Lagereinheit (KGM) und Auftragskomponente (ST)!' in action.GoodsIssue view
-		 And I can see messageStrip with type 'Error' in action.GoodsIssue view
-		Then on the Goods Issue Page: I should see the save button is disabled
+#		When I click on clearFormButton in action.GoodsIssue view
+#		 And I enter '1234567' into orderNumberInput in action.GoodsIssue view
+#		 And I enter '00000000109330000010' into storageUnitInput in action.GoodsIssue view
+#		Then I can see messageStrip with text 'Achtung: Inkonsistente Mengeneinheiten in Lagereinheit (KGM) und Auftragskomponente (ST)!' in action.GoodsIssue view
+#		 And I can see messageStrip with type 'Error' in action.GoodsIssue view
+#		Then on the Goods Issue Page: I should see the save button is disabled
 		
 	@wip
 	Scenario: Should calculate and display remaining quantity if users have entered order number and material number (restmenge = bdmng - enmng)
 	
-	
+	@wip
 	Scenario: Should show error message if entered order number does not exist
 		When I enter '00000000100000100011' into storageUnitInput in action.GoodsIssue view
 		 And I enter '1000001' into orderNumberInput in action.GoodsIssue view
