@@ -101,6 +101,106 @@ sap.ui.define([
 			}
 		},
 
+		onSave: function() {
+			var oBundle = this.getResourceBundle(),
+				fnResolve,
+				fnReject;
+
+			fnResolve = function(oData) {
+				var aResults,
+					aMessages,
+					sFatalError,
+					oReturn;
+
+				try {
+
+					aResults = oData.d.results[0].Rowset.results;
+					aMessages = oData.d.results[0].Messages.results;
+					sFatalError = oData.d.results[0].FatalError;
+
+					if (!sFatalError) {
+						this.addLogMessage({
+							text: oBundle.getText("messageTextGoodsIssuePostingSuccessfull"),
+							type: sap.ui.core.MessageType.Success
+						});
+					} else {
+						this.addLogMessage({
+							text: sFatalError,
+							type: sap.ui.core.MessageType.Error
+						});
+					}
+
+				} catch (err) {
+					MessageBox.error(oBundle.getText("messageTextGoodsIssuePostingFailed"), {
+						title: err
+					});
+				} finally {
+					this.onClearFormPress({}, true /*bKeepMessageStrip*/ );
+				}
+			}.bind(this);
+
+			fnReject = function(oError) {
+				MessageBox.error(oBundle.getText("messageTextGoodsIssueError"));
+			}.bind(this);
+
+			this._postGoodsIssue().then(fnResolve, fnReject);
+
+		},
+
+		_postGoodsIssue: function() {
+
+			var sPath = "/",
+				oDataModel = this.getModel("data"),
+				oGoodsIssueModel = this.getModel("goodsMovement"),
+
+				sDefaultPlant = "1000",
+				sDefaultMoveType = "261",
+				sDefaultUnitOfMeasure = "KG",
+
+				oParam;
+
+			if (oDataModel.getProperty(sPath + "LENUM")) {
+				oParam = {
+					"Param.1": oDataModel.getProperty(sPath + "LENUM"),
+					"Param.2": oDataModel.getProperty(sPath + "AUFNR"),
+					//"Param.3": oDataModel.getProperty(sPath + "LGORT"),
+					"Param.4": oDataModel.getProperty(sPath + "SOLLME"),
+					"Param.5": oDataModel.getProperty(sPath + "MEINH") || sDefaultUnitOfMeasure,
+					"Param.6": oDataModel.getProperty(sPath + "MATNR"),
+					//"Param.7": oDataModel.getProperty(sPath + "CHARG"),
+					//"Param.8": oDataModel.getProperty(sPath + "SCHUETT"),
+					//"Param.9": oDataModel.getProperty(sPath + "VORNR"),
+					"Param.11": oDataModel.getProperty(sPath + "BWART") || sDefaultMoveType,
+					//"Param.12": oDataModel.getProperty(sPath + "WERK") || sDefaultPlant,
+					//"Param.13": oDataModel.getProperty(sPath + "LGTYP"),
+					//"Param.14": oDataModel.getProperty(sPath + "LGPLA"),
+					//"Param.15": oDataModel.getProperty(sPath + "NLTYP"),
+					//"Param.16": oDataModel.getProperty(sPath + "NLPLA")
+				};
+			} else {
+				oParam = {
+					//"Param.1": oDataModel.getProperty(sPath + "LENUM"),
+					"Param.2": oDataModel.getProperty(sPath + "AUFNR"),
+					"Param.3": oDataModel.getProperty(sPath + "LGORT"),
+					"Param.4": oDataModel.getProperty(sPath + "SOLLME"),
+					"Param.5": oDataModel.getProperty(sPath + "MEINH") || sDefaultUnitOfMeasure,
+					"Param.6": oDataModel.getProperty(sPath + "MATNR"),
+					//"Param.7": oDataModel.getProperty(sPath + "CHARG"),
+					//"Param.8": oDataModel.getProperty(sPath + "SCHUETT"),
+					//"Param.9": oDataModel.getProperty(sPath + "VORNR"),
+					"Param.11": oDataModel.getProperty(sPath + "BWART") || sDefaultMoveType,
+					//"Param.12": oDataModel.getProperty(sPath + "WERK") || sDefaultPlant,
+					//"Param.13": oDataModel.getProperty(sPath + "LGTYP"),
+					//"Param.14": oDataModel.getProperty(sPath + "LGPLA"),
+					//"Param.15": oDataModel.getProperty(sPath + "NLTYP"),
+					//"Param.16": oDataModel.getProperty(sPath + "NLPLA")
+				};
+			}
+
+			return oGoodsIssueModel.loadMiiData(oGoodsIssueModel._sServiceUrl, oParam);
+
+		},
+
 		updateViewControls: function(oData) {
 			var oViewModel = this.getModel("view"),
 				bInputValuesComplete,
@@ -276,6 +376,7 @@ sap.ui.define([
 			this.updateViewControls(this.getModel("data").getData());
 		},
 		onUnitOfMeasureChange: function(oEvent) {
+			//oEvent.getParameter("value").toUpperCase()
 			this.updateViewControls(this.getModel("data").getData());
 		},
 

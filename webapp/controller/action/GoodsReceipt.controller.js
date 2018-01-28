@@ -235,7 +235,7 @@ sap.ui.define([
 
 			var sPath = "/",
 				oDataModel = this.getModel("data"),
-				oGoodsReceiptModel = this.getModel("goodsReceipt"),
+				oGoodsReceiptModel = this.getModel("goodsMovement"),
 
 				sDefaultPlant = "1000",
 				sDefaultMoveType = "101",
