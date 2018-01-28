@@ -32,7 +32,8 @@
 									<l:GridData span="XL2 L3 M4 S8"/>
 								</layoutData>
 							</Input>
-							<Input id="unitOfMeasureInput" change="onUnitOfMeasureChange" value="{path: 'data>/unitOfMeasure', type:'.sapType.MEINS'}" editable="false">
+							<Input id="unitOfMeasureInput" change="onUnitOfMeasureChange" value="{path: 'data>/unitOfMeasure', type:'.sapType.MEINS'}"
+								editable="{=${view>/type}==='nonLE'}">
 								<layoutData>
 									<l:GridData span="XL1 L1 M2 S4"/>
 								</layoutData>
