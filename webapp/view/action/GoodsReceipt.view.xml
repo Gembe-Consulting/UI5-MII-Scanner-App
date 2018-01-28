@@ -27,7 +27,7 @@
 							<Label text="{i18n>lableTextFormGoodsReceiptOrder}"/>
 							<Input id="orderNumberInput" class="noScannerInput" maxLength="7" change="onOrderNumberChange"
 								value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}" editable="{=${data>/LENUM}===null}"></Input>
-							<Label text="{i18n>lableTextFormGoodsReceiptQuantity}, {i18n>lableTextFormGoodsReceiptUnitOfMeasure}"/>
+							<Label text="{i18n>lableTextFormGoodsReceiptQuantity}, {i18n>lableTextFormGoodsReceiptUnitOfMeasureShort}"/>
 							<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}"
 								editable="{view>/bStorageUnitValid}">
 								<layoutData>

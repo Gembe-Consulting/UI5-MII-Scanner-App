@@ -26,7 +26,7 @@
 							<Input id="storageUnitInput" value="{data>/storageUnitNumber}" visible="{=${view>/type}!=='nonLE'}" change="onStorageUnitNumberChange"/>
 							<Label text="{i18n>lableTextFormGoodsIssueOrder}"/>
 							<Input id="orderNumberInput" maxLength="7" change="onOrderNumberChange" value="{path: 'data>/orderNumber', type:'.sapType.AUFNR'}"></Input>
-							<Label text="{i18n>lableTextFormGoodsIssueQuantity}, {i18n>lableTextFormGoodsIssueUnitOfMeasure}"/>
+							<Label text="{i18n>lableTextFormGoodsIssueQuantity}, {i18n>lableTextFormGoodsIssueUnitOfMeasureShort}"/>
 							<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}">
 								<layoutData>
 									<l:GridData span="XL2 L3 M4 S8"/>
