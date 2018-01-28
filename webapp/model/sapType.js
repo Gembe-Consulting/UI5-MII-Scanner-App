@@ -23,7 +23,8 @@ sap.ui.define([
 
 		LGORT: new sap.ui.model.type.String(null, {
 			minLength: 4,
-			maxLength: 4
+			maxLength: 4,
+			search: "^((?!VG01|vg01).)*$"
 		}),
 
 		AUFNR: new sap.ui.model.type.String(null, {

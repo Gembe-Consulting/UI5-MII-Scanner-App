@@ -378,7 +378,14 @@ sap.ui.define([
 			this.updateViewControls(this.getModel("data").getData());
 		},
 		onUnitOfMeasureChange: function(oEvent) {
-			//oEvent.getParameter("value").toUpperCase()
+			this.getModel("data").setProperty("/unitOfMeasure", oEvent.getParameter("value").toUpperCase());
+			this.updateViewControls(this.getModel("data").getData());
+		},
+		onMaterialNumbeChange: function(oEvent) {
+			this.updateViewControls(this.getModel("data").getData());
+		},
+		onStorageLocationChange: function(oEvent) {
+			this.getModel("data").setProperty("/storageLocation", oEvent.getParameter("value").toUpperCase());
 			this.updateViewControls(this.getModel("data").getData());
 		},
 
