@@ -8,6 +8,7 @@ sap.ui.define([
 
 	return PageBaseController.extend("com.mii.scanner.controller.action.ActionBaseController", {
 		constructor: function(sId, mProperties) {
+
 			this.mScannerInputTypes = {
 				storageUnit: {
 					key: "LENUM",
@@ -30,6 +31,10 @@ sap.ui.define([
 					validationExpression: /^1\d{6}\/\d{4}$/gm
 				}
 			};
+		},
+
+		onInit: function() {
+			PageBaseController.prototype.onInit.call(this);
 		},
 
 		requestOrderHeaderInfoService: function(sOrderNumber) {

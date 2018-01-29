@@ -5,7 +5,10 @@ sap.ui.define([
 	"use strict";
 
 	return ActionBaseController.extend("com.mii.scanner.controller.action.StockTransfer", {
-		onInit:function(){
+		onInit: function() {
+			//call super class onInit to apply user login protection. DO NOT DELETE!
+			ActionBaseController.prototype.onInit.call(this);
+
 			var oModel = new JSONModel(),
 				oData = {
 					LE: null,
@@ -15,7 +18,7 @@ sap.ui.define([
 					LGORT: "",
 					INFO: ""
 				};
-				
+
 			oModel.setData(oData);
 			this.setModel(oModel);
 		}
