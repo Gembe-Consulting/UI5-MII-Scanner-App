@@ -98,13 +98,24 @@ module.exports = function(grunt) {
 				files: [{
 					"expand": true,
 					"src": "test/**",
-					"dest": "dist/test",
+					"dest": "dist",
 					"cwd": "webapp"
 				}, {
 					"expand": true,
 					"src": "test.html",
 					"dest": "dist",
 					"cwd": "webapp"
+				}]
+			},
+			irpt: {
+				files: [{
+					"expand": true,
+					"src": "index.html",
+					"dest": "dist",
+					"cwd": "webapp",
+					rename: function(dest, src) {
+						return dest + "/" + src.replace('.html', '.irpt');
+					}
 				}]
 			}
 		}
@@ -125,6 +136,7 @@ module.exports = function(grunt) {
 		'clean',
 		'build',
 		'copy:test',
+		'copy:irpt',
 		'uglify:dist',
 		'xmlmin:dist'
 	]);

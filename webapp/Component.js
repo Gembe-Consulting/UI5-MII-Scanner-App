@@ -121,7 +121,7 @@ sap.ui.define([
 			debugger;
 			//nothing found? Maybe annonymous login using dektop? Then check IllumLoginName
 			if (!sRemoteUserId && this.getModel("device").getProperty("/system/desktop")) {
-				sRemoteUserId = $('#IllumLoginName').val();
+				sRemoteUserId = $("#" + this.S_ILLUMLOGINNAME_URL_PARAM_NAME).val();
 			}
 
 			return sRemoteUserId;
