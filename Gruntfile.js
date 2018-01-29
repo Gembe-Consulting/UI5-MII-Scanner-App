@@ -16,10 +16,10 @@ module.exports = function(grunt) {
 						var aVersionParts = aParts[1].split(".");
 
 						if (aVersionParts[2] >= 95) {
-							aVersionParts[1] = Number(aVersionParts[1]) + 5;
+							aVersionParts[1] = Number(aVersionParts[1]) + 1;
 							aVersionParts[2] = 0;
 						} else {
-							aVersionParts[2] = Number(aVersionParts[2]) + 1;
+							aVersionParts[2] = Number(aVersionParts[2]) + 5;
 						}
 
 						var sNewVersion = aVersionParts[0] + "." + aVersionParts[1] + "." + aVersionParts[2];
@@ -38,6 +38,7 @@ module.exports = function(grunt) {
 					dest: 'dist/controller',
 					cwd: '.',
 					rename: function(dst, src) {
+						grunt.log.writeln("Uglify " + src);
 						// To keep the source js files and make new files as `*.min.js`:
 						// return dst + '/' + src.replace('.js', '.min.js');
 						// Or to override to src:
@@ -49,6 +50,19 @@ module.exports = function(grunt) {
 					dest: 'dist/model',
 					cwd: '.',
 					rename: function(dst, src) {
+						grunt.log.writeln("Uglify " + src);
+						// To keep the source js files and make new files as `*.min.js`:
+						// return dst + '/' + src.replace('.js', '.min.js');
+						// Or to override to src:
+						return src;
+					}
+				}, {
+					expand: true,
+					src: ['dist/Component.js'],
+					dest: 'dist',
+					cwd: '.',
+					rename: function(dst, src) {
+						grunt.log.writeln("Uglify " + src);
 						// To keep the source js files and make new files as `*.min.js`:
 						// return dst + '/' + src.replace('.js', '.min.js');
 						// Or to override to src:
