@@ -118,6 +118,11 @@ sap.ui.define([
 		_getRemoteUsername: function() {
 			var oParameters = jQuery.sap.getUriParameters(window.location.href),
 				sRemoteUserId = oParameters.get(this.S_ILLUMLOGINNAME_URL_PARAM_NAME);
+			debugger;
+			//nothing found? Maybe annonymous login using dektop? Then check IllumLoginName
+			if (!sRemoteUserId && this.getModel("device").getProperty("/system/desktop")) {
+				sRemoteUserId = $('#IllumLoginName').val();
+			}
 
 			return sRemoteUserId;
 		},
@@ -194,7 +199,7 @@ sap.ui.define([
 			// if user was not found, oUser is undefined
 			return oUser && oUser.USERLOGIN === sUserInput;
 		},
-		
+
 		/**
 		 * Adds an jQuery event listener to the html document
 		 * Only if current system is not a desktop device!
