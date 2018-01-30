@@ -26,9 +26,6 @@ sap.ui.define([
 			// initialize the error handler with the component
 			this._oErrorHandler = new ErrorHandler(this);
 
-			this.S_USERLOGIN_PARAM_NAME = "USERLOGIN";
-			this.S_ILLUMLOGINNAME_URL_PARAM_NAME = "IllumLoginName";
-
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
 
@@ -39,50 +36,9 @@ sap.ui.define([
 			// create the views based on the url/hash
 			this.getRouter().initialize();
 
-			// note: must run after Router initialization!
-			//this.checkRemoteUserLoginByUrlParam();
-
-			// this.getRouter().attachRouteMatched(function(oEvent) {
-			// 	var bForce = true,
-			// 		sCurrentHash = this.oHashChanger.getHash(),
-			// 		sDefaultHash = this._oOwner._getDefaultRoutePattern("login");
-
-			// 	if (!this._oOwner.isUserLoggedIn()) {
-			// 		if (sDefaultHash !== sCurrentHash) {
-			// 			//Set last denied hash, if last denied hash is still initial (first unauthorizes attempt)
-			// 			this._lastDeniedIntendetHash = this._lastDeniedIntendetHash ? this._lastDeniedIntendetHash : sCurrentHash;
-			// 			// redirect to login page, if we are not already on it
-			// 			this.oHashChanger.setHash(sDefaultHash);
-			// 		}
-			// 	}
-
-			// 	if (this._oOwner.isUserLoggedIn()) {
-
-			// 		//update user model to reflect login time
-			// 		this._oOwner.getModel("user").updateBindings(bForce);
-			// 		// restore previous hash, if its not login page
-			// 		if (this._lastDeniedIntendetHash && (sDefaultHash !== sCurrentHash)) {
-			// 			this.oHashChanger.setHash(this._lastDeniedIntendetHash);
-			// 			this._lastDeniedIntendetHash = null;
-			// 		}
-			// 	}
-			// });
-
 			// purge username from user modele, once login page is displayed
-			// remove username from URL parameters
 			this.getRouter().getTarget("login").attachDisplay(function(oEvent) {
-				var sUserName = this._getRemoteUsername(),
-					sUrlParam,
-					sUrlCleaned;
 				this.getModel("user").setProperty("/", {});
-
-				if (sUserName) {
-					sUrlParam = this.S_ILLUMLOGINNAME_URL_PARAM_NAME + "=" + sUserName;
-					sUrlCleaned = window.location.href.replace(sUrlParam, "");
-
-					window.history.replaceState({}, document.title, sUrlCleaned);
-				}
-
 			}.bind(this));
 
 			// set the browser page title based on navigation
@@ -90,41 +46,6 @@ sap.ui.define([
 				document.title = oEvent.getParameter("title");
 			});
 
-		},
-		/**
-		 * This method checks if there is an url parameter containing the user object.
-		 * If this is the case, we will load the "user" model data from MII.
-		 * We then try to redirect to the intendet page.
-		 */
-		checkRemoteUserLoginByUrlParam: function() {
-			var sRemoteUserId = this._getRemoteUsername(),
-				oParams,
-				oModel;
-
-			// If remote user was given, we load the data of our user Model, and check if the given parameter is a valid MII user
-			// This is not security!
-
-			if (sRemoteUserId) { //.then(fnResolveHandler, fnRejectHandler)
-				this.testUserLoginName(sRemoteUserId).then(function() {
-						//continue navigation
-						//this.getRouter().navTo("home");
-					}.bind(this),
-					function() {
-						this.getRouter().navTo("login", {}, true);
-					}.bind(this));
-			}
-		},
-
-		_getRemoteUsername: function() {
-			var oParameters = jQuery.sap.getUriParameters(window.location.href),
-				sRemoteUserId = oParameters.get(this.S_ILLUMLOGINNAME_URL_PARAM_NAME);
-
-			//nothing found? Maybe annonymous login using dektop? Then check IllumLoginName
-			if (!sRemoteUserId && this.getModel("device").getProperty("/system/desktop")) {
-				sRemoteUserId = $("#" + this.S_ILLUMLOGINNAME_URL_PARAM_NAME).val();
-			}
-
-			return sRemoteUserId;
 		},
 
 		/**
@@ -138,7 +59,7 @@ sap.ui.define([
 		 *	- settled - Has fulfilled or rejected
 		 */
 		testUserLoginName: function(sUserInput) {
-			var sUserInput = sUserInput ? sUserInput : this._getRemoteUsername(),
+			var sUserInput = sUserInput ? sUserInput : this._getIllumLoginName(),
 				sUserInputUpper = sUserInput ? sUserInput.toUpperCase() : "",
 				oModel = this.getModel("user"),
 				oLoginUser,
@@ -166,11 +87,18 @@ sap.ui.define([
 			}.bind(this));
 		},
 
+		_getIllumLoginName: function() {
+			var sUserId;
+
+			if (this.getModel("device").getProperty("/system/desktop")) {
+				sUserId = $("#IllumLoginName").val();
+			}
+
+			return sUserId;
+		},
+
 		_setUserModel: function(oLoginUser) {
 			var oModel = this.getModel("user");
-
-			// enhance user Model - disabled, because of not requested feature
-			//oLoginUser.lastLoginTimestamp = new Date();
 
 			// Set user model
 			oModel.setProperty("/", oLoginUser);
@@ -190,6 +118,20 @@ sap.ui.define([
 
 			return oModel.loadMiiData(oModel._sServiceUrl, oParam);
 
+		},
+
+		/** 
+		 * Checks if the current navigatin is allowed based on the user model
+		 */
+		isUserLoggedIn: function() {
+			var oModel = this.getModel("user");
+
+			if (!oModel || !oModel.getProperty("/USERLOGIN") || oModel.getProperty("/USERLOGIN") === "") {
+				jQuery.sap.log.warning("User nicht angemeldet", "this.getModel('user') undefined or property USERLOGIN not given or empty.", this.toString());
+				return false;
+			}
+
+			return true;
 		},
 
 		/**
@@ -268,20 +210,6 @@ sap.ui.define([
 			this._oErrorHandler.destroy();
 			// call the base component's destroy function
 			UIComponent.prototype.destroy.apply(this, arguments);
-		},
-
-		/** 
-		 * Checks if the current navigatin is allowed based on the user model
-		 */
-		isUserLoggedIn: function(sUserName) {
-			var oModel = this.getModel("user");
-
-			if (!oModel || !oModel.getProperty("/" + this.S_USERLOGIN_PARAM_NAME) || oModel.getProperty("/" + this.S_USERLOGIN_PARAM_NAME) === "") {
-				jQuery.sap.log.warning("User nicht angemeldet", "this.getModel(\"user\") undefined or property " + this.S_USERLOGIN_PARAM_NAME + " not given or empty.", this.toString());
-				return false;
-			}
-
-			return true;
 		},
 
 		_getDefaultRoutePattern: function(sRouteName) {
