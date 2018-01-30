@@ -1,36 +1,7 @@
 module.exports = function(grunt) {
 	'use strict';
 
-	grunt.log.writeln("Grunt verbose: " + grunt.option('verbose'));
-
 	var config = {
-		"openui5_preload": {
-			"preloadTmp": {
-				"options": {
-					"resources": {
-						"cwd": "dist/tmp",
-						"src": [
-							"**/*.js",
-							"**/*.fragment.html",
-							"**/*.fragment.json",
-							"**/*.fragment.xml",
-							"**/*.view.html",
-							"**/*.view.json",
-							"**/*.view.xml",
-							"**/*.properties",
-							"manifest.json",
-							"!test/**",
-							"!**/node_modules/**",
-							"!neo-app.json"
-						],
-						"prefix": "com/mii/scanner"
-					},
-					"compress": true,
-					"dest": "dist/tmp"
-				},
-				"components": true
-			}
-		},
 		replace: {
 			version: {
 				src: ['webapp/i18n/i18n.properties'],
@@ -150,13 +121,16 @@ module.exports = function(grunt) {
 		}
 	};
 
-	grunt.file.write("GruntConfigInitial.log", JSON.stringify(grunt.config(), null, 2));
-
 	grunt.loadNpmTasks('@sap/grunt-sapui5-bestpractice-build');
-	grunt.loadNpmTasks('grunt-text-replace');
-	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.file.write("GruntConfigInitial.log", JSON.stringify(grunt.config(), null, 2));
+	//	grunt.file.write("GruntOptions.log", JSON.stringify(grunt.option(), null, 2));
+	//	grunt.file.write("GruntOptionsFlags.log", JSON.stringify(grunt.option.flags(), null, 2));
 
 	grunt.config.merge(config);
+
+	grunt.loadNpmTasks('grunt-text-replace');
+	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-xmlmin');
 
 	grunt.registerTask('default', [
 		'replace:version',
@@ -164,7 +138,9 @@ module.exports = function(grunt) {
 		'clean',
 		'build',
 		'copy:test',
-		'copy:irpt'
+		'copy:irpt',
+		'uglify:dist',
+		'xmlmin:dist'
 	]);
 
 	grunt.file.write("GruntConfigFinal.log", JSON.stringify(grunt.config(), null, 2));

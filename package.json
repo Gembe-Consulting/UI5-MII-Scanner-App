@@ -5,7 +5,6 @@
 	"private": true,
 	"devDependencies": {
 		"grunt-text-replace": "",
-		"grunt-xmlmin": "",
 		"@sap/grunt-sapui5-bestpractice-build": ""
 	}
 }
