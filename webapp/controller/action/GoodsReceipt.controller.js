@@ -23,6 +23,13 @@ sap.ui.define([
 			BESTQ: null
 		},
 
+		_oInitView: {
+			bStorageUnitValid: true,
+			bValid: false,
+			storageUnitNumberValueState: sap.ui.core.ValueState.None,
+			orderNumberValueState: sap.ui.core.ValueState.None
+		},
+
 		onInit: function() {
 			//call super class onInit to apply user login protection. DO NOT DELETE!
 			ActionBaseController.prototype.onInit.call(this);
@@ -36,10 +43,6 @@ sap.ui.define([
 			oModel.setData(oData);
 			this.setModel(oModel, "data");
 
-			this._oInitView = {
-				bStorageUnitValid: true,
-				bValid: false
-			};
 			this.setModel(new JSONModel(jQuery.extend({}, this._oInitView)), "view");
 
 			this.getRouter().getRoute("goodsReceipt").attachMatched(this._onRouteMatched, this);
@@ -135,12 +138,16 @@ sap.ui.define([
 		},
 
 		onStorageUnitNumberChange: function(oEvent) {
-			var sStorageUnitNumber = oEvent.getParameter("value"),
+			var oSource = oEvent.getSource(),
+				sStorageUnitNumber = oEvent.getParameter("value"),
 				oBundle = this.getResourceBundle();
 
 			sStorageUnitNumber = this._padStorageUnitNumber(sStorageUnitNumber);
 
 			jQuery.sap.log.info("Start gathering data for palette " + sStorageUnitNumber);
+
+			oSource.setValueState(sap.ui.core.ValueState.None);
+			this.showControlBusyIndicator(oSource);
 
 			this.clearLogMessages();
 
@@ -154,6 +161,7 @@ sap.ui.define([
 
 					if (aResultList.length === 1) {
 						oStorageUnit = this._formatStorageUnitData(oData.d.results[0].Rowset.results[0].Row.results[0]);
+						oSource.setValueState(sap.ui.core.ValueState.Success);
 					} else {
 						throw oBundle.getText("messageTitleStorageUnitNotFound");
 					}
@@ -163,6 +171,7 @@ sap.ui.define([
 							text: oBundle.getText("messageTextStorageUnitAlreadyPosted", [sStorageUnitNumber])
 						});
 						this.getModel("view").setProperty("/bStorageUnitValid", false);
+						oSource.setValueState(sap.ui.core.ValueState.Error);
 					} else {
 						this.getModel("view").setProperty("/bStorageUnitValid", true);
 					}
@@ -175,6 +184,7 @@ sap.ui.define([
 					MessageBox.error(oBundle.getText("messageTextStorageUnitNotFound", [sStorageUnitNumber]), {
 						title: err
 					});
+					oSource.setValueState(sap.ui.core.ValueState.Error);
 				} finally {}
 
 			}.bind(this);
@@ -183,13 +193,17 @@ sap.ui.define([
 				MessageBox.error(oBundle.getText("messageTextGoodsReceiptError"));
 			}.bind(this);
 
-			this.requestStorageUnitInfoService(sStorageUnitNumber).then(fnResolve, fnReject);
+			this.requestStorageUnitInfoService(sStorageUnitNumber).then(fnResolve, fnReject).then(function() {
+				this.hideControlBusyIndicator(oSource);
+			}.bind(this));
 		},
 
 		onSave: function() {
 			var oBundle = this.getResourceBundle(),
 				fnResolve,
 				fnReject;
+
+			this.getOwnerComponent().showBusyIndicator();
 
 			fnResolve = function(oData) {
 				var aResults,
@@ -228,7 +242,7 @@ sap.ui.define([
 				MessageBox.error(oBundle.getText("messageTextGoodsReceiptError"));
 			}.bind(this);
 
-			this._postGoodsReceipt().then(fnResolve, fnReject);
+			this._postGoodsReceipt().then(fnResolve, fnReject).then(this.getOwnerComponent().hideBusyIndicator);
 
 		},
 
@@ -297,12 +311,56 @@ sap.ui.define([
 		},
 
 		onOrderNumberChange: function(oEvent) {
-			this.updateViewControls(this.getModel("data").getData());
+			var oSource = oEvent.getSource(),
+				sOrderNumber = oEvent.getParameter("value"),
+				oBundle = this.getResourceBundle();
+
+			oSource.setValueState(sap.ui.core.ValueState.None);
+
+			this.clearLogMessages();
+
+			this.showControlBusyIndicator(oSource);
+
+			var fnResolve = function(oData) {
+				var aResultList,
+					oOrderHeader,
+					oModel = this.getModel("data");
+
+				aResultList = oData.d.results[0].Rowset.results[0].Row.results;
+
+				if (aResultList.length === 1) {
+					oSource.setValueState(sap.ui.core.ValueState.Success);
+
+					this.updateViewControls(this.getModel("data").getData());
+
+				} else {
+					oSource.setValueState(sap.ui.core.ValueState.Error);
+
+					this.addLogMessage({
+						text: oBundle.getText("messageTextGoodsReceiptOrderNumberNotFoundError", [sOrderNumber])
+					});
+				}
+
+			}.bind(this);
+
+			var fnReject = function(oError) {
+				MessageBox.error(oBundle.getText("messageTextGoodsReceiptError"));
+			}.bind(this);
+
+			this.requestOrderHeaderInfoService(sOrderNumber).then(fnResolve, fnReject).then(function() {
+				this.hideControlBusyIndicator(oSource);
+			}.bind(this));
+
 		},
 		onQuantityChange: function(oEvent) {
 			this.updateViewControls(this.getModel("data").getData());
 		},
 		onUnitOfMeasureChange: function(oEvent) {
+			var sUnitOfMeasure = oEvent.getParameter("value").toUpperCase(),
+				oDataModel = this.getModel("data");
+
+			oDataModel.setProperty("/MEINH", sUnitOfMeasure);
+
 			this.updateViewControls(this.getModel("data").getData());
 		},
 		onStorageLocationChange: function(oEvent) {

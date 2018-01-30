@@ -98,6 +98,19 @@ sap.ui.require([
 						}.bind(this));
 
 						return this;
+					},
+					iShouldSeeTheBusyIndicator: function() {
+						return this.waitFor({
+							viewName: "sap.m.MessageBox",
+							check: function() {
+								return !!sap.ui.test.Opa5.getJQuery()(".sapMMessageBoxError").length && sap.ui.test.Opa5.getJQuery()(".sapMMessageBoxError").find(".sapMMsgBoxText").text() === sErrorMessage;
+							},
+							success: function(oMessageBox) {
+								Opa5.assert.ok(true, "Error message box is shown");
+							},
+							errorMessage: "Did not find the Error Message Box"
+
+						});
 					}
 				}
 			}

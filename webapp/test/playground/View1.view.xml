@@ -1,0 +1,34 @@
+<mvc:View controllerName="test.playground.View1" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+	xmlns="sap.m">
+	<App id="idAppControl">
+		<pages>
+			<Page title="{i18n>title}">
+				<content>
+					<HBox alignItems="Center">
+						<Label text="Navigation: "/>
+						<Input id="navigation" value="/Start/Materialbewegung/WE"/>
+					</HBox>
+					<HBox alignItems="Center">
+						<Label text="Storage Unit Number:"/>
+						<Input id="storageUnitNumber" value="00000000109330000001"/>
+					</HBox>
+					<HBox alignItems="Center">
+						<Label text="Process Order Number:"/>
+						<Input id="orderNumber"/>
+					</HBox>
+					<HBox alignItems="Center">
+						<Label text="Unit of Measure:"/>
+						<Input id="unitOfMeasure"/>
+					</HBox>
+					<HBox alignItems="Center">
+						<Label text="Storage Location:"/>
+						<Input id="storageLocation"/>
+					</HBox>
+					<Button text="Call external App in Popup" press="onCallExternalAppInPopup"/>
+					<Button text="Call external App in new Frame" press="onCallExternalAppInNewFrame"/>
+					<Button text="Call external App in same Window" press="onCallExternalAppInSameWindow"/>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

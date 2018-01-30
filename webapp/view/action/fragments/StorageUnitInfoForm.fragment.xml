@@ -19,14 +19,14 @@
 			<c:Icon id="storageUnitFragmentSpecialStockIndicatorIcon" src="sap-icon://quality-issue" color="#f9a429"
 				visible="{= ${data>/BESTQ}!=='0' &amp;&amp; ${data>/BESTQ}!==null}" width="25px"
 				tooltip="{i18n>labelTextTooltipStorageUnitInfoActionFragmentSpecialStockIndicator}"/>
-			<c:Icon id="storageUnitFragmentPastExpirationDateIcon" src="sap-icon://quality-issue" color="#ee0000"
+			<c:Icon id="storageUnitFragmentPastExpirationDateIcon" src="sap-icon://quality-issue" color="#f9a429"
 				visible="{path:'data>/VFDAT', formatter:'.formatter.isPastDate'}" width="25px"/>
 		</HBox>
 		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentExpirationDate}"/>
 		<HBox>
 			<Text id="storageUnitFragmentExpirationDateText"
 				text="{path: 'data>/VFDAT', type:'sap.ui.model.type.Date', formatOptions: { source: { pattern: 'MM-dd-yyyy' }}}" width="100px"/>
-			<c:Icon id="storageUnitFragmentExpirationDateOutOfDateIcon" src="sap-icon://sys-cancel-2" color="#ee0000"
+			<c:Icon id="storageUnitFragmentExpirationDateOutOfDateIcon" src="sap-icon://date-time" color="#f9a429"
 				visible="{path:'data>/VFDAT', formatter:'.formatter.isPastDate'}" width="25px"/>
 		</HBox>
 		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentStorageBin}"/>

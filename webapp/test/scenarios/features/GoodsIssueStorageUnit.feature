@@ -74,19 +74,23 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 		 And I can see specialStockQualityIcon with color '#f9a429' in action.GoodsIssue view
 		 And I can see specialStockQualityIcon with src 'sap-icon://lab' in action.GoodsIssue view
 		 
+	@wip
+	Scenario: Should show warning icon if users enter LE with restricted-use stock (nicht frei verwendbar)
+		 
 	Scenario: Should show error icon and message if users enter LE with past expiration date and prevent posting
 		When I enter '00000000109330000006' into storageUnitInput in action.GoodsIssue view
 		Then I can see messageStrip with text 'Achtung: MHD der Charge '0109331231' ist am '20.12.2010' abgelaufen!' in action.GoodsIssue view 
-		 And I can see expirationDateIndicatorIcon with color '#ee0000' in action.GoodsIssue view
+		 And I can see messageStrip with type 'Warning' in action.GoodsIssue view
+		 And I can see expirationDateIndicatorIcon with color '#f9a429' in action.GoodsIssue view
 		 And I can see expirationDateIndicatorIcon with src 'sap-icon://quality-issue' in action.GoodsIssue view
-		 And I can see expirationDateOutOfDateIcon with color '#ee0000' in action.GoodsIssue view
-		 And I can see expirationDateOutOfDateIcon with src 'sap-icon://sys-cancel-2' in action.GoodsIssue view
-		 And I can see storageUnitFragmentPastExpirationDateIcon with color '#ee0000' in action.GoodsIssue view
+		 And I can see expirationDateOutOfDateIcon with color '#f9a429' in action.GoodsIssue view
+		 And I can see expirationDateOutOfDateIcon with src 'sap-icon://date-time' in action.GoodsIssue view
+		 And I can see storageUnitFragmentPastExpirationDateIcon with color '#f9a429' in action.GoodsIssue view
 		 And I can see storageUnitFragmentPastExpirationDateIcon with src 'sap-icon://quality-issue' in action.GoodsIssue view
-		 And I can see storageUnitFragmentExpirationDateOutOfDateIcon with color '#ee0000' in action.GoodsIssue view
-		 And I can see storageUnitFragmentExpirationDateOutOfDateIcon with src 'sap-icon://sys-cancel-2' in action.GoodsIssue view
+		 And I can see storageUnitFragmentExpirationDateOutOfDateIcon with color '#f9a429' in action.GoodsIssue view
+		 And I can see storageUnitFragmentExpirationDateOutOfDateIcon with src 'sap-icon://date-time' in action.GoodsIssue view
 		When I enter '1093300' into orderNumberInput in action.GoodsIssue view
-		Then on the Goods Issue Page: I should see the save button is disabled
+		Then I can see saveButton in action.GoodsIssue view
 
 	Scenario: Should show confirmation popup if users enter a storage unit with material number that is not contained in order component list (Unplanned Withdrawal)
 		When I enter '00000000109330000008' into storageUnitInput in action.GoodsIssue view
@@ -94,13 +98,15 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 		Then I can see storageUnitFragmentMaterialInfoText with text '0000000-000 - UNPLANNED WITHDRAWAL of Zucker-Fett-VBT' in action.GoodsIssue view
 		 And I can see messageStrip with text 'Ungeplante Entnahme: Komponente '0000000-000' für Auftrag '1234567' nicht vorgesehen!' in action.GoodsIssue view
 		 And I can see messageStrip with type 'Warning' in action.GoodsIssue view
+		 And I can see orderNumberInput with valueState 'Warning' in action.GoodsIssue view
+		 And I can see saveButton in action.GoodsIssue view
 	
 	Scenario: Should show error message if users enter a storage unit with material number that is backflushed in order
 		When I enter '00000000109330000009' into storageUnitInput in action.GoodsIssue view
 		 And I enter '1234567' into orderNumberInput in action.GoodsIssue view
 		Then I can see messageStrip with text 'Achtung: Komponente '1200666-002' wird retrograd entnommen!' in action.GoodsIssue view
-		 And I can see messageStrip with type 'Error' in action.GoodsIssue view
-		Then on the Goods Issue Page: I should see the save button is disabled
+		 And I can see messageStrip with type 'Warning' in action.GoodsIssue view
+		Then I can see saveButton in action.GoodsIssue view
 	
 	Scenario: Should show error message if unit of measure from LE does not match unit of measure from order component list
 		When I enter '00000000109330000010' into storageUnitInput in action.GoodsIssue view
@@ -108,17 +114,6 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 		Then I can see messageStrip with text 'Achtung: Inkonsistente Mengeneinheiten in Auftragskomponente (ST) und Lagereinheit (KGM)!' in action.GoodsIssue view
 		 And I can see messageStrip with type 'Error' in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
-#		When I click on clearFormButton in action.GoodsIssue view
-#		 And I enter '1234567' into orderNumberInput in action.GoodsIssue view
-#		 And I enter '00000000109330000010' into storageUnitInput in action.GoodsIssue view
-#		Then I can see messageStrip with text 'Achtung: Inkonsistente Mengeneinheiten in Lagereinheit (KGM) und Auftragskomponente (ST)!' in action.GoodsIssue view
-#		 And I can see messageStrip with type 'Error' in action.GoodsIssue view
-#		Then on the Goods Issue Page: I should see the save button is disabled
-		
-	@wip
-	Scenario: Should calculate and display remaining quantity if users have entered order number and material number (restmenge = bdmng - enmng)
-		Wenn ich ein LE mit IST Menge x eingebe, soll die Menge vorgeschlagen werden
-		wenn ich einen Auftrag mit Restmenge Menge y eingebe soll diese Menge vorgeschlagen werden
 	
 	Scenario: Should show error message if entered order number does not exist
 		When I enter '00000000100000100011' into storageUnitInput in action.GoodsIssue view

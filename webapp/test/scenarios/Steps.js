@@ -8,25 +8,25 @@ sap.ui.define([
 	return StepDefinitions.extend("com/mii/scanner/test/Steps", {
 		init: function() {
 			var opa = new Opa5();
-			
+
 			this.register(/^the url parameter "(.*?)" is removed$/i,
 				function(sUrlParameter, Given, When, Then) {
 					Then.theUrlShouldNotContainParameter(sUrlParameter);
 				}
 			);
-			
+
 			this.register(/^the url parameter "(.*?)" exists/i,
 				function(sUrlParameter, Given, When, Then) {
 					Then.theUrlShouldContainParameter(sUrlParameter);
 				}
 			);
-			
+
 			this.register(/^I navigate to "(.*?)"/i,
 				function(sHash, Given, When, Then) {
 					Given.iNavigateToPage(sHash);
 				}
 			);
-			
+
 			this.register(/^I start the app on "(.*?)" using remote user "(.*?)"$/i,
 				function(sHash, sUsername, Given, When, Then) {
 					Given.iStartTheApp({
@@ -35,13 +35,12 @@ sap.ui.define([
 					});
 				}
 			);
-			
+
 			oGenericSteps.register(
 				this, /* GherkinSteps */
 				opa, /* oOpaInstance */
 				Opa5 /* Opa5 */
 			);
-
 
 		}
 	});

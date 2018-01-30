@@ -23,7 +23,6 @@ sap.ui.define([
 			storageLocation: null,
 			materialNumber: null,
 			bulkMaterialIndicator: false,
-			backflushMaterialIndicator: false,
 			//storage unit data
 			LENUM: null,
 			BESTQ: null,
@@ -113,6 +112,8 @@ sap.ui.define([
 				fnResolve,
 				fnReject;
 
+			this.getOwnerComponent().showBusyIndicator();
+
 			fnResolve = function(oData) {
 				var aResults,
 					aMessages,
@@ -151,7 +152,7 @@ sap.ui.define([
 				MessageBox.error(oBundle.getText("messageTextGoodsIssueError"));
 			}.bind(this);
 
-			this._postGoodsIssue().then(fnResolve, fnReject);
+			this._postGoodsIssue().then(fnResolve, fnReject).then(this.getOwnerComponent().hideBusyIndicator);
 
 		},
 
@@ -236,6 +237,7 @@ sap.ui.define([
 			}
 
 			this.showControlBusyIndicator(oSource);
+			oSource.setValueState(sap.ui.core.ValueState.None);
 
 			this.clearLogMessages();
 
@@ -262,11 +264,11 @@ sap.ui.define([
 
 					if (oOrderComponent) {
 						if (oOrderComponent.RGEKZ === "X") {
+							oSource.setValueState(sap.ui.core.ValueState.Warning);
 							this.addLogMessage({
-								text: oBundle.getText("messageTextMaterialBackflushedInOrderComponentList", [sMaterialNumber])
+								text: oBundle.getText("messageTextMaterialBackflushedInOrderComponentList", [sMaterialNumber]),
+								type: sap.ui.core.MessageType.Warning
 							});
-							bComponentIsBackflushed = true;
-							oSource.setValueState(sap.ui.core.ValueState.Error);
 						}
 
 						if (!!oDataModel.getProperty("/unitOfMeasure") && (oOrderComponent.EINHEIT !== oDataModel.getProperty("/unitOfMeasure"))) {
@@ -284,8 +286,6 @@ sap.ui.define([
 						}
 
 					}
-
-					oDataModel.setProperty("/backflushMaterialIndicator", bComponentIsBackflushed);
 
 				} catch (err) {
 					MessageBox.error(oBundle.getText("messageTextGoodsIssueError"), {
@@ -352,21 +352,15 @@ sap.ui.define([
 					}
 
 					if (this.formatter.isPastDate(oStorageUnit.VFDAT)) {
-						oSource.setValueState(sap.ui.core.ValueState.Error);
+						oSource.setValueState(sap.ui.core.ValueState.Warning);
 						oExpirationDateFormatted = moment(oStorageUnit.VFDAT, "MM-DD-YYYY");
 						this.addLogMessage({
-							text: oBundle.getText("messageTextStorageUnitHasPastExpirationDate", [oStorageUnit.CHARG, oExpirationDateFormatted.format("L")])
+							text: oBundle.getText("messageTextStorageUnitHasPastExpirationDate", [oStorageUnit.CHARG, oExpirationDateFormatted.format("L")]),
+							type: sap.ui.core.MessageType.Warning
 						});
-						bStorageUnitDataValid = false;
+						bStorageUnitDataValid = true;
 					}
-					/*
-					if (!!oDataModel.getProperty("/unitOfMeasure") && (oStorageUnit.MEINH !== oDataModel.getProperty("/unitOfMeasure"))) {
-						this.addLogMessage({
-							text: oBundle.getText("messageTextStorageUnitHasDeviatingUnitOfMeasure", [oStorageUnit.MEINH, oDataModel.getProperty("/unitOfMeasure")])
-						});
-						bStorageUnitDataValid = false;
-					}
-					*/
+
 					this.getModel("view").setProperty("/bStorageUnitValid", bStorageUnitDataValid);
 
 					// merge data from storage unit with main model
@@ -494,10 +488,10 @@ sap.ui.define([
 			if (oData) {
 				switch (this.getModel("view").getProperty("/type")) {
 					case "withLE":
-						return !!oData.entryQuantity && !oData.entryQuantity <= 0 && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageUnitNumber && oData.backflushMaterialIndicator === false && !this.formatter.isPastDate(oData.VFDAT);
+						return !!oData.entryQuantity && !oData.entryQuantity <= 0 && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageUnitNumber;
 						break;
 					case "nonLE":
-						return !!oData.entryQuantity && !oData.entryQuantity <= 0 && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageLocation && !!oData.materialNumber && oData.backflushMaterialIndicator === false;
+						return !!oData.entryQuantity && !oData.entryQuantity <= 0 && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageLocation && !!oData.materialNumber;
 						break;
 					default:
 						return false;
