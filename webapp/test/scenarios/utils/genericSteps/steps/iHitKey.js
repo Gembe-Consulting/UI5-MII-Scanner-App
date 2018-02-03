@@ -5,27 +5,28 @@
 	module.exports = {
 		docs: {
 			description: "Fire a key press",
-			synopsis: "I hit '<key>' [in <viewName> view]",
-			examples: ["I hit 'ENTER'", "I hit 'F1' in Creation view"]
+			synopsis: "I press '<key>' at <control> [in <viewName> view]",
+			examples: ["I press 'ENTER'", "I press 'F1' in Creation view"]
 		},
 		icon: "edit",
-		regexp: /^I hit '(.+?)' into ([a-zA-Z0-9]+)( in ([a-zA-Z0-9\.]+) view)?$/,
-		action: function(sKey, sControlId, sViewPart, sViewName) {
+		regexp: /^I press (.+?)(\s\+\s(ALT|SHIFT|CTRL))?\sat\s([a-zA-Z0-9]+)(\sin\s([a-zA-Z0-9\.]+)\sview)?$/,
+		//regexp: new RegExp(["^I hit (.+?)", "( \+ (ALT|SHIFT|CTRL))?", " into ([a-zA-Z0-9]+)", "( in ([a-zA-Z0-9\.]+) view)?$"].join("")),
+		action: function(sKey, sModifierPart, sModifier, sControlId, sViewPart, sViewName) {
 			var that = this;
 			var oWaitForOptions = {
 				id: sControlId,
 				success: function(oControl) {
-					var oWindow,
-						ojQuery,
-						sQueryKeyCode;
+					var oWindow = sap.ui.test.Opa5.getWindow(),
+						ojQuery = sap.ui.test.Opa5.getJQuery(),
+						oUtils = sap.ui.test.Opa5.getUtils(),
+						sQueryKeyCode,
+						bShiftKey = sModifier === "SHIFT" ? true : false,
+						bAltKey = sModifier === "ALT" ? true : false,
+						bCtrlKey = sModifier === "CTRL" ? true : false;
 
-					oWindow = sap.ui.test.Opa5.getWindow();
-					ojQuery = sap.ui.test.Opa5.getJQuery();
-
-					var $ActionDomRef = oWindow.$(oControl),
-						oActionDomRef = $ActionDomRef[0];
-
-					var oUtils = sap.ui.test.Opa5.getUtils();
+					if (!jQuery.sap.KeyCodes[sKey]) {
+						that.Opa5.assert.ok(false, "Key" + sKey + " is not an enum of jQuery.sap.KeyCodes");
+					}
 
 					/**
 					 * Programmatically triggers a 'keydown' event on a specified target.
@@ -38,7 +39,7 @@
 					 * @param {boolean} bCtrlKey Indicates whether the ctrl key is down in addition
 					 * @public
 					 */
-					oUtils.triggerKeyboardEvent(oControl.getId(), sKey, false, false, false);
+					oUtils.triggerKeyboardEvent(oControl.getId(), sKey, bShiftKey, bAltKey, bCtrlKey);
 
 				}
 			};

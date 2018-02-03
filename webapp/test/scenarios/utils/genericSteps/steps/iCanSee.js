@@ -9,7 +9,7 @@
 			examples: ["I can see btnNext", "I can see btnNext with text 'next' in Detail view", "I can see lblTitle in Overview view", "I can see txtInput with value '1234ABCD' in Main view", "I can see txtInput with value containing '123' in Main view", "I can see txtInput with value containing '123'"]
 		},
 		icon: "show",
-		regexp: new RegExp(["^I can see\\s+", "([a-zA-Z0-9]+)", "\\s?(with\\s([^\\s]+)\\s(containing\\s|starting\\swith\\s|ending\\swith\\s)?'(.*?)')?", "(\\s+in\\s+(.+?)\\sview)?\\s*$"].join("")),
+		regexp: new RegExp(["^I can see\\s+", "([a-zA-Z0-9]+)", "\\s?(with\\s([^\\s]+)\\s(is\\s|containing\\s|starting\\swith\\s|ending\\swith\\s)?'(.*?)')?", "(\\s+in\\s+(.+?)\\sview)?\\s*$"].join("")),
 		action: function(sId, sWithProperty, sPropertyName, sTypeOfCheck, sValue, sViewPart, sViewName) {
 			var that = this,
 				oWaitForOptions;

@@ -1,0 +1,213 @@
+{
+	"d": {
+		"results": [{
+			"__metadata": {
+				"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Rowsets('SAPUI5/services/stocktransfer/GetStorageBinListQry')",
+				"type": "QueryTemplate.Rowsets"
+			},
+			"DateCreated": "\/Date(1517666689000)\/",
+			"EndDate": "\/Date(1517666689000)\/",
+			"StartDate": "\/Date(1517663089000)\/",
+			"Version": "14.0 SP7 Patch 15 (Jan 13, 2016)",
+			"QueryTemplate": "SAPUI5/services/stocktransfer/GetStorageBinListQry",
+			"Rowset": {
+				"results": [{
+					"__metadata": {
+						"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Rowset(QueryTemplate='SAPUI5/services/stocktransfer/GetStorageBinListQry',RowsetId=1)",
+						"type": "QueryTemplate.Rowset"
+					},
+					"RowsetId": 1,
+					"QueryTemplate": "SAPUI5/services/stocktransfer/GetStorageBinListQry",
+					"Column": {
+						"results": [{
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('LGRPLTZ')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "LGRPLTZ",
+							"Description": "LGRPLTZ",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "LGRPLTZ"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('LGRTXT')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "LGRTXT",
+							"Description": "LGRTXT",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "LGRTXT"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('LGRTYP')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "LGRTYP",
+							"Description": "LGRTYP",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "LGRTYP"
+						}]
+					},
+					"Row": {
+						"results": [{
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"LGRPLTZ": "BA01",
+							"LGRTXT": "BB-Aufgabe 1",
+							"LGRTYP": null,
+							"RowId": 1
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(2)",
+								"type": "QueryTemplate.Row"
+							},
+							"LGRPLTZ": "BA02",
+							"LGRTXT": "BB-Aufgabe 2",
+							"LGRTYP": null,
+							"RowId": 2
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(3)",
+								"type": "QueryTemplate.Row"
+							},
+							"LGRPLTZ": "17-06",
+							"LGRTXT": "KH01",
+							"LGRTYP": "014",
+							"RowId": 3
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(4)",
+								"type": "QueryTemplate.Row"
+							},
+							"LGRPLTZ": "S31",
+							"LGRTXT": "Schleuse BT31",
+							"LGRTYP": "600",
+							"RowId": 4
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(5)",
+								"type": "QueryTemplate.Row"
+							},
+							"LGRPLTZ": "S33",
+							"LGRTXT": "Schleuse BT33",
+							"LGRTYP": "600",
+							"RowId": 5
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(6)",
+								"type": "QueryTemplate.Row"
+							},
+							"LGRPLTZ": "STK33",
+							"LGRTXT": "Schleuse KH33",
+							"LGRTYP": "600",
+							"RowId": 6
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(7)",
+								"type": "QueryTemplate.Row"
+							},
+							"LGRPLTZ": "STK34",
+							"LGRTXT": "Schleuse KH34",
+							"LGRTYP": "600",
+							"RowId": 7
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(8)",
+								"type": "QueryTemplate.Row"
+							},
+							"LGRPLTZ": "STK35",
+							"LGRTXT": "Schleuse KH35",
+							"LGRTYP": "600",
+							"RowId": 8
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(9)",
+								"type": "QueryTemplate.Row"
+							},
+							"LGRPLTZ": "BBT4",
+							"LGRTXT": "Big-Bag-Befüllung BT32a",
+							"LGRTYP": "900",
+							"RowId": 9
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(10)",
+								"type": "QueryTemplate.Row"
+							},
+							"LGRPLTZ": "PL23",
+							"LGRTXT": "PVB 23m",
+							"LGRTYP": "900",
+							"RowId": 10
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(11)",
+								"type": "QueryTemplate.Row"
+							},
+							"LGRPLTZ": "PLGT",
+							"LGRTXT": "PVB GT",
+							"LGRTYP": "900",
+							"RowId": 11
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(12)",
+								"type": "QueryTemplate.Row"
+							},
+							"LGRPLTZ": "PLKA",
+							"LGRTXT": "PVB Kammern",
+							"LGRTYP": "900",
+							"RowId": 12
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(13)",
+								"type": "QueryTemplate.Row"
+							},
+							"LGRPLTZ": "PLMS",
+							"LGRTXT": "PVB MS",
+							"LGRTYP": "900",
+							"RowId": 13
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(14)",
+								"type": "QueryTemplate.Row"
+							},
+							"LGRPLTZ": "PLTT",
+							"LGRTXT": "PVB TT",
+							"LGRTYP": "900",
+							"RowId": 14
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(15)",
+								"type": "QueryTemplate.Row"
+							},
+							"LGRPLTZ": "PLVP",
+							"LGRTXT": "PVB VP",
+							"LGRTYP": "900",
+							"RowId": 15
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(16)",
+								"type": "QueryTemplate.Row"
+							},
+							"LGRPLTZ": "PRODUKTION",
+							"LGRTXT": "Produktion",
+							"LGRTYP": "900",
+							"RowId": 16
+						}]
+					}
+				}]
+			},
+			"Messages": {
+				"results": [
+
+				]
+			}
+		}]
+	}
+}

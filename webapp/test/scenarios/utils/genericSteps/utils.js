@@ -1,10 +1,27 @@
-/*! openui5-generic-app-testing 2017-11-22 */
+/*! openui5-generic-app-testing 2017-12-05 */
 
 (function() {
 	var module = {};
 
 	function getGetterMethodName(sProperty) {
 		return "get" + sProperty.charAt(0).toUpperCase() + sProperty.slice(1);
+	}
+
+	function isView(oControl) {
+		var sElementName = oControl.getMetadata().getElementName();
+		return Object.keys(sap.ui.core.mvc.ViewType).map(function(sViewTypeKey) {
+			var sViewTypeValue = sap.ui.core.mvc.ViewType[sViewTypeKey];
+			return "sap.ui.core.mvc." + sViewTypeValue + "View";
+		}).some(function(sPossibleViewName) {
+			return sElementName === sPossibleViewName;
+		});
+	}
+
+	function getControlView(oControl) {
+		if (!oControl) {
+			return null;
+		}
+		return isView(oControl) ? oControl : getControlView(oControl.getParent());
 	}
 
 	function positionTextToIndex(sPositionText, iNumItems) {
@@ -22,6 +39,29 @@
 			throw new Error("Unrecognized position '" + sPositionText + "'");
 		}
 		return iIndex;
+	}
+
+	function testControlProperty(oControl, sPropertyName, sTypeOfCheck, sValue) {
+		var sGetterMethodName = getGetterMethodName(sPropertyName);
+		if (typeof oControl[sGetterMethodName] !== "function") {
+			return {
+				success: false,
+				reason: "action refers to property '" + sPropertyName + "'. However the control '" + oControl.getId() + "' does not expose the " +
+					sGetterMethodName + " getter"
+			};
+		}
+		var sText = oControl[sGetterMethodName]();
+		sTypeOfCheck = (sTypeOfCheck || "equal to").replace(/\s+$/g, "");
+		var bPass = testTextValue(sTypeOfCheck, sText, sValue);
+		if (!bPass) {
+			return {
+				success: false,
+				reason: "the text '" + sText + "' is not " + sTypeOfCheck + " '" + sValue + "'"
+			};
+		}
+		return {
+			success: true
+		};
 	}
 
 	function findNestedAggregationItem(oTargetControl, oConstraints, bDeep, aControlsToCheck) {
@@ -50,7 +90,8 @@
 				constraint: "property",
 				fn: function(oControl) {
 					var sGetterFn = getGetterMethodName(oConstraints.property);
-					return typeof oControl[sGetterFn] === "function" && testTextValue(oConstraints.propertyOperand, oControl[sGetterFn](), oConstraints.propertyValue);
+					return typeof oControl[sGetterFn] === "function" && testTextValue(oConstraints.propertyOperand, oControl[sGetterFn](),
+						oConstraints.propertyValue);
 				}
 			}, {
 				constraint: "itemIndex",
@@ -77,14 +118,6 @@
 	}
 
 	function testTextValue(sOperand, sText, sValue) {
-		
-		//don't be too strict when it comes to stringified types
-		if(sValue === "true"){
-			sValue = true;
-		}else if(sValue === "false"){
-			sValue = false;
-		}
-		
 		switch (sOperand) {
 			case "containing":
 				return sText.indexOf(sValue) >= 0;
@@ -97,17 +130,40 @@
 				return iPosition > -1 && iPosition + sValue.length === sText.length;
 
 			case "equal to":
-				return sText === sValue; 
+				return sText === sValue;
+
+			case "is":
+				return sText === JSON.parse(sValue); //don't be too strict when it comes to stringified types
 
 			default:
 				throw new Error("Invalid operand for text value check: '" + sOperand + "'");
 		}
 	}
+
+	function findControl(sMaybePosition, sControlType, sWithProperty, sPropertyName, sTypeOfCheck, sValue, sDeeplyOrDirectly, oParentControl) {
+		var oSearchConstraints = {
+			itemIndex: sMaybePosition ? positionTextToIndex(sMaybePosition.replace(" ", "")) : 0
+		};
+		if (sControlType) {
+			oSearchConstraints.controlType = sControlType.replace(" ", "");
+		}
+		if (sWithProperty) {
+			oSearchConstraints.property = sPropertyName;
+			oSearchConstraints.propertyOperand = (sTypeOfCheck || "equal to").replace(/\s+$/g, "");
+			oSearchConstraints.propertyValue = sValue;
+		}
+		var bDeepSearch = sDeeplyOrDirectly === "deeply";
+		var oSearch = findNestedAggregationItem(oParentControl, oSearchConstraints, bDeepSearch, []);
+		return oSearch;
+	}
 	module.exports = {
 		testTextValue: testTextValue,
 		findNestedAggregationItem: findNestedAggregationItem,
 		getGetterMethodName: getGetterMethodName,
-		positionTextToIndex: positionTextToIndex
+		positionTextToIndex: positionTextToIndex,
+		getControlView: getControlView,
+		findControl: findControl,
+		testControlProperty: testControlProperty
 	};
 	module.exports.name = "utils";
 	sap.ui.define([], function() {

@@ -2,11 +2,13 @@ sap.ui.define([
 	"com/mii/scanner/controller/PageBaseController",
 	"sap/m/MessageBox",
 	"sap/m/MessageToast",
-	"sap/m/MessageStrip"
-], function(PageBaseController, MessageBox, MessageToast, MessageStrip) {
+	"sap/m/MessageStrip",
+	"com/mii/scanner/model/formatter"
+], function(PageBaseController, MessageBox, MessageToast, MessageStrip, formatter) {
 	"use strict";
 
 	return PageBaseController.extend("com.mii.scanner.controller.action.ActionBaseController", {
+		formatter: formatter,
 		constructor: function(sId, mProperties) {
 
 			this.mScannerInputTypes = {

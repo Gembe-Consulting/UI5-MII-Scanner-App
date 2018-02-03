@@ -29,12 +29,12 @@ Feature: Creating goods receipt posting to SAP ERP
 		 And I can see storageUnitInput with valueState 'Success' in action.GoodsReceipt view
 		 And I can see quantityInput with value '600,000' in action.GoodsReceipt view
 		 And I can see unitOfMeasureInput with value 'KG' in action.GoodsReceipt view
-		 And I can see unitOfMeasureInput with editable 'false' in action.GoodsReceipt view
+		 And I can see unitOfMeasureInput with editable is 'false' in action.GoodsReceipt view
 		 And I can see storageLocationInput with value '1000' in action.GoodsReceipt view
-		 And I can see storageLocationInput with editable 'false' in action.GoodsReceipt view
+		 And I can see storageLocationInput with editable is 'false' in action.GoodsReceipt view
 		 And I can see orderNumberInput with value '1093300' in action.GoodsReceipt view
-		 And I can see orderNumberInput with editable 'false' in action.GoodsReceipt view
-		 And I can see saveButton with enabled 'true' in action.GoodsReceipt view
+		 And I can see orderNumberInput with editable is 'false' in action.GoodsReceipt view
+		 And I can see saveButton with enabled is 'true' in action.GoodsReceipt view
 		
 	Scenario: User enters a order number
 		When I enter '1093300' into orderNumberInput in action.GoodsReceipt view
@@ -42,13 +42,13 @@ Feature: Creating goods receipt posting to SAP ERP
 		Then on the Goods Receipt Page: I should see the save button is disabled
 		When I enter '4711' into storageLocationInput in action.GoodsReceipt view
 		Then I can see storageUnitInput with value '' in action.GoodsReceipt view
-		 And I can see storageUnitInput with editable 'false' in action.GoodsReceipt view
+		 And I can see storageUnitInput with editable is 'false' in action.GoodsReceipt view
 		When I enter '600,000' into quantityInput in action.GoodsReceipt view
 		And I enter 'kg' into unitOfMeasureInput in action.GoodsReceipt view
 		Then I can see unitOfMeasureInput with value 'KG' in action.GoodsReceipt view
 		Then on the Goods Receipt Page: I should see the save button is enabled
 		When I enter '1000' into storageLocationInput in action.GoodsReceipt view
-		Then I can see storageUnitInput with editable 'true' in action.GoodsReceipt view
+		Then I can see storageUnitInput with editable is 'true' in action.GoodsReceipt view
 		Then on the Goods Receipt Page: I should see the save button is disabled
 		When I enter '4712' into storageLocationInput in action.GoodsReceipt view
 		 And I hit 'ENTER' into storageLocationInput in action.GoodsReceipt view
@@ -74,11 +74,11 @@ Feature: Creating goods receipt posting to SAP ERP
 		Then I can see quantityInput with value '0,000' in action.GoodsReceipt view
 		 And I can see messageStrip with text 'Palette '00000000109330000002' wurde bereits gebucht!' in action.GoodsReceipt view
 		Then on the Goods Receipt Page: I should see the save button is disabled
-		 And I can see quantityInput with editable 'false' in action.GoodsReceipt view
+		 And I can see quantityInput with editable is 'false' in action.GoodsReceipt view
 		When I click on clearFormButton in action.GoodsReceipt view 
 		Then on the Goods Receipt Page: I should see the save button is disabled
 		Then on the Goods Receipt Page: I should see all input fields are initial
-		 And I can see quantityInput with editable 'true' in action.GoodsReceipt view
+		 And I can see quantityInput with editable is 'true' in action.GoodsReceipt view
 	
 	Scenario: User enters storage location VG01
 		When I enter 'VG01' into storageLocationInput in action.GoodsReceipt view

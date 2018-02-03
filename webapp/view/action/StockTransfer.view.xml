@@ -1,38 +1,53 @@
 <mvc:View controllerName="com.mii.scanner.controller.action.StockTransfer" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
 	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
-	<Page id="stockTransferPage" title="{i18n>titleStockTransfer}" showNavButton="true" navButtonPress="onNavBack">
+	<Page id="stockTransferPage" title="{i18n>titleStockTransfer}">
+		<headerContent>
+			<Button id="clearFormButton" icon="sap-icon://redo" press="onClearFormPress"/>
+		</headerContent>
 		<content>
-			<f:SimpleForm editable="true" layout="ResponsiveGridLayout" breakpointM="400" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
-				emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
-				<f:content>
-					<Label text="{i18n>lableTextFormStockTransferStorageBinTarget}"/>
-					<ComboBox>
-						<c:ListItem key="" text="---"/>
-						<c:ListItem key="BB1" text="BB Aufgabe 1"/>
-						<c:ListItem key="BB2" text="BB Aufgabe 2"/>
-					</ComboBox>
-					<Label text="{i18n>lableTextFormStockTransferStorageUnit}"/>
-					<Input value="{data>/LENUM}"/>
-					<Label text="{i18n>lableTextFormStockTransferQuantity}, {i18n>lableTextFormStockTransferUnitOfMeasure}"/>
-					<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}">
-						<layoutData>
-							<l:GridData span="XL2 L3 M4 S8"/>
-						</layoutData>
-					</Input>
-					<Input id="unitOfMeasureInput" change="onUnitOfMeasureChange" value="{path: 'data>/MEINH', type:'.sapType.MEINS'}"
-						editable="{=${data>/LENUM}===null}">
-						<layoutData>
-							<l:GridData span="XL1 L1 M2 S4"/>
-						</layoutData>
-					</Input>
-				</f:content>
-			</f:SimpleForm>
-			<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>
+			<l:VerticalLayout id="messageStripContainer" width="100%"></l:VerticalLayout>
+			<VBox height="100%" width="100%" direction="Column" alignItems="Center" justifyContent="Start">
+				<items>
+					<f:SimpleForm editable="true" layout="ResponsiveGridLayout" breakpointM="400" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+						emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
+						<f:content>
+							<Label text="{i18n>lableTextFormStockTransferStorageBinTarget}"/>
+							<ComboBox id="storageBinSelection" showSecondaryValues="true" filterSecondaryValues="true"
+								items="{ path: 'storageBinList>/d/results/0/Rowset/results/0/Row/results' }" selectedKey="{data>/targetStorageBinSelection}"
+								valueState="{= ${data>/targetStorageBinSelection} === null ? 'None': ${data>/targetStorageBinSelection} === '' ? 'Error' : 'Success' }">
+								<c:ListItem key="{storageBinList>LGRPLTZ}" text="{storageBinList>LGRTXT}" additionalText="{storageBinList>LGRPLTZ}"/>
+							</ComboBox>
+							<Label text="{i18n>lableTextFormStockTransferStorageUnit}"/>
+							<Input id="storageUnitInput" class="noScannerInput" maxLength="20" change="onStorageUnitNumberChange"
+								value="{path: 'data>/storageUnitNumberInput', type:'.sapType.LENUM'}" valueState="{view>/storageUnitNumberValueState}"></Input>
+							<Label text="{i18n>lableTextFormStockTransferQuantity}, {i18n>lableTextFormStockTransferUnitOfMeasureShort}"/>
+							<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/quantityInput', type:'.sapType.QUAN'}"
+								editable="{=${data>/ISTME} &lt;= 0.0010}">
+								<layoutData>
+									<l:GridData span="XL2 L3 M4 S8"/>
+								</layoutData>
+							</Input>
+							<Input id="unitOfMeasureInput" value="{path: 'data>/MEINH', type:'.sapType.MEINS'}" editable="false">
+								<layoutData>
+									<l:GridData span="XL1 L1 M2 S4"/>
+								</layoutData>
+							</Input>
+							<Label text="{i18n>lableTextFormStockTransferOrderNumber}"/>
+							<Input id="orderNumberInput" value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}" editable="false"></Input>
+							<Label text="{i18n>lableTextFormStockTransferActualQuantity}, ME"/>
+							<Text text="0,0010 KG"/>
+							<Label text="{i18n>lableTextFormStockTransferTargetQuantity}, ME"/>
+							<Text text="100,25 KG"/>
+						</f:content>
+					</f:SimpleForm>
+					<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>
+				</items>
+			</VBox>
 		</content>
 		<footer>
 			<Toolbar>
 				<ToolbarSpacer/>
-				<Button id="saveButton" type="Accept" text="{i18n>textButtonSaveStockTransfer}" press="onSave" enabled="{data>/bValid}"/>
+				<Button id="saveButton" type="Accept" text="{i18n>textButtonSaveStockTransfer}" press="onSave" enabled="{view>/bValid}"/>
 				<Button id="cancelButton" type="Reject" text="{i18n>textButtonCancelStockTransfer}" press="onCancelAction"/>
 			</Toolbar>
 		</footer>
