@@ -9,6 +9,12 @@ sap.ui.define([
 		init: function() {
 			var opa = new Opa5();
 
+			this.register(/^I can see (.*?) has focus in (.*?) view$/i,
+				function(sControlId, sViewName, Given, When, Then) {
+					Then.iCanSeeControlHasFocus(sControlId, sViewName);
+				}
+			);
+
 			this.register(/^the url parameter "(.*?)" is removed$/i,
 				function(sUrlParameter, Given, When, Then) {
 					Then.theUrlShouldNotContainParameter(sUrlParameter);

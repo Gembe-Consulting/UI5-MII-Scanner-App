@@ -25,7 +25,7 @@
 						bCtrlKey = sModifier === "CTRL" ? true : false;
 
 					if (!jQuery.sap.KeyCodes[sKey]) {
-						that.Opa5.assert.ok(false, "Key" + sKey + " is not an enum of jQuery.sap.KeyCodes");
+						that.Opa5.assert.ok(false, "Key " + sKey + " is not an enum of jQuery.sap.KeyCodes");
 					}
 
 					/**

@@ -2,13 +2,16 @@ sap.ui.define([
 	"./ActionBaseController",
 	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox",
-	"com/mii/scanner/model/sapType"
-], function(ActionBaseController, JSONModel, MessageBox, sapType) {
+	"com/mii/scanner/model/sapType",
+	"com/mii/scanner/model/formatter"
+], function(ActionBaseController, JSONModel, MessageBox, sapType, formatter) {
 	"use strict";
 
 	return ActionBaseController.extend("com.mii.scanner.controller.action.StockTransfer", {
 
 		sapType: sapType,
+
+		formatter: formatter,
 
 		_oInitData: {
 			//uswer input data
@@ -54,7 +57,14 @@ sap.ui.define([
 			this.clearLogMessages();
 
 			var fnResolve = function(oData) {
-				var oStorageUnit,
+				var oStorageUnit = {
+						LENUM: null,
+						AUFNR: null,
+						ISTME: null,
+						TARGETME: null,
+						MEINH: null
+					},
+					oDataModel = this.getModel("data"),
 					aResultList;
 
 				try {
@@ -72,7 +82,15 @@ sap.ui.define([
 						oSource.setValueState(sap.ui.core.ValueState.Error);
 					}
 
-					this.getModel("data").setData(oStorageUnit, true);
+					oDataModel.setData(oStorageUnit, true);
+
+					// remap same properties
+					if (this.formatter.isEmptyStorageUnit(oStorageUnit.ISTME)) {
+						oDataModel.setProperty("/quantityInput", null);
+						this.byId("quantityInput").focus();
+					} else {
+						oDataModel.setProperty("/quantityInput", oStorageUnit.ISTME);
+					}
 
 				} catch (err) {
 					MessageBox.error(oBundle.getText("messageTextStockTransferError"));

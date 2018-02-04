@@ -16,6 +16,8 @@ Feature: Creating a stock transfer
 		Then I can see quantityInput with value '0,000' in action.StockTransfer view
 		Then I can see unitOfMeasureInput in action.StockTransfer view
 		Then I can see orderNumberInput with editable is 'false' in action.StockTransfer view
+		Then I can see storageUnitActualQuantityText with text ' ' in action.StockTransfer view
+		Then I can see storageUnitTargetQuantityText with text ' ' in action.StockTransfer view
 		Then I can see clearFormButton in action.StockTransfer view
 		Then I can see cancelButton in action.StockTransfer view
 		Then I cannot see saveButton in action.StockTransfer view
@@ -40,15 +42,27 @@ Feature: Creating a stock transfer
 		Then I can see storageUnitInput with value '109330000013' in action.StockTransfer view
 		 And I can see storageUnitInput with valueState 'Success' in action.StockTransfer view
 		 And I can see quantityInput with editable is 'true' in action.StockTransfer view
+		 And I can see quantityInput with value '' in action.StockTransfer view
+		 And I can see quantityInput has focus in action.StockTransfer view
+		 And I can see orderNumberInput with value '1093300' in action.StockTransfer view
+		 And I can see storageUnitActualQuantityText with text '0,001 KG' in action.StockTransfer view
+		 And I can see storageUnitTargetQuantityText with text '600,000 KG' in action.StockTransfer view
 		When I click on clearFormButton in action.StockTransfer view
+		Then I can see storageUnitInput with valueState 'None' in action.StockTransfer view
 		 And I can see quantityInput with editable is 'false' in action.StockTransfer view
 		When I enter '00000000109330000014' into storageUnitInput in action.StockTransfer view
 		Then I can see storageUnitInput with value '109330000014' in action.StockTransfer view
 		 And I can see storageUnitInput with valueState 'Success' in action.StockTransfer view
 		 And I can see quantityInput with editable is 'false' in action.StockTransfer view
-		When I click on clearFormButton in action.StockTransfer view
-		Then I can see storageUnitInput with valueState 'None' in action.StockTransfer view
+		 And I can see quantityInput with value '300,000' in action.StockTransfer view
+		 And I can see storageUnitActualQuantityText with text '300,000 KG' in action.StockTransfer view
+		 And I can see storageUnitTargetQuantityText with text '600,000 KG' in action.StockTransfer view
 		When I enter '00000000000000000001' into storageUnitInput in action.StockTransfer view
 		Then I can see storageUnitInput with valueState 'Error' in action.StockTransfer view
 		 And I can see messageStrip with text 'Achtung: Palette '00000000000000000001' existiert nicht!' in action.StockTransfer view
 		 And I can see messageStrip with type 'Error' in action.StockTransfer view
+		 And I can see orderNumberInput with value '' in action.StockTransfer view
+		 And I can see storageUnitActualQuantityText with text ' ' in action.StockTransfer view
+		 And I can see storageUnitTargetQuantityText with text ' ' in action.StockTransfer view
+		 
+	

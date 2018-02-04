@@ -33,7 +33,7 @@
 					sText = oControl[sGetterMethodName]();
 					sTypeOfCheck = (sTypeOfCheck || "equal to").replace(/\s+$/g, "");
 					bTextValueCheckPass = that.utils.testTextValue(sTypeOfCheck, sText, sValue);
-					that.Opa5.assert.ok(bTextValueCheckPass, [sId, "with", sPropertyName, sTypeOfCheck + "'" + sValue + "'", "was found" + sInView]);
+					that.Opa5.assert.ok(bTextValueCheckPass, [sId, "with", sPropertyName, sTypeOfCheck + "'" + sValue + "'", "was found" + sInView, sId + "." + sGetterMethodName + "=" + sText]);
 					return;
 				}
 				that.Opa5.assert.ok(true, [sId, "was found" + sInView].join(" "));

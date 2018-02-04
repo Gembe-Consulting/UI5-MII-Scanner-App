@@ -51,7 +51,7 @@ Feature: Creating goods receipt posting to SAP ERP
 		Then I can see storageUnitInput with editable is 'true' in action.GoodsReceipt view
 		Then on the Goods Receipt Page: I should see the save button is disabled
 		When I enter '4712' into storageLocationInput in action.GoodsReceipt view
-		 And I hit 'ENTER' into storageLocationInput in action.GoodsReceipt view
+		 And I press ENTER at storageLocationInput in action.GoodsReceipt view
 		Then on the Goods Receipt Page: I should see the save button is enabled
 
 	Scenario: User clears the input form

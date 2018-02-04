@@ -31,6 +31,37 @@ sap.ui.define([], function() {
 		},
 
 		/**
+		 * Checks if a storage unit quantity is considered empty:
+		 * - if quantity is 0
+		 * - if qunatity is 0.001
+		 * @public
+		 * @param {string|number} sQuantity the quantity of the storage unit (commonly ISTME)
+		 * @returns {boolean}
+		 */
+		isEmptyStorageUnit: function(sQuantity) {
+			var fQuantity = parseFloat(sQuantity),
+				fZero = 0.0,
+				fNearToZero = 0.001;
+
+			return (fQuantity === fZero) || (fQuantity === fNearToZero);
+		},
+		/**
+		 * Checks if a storage unit quantity is considered full / non-empty:
+		 * - if quantity not 0
+		 * - if qunatity not 0.001
+		 * @public
+		 * @param {string|number} sQuantity the quantity of the storage unit (commonly ISTME)
+		 * @returns {boolean}
+		 */
+		isFullStorageUnit: function(sQuantity) {
+			var fQuantity = parseFloat(sQuantity),
+				fZero = 0.0,
+				fNearToZero = 0.001;
+
+			return (fQuantity !== fZero) && (fQuantity !== fNearToZero);
+		},
+
+		/**
 		 * Defines a value state based on the stock level
 		 *
 		 * @public
