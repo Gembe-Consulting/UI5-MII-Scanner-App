@@ -1,5 +1,5 @@
 <mvc:View controllerName="com.mii.scanner.controller.action.StockTransfer" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
-	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
+	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:storageBinData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 	<Page id="stockTransferPage" title="{i18n>titleStockTransfer}">
 		<headerContent>
 			<Button id="clearFormButton" icon="sap-icon://redo" press="onClearFormPress"/>
@@ -14,9 +14,10 @@
 							<Label text="{i18n>lableTextFormStockTransferStorageBinTarget}"/>
 							<ComboBox id="storageBinSelection" showSecondaryValues="true" filterSecondaryValues="true" change="onStorageBinSelectionChange"
 								selectionChange="onStorageBinSelectionChange" items="{ path: 'storageBinList>/d/results/0/Rowset/results/0/Row/results' }"
-								selectedKey="{data>/targetStorageBinSelection}"
+								selectedKey="{data>/targetStorageBinSelection}" selectedItemId="{data>/targetStorageBinItemSelection}"
 								valueState="{= ${data>/targetStorageBinSelection} === null ? 'None': ${data>/targetStorageBinSelection} === '' ? 'Error' : 'Success' }">
-								<c:ListItem key="{storageBinList>LGRPLTZ}" text="{storageBinList>LGRTXT}" additionalText="{storageBinList>LGRPLTZ}"/>
+								<c:ListItem key="{storageBinList>LGRPLTZ}" text="{storageBinList>LGRTXT}" additionalText="{storageBinList>LGRPLTZ}"
+									storageBinData:storageType="{storageBinList>LGRTYP}"/>
 							</ComboBox>
 							<Label text="{i18n>lableTextFormStockTransferStorageUnit}"/>
 							<Input id="storageUnitInput" class="noScannerInput" maxLength="20" change="onStorageUnitNumberChange"

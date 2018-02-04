@@ -27,14 +27,32 @@ sap.ui.define([
 					var mUrlParams = jQuery.sap.getUriParameters(oXhr.url),
 						sQueryTemplatePath = mUrlParams.get(sMiiServiceName),
 						sQueryTemplateName = sQueryTemplatePath.substr(sQueryTemplatePath.lastIndexOf("/") + 1),
-						oResponse = jQuery.sap.syncGetJSON(sJsonFilesUrl + "/" + sQueryTemplateName + ".json", {
-							"_": new Date().getTime()
-						}),
+						oUriParameters = jQuery.sap.getUriParameters(),
+						sErrorServiceName = oUriParameters.get("errorServiceName"),
+						sErrorServiceType = oUriParameters.get("errorServiceType"),
+						bErrorState = sErrorServiceName === sQueryTemplateName,
+						oResponse,
 						mHeaders = {
 							"Content-Type": "application/json;charset=utf-8"
 						},
 						sMessage, sStatusCode,
 						fnServiceDataProcessing = "fn" + sQueryTemplateName;
+
+					if (bErrorState && sErrorServiceType === "badRequest") {
+						oXhr.respond(400, mHeaders, "Mockserver response: errorService '" + sErrorServiceName + "' not available!");
+						return false;
+					}
+
+					if (bErrorState && sErrorServiceType === "emptyRequest") {
+						oResponse = jQuery.sap.syncGetJSON(sJsonFilesUrl + "/" + "_EmptyRowsetResultError.json");
+					} else if (bErrorState && sErrorServiceType === "fatalError") {
+						oResponse = jQuery.sap.syncGetJSON(sJsonFilesUrl + "/" + "_FatalError.json");
+					} else {
+						oResponse = jQuery.sap.syncGetJSON(sJsonFilesUrl + "/" + sQueryTemplateName + ".json", {
+							"_": new Date()
+								.getTime()
+						});
+					}
 
 					if (!oResponse.success) {
 						sMessage = Response.status + ": " + oResponse.error || "Fatal application exception.";
@@ -47,7 +65,7 @@ sap.ui.define([
 						return false;
 					}
 
-					if (oRef[fnServiceDataProcessing] && oRef[fnServiceDataProcessing] instanceof Function) {
+					if (!bErrorState && oRef[fnServiceDataProcessing] && oRef[fnServiceDataProcessing] instanceof Function) {
 						jQuery.sap.log.debug("Post-Processing data with" + JSON.stringify(oRef[fnServiceDataProcessing]), "MII-Mockserver");
 						oResponse.data = oRef[fnServiceDataProcessing](oResponse.data, mUrlParams);
 					} else {
@@ -77,10 +95,12 @@ sap.ui.define([
 				oUriParameters = jQuery.sap.getUriParameters(),
 				sErrorParam = oUriParameters.get("errorType"),
 				iErrorCode = sErrorParam === "badRequest" ? 400 : 500,
+				sErrorService = oUriParameters.get("errorService"),
 				sEntity = "QueryTemplate",
 				sJsonFilesUrl = jQuery.sap.getModulePath(_sJsonFilesModulePath),
 				sManifestUrl = jQuery.sap.getModulePath(_sAppModulePath + "manifest", ".json"),
-				oManifest = jQuery.sap.syncGetJSON(sManifestUrl).data,
+				oManifest = jQuery.sap.syncGetJSON(sManifestUrl)
+				.data,
 				aDataSources = oManifest["sap.app"].dataSources,
 				oDataSource = aDataSources.illuminatorService;
 
@@ -97,8 +117,8 @@ sap.ui.define([
 
 			oMockServer = new MockServer(oMockServerConfig);
 
-			// handling request errors
-			if (sErrorParam) {
+			// handling request errors for all services
+			if (sErrorParam && sErrorService === "all") {
 				var aRequests = oMockServer.getRequests();
 
 				var fnResponse = function(iErrCode, sMessage, aRequest) {
@@ -110,7 +130,8 @@ sap.ui.define([
 				};
 
 				aRequests.forEach(function(aEntry) {
-					if (aEntry.path.toString().indexOf(sEntity) > -1) {
+					if (aEntry.path.toString()
+						.indexOf(sEntity) > -1) {
 						fnResponse(iErrorCode, sErrorParam, aEntry);
 					}
 				});

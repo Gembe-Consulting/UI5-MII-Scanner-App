@@ -22,19 +22,25 @@ sap.ui.define([
 				Opa5.apply(this, arguments);
 
 				this._oConfig = oConfig;
-				
+
 				this.oQUnitUtils = QUnitUtils;
 			},
 
 			iStartTheApp: function(oOptions) {
 				var sUrlParameters;
 				oOptions = oOptions || {
-					delay: 0,
-					mobile: false,
-					illumLoginName: ""
+					delay: 0
 				};
 
 				sUrlParameters = "serverDelay=" + oOptions.delay;
+
+				if (oOptions.errorType) {
+					sUrlParameters = sUrlParameters + "&" + "errorType=" + oOptions.errorType
+				}
+
+				if (oOptions.errorService) {
+					sUrlParameters = sUrlParameters + "&" + "errorService=" + oOptions.errorService
+				}
 
 				if (oOptions.illumLoginName !== "") {
 					sUrlParameters = sUrlParameters + "&IllumLoginName=" + oOptions.illumLoginName;

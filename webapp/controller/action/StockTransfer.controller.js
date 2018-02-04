@@ -18,6 +18,7 @@ sap.ui.define([
 			storageUnitNumberInput: null,
 			entryQuantity: 0.0,
 			targetStorageBinSelection: null,
+			targetStorageBinItemSelection: null,
 			//external data
 			LENUM: null
 		},
@@ -87,7 +88,8 @@ sap.ui.define([
 					// remap same properties
 					if (this.formatter.isEmptyStorageUnit(oStorageUnit.ISTME)) {
 						oDataModel.setProperty("/entryQuantity", null);
-						this.byId("quantityInput").focus();
+						this.byId("quantityInput")
+							.focus();
 					} else {
 						oDataModel.setProperty("/entryQuantity", oStorageUnit.ISTME);
 					}
@@ -95,7 +97,8 @@ sap.ui.define([
 					MessageBox.error(oBundle.getText("messageTextStockTransferError"));
 					oSource.setValueState(sap.ui.core.ValueState.Error);
 				} finally {
-					this.updateViewControls(this.getModel("data").getData());
+					this.updateViewControls(this.getModel("data")
+						.getData());
 				}
 
 			}.bind(this);
@@ -104,18 +107,191 @@ sap.ui.define([
 				MessageBox.error(oBundle.getText("messageTextStockTransferError"));
 			}.bind(this);
 
-			this.requestStorageUnitInfoService(sStorageUnitNumber).then(fnResolve, fnReject).then(function() {
-				this.hideControlBusyIndicator(oSource);
-			}.bind(this));
+			this.requestStorageUnitInfoService(sStorageUnitNumber)
+				.then(fnResolve, fnReject)
+				.then(function() {
+					this.hideControlBusyIndicator(oSource);
+				}.bind(this));
 
+		},
+
+		onSave: function(oEvent) {
+			var oBundle = this.getResourceBundle(),
+				bPerformGoodsReceipt = this._isGoodsReceiptRequired(),
+				fnResolveStockTransfer,
+				fnResolveGoodsReceipt,
+				fnReject;
+
+			this.getOwnerComponent()
+				.showBusyIndicator();
+
+			fnResolveStockTransfer = function(oData) {
+				var aResults,
+					aMessages,
+					sFatalError,
+					oReturn,
+					oDataModel = this.getModel("data"),
+					sSuccessMessage;
+
+				try {
+
+					aResults = oData.d.results[0].Rowset.results;
+					aMessages = oData.d.results[0].Messages.results;
+					sFatalError = oData.d.results[0].FatalError;
+
+					if (!sFatalError) {
+						if (bPerformGoodsReceipt) {
+							sSuccessMessage = oBundle.getText("messageTextStockTransferPostingWithGoodsReceiptSuccessfull", [oDataModel.getProperty("/storageUnitNumberInput"), oDataModel.getProperty("/targetStorageBinSelection")]);
+						} else {
+							sSuccessMessage = oBundle.getText("messageTextStockTransferPostingSuccessfull", [oDataModel.getProperty("/storageUnitNumberInput"), oDataModel.getProperty("/targetStorageBinSelection")]);
+						}
+
+						this.addLogMessage({
+							text: sSuccessMessage,
+							type: sap.ui.core.MessageType.Success
+						});
+					} else {
+						this.addLogMessage({
+							text: sFatalError,
+							type: sap.ui.core.MessageType.Error
+						});
+					}
+
+				} catch (err) {
+					MessageBox.error(oBundle.getText("messageTextStockTransferPostingFailed"), {
+						title: err
+					});
+				} finally {
+					this.onClearFormPress({}, true /*bKeepMessageStrip*/ );
+				}
+			}.bind(this);
+
+			fnResolveGoodsReceipt = function(oData) {
+				var aResults,
+					aMessages,
+					sFatalError,
+					oReturn,
+					oDataModel = this.getModel("data");
+
+				aResults = oData.d.results[0].Rowset.results;
+				aMessages = oData.d.results[0].Messages.results;
+				sFatalError = oData.d.results[0].FatalError;
+
+				if (!sFatalError) {
+
+				} else {
+					this.addLogMessage({
+						text: sFatalError,
+						type: sap.ui.core.MessageType.Error
+					});
+					throw "sFatalError";
+				}
+
+			}.bind(this);
+
+			fnReject = function(oError) {
+				MessageBox.error(oBundle.getText("messageTextStockTransferError"));
+			}.bind(this);
+
+			if (bPerformGoodsReceipt) {
+				this._postGoodsReceipt()
+					.then(fnResolveGoodsReceipt, fnReject)
+					.then(this._postStockTransfer.bind(this))
+					.then(fnResolveStockTransfer, fnReject)
+					.then(this.getOwnerComponent()
+						.hideBusyIndicator);
+			} else {
+				this._postStockTransfer()
+					.then(fnResolveStockTransfer, fnReject)
+					.then(this.getOwnerComponent()
+						.hideBusyIndicator);
+			}
+
+		},
+
+		_postStockTransfer: function() {
+			var sPath = "/",
+				oDataModel = this.getModel("data"),
+				oViewModel = this.getModel("view"),
+				oStockTransferModel = this.getModel("goodsMovement"),
+				sDefaultPlant = "1000",
+				sDefaultMoveType = "999",
+				sDefaultUnitOfMeasure = "KG",
+				oParam,
+				oStorageBinItem = this.byId("storageBinSelection")
+				.getSelectedItem(),
+				oStorageBinData = oStorageBinItem.data();
+
+			if (oDataModel.getProperty(sPath + "targetStorageBinSelection") === "BA01" || oDataModel.getProperty(sPath + "targetStorageBinSelection") === "BA02") {
+				oDataModel.setProperty(sPath + "BWART", "311");
+				oDataModel.setProperty(sPath + "NLTYP", "");
+			}
+
+			oParam = {
+				"Param.1": oDataModel.getProperty(sPath + "LENUM"),
+				//"Param.2": oDataModel.getProperty(sPath + "AUFNR"),
+				"Param.3": oDataModel.getProperty(sPath + "LGORT") || "",
+				"Param.4": oDataModel.getProperty(sPath + "entryQuantity"),
+				"Param.5": oDataModel.getProperty(sPath + "MEINH") || sDefaultUnitOfMeasure,
+				"Param.6": oDataModel.getProperty(sPath + "MATNR"),
+				//"Param.7": oDataModel.getProperty(sPath + "batchNumber"),
+				//"Param.8": oDataModel.getProperty(sPath + "bulkMaterialIndicator"),
+				//"Param.9": oDataModel.getProperty(sPath + "operationNumber"),
+				"Param.11": oDataModel.getProperty(sPath + "BWART") || sDefaultMoveType,
+				//"Param.12": oDataModel.getProperty(sPath + "WERK") || sDefaultPlant,
+				"Param.13": oDataModel.getProperty(sPath + "LGTYP"),
+				"Param.14": oDataModel.getProperty(sPath + "LGPLA") || "",
+				"Param.15": oDataModel.getProperty(sPath + "NLTYP") || oStorageBinData.storageType || "",
+				"Param.16": oDataModel.getProperty(sPath + "targetStorageBinSelection")
+			};
+
+			return oStockTransferModel.loadMiiData(oStockTransferModel._sServiceUrl, oParam);
+		},
+
+		_postGoodsReceipt: function() {
+			var sPath = "/",
+				oDataModel = this.getModel("data"),
+				oViewModel = this.getModel("view"),
+				oGoodsReceiptModel = this.getModel("goodsMovement"),
+				sDefaultPlant = "1000",
+				sDefaultMoveType = "101",
+				sDefaultUnitOfMeasure = "KG",
+				oParam;
+
+			oParam = {
+				"Param.1": oDataModel.getProperty(sPath + "LENUM"),
+				"Param.2": oDataModel.getProperty(sPath + "AUFNR"),
+				//"Param.3": oDataModel.getProperty(sPath + "LGORT"),
+				"Param.4": oDataModel.getProperty(sPath + "entryQuantity"),
+				"Param.5": oDataModel.getProperty(sPath + "MEINH") || sDefaultUnitOfMeasure,
+				//"Param.6": oDataModel.getProperty(sPath + "MATNR"),
+				//"Param.7": oDataModel.getProperty(sPath + "CHARG"),
+				//"Param.8": oDataModel.getProperty(sPath + "SCHUETT"),
+				//"Param.9": oDataModel.getProperty(sPath + "VORNR"),
+				"Param.11": oDataModel.getProperty(sPath + "BWART") || sDefaultMoveType,
+				//"Param.12": oDataModel.getProperty(sPath + "WERK") || sDefaultPlant,
+				//"Param.13": oDataModel.getProperty(sPath + "LGTYP"),
+				//"Param.14": oDataModel.getProperty(sPath + "LGPLA"),
+				//"Param.15": oDataModel.getProperty(sPath + "NLTYP"),
+				//"Param.16": oDataModel.getProperty(sPath + "NLPLA")
+			};
+
+			return oGoodsReceiptModel.loadMiiData(oGoodsReceiptModel._sServiceUrl, oParam);
+		},
+
+		_isGoodsReceiptRequired: function() {
+			return this.formatter.isEmptyStorageUnit(this.getModel("data")
+				.getProperty("/ISTME"));
 		},
 
 		onStorageBinSelectionChange: function(oEvent) {
-			this.updateViewControls(this.getModel("data").getData());
+			this.updateViewControls(this.getModel("data")
+				.getData());
 		},
 
 		onQuantityChange: function(oEvent) {
-			this.updateViewControls(this.getModel("data").getData());
+			this.updateViewControls(this.getModel("data")
+				.getData());
 		},
 
 		updateViewControls: function(oData) {

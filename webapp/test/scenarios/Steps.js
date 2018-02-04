@@ -42,6 +42,16 @@ sap.ui.define([
 				}
 			);
 
+			this.register(/^I start the app on '(.*?)' using parameter '(.*?)'"$/i,
+				function(sHash, sParameter, Given, When, Then) {
+
+					Given.iStartTheApp({
+						hash: sHash,
+						illumLoginName: sUsername
+					});
+				}
+			);
+
 			oGenericSteps.register(
 				this, /* GherkinSteps */
 				opa, /* oOpaInstance */

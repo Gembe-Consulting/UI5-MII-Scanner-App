@@ -88,3 +88,24 @@ Feature: Creating a stock transfer
 		 And I can see saveButton in action.StockTransfer view
 		When I click on clearFormButton in action.StockTransfer view
 		Then I cannot see saveButton in action.StockTransfer view
+		
+	Scenario: Should successfully post stock transfer to SAP ERP without a priori goods receipt posting
+		When I press ARROW_DOWN + ALT at storageBinSelection in action.StockTransfer view
+		 And I click on last item of storageBinSelection items in action.StockTransfer view
+		 And I enter '00000000109330000014' into storageUnitInput in action.StockTransfer view
+		 And I click on saveButton in action.StockTransfer view
+		Then I can see messageStrip with text 'Umlagerung von Palette '109330000014' nach Lagerplatz 'PRODUKTION' wurde erfolgreich gebucht!' in action.StockTransfer view
+		 And I can see messageStrip with type 'Success' in action.StockTransfer view
+		 And I can see storageUnitInput with value '' in action.StockTransfer view
+		 And I can see storageBinSelection with value '' in action.StockTransfer view
+
+	Scenario: Should successfully post stock transfer to SAP ERP including a pre-leading goods receipt posting
+		When I press ARROW_DOWN + ALT at storageBinSelection in action.StockTransfer view
+		 And I click on last item of storageBinSelection items in action.StockTransfer view
+		 And I enter '00000000109330000013' into storageUnitInput in action.StockTransfer view
+		 And I enter '321,123' into quantityInput in action.StockTransfer view
+		 And I click on saveButton in action.StockTransfer view
+		Then I can see messageStrip with text 'Wareneingang von Palette '109330000013' und Umlagerung nach Lagerplatz 'PRODUKTION' wurde erfolgreich gebucht!' in action.StockTransfer view
+		 And I can see messageStrip with type 'Success' in action.StockTransfer view
+		 And I can see storageUnitInput with value '' in action.StockTransfer view
+		 And I can see storageBinSelection with value '' in action.StockTransfer view
