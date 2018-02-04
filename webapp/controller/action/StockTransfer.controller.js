@@ -16,7 +16,7 @@ sap.ui.define([
 		_oInitData: {
 			//uswer input data
 			storageUnitNumberInput: null,
-			quantityInput: 0.0,
+			entryQuantity: 0.0,
 			targetStorageBinSelection: null,
 			//external data
 			LENUM: null
@@ -86,16 +86,17 @@ sap.ui.define([
 
 					// remap same properties
 					if (this.formatter.isEmptyStorageUnit(oStorageUnit.ISTME)) {
-						oDataModel.setProperty("/quantityInput", null);
+						oDataModel.setProperty("/entryQuantity", null);
 						this.byId("quantityInput").focus();
 					} else {
-						oDataModel.setProperty("/quantityInput", oStorageUnit.ISTME);
+						oDataModel.setProperty("/entryQuantity", oStorageUnit.ISTME);
 					}
-
 				} catch (err) {
 					MessageBox.error(oBundle.getText("messageTextStockTransferError"));
 					oSource.setValueState(sap.ui.core.ValueState.Error);
-				} finally {}
+				} finally {
+					this.updateViewControls(this.getModel("data").getData());
+				}
 
 			}.bind(this);
 
@@ -107,7 +108,48 @@ sap.ui.define([
 				this.hideControlBusyIndicator(oSource);
 			}.bind(this));
 
-		}
+		},
+
+		onStorageBinSelectionChange: function(oEvent) {
+			this.updateViewControls(this.getModel("data").getData());
+		},
+
+		onQuantityChange: function(oEvent) {
+			this.updateViewControls(this.getModel("data").getData());
+		},
+
+		updateViewControls: function(oData) {
+			var oViewModel = this.getModel("view"),
+				bInputValuesComplete,
+				bNoErrorMessagesActive,
+				bReadyForPosting;
+
+			// check if all required input data is present
+			bInputValuesComplete = this.isInputDataValid(oData);
+
+			// check if all input data has proper format
+			bNoErrorMessagesActive = this.isMessageModelClean();
+
+			// we are ready for posting once we have complete and proper formatted input
+			bReadyForPosting = bNoErrorMessagesActive && bInputValuesComplete;
+
+			oViewModel.setProperty("/bValid", bReadyForPosting);
+		},
+
+		/**
+		 * Posting is allowed when
+		 * - Storage bins has been selected
+		 * - Storage unit has been entered
+		 * - Storage unit is valid
+		 * - Quntity has been entered and is not zero
+		 */
+		isInputDataValid: function(oData) {
+			if (oData) {
+				return !!oData.targetStorageBinSelection && !!oData.storageUnitNumberInput && !!oData.LENUM && !!oData.entryQuantity && !this.formatter.isEmptyStorageUnit(oData.entryQuantity);
+			} else {
+				return false;
+			}
+		},
 	});
 
 });

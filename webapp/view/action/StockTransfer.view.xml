@@ -12,8 +12,9 @@
 						emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
 						<f:content>
 							<Label text="{i18n>lableTextFormStockTransferStorageBinTarget}"/>
-							<ComboBox id="storageBinSelection" showSecondaryValues="true" filterSecondaryValues="true"
-								items="{ path: 'storageBinList>/d/results/0/Rowset/results/0/Row/results' }" selectedKey="{data>/targetStorageBinSelection}"
+							<ComboBox id="storageBinSelection" showSecondaryValues="true" filterSecondaryValues="true" change="onStorageBinSelectionChange"
+								selectionChange="onStorageBinSelectionChange" items="{ path: 'storageBinList>/d/results/0/Rowset/results/0/Row/results' }"
+								selectedKey="{data>/targetStorageBinSelection}"
 								valueState="{= ${data>/targetStorageBinSelection} === null ? 'None': ${data>/targetStorageBinSelection} === '' ? 'Error' : 'Success' }">
 								<c:ListItem key="{storageBinList>LGRPLTZ}" text="{storageBinList>LGRTXT}" additionalText="{storageBinList>LGRPLTZ}"/>
 							</ComboBox>
@@ -21,7 +22,7 @@
 							<Input id="storageUnitInput" class="noScannerInput" maxLength="20" change="onStorageUnitNumberChange"
 								value="{path: 'data>/storageUnitNumberInput', type:'.sapType.LENUM'}" valueState="{view>/storageUnitNumberValueState}"></Input>
 							<Label text="{i18n>lableTextFormStockTransferQuantity}, {i18n>lableTextFormStockTransferUnitOfMeasureShort}"/>
-							<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/quantityInput', type:'.sapType.QUAN'}"
+							<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}"
 								editable="{path:'data>/ISTME', formatter:'.formatter.isEmptyStorageUnit'}">
 								<layoutData>
 									<l:GridData span="XL2 L3 M4 S8"/>
