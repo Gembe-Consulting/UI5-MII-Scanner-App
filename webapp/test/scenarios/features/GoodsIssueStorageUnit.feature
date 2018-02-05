@@ -77,7 +77,7 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 	@wip
 	Scenario: Should show warning icon if users enter LE with restricted-use stock (nicht frei verwendbar)
 		 
-	Scenario: Should show error icon and message if users enter LE with past expiration date and prevent posting
+	Scenario: Should show warning icon and message if users enter LE with past expiration date
 		When I enter '00000000109330000006' into storageUnitInput in action.GoodsIssue view
 		Then I can see messageStrip with text 'Achtung: MHD der Charge '0109331231' ist am '20.12.2010' abgelaufen!' in action.GoodsIssue view 
 		 And I can see messageStrip with type 'Warning' in action.GoodsIssue view
@@ -92,7 +92,7 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 		When I enter '1093300' into orderNumberInput in action.GoodsIssue view
 		Then I can see saveButton in action.GoodsIssue view
 
-	Scenario: Should show confirmation popup if users enter a storage unit with material number that is not contained in order component list (Unplanned Withdrawal)
+	Scenario: Should show show warning message if users enter a storage unit with material number that is not contained in order component list (Unplanned Withdrawal)
 		When I enter '00000000109330000008' into storageUnitInput in action.GoodsIssue view
 		 And I enter '1234567' into orderNumberInput in action.GoodsIssue view
 		Then I can see storageUnitFragmentMaterialInfoText with text '0000000-000 - UNPLANNED WITHDRAWAL of Zucker-Fett-VBT' in action.GoodsIssue view
@@ -101,7 +101,7 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 		 And I can see orderNumberInput with valueState 'Warning' in action.GoodsIssue view
 		 And I can see saveButton in action.GoodsIssue view
 	
-	Scenario: Should show error message if users enter a storage unit with material number that is backflushed in order
+	Scenario: Should show warning message if users enter a storage unit with material number that is backflushed in order
 		When I enter '00000000109330000009' into storageUnitInput in action.GoodsIssue view
 		 And I enter '1234567' into orderNumberInput in action.GoodsIssue view
 		Then I can see messageStrip with text 'Achtung: Komponente '1200666-002' wird retrograd entnommen!' in action.GoodsIssue view
