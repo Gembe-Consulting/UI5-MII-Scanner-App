@@ -39,10 +39,10 @@ sap.ui.require([
 					});
 				},
 				iScanTheBarcode: function(sBarcodeString) {
-					debugger;
 					return this.waitFor({
 						success: function() {
-							$(document).scannerDetection(sBarcodeString);
+							$(document)
+								.scannerDetection(sBarcodeString);
 						}
 					});
 					return this.waitFor({
@@ -82,7 +82,6 @@ sap.ui.require([
 					});
 				},
 				iShouldSeeTheMessageBox: function(sExpectedMessageText) {
-					debugger;
 					return this.waitFor({
 						searchOpenDialogs: true,
 						viewName: "sap.m.Button",

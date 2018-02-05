@@ -23,7 +23,7 @@ module.exports = function(grunt) {
 						}
 
 						var sNewVersion = aVersionParts[0] + "." + aVersionParts[1] + "." + aVersionParts[2];
-						sNewVersion = sNewVersion + "." + "<%= grunt.template.today('yyyy-mm-dd') %>"
+						sNewVersion = sNewVersion + "." + "<%= grunt.template.today('yyyy-mm-dd') %>";
 						grunt.log.writeln("New Version: " + sNewVersion);
 						return aParts[0] + "=" + sNewVersion;
 					}

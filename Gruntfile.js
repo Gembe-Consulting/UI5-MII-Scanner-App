@@ -1,8 +1,6 @@
 module.exports = function(grunt) {
 	'use strict';
 
-	grunt.log.writeln("Grunt verbose: " + grunt.option('verbose'));
-
 	var config = {
 		"openui5_preload": {
 			"preloadTmp": {
@@ -52,7 +50,7 @@ module.exports = function(grunt) {
 						}
 
 						var sNewVersion = aVersionParts[0] + "." + aVersionParts[1] + "." + aVersionParts[2];
-						sNewVersion = sNewVersion + "." + "<%= grunt.template.today('yyyy-mm-dd') %>"
+						sNewVersion = sNewVersion + "." + "<%= grunt.template.today('yyyy-mm-dd') %>";
 						grunt.log.writeln("New Version: " + sNewVersion);
 						return aParts[0] + "=" + sNewVersion;
 					}
@@ -118,7 +116,7 @@ module.exports = function(grunt) {
 					'dist/view/action/FinishOperation.view.xml': 'dist/view/action/FinishOperation.view.xml',
 					'dist/view/action/InterruptOperation.view.xml': 'dist/view/action/InterruptOperation.view.xml',
 					'dist/view/action/ResumeOperation.view.xml': 'dist/view/action/ResumeOperation.view.xml',
-					'dist/view/action/Startperation.view.xml': 'dist/view/action/StartOperation.view.xml',
+					'dist/view/action/Startperation.view.xml': 'dist/view/action/StartOperation.view.xml'
 				}
 			}
 		},
@@ -159,7 +157,7 @@ module.exports = function(grunt) {
 	grunt.config.merge(config);
 
 	grunt.registerTask('default', [
-		'replace:version',
+		//'replace:version',
 		'lint',
 		'clean',
 		'build',
