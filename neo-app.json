@@ -1,49 +1,51 @@
 {
-  "routes": [
-    {
-      "path": "/ui5miiutilities/mii/util/",
-      "target": {
-        "type": "application",
-        "name": "ui5miiutilities",
-        "entryPath": "/mii/util/"
-      },
-      "description": "MII utility library"
-    },
-    {
-      "path": "/webapp/resources",
-      "target": {
-        "type": "service",
-        "name": "sapui5",
-        "entryPath": "/resources"
-      },
-      "description": "SAPUI5 Resources"
-    },
-    {
-      "path": "/webapp/test-resources",
-      "target": {
-        "type": "service",
-        "name": "sapui5",
-        "entryPath": "/test-resources"
-      },
-      "description": "SAPUI5 Test Resources"
-    },
-    {
-      "path": "/resources",
-      "target": {
-        "type": "service",
-        "name": "sapui5",
-        "entryPath": "/resources"
-      },
-      "description": "SAPUI5 Resources"
-    },
-    {
-      "path": "/test-resources",
-      "target": {
-        "type": "service",
-        "name": "sapui5",
-        "entryPath": "/test-resources"
-      },
-      "description": "SAPUI5 Test Resources"
-    }
-  ]
+	"routes": [{
+		"path": "/openui5genericapptesting",
+		"target": {
+			"type": "application",
+			"name": "openui5genericapptesting",
+			"entryPath": "/"
+		},
+		"description": "openui5-generic-app-testing"
+	}, {
+		"path": "/ui5miiutilities/mii/util/",
+		"target": {
+			"type": "application",
+			"name": "ui5miiutilities",
+			"entryPath": "/mii/util/"
+		},
+		"description": "MII utility library"
+	}, {
+		"path": "/webapp/resources",
+		"target": {
+			"type": "service",
+			"name": "sapui5",
+			"entryPath": "/resources"
+		},
+		"description": "SAPUI5 Resources"
+	}, {
+		"path": "/webapp/test-resources",
+		"target": {
+			"type": "service",
+			"name": "sapui5",
+			"entryPath": "/test-resources"
+		},
+		"description": "SAPUI5 Test Resources"
+	}, {
+		"path": "/resources",
+		"target": {
+			"type": "service",
+			"name": "sapui5",
+			"entryPath": "/resources"
+		},
+		"description": "SAPUI5 Resources"
+	}, {
+		"path": "/test-resources",
+		"target": {
+			"type": "service",
+			"name": "sapui5",
+			"entryPath": "/test-resources"
+		},
+		"description": "SAPUI5 Test Resources"
+	}]
 }
