@@ -1,6 +1,6 @@
 sap.ui.define([
 	"jquery.sap.global",
-	"com/mii/scanner/test/utils/genericSteps/GenericSteps", // ui5app.utils mapped via sap-ui-resourceroots
+	"openui5genericapptesting/GenericSteps", // openui5genericapptesting is mapped via sap-ui-resourceroots
 	"sap/ui/test/gherkin/StepDefinitions",
 	"sap/ui/test/Opa5",
 ], function($, oGenericSteps, StepDefinitions, Opa5) {
