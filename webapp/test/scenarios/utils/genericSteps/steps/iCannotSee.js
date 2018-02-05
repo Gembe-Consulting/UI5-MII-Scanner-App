@@ -18,10 +18,11 @@
 			var bFound = false;
 			oWaitForOptions = {
 				check: function(aAllControls) {
-					bFound = (aAllControls || []).some(function(oControl) {
-						var oControlView = that.utils.getControlView(oControl);
-						return oControl.getId() === oControlView.createId(sId);
-					});
+					bFound = (aAllControls || [])
+						.some(function(oControl) {
+							var oControlView = that.utils.getControlView(oControl);
+							return oControl.getId() === oControlView.createId(sId);
+						});
 					return true;
 				}
 			};
@@ -29,9 +30,10 @@
 				oWaitForOptions.viewName = sViewName;
 			}
 			var sInView = sViewName ? " in " + sViewName + " view" : "";
-			that.opa.waitFor(oWaitForOptions).done(function() {
-				that.Opa5.assert.ok(!bFound, sId + " is not visible or disabled and was not found" + sInView);
-			});
+			that.opa.waitFor(oWaitForOptions)
+				.done(function() {
+					that.Opa5.assert.ok(!bFound, sId + " is not visible or disabled and was not found" + sInView);
+				});
 		}
 	};
 	module.exports.name = "iCannotSee";

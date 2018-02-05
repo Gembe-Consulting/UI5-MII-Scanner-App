@@ -46,8 +46,7 @@ sap.ui.define([
 				function(sHash, sParameter, Given, When, Then) {
 
 					Given.iStartTheApp({
-						hash: sHash,
-						illumLoginName: sUsername
+						hash: sHash
 					});
 				}
 			);

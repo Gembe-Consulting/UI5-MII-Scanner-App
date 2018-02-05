@@ -4,17 +4,21 @@
 	var module = {};
 
 	function getGetterMethodName(sProperty) {
-		return "get" + sProperty.charAt(0).toUpperCase() + sProperty.slice(1);
+		return "get" + sProperty.charAt(0)
+			.toUpperCase() + sProperty.slice(1);
 	}
 
 	function isView(oControl) {
-		var sElementName = oControl.getMetadata().getElementName();
-		return Object.keys(sap.ui.core.mvc.ViewType).map(function(sViewTypeKey) {
-			var sViewTypeValue = sap.ui.core.mvc.ViewType[sViewTypeKey];
-			return "sap.ui.core.mvc." + sViewTypeValue + "View";
-		}).some(function(sPossibleViewName) {
-			return sElementName === sPossibleViewName;
-		});
+		var sElementName = oControl.getMetadata()
+			.getElementName();
+		return Object.keys(sap.ui.core.mvc.ViewType)
+			.map(function(sViewTypeKey) {
+				var sViewTypeValue = sap.ui.core.mvc.ViewType[sViewTypeKey];
+				return "sap.ui.core.mvc." + sViewTypeValue + "View";
+			})
+			.some(function(sPossibleViewName) {
+				return sElementName === sPossibleViewName;
+			});
 	}
 
 	function getControlView(oControl) {
@@ -51,7 +55,8 @@
 			};
 		}
 		var sText = oControl[sGetterMethodName]();
-		sTypeOfCheck = (sTypeOfCheck || "equal to").replace(/\s+$/g, "");
+		sTypeOfCheck = (sTypeOfCheck || "equal to")
+			.replace(/\s+$/g, "");
 		var bPass = testTextValue(sTypeOfCheck, sText, sValue);
 		if (!bPass) {
 			return {
@@ -67,47 +72,51 @@
 	function findNestedAggregationItem(oTargetControl, oConstraints, bDeep, aControlsToCheck) {
 		var oTargetControlMetadata = oTargetControl.getMetadata();
 		var oFoundControl = null;
-		Object.keys(oTargetControlMetadata._mAllAggregations).map(function(sAggregation) {
-			return oTargetControlMetadata._mAllAggregations[sAggregation];
-		}).filter(function(oAggregationMetadata) {
-			return oAggregationMetadata.visibility === "public";
-		}).forEach(function(oAggregationMetadata) {
-			if (oFoundControl) {
-				return;
-			}
-			var sAggregationName = oAggregationMetadata.name;
-			var sPublicMethodName = getGetterMethodName(sAggregationName);
-			var aChildControls = oTargetControl[sPublicMethodName]();
-			if (Object.prototype.toString.apply(aChildControls) !== "[object Array]") {
-				return;
-			}
-			oFoundControl = [{
-				constraint: "controlType",
-				fn: function(oControl) {
-					return oControl.getMetadata()._sClassName === oConstraints.controlType;
+		Object.keys(oTargetControlMetadata._mAllAggregations)
+			.map(function(sAggregation) {
+				return oTargetControlMetadata._mAllAggregations[sAggregation];
+			})
+			.filter(function(oAggregationMetadata) {
+				return oAggregationMetadata.visibility === "public";
+			})
+			.forEach(function(oAggregationMetadata) {
+				if (oFoundControl) {
+					return;
 				}
-			}, {
-				constraint: "property",
-				fn: function(oControl) {
-					var sGetterFn = getGetterMethodName(oConstraints.property);
-					return typeof oControl[sGetterFn] === "function" && testTextValue(oConstraints.propertyOperand, oControl[sGetterFn](),
-						oConstraints.propertyValue);
+				var sAggregationName = oAggregationMetadata.name;
+				var sPublicMethodName = getGetterMethodName(sAggregationName);
+				var aChildControls = oTargetControl[sPublicMethodName]();
+				if (Object.prototype.toString.apply(aChildControls) !== "[object Array]") {
+					return;
 				}
-			}, {
-				constraint: "itemIndex",
-				fn: function(oFoundControl, iControlIdx) {
-					return iControlIdx === oConstraints.itemIndex;
+				oFoundControl = [{
+					constraint: "controlType",
+					fn: function(oControl) {
+						return oControl.getMetadata()
+							._sClassName === oConstraints.controlType;
+					}
+				}, {
+					constraint: "property",
+					fn: function(oControl) {
+						var sGetterFn = getGetterMethodName(oConstraints.property);
+						return typeof oControl[sGetterFn] === "function" && testTextValue(oConstraints.propertyOperand, oControl[sGetterFn](),
+							oConstraints.propertyValue);
+					}
+				}, {
+					constraint: "itemIndex",
+					fn: function(oFoundControl, iControlIdx) {
+						return iControlIdx === oConstraints.itemIndex;
+					}
+				}].reduce(function(aFilteredChildControls, oNextFilterSpec) {
+					if (oConstraints.hasOwnProperty(oNextFilterSpec.constraint)) {
+						return aFilteredChildControls.filter(oNextFilterSpec.fn);
+					}
+					return aFilteredChildControls;
+				}, aChildControls)[0] || null;
+				if (!oFoundControl) {
+					Array.prototype.push.apply(aControlsToCheck, aChildControls);
 				}
-			}].reduce(function(aFilteredChildControls, oNextFilterSpec) {
-				if (oConstraints.hasOwnProperty(oNextFilterSpec.constraint)) {
-					return aFilteredChildControls.filter(oNextFilterSpec.fn);
-				}
-				return aFilteredChildControls;
-			}, aChildControls)[0] || null;
-			if (!oFoundControl) {
-				Array.prototype.push.apply(aControlsToCheck, aChildControls);
-			}
-		});
+			});
 		if (!oFoundControl && aControlsToCheck.length > 0 && bDeep) {
 			return findNestedAggregationItem(aControlsToCheck.shift(), oConstraints, bDeep, aControlsToCheck);
 		}
@@ -149,7 +158,8 @@
 		}
 		if (sWithProperty) {
 			oSearchConstraints.property = sPropertyName;
-			oSearchConstraints.propertyOperand = (sTypeOfCheck || "equal to").replace(/\s+$/g, "");
+			oSearchConstraints.propertyOperand = (sTypeOfCheck || "equal to")
+				.replace(/\s+$/g, "");
 			oSearchConstraints.propertyValue = sValue;
 		}
 		var bDeepSearch = sDeeplyOrDirectly === "deeply";

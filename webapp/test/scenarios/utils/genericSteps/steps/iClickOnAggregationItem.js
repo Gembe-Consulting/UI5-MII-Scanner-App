@@ -18,7 +18,8 @@
 					var aItems = oControl.getAggregation(sAggregationName),
 						iItemIndex = that.utils.positionTextToIndex(sItemPosition, aItems.length),
 						oItem = aItems[iItemIndex];
-					oItem.$().trigger("tap");
+					oItem.$()
+						.trigger("tap");
 
 					//var ojQuery = sap.ui.test.Opa5.getJQuery()
 					var oUtils = sap.ui.test.Opa5.getUtils();
