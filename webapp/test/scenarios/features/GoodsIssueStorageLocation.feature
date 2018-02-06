@@ -17,6 +17,7 @@ Feature: Creating goods issue posting to SAP ERP using storage location
 		Then I can see storageLocationInput in action.GoodsIssue view
 		Then I can see materialNumberInput in action.GoodsIssue view
 		Then I can see bulkMaterialSwitch in action.GoodsIssue view
+		Then I can see clearQuantityInputIcon with src 'sap-icon://eraser' in action.GoodsIssue view
 		Then I can see clearFormButton in action.GoodsIssue view
 		Then I can see cancelButton in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
@@ -27,7 +28,10 @@ Feature: Creating goods issue posting to SAP ERP using storage location
 		Then on the Goods Issue Page: I should see the save button is disabled
 		When I enter '321,123' into quantityInput in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
-		When I enter 'kg' into unitOfMeasureInput in action.GoodsIssue view
+		When I click on clearQuantityInputIcon in action.GoodsIssue view
+		Then I can see quantityInput with value '' in action.GoodsIssue view
+		When I enter '321,123' into quantityInput in action.GoodsIssue view
+		 And I enter 'kg' into unitOfMeasureInput in action.GoodsIssue view
 		Then I can see unitOfMeasureInput with value 'KG' in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
 		When I enter 'rb01' into storageLocationInput in action.GoodsIssue view

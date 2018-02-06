@@ -32,11 +32,14 @@
 							<Input id="materialNumberInput" change="onMaterialNumberChange" value="{path: 'data>/materialNumber', type:'.sapType.MATNR'}" maxLength="11"
 								visible="{=${view>/type}==='nonLE'}" valueState="{view>/materialNumberValueState}"></Input>
 							<Label text="{i18n>lableTextFormGoodsIssueQuantity}, {i18n>lableTextFormGoodsIssueUnitOfMeasureShort}"/>
-							<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}">
-								<layoutData>
-									<l:GridData span="XL2 L3 M4 S8"/>
-								</layoutData>
-							</Input>
+							<HBox alignItems="Center">
+								<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}">
+									<layoutData>
+										<l:GridData span="XL2 L3 M4 S8"/>
+									</layoutData>
+								</Input>
+								<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress" class="sapUiSmallMarginEnd"></c:Icon>
+							</HBox>
 							<Input id="unitOfMeasureInput" change="onUnitOfMeasureChange" value="{path: 'data>/unitOfMeasure', type:'.sapType.MEINS'}" maxLength="4"
 								editable="{=${view>/type}==='nonLE'}">
 								<layoutData>
