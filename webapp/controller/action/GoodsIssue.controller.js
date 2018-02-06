@@ -279,6 +279,10 @@ sap.ui.define([
 							oDataModel.setProperty("/unitOfMeasure", sComponentUnitOfMeasure);
 							oSource.setValueState(sap.ui.core.ValueState.Error);
 						}
+						
+						if(!oDataModel.getProperty("/unitOfMeasure")){
+							oDataModel.setProperty("/unitOfMeasure", oOrderComponent.EINHEIT);
+						}
 
 						// update entry quantity by remaining open quantity, but only if users did not enter a quantity beforhand
 						if (this.getModel("view").getProperty("/type") === "nonLE" 

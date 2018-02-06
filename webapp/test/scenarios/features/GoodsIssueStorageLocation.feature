@@ -53,6 +53,7 @@ Feature: Creating goods issue posting to SAP ERP using storage location
 		 And I can see messageStrip with text 'Ungeplante Entnahme: Komponente '0000000-000' für Auftrag '1234567' nicht vorgesehen!' in action.GoodsIssue view
 		When I enter '1200666-004' into materialNumberInput in action.GoodsIssue view
 		Then I can see materialNumberInput with valueState 'Success' in action.GoodsIssue view
+		Then I can see unitOfMeasureInput with value 'ST' in action.GoodsIssue view
 		When I click on clearFormButton in action.GoodsIssue view
 		Then I can see materialNumberInput with valueState 'None' in action.GoodsIssue view
 		Then I can see orderNumberInput with valueState 'None' in action.GoodsIssue view
