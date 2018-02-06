@@ -42,11 +42,24 @@ sap.ui.define([
 				}
 			);
 
-			this.register(/^I start the app on '(.*?)' using parameter '(.*?)'"$/i,
+			this.register(/^I start the app on '(.*?)' using parameter '(.*?)'$/i,
 				function(sHash, sParameter, Given, When, Then) {
 
 					Given.iStartTheApp({
 						hash: sHash
+					});
+				}
+			);
+			
+			//Then I should see goodsReceiptPageTitle in action.GoodsReceipt view has color '#1F35DE'
+			//this.register(/^I start the app on '(.*?)' using parameter '(.*?)'"$/i,
+			this.register(/^I can see (.+?) in (.+?) view has css (.+?) '(.+?)'$/i,
+				function(sControlId, sViewName, sCssProperty, sValue, Given, When, Then) {
+					Then.iCanSeeControlHasColor({
+						sControlId: sControlId,
+						sViewName:sViewName,
+						sCssProperty:sCssProperty,
+						sValue:sValue
 					});
 				}
 			);

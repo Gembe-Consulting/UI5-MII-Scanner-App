@@ -31,13 +31,28 @@ sap.ui.define([
 					success: function(oControl) {
 						Opa5.assert.ok(true, "Control " + sControlId + " has been found in " + sViewName + " view");
 
-						Opa5.assert.ok(oControl.$().hasClass("sapMFocus"), "Control " + sControlId + " has focus (has class 'sapMFocus')");
-						Opa5.assert.ok(oControl.$().hasClass("sapMInputFocused"), "Control " + sControlId + " has focus (has class 'sapMInputFocused')");
+						Opa5.assert.ok(oControl.$()
+							.hasClass("sapMFocus"), "Control " + sControlId + " has focus (has class 'sapMFocus')");
+						Opa5.assert.ok(oControl.$()
+							.hasClass("sapMInputFocused"), "Control " + sControlId + " has focus (has class 'sapMInputFocused')");
 					},
 					errorMessage: "Could not obtain control"
 				});
 			},
+			iCanSeeControlHasColor: function(sControlId, sViewName, sCssProperty, sValue) {
+				var that = this;
+				return this.waitFor({
+					viewName: sViewName,
+					id: sControlId,
+					success: function(oControl) {
+						Opa5.assert.ok(true, "Control " + sControlId + " has been found in " + sViewName + " view");
 
+						Opa5.assert.ok(oControl.$()
+							.css(sCssProperty) === sValue, "Control " + sControlId + " has " + sCssProperty + " " + sValue);
+					},
+					errorMessage: "Could not obtain control"
+				});
+			},
 			theUrlShouldNotContainParameter: function(sUrlParameter) {
 				var oWindowWithinFrame = sap.ui.test.Opa5.getWindow();
 				var bHasParamInUrl = oWindowWithinFrame.location.href.indexOf(sUrlParameter) < 0 ? true : false;

@@ -20,8 +20,12 @@ Feature: Creating goods receipt posting to SAP ERP
 		Then I can see storageLocationInput in action.GoodsReceipt view
 		Then I can see clearFormButton in action.GoodsReceipt view
 		Then I can see cancelButton in action.GoodsReceipt view
+		Then I can see goodsReceiptPageIcon with src 'sap-icon://inbox' in action.GoodsReceipt view
+		Then I can see goodsReceiptPageIcon with color '#1F35DE' in action.GoodsReceipt view
+		Then I can see goodsReceiptPageTitle in action.GoodsReceipt view has css color '#1F35DE'
 		Then on the Goods Receipt Page: I should see the save button is disabled
 		Then on the Goods Receipt Page: I should see all input fields are initial
+		
 		
 	Scenario: User enters a storge unit number and sees the storge unit data
 		When I enter '00000000109330000001' into storageUnitInput in action.GoodsReceipt view
