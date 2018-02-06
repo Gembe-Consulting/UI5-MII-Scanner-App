@@ -478,6 +478,10 @@ sap.ui.define([
 				}.bind(this));
 
 		},
+		
+		onClearQuantityInputPress:function(oEvent){
+			this.byId("quantityInput").setValue("").focus();
+		},
 
 		onQuantityChange: function(oEvent) {
 			this.updateViewControls(this.getModel("data")
