@@ -58,8 +58,14 @@ Feature: Creating goods issue posting to SAP ERP using storage location
 		Then I can see orderNumberInput with valueState 'None' in action.GoodsIssue view
 		Then I can see materialNumberInput with valueState 'None' in action.GoodsIssue view
 	
-	Scenario: Should calculate remaining open quantity
+	Scenario: Should calculate remaining open quantity if input quantity is zero
 		When I enter '1234567' into orderNumberInput in action.GoodsIssue view
+		Then I can see quantityInput with value '0,000' in action.GoodsIssue view
+		When I enter '1200666-006' into materialNumberInput in action.GoodsIssue view
+		Then I can see quantityInput with value '130,000' in action.GoodsIssue view
+		When I click on clearFormButton in action.GoodsIssue view
+		 And I enter '1234567' into orderNumberInput in action.GoodsIssue view
 		 And I enter '999,999' into quantityInput in action.GoodsIssue view
 		 And I enter '1200666-006' into materialNumberInput in action.GoodsIssue view
-		Then I can see quantityInput with value '130,000' in action.GoodsIssue view
+		Then I can see quantityInput with value '999,999' in action.GoodsIssue view
+		

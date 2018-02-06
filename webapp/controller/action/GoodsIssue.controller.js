@@ -279,8 +279,9 @@ sap.ui.define([
 							oSource.setValueState(sap.ui.core.ValueState.Error);
 						}
 
-						// update entry quantity by remaining open quantity
-						if (this.getModel("view").getProperty("/type") === "nonLE") {
+						// update entry quantity by remaining open quantity, but only if users did not enter a quantity beforhand
+						if (this.getModel("view").getProperty("/type") === "nonLE" 
+							&& oDataModel.getProperty("/entryQuantity") === 0.0) {
 							oDataModel.setProperty("/entryQuantity", oOrderComponent.BDMNG - oOrderComponent.ENMNG);
 							oSource.setTooltip("Restmenge \'" + (oOrderComponent.BDMNG - oOrderComponent.ENMNG) + "\' = Bedarfsmenge \'" + oOrderComponent.BDMNG + "\' - Entnommene Menge \'" + oOrderComponent.ENMNG + "\'");
 						}
