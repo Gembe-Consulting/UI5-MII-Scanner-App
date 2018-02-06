@@ -1,9 +1,15 @@
 <mvc:View controllerName="com.mii.scanner.controller.action.GoodsReceipt" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
 	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
-	<Page id="goodsReceiptPage" title="{i18n>titleGoodsReceipt}" showNavButton="false">
-		<headerContent>
-			<Button id="clearFormButton" icon="sap-icon://redo" press="onClearFormPress"/>
-		</headerContent>
+	<Page id="goodsReceiptPage" title="" showNavButton="false">
+		<customHeader>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<c:Icon id="goodsReceiptPageIcon" src="sap-icon://inbox" size="2rem" width="4rem" color="#1F35DE" alt="GR"/>
+				<Title id="goodsReceiptPageTitle" text="{i18n>titleGoodsReceipt}" class="suwGoodsReceiptTitle"/>
+				<ToolbarSpacer/>
+				<Button id="clearFormButton" icon="sap-icon://redo" press="onClearFormPress"/>
+			</Toolbar>
+		</customHeader>
 		<content>
 			<l:VerticalLayout id="messageStripContainer" width="100%"></l:VerticalLayout>
 			<!--
