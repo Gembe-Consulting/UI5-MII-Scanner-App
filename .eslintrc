@@ -149,7 +149,7 @@
 		"no-proto": 1,
 		"sap-forbidden-window-property": 1,
 		"no-new-require": 0,
-		"sap-no-hardcoded-url": 2,
+		"sap-no-hardcoded-url": 0,
 		"object-curly-spacing": 0,
 		"no-continue": 0,
 		"sap-no-dynamic-style-insertion": 2,
