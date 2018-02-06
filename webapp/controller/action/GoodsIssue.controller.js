@@ -25,6 +25,7 @@ sap.ui.define([
 			bulkMaterialIndicator: false,
 			//storage unit data
 			LENUM: null,
+			MEINH: null,
 			BESTQ: null,
 			VFDAT: null
 		},
@@ -52,7 +53,9 @@ sap.ui.define([
 
 			this.setModel(new JSONModel(jQuery.extend({}, this._oInitView)), "view");
 
-			this.getRouter().getRoute("goodsIssue").attachMatched(this._onRouteMatched, this);
+			this.getRouter()
+				.getRoute("goodsIssue")
+				.attachMatched(this._onRouteMatched, this);
 		},
 
 		_onRouteMatched: function(oEvent) {
@@ -65,44 +68,57 @@ sap.ui.define([
 			if (oQuery) {
 				if (oQuery.type) {
 					this._oInitView.type = oQuery.type; //update initial object
-					oView.getModel("view").setProperty("/type", oQuery.type);
+					oView.getModel("view")
+						.setProperty("/type", oQuery.type);
 				}
 				if (oQuery.LENUM) {
-					oView.getModel("data").setProperty("/storageUnitNumber", oQuery.LENUM);
-					this.byId("storageUnitInput").fireChange({
-						value: oQuery.LENUM
-					});
+					oView.getModel("data")
+						.setProperty("/storageUnitNumber", oQuery.LENUM);
+					this.byId("storageUnitInput")
+						.fireChange({
+							value: oQuery.LENUM
+						});
 				}
 				if (oQuery.AUFNR) {
-					oView.getModel("data").setProperty("/orderNumber", oQuery.AUFNR);
-					this.byId("orderNumberInput").fireChange({
-						value: oQuery.AUFNR
-					});
+					oView.getModel("data")
+						.setProperty("/orderNumber", oQuery.AUFNR);
+					this.byId("orderNumberInput")
+						.fireChange({
+							value: oQuery.AUFNR
+						});
 				}
 				if (oQuery.MATNR) {
-					oView.getModel("data").setProperty("/materialNumber", oQuery.MATNR);
-					this.byId("materialNumberInput").fireChange({
-						value: oQuery.MATNR
-					});
+					oView.getModel("data")
+						.setProperty("/materialNumber", oQuery.MATNR);
+					this.byId("materialNumberInput")
+						.fireChange({
+							value: oQuery.MATNR
+						});
 				}
 				if (oQuery.MEINH) {
-					oView.getModel("data").setProperty("/unitOfMeasure", oQuery.MEINH);
-					this.byId("unitOfMeasureInput").fireChange({
-						value: oQuery.MEINH
-					});
+					oView.getModel("data")
+						.setProperty("/unitOfMeasure", oQuery.MEINH);
+					this.byId("unitOfMeasureInput")
+						.fireChange({
+							value: oQuery.MEINH
+						});
 				}
 				if (oQuery.LGORT) {
-					oView.getModel("data").setProperty("/storageLocation", oQuery.LGORT);
-					this.byId("storageLocationInput").fireChange({
-						value: oQuery.LGORT
-					});
+					oView.getModel("data")
+						.setProperty("/storageLocation", oQuery.LGORT);
+					this.byId("storageLocationInput")
+						.fireChange({
+							value: oQuery.LGORT
+						});
 				}
 				if (oQuery.SCHGT) {
 					oQuery.SCHGT = (oQuery.SCHGT == 'true');
-					oView.getModel("data").setProperty("/bulkMaterialIndicator", oQuery.SCHGT);
-					this.byId("bulkMaterialSwitch").fireChange({
-						value: oQuery.SCHGT
-					});
+					oView.getModel("data")
+						.setProperty("/bulkMaterialIndicator", oQuery.SCHGT);
+					this.byId("bulkMaterialSwitch")
+						.fireChange({
+							value: oQuery.SCHGT
+						});
 				}
 			}
 		},
@@ -112,7 +128,8 @@ sap.ui.define([
 				fnResolve,
 				fnReject;
 
-			this.getOwnerComponent().showBusyIndicator();
+			this.getOwnerComponent()
+				.showBusyIndicator();
 
 			fnResolve = function(oData) {
 				var aResults,
@@ -152,7 +169,10 @@ sap.ui.define([
 				MessageBox.error(oBundle.getText("messageTextGoodsIssueError"));
 			}.bind(this);
 
-			this._postGoodsIssue().then(fnResolve, fnReject).then(this.getOwnerComponent().hideBusyIndicator);
+			this._postGoodsIssue()
+				.then(fnResolve, fnReject)
+				.then(this.getOwnerComponent()
+					.hideBusyIndicator);
 
 		},
 
@@ -272,21 +292,20 @@ sap.ui.define([
 							});
 						}
 
-						if (!!oDataModel.getProperty("/unitOfMeasure") && oOrderComponent.EINHEIT !== oDataModel.getProperty("/unitOfMeasure")) {
+						if (oDataModel.getProperty("/MEINH") !== oOrderComponent.EINHEIT) {
 							this.addLogMessage({
 								text: oBundle.getText("messageTextOrderComponentHasDeviatingUnitOfMeasure", [oOrderComponent.EINHEIT, oDataModel.getProperty("/unitOfMeasure")])
 							});
-							oDataModel.setProperty("/unitOfMeasure", sComponentUnitOfMeasure);
 							oSource.setValueState(sap.ui.core.ValueState.Error);
-						}
-						
-						if(!oDataModel.getProperty("/unitOfMeasure")){
-							oDataModel.setProperty("/unitOfMeasure", oOrderComponent.EINHEIT);
+						} else {
+							sComponentUnitOfMeasure = oOrderComponent.EINHEIT;
 						}
 
+						oDataModel.setProperty("/unitOfMeasure", sComponentUnitOfMeasure);
+
 						// update entry quantity by remaining open quantity, but only if users did not enter a quantity beforhand
-						if (this.getModel("view").getProperty("/type") === "nonLE" 
-							&& oDataModel.getProperty("/entryQuantity") === 0.0) {
+						if (this.getModel("view")
+							.getProperty("/type") === "nonLE" && oDataModel.getProperty("/entryQuantity") === 0.0) {
 							oDataModel.setProperty("/entryQuantity", oOrderComponent.BDMNG - oOrderComponent.ENMNG);
 							oSource.setTooltip("Restmenge \'" + (oOrderComponent.BDMNG - oOrderComponent.ENMNG) + "\' = Bedarfsmenge \'" + oOrderComponent.BDMNG + "\' - Entnommene Menge \'" + oOrderComponent.ENMNG + "\'");
 						}
@@ -298,7 +317,8 @@ sap.ui.define([
 						title: err
 					});
 				} finally {
-					this.updateViewControls(this.getModel("data").getData());
+					this.updateViewControls(this.getModel("data")
+						.getData());
 				}
 			}.bind(this);
 
@@ -308,10 +328,12 @@ sap.ui.define([
 				});
 			}.bind(this);
 
-			this.requestOrderComponentInfoService(sOrderNumber, sMaterialNumber).then(fnResolve, fnReject).then(function() {
-				this.hideControlBusyIndicator(oSource);
-			}.bind(this));
-			
+			this.requestOrderComponentInfoService(sOrderNumber, sMaterialNumber)
+				.then(fnResolve, fnReject)
+				.then(function() {
+					this.hideControlBusyIndicator(oSource);
+				}.bind(this));
+
 			return true;
 		},
 
@@ -371,7 +393,8 @@ sap.ui.define([
 						bStorageUnitDataValid = true;
 					}
 
-					this.getModel("view").setProperty("/bStorageUnitValid", bStorageUnitDataValid);
+					this.getModel("view")
+						.setProperty("/bStorageUnitValid", bStorageUnitDataValid);
 
 					// merge data from storage unit with main model
 					oDataModel.setData(oStorageUnit, bMergeData);
@@ -400,9 +423,11 @@ sap.ui.define([
 				MessageBox.error(oBundle.getText("messageTextGoodsIssueError"));
 			}.bind(this);
 
-			this.requestStorageUnitInfoService(sStorageUnitNumber).then(fnResolve, fnReject).then(function() {
-				this.hideControlBusyIndicator(oSource);
-			}.bind(this));
+			this.requestStorageUnitInfoService(sStorageUnitNumber)
+				.then(fnResolve, fnReject)
+				.then(function() {
+					this.hideControlBusyIndicator(oSource);
+				}.bind(this));
 		},
 
 		onOrderNumberChange: function(oEvent) {
@@ -420,8 +445,8 @@ sap.ui.define([
 
 			fnResolve = function(oData) {
 				var aResultList,
-					oModel = this.getModel("data"),
-					oOrderHeader;
+					oOrderHeader,
+					oModel = this.getModel("data");
 
 				aResultList = oData.d.results[0].Rowset.results[0].Row.results;
 
@@ -446,23 +471,28 @@ sap.ui.define([
 				MessageBox.error(oBundle.getText("messageTextGoodsIssueError"));
 			}.bind(this);
 
-			this.requestOrderHeaderInfoService(sOrderNumber).then(fnResolve, fnReject).then(function() {
-				this.hideControlBusyIndicator(oSource);
-			}.bind(this));
+			this.requestOrderHeaderInfoService(sOrderNumber)
+				.then(fnResolve, fnReject)
+				.then(function() {
+					this.hideControlBusyIndicator(oSource);
+				}.bind(this));
 
 		},
 
 		onQuantityChange: function(oEvent) {
-			this.updateViewControls(this.getModel("data").getData());
+			this.updateViewControls(this.getModel("data")
+				.getData());
 		},
 
 		onUnitOfMeasureChange: function(oEvent) {
-			var sUnitOfMeasure = oEvent.getParameter("value").toUpperCase(),
+			var sUnitOfMeasure = oEvent.getParameter("value")
+				.toUpperCase(),
 				oDataModel = this.getModel("data");
 
 			oDataModel.setProperty("/unitOfMeasure", sUnitOfMeasure);
 
-			this.updateViewControls(this.getModel("data").getData());
+			this.updateViewControls(this.getModel("data")
+				.getData());
 		},
 
 		onMaterialNumberChange: function(oEvent) {
@@ -471,11 +501,13 @@ sap.ui.define([
 
 			this.validateComponentWithdrawal(oModel.getProperty("/orderNumber"), oModel.getProperty("/materialNumber"), oSource);
 
-			this.updateViewControls(this.getModel("data").getData());
+			this.updateViewControls(this.getModel("data")
+				.getData());
 		},
 
 		onStorageLocationChange: function(oEvent) {
-			var sStorageLocation = oEvent.getParameter("value").toUpperCase(),
+			var sStorageLocation = oEvent.getParameter("value")
+				.toUpperCase(),
 				oBundle = this.getResourceBundle(),
 				oDataModel = this.getModel("data");
 
@@ -485,12 +517,14 @@ sap.ui.define([
 				oDataModel.setProperty("/storageLocation", sStorageLocation);
 			}
 
-			this.updateViewControls(this.getModel("data").getData());
+			this.updateViewControls(this.getModel("data")
+				.getData());
 		},
 
 		isInputDataValid: function(oData) {
 			if (oData) {
-				switch (this.getModel("view").getProperty("/type")) {
+				switch (this.getModel("view")
+					.getProperty("/type")) {
 					case "withLE":
 						return !!oData.entryQuantity && !oData.entryQuantity <= 0 && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageUnitNumber;
 					case "nonLE":
