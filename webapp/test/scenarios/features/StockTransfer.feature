@@ -70,6 +70,7 @@ Feature: Creating a stock transfer
 		Then I cannot see saveButton in action.StockTransfer view
 		When I press ARROW_DOWN + ALT at storageBinSelection in action.StockTransfer view
 		 And I click on 3rd item of storageBinSelection items in action.StockTransfer view
+		 And I press ENTER at storageBinSelection in action.StockTransfer view
 		Then I can see storageBinSelection with value 'KH01' in action.StockTransfer view
 		Then I cannot see saveButton in action.StockTransfer view
 		When I enter '00000000109330000013' into storageUnitInput in action.StockTransfer view
