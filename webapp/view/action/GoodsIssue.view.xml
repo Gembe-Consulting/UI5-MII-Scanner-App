@@ -28,6 +28,9 @@
 							<Label text="{i18n>lableTextFormGoodsIssueOrder}"/>
 							<Input id="orderNumberInput" change="onOrderNumberChange" value="{path: 'data>/orderNumber', type:'.sapType.AUFNR'}" maxLength="7"
 								valueState="{view>/orderNumberValueState}"></Input>
+							<Label text="{i18n>lableTextFormGoodsIssueMaterial}"/>
+							<Input id="materialNumberInput" change="onMaterialNumberChange" value="{path: 'data>/materialNumber', type:'.sapType.MATNR'}" maxLength="11"
+								visible="{=${view>/type}==='nonLE'}" valueState="{view>/materialNumberValueState}"></Input>
 							<Label text="{i18n>lableTextFormGoodsIssueQuantity}, {i18n>lableTextFormGoodsIssueUnitOfMeasureShort}"/>
 							<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}">
 								<layoutData>
@@ -43,9 +46,6 @@
 							<Label text="{i18n>lableTextFormGoodsIssueStorageLocation}"/>
 							<Input id="storageLocationInput" maxLength="4" change="onStorageLocationChange"
 								value="{path: 'data>/storageLocation', type:'.sapType.LGORT'}" visible="{=${view>/type}==='nonLE'}"></Input>
-							<Label text="{i18n>lableTextFormGoodsIssueMaterial}"/>
-							<Input id="materialNumberInput" change="onMaterialNumberChange" value="{path: 'data>/materialNumber', type:'.sapType.MATNR'}" maxLength="11"
-								visible="{=${view>/type}==='nonLE'}" valueState="{view>/materialNumberValueState}"></Input>
 							<Label text="{i18n>lableTextFormGoodsIssueBulkMaterial}"/>
 							<Switch id="bulkMaterialSwitch" state="{data>/bulkMaterialIndicator}" customTextOn="{i18n>switchCustomOnYes}"
 								customTextOff="{i18n>switchCustomOffNo}" visible="{=${view>/type}==='nonLE'}" tooltip="{i18n>lableTextFormGoodsIssueBulkMaterialTooltip}"></Switch>
