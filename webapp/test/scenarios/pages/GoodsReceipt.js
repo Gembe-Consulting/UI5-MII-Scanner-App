@@ -100,6 +100,7 @@ sap.ui.require([
 						return this;
 					},
 					iShouldSeeTheBusyIndicator: function() {
+						var sErrorMessage;
 						return this.waitFor({
 							viewName: "sap.m.MessageBox",
 							check: function() {
