@@ -230,10 +230,12 @@ sap.ui.define([
 		},
 
 		validateComponentWithdrawal: function(sOrderNumber, sMaterialNumber, oSource) {
-			var oBundle = this.getResourceBundle();
+			var oBundle = this.getResourceBundle(),
+				fnReject,
+				fnResolve;
 
 			if (!sOrderNumber || !sMaterialNumber) {
-				return null;
+				return false;
 			}
 
 			this.showControlBusyIndicator(oSource);
@@ -241,12 +243,11 @@ sap.ui.define([
 
 			this.clearLogMessages();
 
-			var fnResolve = function(oData) {
+			fnResolve = function(oData) {
 				var oOrderComponent,
 					aResultList,
 					oDataModel = this.getModel("data"),
-					sComponentUnitOfMeasure,
-					bComponentIsBackflushed = false;
+					sComponentUnitOfMeasure;
 
 				try {
 					aResultList = oData.d.results[0].Rowset.results[0].Row.results;
@@ -271,7 +272,7 @@ sap.ui.define([
 							});
 						}
 
-						if (!!oDataModel.getProperty("/unitOfMeasure") && (oOrderComponent.EINHEIT !== oDataModel.getProperty("/unitOfMeasure"))) {
+						if (!!oDataModel.getProperty("/unitOfMeasure") && oOrderComponent.EINHEIT !== oDataModel.getProperty("/unitOfMeasure")) {
 							this.addLogMessage({
 								text: oBundle.getText("messageTextOrderComponentHasDeviatingUnitOfMeasure", [oOrderComponent.EINHEIT, oDataModel.getProperty("/unitOfMeasure")])
 							});
@@ -297,7 +298,7 @@ sap.ui.define([
 				}
 			}.bind(this);
 
-			var fnReject = function(oError) {
+			fnReject = function(oError) {
 				MessageBox.error(oError.message, {
 					title: oError.statusText
 				});
@@ -306,6 +307,8 @@ sap.ui.define([
 			this.requestOrderComponentInfoService(sOrderNumber, sMaterialNumber).then(fnResolve, fnReject).then(function() {
 				this.hideControlBusyIndicator(oSource);
 			}.bind(this));
+			
+			return true;
 		},
 
 		/*
@@ -314,7 +317,9 @@ sap.ui.define([
 		onStorageUnitNumberChange: function(oEvent) {
 			var oSource = oEvent.getSource(),
 				sStorageUnitNumber = oEvent.getParameter("value"),
-				oBundle = this.getResourceBundle();
+				oBundle = this.getResourceBundle(),
+				fnResolve,
+				fnReject;
 
 			sStorageUnitNumber = this._padStorageUnitNumber(sStorageUnitNumber);
 
@@ -325,7 +330,7 @@ sap.ui.define([
 
 			this.clearLogMessages();
 
-			var fnResolve = function(oData) {
+			fnResolve = function(oData) {
 				var oStorageUnit,
 					aResultList,
 					bStorageUnitDataValid = true,
@@ -387,7 +392,7 @@ sap.ui.define([
 
 			}.bind(this);
 
-			var fnReject = function(oError) {
+			fnReject = function(oError) {
 				MessageBox.error(oBundle.getText("messageTextGoodsIssueError"));
 			}.bind(this);
 
@@ -399,7 +404,9 @@ sap.ui.define([
 		onOrderNumberChange: function(oEvent) {
 			var oSource = oEvent.getSource(),
 				sOrderNumber = oEvent.getParameter("value"),
-				oBundle = this.getResourceBundle();
+				oBundle = this.getResourceBundle(),
+				fnResolve,
+				fnReject;
 
 			oSource.setValueState(sap.ui.core.ValueState.None);
 
@@ -407,10 +414,10 @@ sap.ui.define([
 
 			this.showControlBusyIndicator(oSource);
 
-			var fnResolve = function(oData) {
+			fnResolve = function(oData) {
 				var aResultList,
-					oOrderHeader,
-					oModel = this.getModel("data");
+					oModel = this.getModel("data"),
+					oOrderHeader;
 
 				aResultList = oData.d.results[0].Rowset.results[0].Row.results;
 
@@ -431,7 +438,7 @@ sap.ui.define([
 
 			}.bind(this);
 
-			var fnReject = function(oError) {
+			fnReject = function(oError) {
 				MessageBox.error(oBundle.getText("messageTextGoodsIssueError"));
 			}.bind(this);
 
@@ -442,18 +449,11 @@ sap.ui.define([
 		},
 
 		onQuantityChange: function(oEvent) {
-			var oSource = oEvent.getSource(),
-				fValue = this.getModel("data").getProperty("/entryQuantity");
-
-			if (fValue > 0.0 || fValue < 0.0) {
-
-			}
 			this.updateViewControls(this.getModel("data").getData());
 		},
 
 		onUnitOfMeasureChange: function(oEvent) {
-			var oSource = oEvent.getSource(),
-				sUnitOfMeasure = oEvent.getParameter("value").toUpperCase(),
+			var sUnitOfMeasure = oEvent.getParameter("value").toUpperCase(),
 				oDataModel = this.getModel("data");
 
 			oDataModel.setProperty("/unitOfMeasure", sUnitOfMeasure);
@@ -471,8 +471,7 @@ sap.ui.define([
 		},
 
 		onStorageLocationChange: function(oEvent) {
-			var oSource = oEvent.getSource(),
-				sStorageLocation = oEvent.getParameter("value").toUpperCase(),
+			var sStorageLocation = oEvent.getParameter("value").toUpperCase(),
 				oBundle = this.getResourceBundle(),
 				oDataModel = this.getModel("data");
 
@@ -490,10 +489,8 @@ sap.ui.define([
 				switch (this.getModel("view").getProperty("/type")) {
 					case "withLE":
 						return !!oData.entryQuantity && !oData.entryQuantity <= 0 && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageUnitNumber;
-						break;
 					case "nonLE":
 						return !!oData.entryQuantity && !oData.entryQuantity <= 0 && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageLocation && !!oData.materialNumber;
-						break;
 					default:
 						return false;
 				}
