@@ -5,7 +5,8 @@
 				footerText="{i18n>footerTextUserName} '{user>/USERLOGIN}' {i18n>footerTextLoggedOn} {path: 'user>/lastLoginTimestamp', type: 'sap.ui.model.type.DateTime', formatOptions: { relative: true } }"
 				mode="None" width="100%" class="sapUiResponsiveMargin" inset="{= !${device>/system/phone} }">
 				<items>
-					<CustomListItem id="goodsReceiptItem" type="Navigation" press="onNavForward" class="sapUiResponsiveMargin">
+					
+					<CustomListItem id="goodsReceiptItem" type="Navigation" press="onNavForward" class="sapUiResponsiveMargin" tooltip="{i18n>itemLabelTextGoodsReceiptTooltip}">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<HBox width="8rem" justifyContent="Center">
@@ -22,7 +23,8 @@
 							<c:CustomData key="target" value="goodsReceipt"/>
 						</customData>
 					</CustomListItem>
-					<CustomListItem id="goodsIssueWithLEItem" type="Navigation" press="onNavForward" class="sapUiResponsiveMargin">
+					
+					<CustomListItem id="goodsIssueWithLEItem" type="Navigation" press="onNavForward" class="sapUiResponsiveMargin" tooltip="{i18n>itemLabelTextGoodsIssueWithLETooltip}">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<HBox width="8rem" justifyContent="Center">
@@ -40,7 +42,8 @@
 							<c:CustomData key="type" value="withLE"/>
 						</customData>
 					</CustomListItem>
-					<CustomListItem id="goodsIssueNonLEItem" type="Navigation" press="onNavForward" class="sapUiResponsiveMargin">
+					
+					<CustomListItem id="goodsIssueNonLEItem" type="Navigation" press="onNavForward" class="sapUiResponsiveMargin" tooltip="{i18n>itemLabelTextGoodsIssueNonLETooltip}">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<HBox width="8rem" justifyContent="Center">
@@ -58,29 +61,13 @@
 							<c:CustomData key="type" value="nonLE"/>
 						</customData>
 					</CustomListItem>
-					<CustomListItem type="Navigation" press="onNavForward" class="sapUiResponsiveMargin">
+
+					<CustomListItem id="rollerConveyorItem" type="Navigation" press="onNavForward" class="sapUiResponsiveMargin" tooltip="{i18n>itemLabelTextRollerConveyorTooltip}">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<HBox width="8rem" justifyContent="Center">
-									<c:Icon src="sap-icon://offsite-work" size="3rem" height="4rem" color="#05B074" alt="ST"/>
-									<c:Icon src="sap-icon://shipping-status" size="2rem" color="#05B074" alt="ST"/>
-								</HBox>
-								<VBox width="100%">
-									<Label text="{i18n>itemLabelTextStockTransfer}" design="Bold"/>
-									<Label text="{i18n>itemInfoTextStockTransfer}" visible="{= !${device>/system/phone} }"/>
-								</VBox>
-							</HBox>
-						</content>
-						<customData>
-							<c:CustomData key="target" value="stockTransfer"/>
-						</customData>
-					</CustomListItem>
-					<CustomListItem type="Navigation" press="onNavForward" class="sapUiResponsiveMargin">
-						<content>
-							<HBox alignItems="Center" justifyContent="Start">
-								<HBox width="8rem" justifyContent="Center">
-									<c:Icon src="sap-icon://instance" size="3rem" height="4rem" color="#FFAC00" alt="RC"/>
-									<c:Icon src="sap-icon://process" size="2rem" color="#FFAC00" alt="RC"/>
+									<c:Icon src="sap-icon://instance" size="3rem" height="4rem" color="#05B074" alt="RC"/>
+									<c:Icon src="sap-icon://process" size="2rem" color="#05B074" alt="RC"/>
 								</HBox>
 								<VBox width="100%">
 									<Label text="{i18n>itemLabelTextRollerConveyor}" design="Bold"/>
@@ -92,6 +79,25 @@
 							<c:CustomData key="target" value="rollerConveyor"/>
 						</customData>
 					</CustomListItem>
+					
+					<CustomListItem id="stockTransferItem" type="Navigation" press="onNavForward" class="sapUiResponsiveMargin" tooltip="{i18n>itemLabelTextStockTransferTooltip}">
+						<content>
+							<HBox alignItems="Center" justifyContent="Start">
+								<HBox width="8rem" justifyContent="Center">
+									<c:Icon src="sap-icon://offsite-work" size="3rem" height="4rem" color="#FFAC00" alt="ST"/>
+									<c:Icon src="sap-icon://shipping-status" size="2rem" color="#FFAC00" alt="ST"/>
+								</HBox>
+								<VBox width="100%">
+									<Label text="{i18n>itemLabelTextStockTransfer}" design="Bold"/>
+									<Label text="{i18n>itemInfoTextStockTransfer}" visible="{= !${device>/system/phone} }"/>
+								</VBox>
+							</HBox>
+						</content>
+						<customData>
+							<c:CustomData key="target" value="stockTransfer"/>
+						</customData>
+					</CustomListItem>
+					
 				</items>
 			</List>
 		</content>
