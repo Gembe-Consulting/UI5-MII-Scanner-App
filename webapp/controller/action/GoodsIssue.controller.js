@@ -16,7 +16,7 @@ sap.ui.define([
 
 		_oInitData: {
 			//entry screen data
-			entryQuantity: 0.0,
+			entryQuantity: null,
 			unitOfMeasure: null,
 			orderNumber: null,
 			storageUnitNumber: null,
@@ -479,10 +479,6 @@ sap.ui.define([
 
 		},
 		
-		onClearQuantityInputPress:function(oEvent){
-			this.byId("quantityInput").setValue("").focus();
-		},
-
 		onQuantityChange: function(oEvent) {
 			this.updateViewControls(this.getModel("data")
 				.getData());

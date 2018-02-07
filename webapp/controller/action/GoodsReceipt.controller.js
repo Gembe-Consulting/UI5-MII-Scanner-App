@@ -17,7 +17,7 @@ sap.ui.define([
 		_oInitData: {
 			LENUM: null,
 			AUFNR: null,
-			SOLLME: 0.0,
+			SOLLME: null,
 			MEINH: null,
 			LGORT: null,
 			BESTQ: null

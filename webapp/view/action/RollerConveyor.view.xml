@@ -8,11 +8,14 @@
 					<Label text="{i18n>lableTextFormRollerConveyorStorageUnit}"/>
 					<Input value="{data>/LENUM}"/>
 					<Label text="{i18n>lableTextFormRollerConveyorQuantity}, {i18n>lableTextFormRollerConveyorUnitOfMeasure}"/>
-					<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}">
-						<layoutData>
-							<l:GridData span="XL2 L3 M4 S8"/>
-						</layoutData>
-					</Input>
+					<HBox alignItems="Center">
+						<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}">
+							<layoutData>
+								<l:GridData span="XL2 L3 M4 S8"/>
+							</layoutData>
+						</Input>
+						<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress" class="sapUiSmallMarginEnd"></c:Icon>
+					</HBox>
 					<Input id="unitOfMeasureInput" change="onUnitOfMeasureChange" value="{path: 'data>/MEINH', type:'.sapType.MEINS'}"
 						editable="{=${data>/LENUM}===null}">
 						<layoutData>
@@ -27,8 +30,7 @@
 						<c:ListItem key="04" text="Palettierer le. Palette" additionalText="PALE"/>
 					</ComboBox>
 					<Label text="{i18n>lableTextFormRollerConveyorStorageStretcher}"/>
-					<Switch id="stretcherActiveSwitch" customTextOn="{i18n>switchCustomOnYes}" customTextOff="{i18n>switchCustomOffNo}"
-						state="{data>/STRETCH}"></Switch>
+					<Switch id="stretcherActiveSwitch" customTextOn="{i18n>switchCustomOnYes}" customTextOff="{i18n>switchCustomOffNo}" state="{data>/STRETCH}"></Switch>
 				</f:content>
 			</f:SimpleForm>
 			<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>

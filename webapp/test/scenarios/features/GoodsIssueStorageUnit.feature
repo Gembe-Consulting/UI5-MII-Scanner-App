@@ -11,11 +11,12 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 	Scenario: Should navigate to Goods Issue Page (with LE) and see all UI elements
 		Then I can see goodsIssuePage in action.GoodsIssue view
 		Then I can see storageUnitInput in action.GoodsIssue view
-		Then I can see quantityInput with value '0,000' in action.GoodsIssue view
+		Then I can see quantityInput with value '' in action.GoodsIssue view
+		Then I can see clearQuantityInputIcon in action.GoodsIssue view
 		Then I can see unitOfMeasureInput in action.GoodsIssue view
 		Then I can see orderNumberInput in action.GoodsIssue view
 		Then I can see clearFormButton in action.GoodsIssue view
-		Then I can see cancelButton in action.GoodsIssue view
+		Then I can see cancelButton with text 'Abbrechen' in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
 		Then on the Goods Issue Page: I should see all "with LE" input fields are initial
 
@@ -25,6 +26,11 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 		When I enter '1093300' into orderNumberInput in action.GoodsIssue view
 		Then I can see saveButton in action.GoodsIssue view
 		When I enter '0,000' into quantityInput in action.GoodsIssue view
+		Then on the Goods Issue Page: I should see the save button is disabled
+		When I enter '1,000' into quantityInput in action.GoodsIssue view
+		Then I can see saveButton in action.GoodsIssue view
+		When I click on clearQuantityInputIcon in action.GoodsIssue view
+		Then I can see quantityInput with value '' in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
 		When I enter '1,000' into quantityInput in action.GoodsIssue view
 		Then I can see saveButton in action.GoodsIssue view
@@ -39,6 +45,7 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 		 And I can see quantityInput with value '217,321' in action.GoodsIssue view
 		 And I can see unitOfMeasureInput with value 'KG' in action.GoodsIssue view
 		 And I can see storageUnitFragmentBatchText with text '0109331231' in action.GoodsIssue view
+		 And I can see storageUnitFragmentActualQuantity with text '217,321 KG' in action.GoodsIssue view
 		 And I can see storageUnitFragmentStorageBinText with text 'PRODUKTION' in action.GoodsIssue view
 		 And I can see storageUnitFragmentStorageTypeText with text '900' in action.GoodsIssue view
 		 And I can see storageUnitFragmentStorageUnitTypeText with text 'Industriepalette' in action.GoodsIssue view

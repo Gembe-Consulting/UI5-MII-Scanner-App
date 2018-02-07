@@ -13,13 +13,11 @@ Feature: Creating a stock transfer
 		Then storageBinSelection in action.StockTransfer view contains 16 items
 		Then I can see storageUnitInput with editable is 'true' in action.StockTransfer view
 		Then I can see storageUnitInput with value '' in action.StockTransfer view
-		Then I can see quantityInput with value '0,000' in action.StockTransfer view
+		Then I can see quantityInput with value '' in action.StockTransfer view
+		Then I can see clearQuantityInputIcon in action.StockTransfer view
 		Then I can see unitOfMeasureInput in action.StockTransfer view
-		Then I can see orderNumberInput with editable is 'false' in action.StockTransfer view
-		Then I can see storageUnitActualQuantityText with text ' ' in action.StockTransfer view
-		Then I can see storageUnitTargetQuantityText with text ' ' in action.StockTransfer view
 		Then I can see clearFormButton in action.StockTransfer view
-		Then I can see cancelButton in action.StockTransfer view
+		Then I can see cancelButton with text 'Abbrechen' in action.StockTransfer view
 		Then I cannot see saveButton in action.StockTransfer view
 #		Then on the Stock Transfer Page: I should see all input fields are initial
 
@@ -44,9 +42,6 @@ Feature: Creating a stock transfer
 		 And I can see quantityInput with editable is 'true' in action.StockTransfer view
 		 And I can see quantityInput with value '' in action.StockTransfer view
 		 And I can see quantityInput has focus in action.StockTransfer view
-		 And I can see orderNumberInput with value '1093300' in action.StockTransfer view
-		 And I can see storageUnitActualQuantityText with text '0,001 KG' in action.StockTransfer view
-		 And I can see storageUnitTargetQuantityText with text '600,000 KG' in action.StockTransfer view
 		When I click on clearFormButton in action.StockTransfer view
 		Then I can see storageUnitInput with valueState 'None' in action.StockTransfer view
 		 And I can see quantityInput with editable is 'false' in action.StockTransfer view
@@ -55,15 +50,10 @@ Feature: Creating a stock transfer
 		 And I can see storageUnitInput with valueState 'Success' in action.StockTransfer view
 		 And I can see quantityInput with editable is 'false' in action.StockTransfer view
 		 And I can see quantityInput with value '300,000' in action.StockTransfer view
-		 And I can see storageUnitActualQuantityText with text '300,000 KG' in action.StockTransfer view
-		 And I can see storageUnitTargetQuantityText with text '600,000 KG' in action.StockTransfer view
 		When I enter '00000000000000000001' into storageUnitInput in action.StockTransfer view
 		Then I can see storageUnitInput with valueState 'Error' in action.StockTransfer view
 		 And I can see messageStrip with text 'Achtung: Palette '00000000000000000001' existiert nicht!' in action.StockTransfer view
 		 And I can see messageStrip with type 'Error' in action.StockTransfer view
-		 And I can see orderNumberInput with value '' in action.StockTransfer view
-		 And I can see storageUnitActualQuantityText with text ' ' in action.StockTransfer view
-		 And I can see storageUnitTargetQuantityText with text ' ' in action.StockTransfer view
 		 
 	Scenario: Should enable save Button once users provide all input and input is valid
 		When I look at the screen
@@ -77,6 +67,11 @@ Feature: Creating a stock transfer
 		Then I cannot see saveButton in action.StockTransfer view
 		When I enter '300,123' into quantityInput in action.StockTransfer view
 		 And I press ENTER at quantityInput in action.StockTransfer view
+		Then I can see saveButton in action.StockTransfer view
+		When I click on clearQuantityInputIcon in action.StockTransfer view
+		Then I can see quantityInput with value '' in action.StockTransfer view
+		 And I cannot see saveButton in action.StockTransfer view
+		When I enter '300,123' into quantityInput in action.StockTransfer view
 		Then I can see saveButton in action.StockTransfer view
 		When I enter '00000000000000000001' into storageUnitInput in action.StockTransfer view
 		Then I cannot see saveButton in action.StockTransfer view

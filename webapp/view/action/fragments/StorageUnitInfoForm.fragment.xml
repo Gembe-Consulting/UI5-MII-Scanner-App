@@ -29,6 +29,8 @@
 			<c:Icon id="storageUnitFragmentExpirationDateOutOfDateIcon" src="sap-icon://date-time" color="#f9a429"
 				visible="{path:'data>/VFDAT', formatter:'.formatter.isPastDate'}" width="25px"/>
 		</HBox>
+		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentActualQuantity}"/>
+		<Text id="storageUnitFragmentActualQuantityText" text="{path: 'data>/ISTME', type:'.sapType.QUAN'} {data>/MEINH}"/>
 		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentStorageBin}"/>
 		<Text id="storageUnitFragmentStorageBinText" text="{data>/LGPLA}"/>
 		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentStorageType}"/>

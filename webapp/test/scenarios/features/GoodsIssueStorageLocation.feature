@@ -11,7 +11,8 @@ Feature: Creating goods issue posting to SAP ERP using storage location
 		
 	Scenario: Should navigate to Goods Issue Page (non LE) and see all UI elements
 		Then I can see goodsIssuePage in action.GoodsIssue view
-		Then I can see quantityInput with value '0,000' in action.GoodsIssue view
+		Then I can see quantityInput with value '' in action.GoodsIssue view
+		Then I can see clearQuantityInputIcon in action.GoodsIssue view
 		Then I can see unitOfMeasureInput in action.GoodsIssue view
 		Then I can see orderNumberInput in action.GoodsIssue view
 		Then I can see storageLocationInput in action.GoodsIssue view
@@ -19,7 +20,7 @@ Feature: Creating goods issue posting to SAP ERP using storage location
 		Then I can see bulkMaterialSwitch in action.GoodsIssue view
 		Then I can see clearQuantityInputIcon with src 'sap-icon://eraser' in action.GoodsIssue view
 		Then I can see clearFormButton in action.GoodsIssue view
-		Then I can see cancelButton in action.GoodsIssue view
+		Then I can see cancelButton with text 'Abbrechen' in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
 		Then on the Goods Issue Page: I should see all "non LE" input fields are initial
 		

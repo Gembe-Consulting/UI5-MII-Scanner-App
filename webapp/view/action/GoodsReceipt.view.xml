@@ -35,12 +35,15 @@
 							<Input id="orderNumberInput" class="noScannerInput" maxLength="7" change="onOrderNumberChange"
 								value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}" editable="{=${data>/LENUM}===null}" valueState="{view>/orderNumberValueState}"></Input>
 							<Label text="{i18n>lableTextFormGoodsReceiptQuantity}, {i18n>lableTextFormGoodsReceiptUnitOfMeasureShort}"/>
-							<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}"
-								editable="{view>/bStorageUnitValid}">
-								<layoutData>
-									<l:GridData span="XL2 L3 M4 S8"/>
-								</layoutData>
-							</Input>
+							<HBox alignItems="Center">
+								<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}"
+									editable="{view>/bStorageUnitValid}">
+									<layoutData>
+										<l:GridData span="XL2 L3 M4 S8"/>
+									</layoutData>
+								</Input>
+								<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress" class="sapUiSmallMarginEnd"></c:Icon>
+							</HBox>
 							<Input id="unitOfMeasureInput" change="onUnitOfMeasureChange" value="{path: 'data>/MEINH', type:'.sapType.MEINS'}"
 								editable="{=${data>/LENUM}===null}">
 								<layoutData>

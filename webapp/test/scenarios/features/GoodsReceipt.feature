@@ -14,18 +14,18 @@ Feature: Creating goods receipt posting to SAP ERP
 	Scenario: Should navigate to Goods Receipt Page and see all UI elements
 		Then I can see goodsReceiptPage in action.GoodsReceipt view
 		Then I can see storageUnitInput in action.GoodsReceipt view
-		Then I can see quantityInput with value '0,000' in action.GoodsReceipt view
+		Then I can see quantityInput with value '' in action.GoodsReceipt view
+		Then I can see clearQuantityInputIcon in action.GoodsReceipt view
 		Then I can see unitOfMeasureInput in action.GoodsReceipt view
 		Then I can see orderNumberInput in action.GoodsReceipt view
 		Then I can see storageLocationInput in action.GoodsReceipt view
 		Then I can see clearFormButton in action.GoodsReceipt view
-		Then I can see cancelButton in action.GoodsReceipt view
+		Then I can see cancelButton with text 'Abbrechen' in action.GoodsReceipt view
 		Then I can see goodsReceiptPageIcon with src 'sap-icon://inbox' in action.GoodsReceipt view
 		Then I can see goodsReceiptPageIcon with color '#1F35DE' in action.GoodsReceipt view
 		Then I can see goodsReceiptPageTitle in action.GoodsReceipt view has css color '#1F35DE'
 		Then on the Goods Receipt Page: I should see the save button is disabled
 		Then on the Goods Receipt Page: I should see all input fields are initial
-		
 		
 	Scenario: User enters a storge unit number and sees the storge unit data
 		When I enter '00000000109330000001' into storageUnitInput in action.GoodsReceipt view
@@ -51,7 +51,11 @@ Feature: Creating goods receipt posting to SAP ERP
 		And I enter 'kg' into unitOfMeasureInput in action.GoodsReceipt view
 		Then I can see unitOfMeasureInput with value 'KG' in action.GoodsReceipt view
 		Then on the Goods Receipt Page: I should see the save button is enabled
-		When I enter '1000' into storageLocationInput in action.GoodsReceipt view
+		When I click on clearQuantityInputIcon in action.GoodsReceipt view
+		Then I can see quantityInput with value '' in action.GoodsReceipt view
+		Then on the Goods Receipt Page: I should see the save button is disabled
+		When I enter '600,000' into quantityInput in action.GoodsReceipt view
+		 And I enter '1000' into storageLocationInput in action.GoodsReceipt view
 		Then I can see storageUnitInput with editable is 'true' in action.GoodsReceipt view
 		Then on the Goods Receipt Page: I should see the save button is disabled
 		When I enter '4712' into storageLocationInput in action.GoodsReceipt view

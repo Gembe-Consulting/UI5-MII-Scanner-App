@@ -86,11 +86,13 @@ sap.ui.define([
 		},
 
 		showControlBusyIndicator: function(oSource) {
-			return oSource.setBusyIndicatorDelay(0).setBusy(true);
+			return oSource.setBusyIndicatorDelay(0)
+				.setBusy(true);
 		},
 
 		hideControlBusyIndicator: function(oSource) {
-			return oSource.setBusyIndicatorDelay(0).setBusy(false);
+			return oSource.setBusyIndicatorDelay(0)
+				.setBusy(false);
 		},
 		/**
 		 * Check is a given storage location is allowed for posting
@@ -151,6 +153,16 @@ sap.ui.define([
 			}
 		},
 
+		onClearQuantityInputPress: function(oEvent) {
+			var oQuantityInputControl = this.byId("quantityInput");
+
+			if (oQuantityInputControl) {
+				oQuantityInputControl
+					.setValue("")
+					.focus();
+			}
+		},
+
 		onCancelAction: function(oEvent) {
 			this.handleConfirmationMessageBoxPress(oEvent);
 		},
@@ -183,7 +195,9 @@ sap.ui.define([
 		},
 
 		isMessageModelClean: function() {
-			var oMessageModel = sap.ui.getCore().getMessageManager().getMessageModel(),
+			var oMessageModel = sap.ui.getCore()
+				.getMessageManager()
+				.getMessageModel(),
 				aMessages = oMessageModel.getData();
 
 			if (aMessages && aMessages.length > 0) {

@@ -16,7 +16,7 @@ sap.ui.define([
 		_oInitData: {
 			//uswer input data
 			storageUnitNumberInput: null,
-			entryQuantity: 0.0,
+			entryQuantity: null,
 			targetStorageBinSelection: null,
 			targetStorageBinItemSelection: null,
 			//external data

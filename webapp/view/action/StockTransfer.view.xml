@@ -23,29 +23,20 @@
 							<Input id="storageUnitInput" class="noScannerInput" maxLength="20" change="onStorageUnitNumberChange"
 								value="{path: 'data>/storageUnitNumberInput', type:'.sapType.LENUM'}" valueState="{view>/storageUnitNumberValueState}"></Input>
 							<Label text="{i18n>lableTextFormStockTransferQuantity}, {i18n>lableTextFormStockTransferUnitOfMeasureShort}"/>
-							<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}"
-								editable="{path:'data>/ISTME', formatter:'.formatter.isEmptyStorageUnit'}">
-								<layoutData>
-									<l:GridData span="XL2 L3 M4 S8"/>
-								</layoutData>
-							</Input>
+							<HBox alignItems="Center">
+								<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}"
+									editable="{path:'data>/ISTME', formatter:'.formatter.isEmptyStorageUnit'}">
+									<layoutData>
+										<l:GridData span="XL2 L3 M4 S8"/>
+									</layoutData>
+								</Input>
+								<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress" class="sapUiSmallMarginEnd"></c:Icon>
+							</HBox>
 							<Input id="unitOfMeasureInput" value="{path: 'data>/MEINH', type:'.sapType.MEINS'}" editable="false">
 								<layoutData>
 									<l:GridData span="XL1 L1 M2 S4"/>
 								</layoutData>
 							</Input>
-							<Label text="{i18n>lableTextFormStockTransferOrderNumber}"/>
-							<Input id="orderNumberInput" value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}" editable="false"></Input>
-							<Label text="{i18n>lableTextFormStockTransferActualQuantity}, {i18n>lableTextFormStockTransferUnitOfMeasureShort}"/>
-							<HBox>
-								<c:Icon src="sap-icon://measuring-point" class="sapUiTinyMargin"/>
-								<Text id="storageUnitActualQuantityText" text="{path: 'data>/ISTME', type:'.sapType.QUAN'} {data>/MEINH}"/>
-							</HBox>
-							<Label text="{i18n>lableTextFormStockTransferTargetQuantity}, {i18n>lableTextFormStockTransferUnitOfMeasureShort}"/>
-							<HBox>
-								<c:Icon src="sap-icon://goal" class="sapUiTinyMargin"/>
-								<Text id="storageUnitTargetQuantityText" text="{path: 'data>/TARGETME', type:'.sapType.QUAN'} {data>/MEINH}"/>
-							</HBox>
 						</f:content>
 					</f:SimpleForm>
 					<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>
