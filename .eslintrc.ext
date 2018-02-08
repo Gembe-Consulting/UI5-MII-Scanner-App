@@ -721,7 +721,7 @@
 			"helpUrl": "http://eslint.org/docs/rules/no-new-require"
 		},
 		"sap-no-hardcoded-url": {
-			"severity": "error",
+			"severity": "warning",
 			"category": "Fiori Architectural Guidelines",
 			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?fa158d772a2a48bc9b1530713ac03bbd.html"
 		},

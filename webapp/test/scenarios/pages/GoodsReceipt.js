@@ -100,10 +100,11 @@ sap.ui.require([
 						return this;
 					},
 					iShouldSeeTheBusyIndicator: function() {
-						var sErrorMessage;
+						
 						return this.waitFor({
 							viewName: "sap.m.MessageBox",
 							check: function() {
+								var sErrorMessage;
 								return !!sap.ui.test.Opa5.getJQuery()(".sapMMessageBoxError").length && sap.ui.test.Opa5.getJQuery()(".sapMMessageBoxError").find(".sapMMsgBoxText").text() === sErrorMessage;
 							},
 							success: function(oMessageBox) {
