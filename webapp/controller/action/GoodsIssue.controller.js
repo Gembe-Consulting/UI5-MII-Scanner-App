@@ -304,8 +304,8 @@ sap.ui.define([
 						oDataModel.setProperty("/unitOfMeasure", sComponentUnitOfMeasure);
 
 						// update entry quantity by remaining open quantity, but only if users did not enter a quantity beforhand
-						if (this.getModel("view")
-							.getProperty("/type") === "nonLE" && oDataModel.getProperty("/entryQuantity") === "") {
+						if (this.getModel("view").getProperty("/type") === "nonLE"
+							 && ( !oDataModel.getProperty("/entryQuantity") || oDataModel.getProperty("/entryQuantity") === "" ) ) {
 							oDataModel.setProperty("/entryQuantity", oOrderComponent.BDMNG - oOrderComponent.ENMNG);
 							oSource.setTooltip("Restmenge \'" + (oOrderComponent.BDMNG - oOrderComponent.ENMNG) + "\' = Bedarfsmenge \'" + oOrderComponent.BDMNG + "\' - Entnommene Menge \'" + oOrderComponent.ENMNG + "\'");
 						}
