@@ -292,7 +292,7 @@ sap.ui.define([
 							});
 						}
 
-						if (oDataModel.getProperty("/MEINH") !== oOrderComponent.EINHEIT) {
+						if (oDataModel.getProperty("/unitOfMeasure") && oDataModel.getProperty("/unitOfMeasure") !== oOrderComponent.EINHEIT) {
 							this.addLogMessage({
 								text: oBundle.getText("messageTextOrderComponentHasDeviatingUnitOfMeasure", [oOrderComponent.EINHEIT, oDataModel.getProperty("/unitOfMeasure")])
 							});
@@ -305,7 +305,7 @@ sap.ui.define([
 
 						// update entry quantity by remaining open quantity, but only if users did not enter a quantity beforhand
 						if (this.getModel("view")
-							.getProperty("/type") === "nonLE" && oDataModel.getProperty("/entryQuantity") === 0.0) {
+							.getProperty("/type") === "nonLE" && oDataModel.getProperty("/entryQuantity") === "") {
 							oDataModel.setProperty("/entryQuantity", oOrderComponent.BDMNG - oOrderComponent.ENMNG);
 							oSource.setTooltip("Restmenge \'" + (oOrderComponent.BDMNG - oOrderComponent.ENMNG) + "\' = Bedarfsmenge \'" + oOrderComponent.BDMNG + "\' - Entnommene Menge \'" + oOrderComponent.ENMNG + "\'");
 						}
@@ -487,12 +487,13 @@ sap.ui.define([
 		onUnitOfMeasureChange: function(oEvent) {
 			var sUnitOfMeasure = oEvent.getParameter("value")
 				.toUpperCase(),
+				oSource = oEvent.getSource(),
 				oDataModel = this.getModel("data");
 
 			oDataModel.setProperty("/unitOfMeasure", sUnitOfMeasure);
+			
+			this.validateComponentWithdrawal(oDataModel.getProperty("/orderNumber"), oDataModel.getProperty("/materialNumber"), oSource);
 
-			this.updateViewControls(this.getModel("data")
-				.getData());
 		},
 
 		onMaterialNumberChange: function(oEvent) {
