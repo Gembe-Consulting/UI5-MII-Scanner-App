@@ -55,7 +55,7 @@ sap.ui.define([
 			//this.register(/^I start the app on '(.*?)' using parameter '(.*?)'"$/i,
 			this.register(/^I can see (.+?) in (.+?) view has css (.+?) '(.+?)'$/i,
 				function(sControlId, sViewName, sCssProperty, sValue, Given, When, Then) {
-					Then.iCanSeeControlHasColor({
+					Then.iCanSeeControlHasCSSProperty({
 						sControlId: sControlId,
 						sViewName:sViewName,
 						sCssProperty:sCssProperty,

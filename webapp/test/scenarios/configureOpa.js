@@ -39,16 +39,33 @@ sap.ui.define([
 					errorMessage: "Could not obtain control"
 				});
 			},
-			iCanSeeControlHasColor: function(sControlId, sViewName, sCssProperty, sValue) {
+			iCanSeeControlHasCSSProperty: function(oOptions) {
 				var that = this;
 				return this.waitFor({
-					viewName: sViewName,
-					id: sControlId,
+					viewName: oOptions.sViewName,
+					id: oOptions.sControlId,
 					success: function(oControl) {
-						Opa5.assert.ok(true, "Control " + sControlId + " has been found in " + sViewName + " view");
+						Opa5.assert.ok(!!oControl, "Control " + oOptions.sControlId + " has been found in " + oOptions.sViewName + " view");
 
-						Opa5.assert.ok(oControl.$()
-							.css(sCssProperty) === sValue, "Control " + sControlId + " has " + sCssProperty + " " + sValue);
+						function hexToRgb(sHex) {
+							var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(sHex);
+							return result ? {
+								r: parseInt(result[1], 16),
+								g: parseInt(result[2], 16),
+								b: parseInt(result[3], 16)
+							} : null;
+						};
+
+						if (oOptions.sCssProperty === "color") {
+
+							var oRGB = hexToRgb(oOptions.sValue);
+							//"rgb(31, 53, 222)"
+							oOptions.sValue = "rgb(" + oRGB.r + ", " + oRGB.g + ", " + oRGB.b + ")";
+						}
+
+						var sCSSValue = oControl.$().css(oOptions.sCssProperty);
+
+						Opa5.assert.ok(sCSSValue === oOptions.sValue, "Control " + oOptions.sControlId + " has " + oOptions.sCssProperty + " " + oOptions.sValue);
 					},
 					errorMessage: "Could not obtain control"
 				});
