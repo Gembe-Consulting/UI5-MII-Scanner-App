@@ -60,12 +60,14 @@ sap.ui.define([
 
 			if (oScannerInputType) {
 				jQuery.sap.log.info("Barcode enthält folgende Information: \'" + sScannedString + "\' Sie haben \'" + oScannerInputType.name + "\' gescannt.");
+				MessageBox.information("Barcode enthält folgende Information: \'" + sScannedString + "\' Sie haben \'" + oScannerInputType.name + "\' gescannt.");
 				oControl = this.getControlByScannerInputType(oScannerInputType);
 				if (oControl) {
 					oControl.fireChangeEvent(sScannedString);
 				}
 			} else {
 				jQuery.sap.log.warning("Ihr Barcode konnte zwar gelesen, aber nicht zugeordnet werden.\nInhalt: \'" + sScannedString + "\'");
+				MessageBox.warning("Ihr Barcode konnte zwar gelesen, aber nicht zugeordnet werden.\nInhalt war: \'" + sScannedString + "\'");
 			}
 
 		},
