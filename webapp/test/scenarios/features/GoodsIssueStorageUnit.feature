@@ -47,7 +47,7 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 		 And I can see quantityInput with value '217,321' in action.GoodsIssue view
 		 And I can see unitOfMeasureInput with value 'KG' in action.GoodsIssue view
 		 And I can see storageUnitFragmentBatchText with text '0109331231' in action.GoodsIssue view
-		 And I can see storageUnitFragmentActualQuantity with text '217,321 KG' in action.GoodsIssue view
+		 And I can see storageUnitFragmentActualQuantityText with text '217,321 KG' in action.GoodsIssue view
 		 And I can see storageUnitFragmentStorageBinText with text 'PRODUKTION' in action.GoodsIssue view
 		 And I can see storageUnitFragmentStorageTypeText with text '900' in action.GoodsIssue view
 		 And I can see storageUnitFragmentStorageUnitTypeText with text 'Industriepalette' in action.GoodsIssue view
