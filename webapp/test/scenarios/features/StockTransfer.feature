@@ -9,9 +9,9 @@ Feature: Creating a stock transfer
 		
 	Scenario: Should navigate to Stock Transfer Page and see all UI elements
 		Then I can see stockTransferPage in action.StockTransfer view
-		Then I can see storageBinSelection with editable is 'true' in action.StockTransfer view
+		Then I can see storageBinSelection with editable being 'true' in action.StockTransfer view
 		Then storageBinSelection in action.StockTransfer view contains 16 items
-		Then I can see storageUnitInput with editable is 'true' in action.StockTransfer view
+		Then I can see storageUnitInput with editable being 'true' in action.StockTransfer view
 		Then I can see storageUnitInput with value '' in action.StockTransfer view
 		Then I can see quantityInput with value '' in action.StockTransfer view
 		Then I can see clearQuantityInputIcon in action.StockTransfer view
@@ -39,16 +39,16 @@ Feature: Creating a stock transfer
 		When I enter '00000000109330000013' into storageUnitInput in action.StockTransfer view
 		Then I can see storageUnitInput with value '109330000013' in action.StockTransfer view
 		 And I can see storageUnitInput with valueState 'Success' in action.StockTransfer view
-		 And I can see quantityInput with editable is 'true' in action.StockTransfer view
+		 And I can see quantityInput with editable being 'true' in action.StockTransfer view
 		 And I can see quantityInput with value '' in action.StockTransfer view
 		 And I can see quantityInput has focus in action.StockTransfer view
 		When I click on clearFormButton in action.StockTransfer view
 		Then I can see storageUnitInput with valueState 'None' in action.StockTransfer view
-		 And I can see quantityInput with editable is 'false' in action.StockTransfer view
+		 And I can see quantityInput with editable being 'false' in action.StockTransfer view
 		When I enter '00000000109330000014' into storageUnitInput in action.StockTransfer view
 		Then I can see storageUnitInput with value '109330000014' in action.StockTransfer view
 		 And I can see storageUnitInput with valueState 'Success' in action.StockTransfer view
-		 And I can see quantityInput with editable is 'false' in action.StockTransfer view
+		 And I can see quantityInput with editable being 'false' in action.StockTransfer view
 		 And I can see quantityInput with value '300,000' in action.StockTransfer view
 		When I enter '00000000000000000001' into storageUnitInput in action.StockTransfer view
 		Then I can see storageUnitInput with valueState 'Error' in action.StockTransfer view

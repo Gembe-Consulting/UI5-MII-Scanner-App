@@ -17,10 +17,10 @@ Feature: Determinate Input Fields from an external Application
 		Given I start the app on "/Start/Materialbewegung" using remote user "phigem"
 		When I navigate to "/Start/Materialbewegung/WE?LGORT=RB01"
 		Then I can see storageLocationInput with value 'RB01' in action.GoodsReceipt view
-		 And I can see storageUnitInput with editable is 'false' in action.GoodsReceipt view
+		 And I can see storageUnitInput with editable being 'false' in action.GoodsReceipt view
 		When I navigate to "/Start/Materialbewegung/WE?LGORT=1000"
 		Then I can see storageLocationInput with value '1000' in action.GoodsReceipt view
-		 And I can see storageUnitInput with editable is 'true' in action.GoodsReceipt view
+		 And I can see storageUnitInput with editable being 'true' in action.GoodsReceipt view
 
 	Scenario: Should open Goods Receipt Page with given unit of measure
 		Given I start the app on "/Start/Materialbewegung" using remote user "phigem"
@@ -68,12 +68,12 @@ Feature: Determinate Input Fields from an external Application
 	Scenario: Should open Goods Issue Page (nonLE) with given bulk material indicator
 		Given I start the app on "/Start/Materialbewegung" using remote user "phigem"
 		When I navigate to "/Start/Materialbewegung/WA?type=nonLE&SCHGT=true"
-		Then I can see bulkMaterialSwitch with state is 'true' in action.GoodsIssue view
+		Then I can see bulkMaterialSwitch with state being 'true' in action.GoodsIssue view
 		
 	Scenario: Should open Goods Issue Page (nonLE) with all possible input values
 		Given I start the app on "/Start/Materialbewegung" using remote user "phigem"
 		When I navigate to "/Start/Materialbewegung/WA?type=nonLE&SCHGT=true&AUFNR=1234567&MATNR=1200666-006&LGORT=RB01&MEINH=KG"
-		Then I can see bulkMaterialSwitch with state is 'true' in action.GoodsIssue view
+		Then I can see bulkMaterialSwitch with state being 'true' in action.GoodsIssue view
 		 And I can see orderNumberInput with value '1234567' in action.GoodsIssue view
 		 And I can see materialNumberInput with value '1200666-006' in action.GoodsIssue view
 		 And I can see storageLocationInput with value 'RB01' in action.GoodsIssue view
