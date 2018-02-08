@@ -27,6 +27,8 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 		Then I can see saveButton in action.GoodsIssue view
 		When I enter '0,000' into quantityInput in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
+		When I enter '' into quantityInput in action.GoodsIssue view
+		Then on the Goods Issue Page: I should see the save button is disabled
 		When I enter '1,000' into quantityInput in action.GoodsIssue view
 		Then I can see saveButton in action.GoodsIssue view
 		When I click on clearQuantityInputIcon in action.GoodsIssue view
@@ -39,7 +41,7 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 
 	Scenario: Should show storage unit data if LE was entered
 		When I look at the screen
-		Then I can see quantityInput with value '0,000' in action.GoodsIssue view
+		Then I can see quantityInput with value '' in action.GoodsIssue view
 		When I enter '00000000109330000004' into storageUnitInput in action.GoodsIssue view
 		Then I can see storageUnitFragmentMaterialInfoText with text '1700948-030 - Zucker-Fett-VBT V185 RSPO-MB 600, BB' in action.GoodsIssue view
 		 And I can see quantityInput with value '217,321' in action.GoodsIssue view

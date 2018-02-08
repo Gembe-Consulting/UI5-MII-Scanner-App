@@ -84,7 +84,7 @@ sap.ui.require([
 							"unitOfMeasureInput": "",
 							"orderNumberInput": "",
 							"storageLocationInput": "",
-							"quantityInput": "0,000"
+							"quantityInput": ""
 						};
 
 						jQuery.each(oInitialControlData, function(sControlId, sEmptyValue) {

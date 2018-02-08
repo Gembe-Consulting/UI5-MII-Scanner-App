@@ -60,7 +60,7 @@ sap.ui.require([
 							"orderNumberInput": "",
 							"storageLocationInput": "",
 							"materialNumberInput": "",
-							"quantityInput": "0,000",
+							"quantityInput": "",
 							"unitOfMeasureInput": "",
 							"bulkMaterialSwitch": false
 						};
@@ -91,7 +91,7 @@ sap.ui.require([
 						var oInitialControlData = {
 							"storageUnitInput": "",
 							"orderNumberInput": "",
-							"quantityInput": "0,000",
+							"quantityInput": "",
 							"unitOfMeasureInput": ""
 						};
 
