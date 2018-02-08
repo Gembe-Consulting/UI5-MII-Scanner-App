@@ -526,9 +526,9 @@ sap.ui.define([
 				switch (this.getModel("view")
 					.getProperty("/type")) {
 					case "withLE":
-						return !!oData.entryQuantity && !oData.entryQuantity <= 0 && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageUnitNumber;
+						return !!oData.entryQuantity && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageUnitNumber;
 					case "nonLE":
-						return !!oData.entryQuantity && !oData.entryQuantity <= 0 && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageLocation && !!oData.materialNumber;
+						return !!oData.entryQuantity && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageLocation && !!oData.materialNumber;
 					default:
 						return false;
 				}

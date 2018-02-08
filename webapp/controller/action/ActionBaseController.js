@@ -157,10 +157,20 @@ sap.ui.define([
 			var oQuantityInputControl = this.byId("quantityInput");
 
 			if (oQuantityInputControl) {
+				// Delete value and set focus
 				oQuantityInputControl
 					.setValue("")
 					.focus();
+				
+				// fire change event to trigger validation
+				oQuantityInputControl.fireChange({
+					value: ""
+				});
+				
+			}else{
+				MessageBox.error("Der feldinhalt konnte nicht gelöscht werden: Kein Control mit ID quantityInput gefunden!");
 			}
+
 		},
 
 		onCancelAction: function(oEvent) {

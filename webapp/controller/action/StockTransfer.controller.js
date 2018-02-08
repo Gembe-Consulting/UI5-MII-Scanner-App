@@ -321,7 +321,7 @@ sap.ui.define([
 		 */
 		isInputDataValid: function(oData) {
 			if (oData) {
-				return !!oData.targetStorageBinSelection && !!oData.storageUnitNumberInput && !!oData.LENUM && !!oData.entryQuantity && !this.formatter.isEmptyStorageUnit(oData.entryQuantity);
+				return !!oData.targetStorageBinSelection && !!oData.storageUnitNumberInput && !!oData.LENUM && !!oData.entryQuantity && oData.entryQuantity !== "" && !this.formatter.isEmptyStorageUnit(oData.entryQuantity);
 			} else {
 				return false;
 			}
