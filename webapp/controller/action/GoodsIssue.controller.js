@@ -405,7 +405,7 @@ sap.ui.define([
 					oDataModel.setProperty("/materialNumber", oStorageUnit.MATNR);
 
 					// set actual from storage unit as entry quantity, if nothing has been entered yet
-					if (oDataModel.getProperty("/entryQuantity") === 0.0) {
+					if (!oDataModel.getProperty("/entryQuantity") || oDataModel.getProperty("/entryQuantity") === "") {
 						oDataModel.setProperty("/entryQuantity", oStorageUnit.ISTME);
 					}
 
