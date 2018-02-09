@@ -127,7 +127,10 @@ sap.ui.define([
 			switch (oInputType.key) {
 				case "LENUM":
 					return this.byId("storageUnitInput");
-					break;
+				case "LGORT":
+					return this.byId("storageLocationInput");
+				case "AUFNR_VORNR":
+					return this.byId("orderNumberInput");
 				default:
 					return null;
 			}
