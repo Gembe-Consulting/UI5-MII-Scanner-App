@@ -2,7 +2,13 @@
    color: #1F35DE !important;
    font-weight: bold;
 }
+
 .suwGoodsIssueTitle{
    color: #BB07FF !important;
+   font-weight: bold;
+}
+
+.suwStockTransferTitle{
+   color: #FFAC00 !important;
    font-weight: bold;
 }
