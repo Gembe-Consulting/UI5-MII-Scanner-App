@@ -5,7 +5,7 @@
 			<Toolbar>
 				<ToolbarSpacer/>
 				<c:Icon id="goodsIssuePageIcon" src="sap-icon://outbox" size="2rem" color="#BB07FF" alt="GI"/>
-				<c:Icon id="goodsIssuePageIcon2" src="{= ${view>/type}==='nonLE' ? 'sap-icon://filter' : 'sap-icon://bar-code'}" size="1.25rem" width="4rem" color="#BB07FF" />
+				<c:Icon id="goodsIssuePageIcon2" src="{= ${view>/type}==='nonLE' ? 'sap-icon://filter' : 'sap-icon://bar-code'}" size="1.25rem" color="#BB07FF" class="sapUiSmallMarginEnd" />
 				<Title id="goodsIssuePageTitle" text="{path:'view>/type', formatter:'.setPageTitle'}" class="suwGoodsIssueTitle"/>
 				<ToolbarSpacer/>
 				<Button id="clearFormButton" icon="sap-icon://redo" press="onClearFormPress"/>

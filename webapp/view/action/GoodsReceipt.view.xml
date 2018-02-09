@@ -4,7 +4,7 @@
 		<customHeader>
 			<Toolbar>
 				<ToolbarSpacer/>
-				<c:Icon id="goodsReceiptPageIcon" src="sap-icon://inbox" size="2rem" width="4rem" color="#1F35DE" alt="GR"/>
+				<c:Icon id="goodsReceiptPageIcon" src="sap-icon://inbox" size="2rem" color="#1F35DE" alt="GR" class="sapUiSmallMarginEnd" />
 				<Title id="goodsReceiptPageTitle" text="{i18n>titleGoodsReceipt}" class="suwGoodsReceiptTitle"/>
 				<ToolbarSpacer/>
 				<Button id="clearFormButton" icon="sap-icon://redo" press="onClearFormPress"/>
