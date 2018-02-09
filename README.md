@@ -1,4 +1,4 @@
-$ git log --after 06/02/2018 --pretty=format:"%s%n%b" --reverse --no-merges | grep -v '^$' > CHANGES.md
+$ git log --after 09/02/2018 --pretty=format:"%s%n%b" --reverse --no-merges | grep -v '^$' > CHANGES.md
 
 [<TYPE>] <subject>
 
@@ -19,3 +19,4 @@ Allowed <TYPE> values:
  - new messahe text
  
 Fixes issue #123
+ 
