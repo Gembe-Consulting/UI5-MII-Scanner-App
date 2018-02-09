@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 $ git log --after 06/02/2018 --pretty=format:"%s%n%b" --reverse --no-merges | grep -v '^$' > CHANGES.md
-=======
-$ git log --after 06/02/2018 --pretty=format:"%s%n%b" --reverse --no-merges | grep -v '^$' > CHANGELOG.md
->>>>>>> refs/heads/master
 
 [<TYPE>] <subject>
 
