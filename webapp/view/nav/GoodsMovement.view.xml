@@ -1,11 +1,8 @@
 <mvc:View controllerName="com.mii.scanner.controller.nav.NavBaseController" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc">
 	<Page id="goodsMovementPage" title="{i18n>titleGoodsMovement}" showNavButton="true" navButtonPress="onNavBack">
 		<content>
-			<List
-				footerText="{i18n>footerTextUserName} '{user>/USERLOGIN}' {i18n>footerTextLoggedOn} {path: 'user>/lastLoginTimestamp', type: 'sap.ui.model.type.DateTime', formatOptions: { relative: true } }"
-				mode="None" width="100%" class="sapUiResponsiveMargin" inset="{= !${device>/system/phone} }">
+			<List mode="None" width="100%" class="sapUiSmallMarginTop" inset="{= !${device>/system/phone} }">
 				<items>
-					
 					<CustomListItem id="goodsReceiptItem" type="Navigation" press="onNavForward" class="sapUiResponsiveMargin" tooltip="{i18n>itemLabelTextGoodsReceiptTooltip}">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
@@ -14,7 +11,7 @@
 									<c:Icon src="sap-icon://bar-code" size="2rem" color="#1F35DE" alt="WITH_LE"/>
 								</HBox>
 								<VBox width="100%">
-									<Label text="{i18n>itemLabelTextGoodsReceipt}" design="Bold"/>
+									<Label text="{i18n>itemLabelTextGoodsReceipt}" design="Bold" class="sapUiSmallMarginBegin"/>
 									<Label text="{i18n>itemInfoTextGoodsReceipt}" visible="{= !${device>/system/phone} }"/>
 								</VBox>
 							</HBox>
@@ -32,7 +29,7 @@
 									<c:Icon src="sap-icon://bar-code" size="2rem" color="#BB07FF" alt="WITH_LE"/>
 								</HBox>
 								<VBox width="100%">
-									<Label text="{i18n>itemLabelTextGoodsIssueWithLE}" design="Bold"/>
+									<Label text="{i18n>itemLabelTextGoodsIssueWithLE}" design="Bold" class="sapUiSmallMarginBegin"/>
 									<Label text="{i18n>itemInfoTextGoodsIssueWithLE}" visible="{= !${device>/system/phone} }"/>
 								</VBox>
 							</HBox>
@@ -51,7 +48,7 @@
 									<c:Icon src="sap-icon://filter" size="2rem" color="#BB07FF" alt="WITHOUT_LE"/>
 								</HBox>
 								<VBox width="100%">
-									<Label text="{i18n>itemLabelTextGoodsIssueNonLE}" design="Bold"/>
+									<Label text="{i18n>itemLabelTextGoodsIssueNonLE}" design="Bold" class="sapUiSmallMarginBegin"/>
 									<Label text="{i18n>itemInfoTextGoodsIssueNonLE}" visible="{= !${device>/system/phone} }"/>
 								</VBox>
 							</HBox>
@@ -70,7 +67,7 @@
 									<c:Icon src="sap-icon://process" size="2rem" color="#05B074" alt="RC"/>
 								</HBox>
 								<VBox width="100%">
-									<Label text="{i18n>itemLabelTextRollerConveyor}" design="Bold"/>
+									<Label text="{i18n>itemLabelTextRollerConveyor}" design="Bold" class="sapUiSmallMarginBegin"/>
 									<Label text="{i18n>itemInfoTextRollerConveyor}" visible="{= !${device>/system/phone} }"/>
 								</VBox>
 							</HBox>
@@ -88,7 +85,7 @@
 									<c:Icon src="sap-icon://shipping-status" size="2rem" color="#FFAC00" alt="ST"/>
 								</HBox>
 								<VBox width="100%">
-									<Label text="{i18n>itemLabelTextStockTransfer}" design="Bold"/>
+									<Label text="{i18n>itemLabelTextStockTransfer}" design="Bold" class="sapUiSmallMarginBegin"/>
 									<Label text="{i18n>itemInfoTextStockTransfer}" visible="{= !${device>/system/phone} }"/>
 								</VBox>
 							</HBox>
@@ -101,5 +98,12 @@
 				</items>
 			</List>
 		</content>
+		<footer>
+			<Toolbar>
+				<Text text="{i18n>footerTextUserName} '{user>/USERLOGIN}'"/>
+				<ToolbarSpacer/>
+				<Text text="Version {i18n>appVersion}"/>
+			</Toolbar>
+		</footer>
 	</Page>
 </mvc:View>

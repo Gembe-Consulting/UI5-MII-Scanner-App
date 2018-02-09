@@ -29,10 +29,11 @@
 					// set up test service for local testing
 					mockserver.init();
 					
-					new sap.ui.core.ComponentContainer({
-						name : "com.mii.scanner"
+					new sap.m.Shell({
+	            		app : new sap.ui.core.ComponentContainer({
+			               name : "com.mii.scanner"
+	            		})
 					}).placeAt("content");
-					
 				});
 			});
 		</script>

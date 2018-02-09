@@ -1,9 +1,7 @@
 <mvc:View controllerName="com.mii.scanner.controller.nav.NavBaseController" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc">
 	<Page id="homePage" title="{i18n>titleHome}" showNavButton="true" navButtonPress="onNavBack">
 		<content>
-			<List id="navListId"
-				footerText="{i18n>footerTextUserName} '{user>/USERLOGIN}' {i18n>footerTextLoggedOn} {path: 'user>/lastLoginTimestamp', type: 'sap.ui.model.type.DateTime', formatOptions: { relative: true } }"
-				mode="None" width="100%" class="sapUiSmallMarginTop" inset="{= !${device>/system/phone} }">
+			<List mode="None" width="100%" class="sapUiSmallMarginTop" inset="{= !${device>/system/phone} }">
 				<items>
 					<CustomListItem id="navGoodsMovementItem" type="Navigation" press="onNavForward" class="sapUiResponsiveMargin">
 						<content>
@@ -50,5 +48,12 @@
 				</items>
 			</List>
 		</content>
+		<footer>
+			<Toolbar>
+				<Text text="{i18n>footerTextUserName} '{user>/USERLOGIN}'"/>
+				<ToolbarSpacer/>
+				<Text text="Version {i18n>appVersion}"/>
+			</Toolbar>
+		</footer>
 	</Page>
 </mvc:View>
