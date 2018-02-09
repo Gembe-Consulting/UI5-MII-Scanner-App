@@ -1,6 +1,16 @@
 <mvc:View controllerName="com.mii.scanner.controller.action.RollerConvoyer" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
 	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
-	<Page id="rollerConveyorPage" title="{i18n>titleRollerConveyor}" showNavButton="true" navButtonPress="onNavBack">
+	<Page id="rollerConveyorPage">
+			<customHeader>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<c:Icon id="rollerConveyorPageIcon" src="sap-icon://instance" size="2rem" color="#05B074" alt="RC"/>
+				<c:Icon id="rollerConveyorPageIcon2" src="sap-icon://process" size="1.25rem" color="#05B074" class="sapUiSmallMarginEnd" />
+				<Title id="rollerConveyorPageTitle" text="{i18n>titleRollerConveyor}" class="suwRollerConveyorTitle"/>
+				<ToolbarSpacer/>
+				<Button id="clearFormButton" icon="sap-icon://redo" press="onClearFormPress"/>
+			</Toolbar>
+		</customHeader>
 		<content>
 			<f:SimpleForm editable="true" layout="ResponsiveGridLayout" breakpointM="400" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
 				emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">

@@ -21,6 +21,11 @@ Feature: Creating goods issue posting to SAP ERP using storage location
 		Then I can see clearQuantityInputIcon with src 'sap-icon://eraser' in action.GoodsIssue view
 		Then I can see clearFormButton in action.GoodsIssue view
 		Then I can see cancelButton with text 'Abbrechen' in action.GoodsIssue view
+		Then I can see goodsIssuePageIcon with src 'sap-icon://outbox' in action.GoodsIssue view
+		Then I can see goodsIssuePageIcon with color '#BB07FF' in action.GoodsIssue view
+		Then I can see goodsIssuePageIcon2 with src 'sap-icon://filter' in action.GoodsIssue view
+		Then I can see goodsIssuePageIcon2 with color '#BB07FF' in action.GoodsIssue view
+		Then I can see goodsIssuePageTitle in action.GoodsIssue view has css color '#BB07FF'
 		Then on the Goods Issue Page: I should see the save button is disabled
 		Then on the Goods Issue Page: I should see all "non LE" input fields are initial
 		

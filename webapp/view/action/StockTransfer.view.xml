@@ -1,9 +1,16 @@
 <mvc:View controllerName="com.mii.scanner.controller.action.StockTransfer" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
 	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:storageBinData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
-	<Page id="stockTransferPage" title="{i18n>titleStockTransfer}">
-		<headerContent>
-			<Button id="clearFormButton" icon="sap-icon://redo" press="onClearFormPress"/>
-		</headerContent>
+	<Page id="stockTransferPage">
+		<customHeader>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<c:Icon id="stockTransferPageIcon" src="sap-icon://offsite-work" size="2rem" color="#FFAC00" alt="GI"/>
+				<c:Icon id="stockTransferPageIcon2" src="sap-icon://shipping-status" size="1.25rem" color="#FFAC00" class="sapUiSmallMarginEnd" />
+				<Title id="stockTransferPageTitle" text="{i18n>titleStockTransfer}" class="suwStockTransferTitle"/>
+				<ToolbarSpacer/>
+				<Button id="clearFormButton" icon="sap-icon://redo" press="onClearFormPress"/>
+			</Toolbar>
+		</customHeader>
 		<content>
 			<l:VerticalLayout id="messageStripContainer" width="100%"></l:VerticalLayout>
 			<VBox height="100%" width="100%" direction="Column" alignItems="Center" justifyContent="Start">
