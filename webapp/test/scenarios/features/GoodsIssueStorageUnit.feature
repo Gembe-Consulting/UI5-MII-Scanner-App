@@ -17,6 +17,11 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 		Then I can see orderNumberInput in action.GoodsIssue view
 		Then I can see clearFormButton in action.GoodsIssue view
 		Then I can see cancelButton with text 'Abbrechen' in action.GoodsIssue view
+		Then I can see goodsIssuePageIcon with src 'sap-icon://outbox' in action.GoodsIssue view
+		Then I can see goodsIssuePageIcon with color '#BB07FF' in action.GoodsIssue view
+		Then I can see goodsIssuePageIcon2 with src 'sap-icon://bar-code' in action.GoodsIssue view
+		Then I can see goodsIssuePageIcon2 with color '#BB07FF' in action.GoodsIssue view
+		Then I can see goodsIssuePageTitle in action.GoodsIssue view has css color '#BB07FF'
 		Then on the Goods Issue Page: I should see the save button is disabled
 		Then on the Goods Issue Page: I should see all "with LE" input fields are initial
 
