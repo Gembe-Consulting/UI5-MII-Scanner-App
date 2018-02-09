@@ -1,9 +1,16 @@
 <mvc:View controllerName="com.mii.scanner.controller.action.GoodsIssue" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
 	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
-	<Page id="goodsIssuePage" title="{path:'view>/type', formatter:'.setPageTitle'}">
-		<headerContent>
-			<Button id="clearFormButton" icon="sap-icon://redo" press="onClearFormPress"/>
-		</headerContent>
+	<Page id="goodsIssuePage">
+		<customHeader>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<c:Icon id="goodsIssuePageIcon" src="sap-icon://outbox" size="2rem" color="#BB07FF" alt="GI"/>
+				<c:Icon id="goodsIssuePageIcon2" src="{= ${view>/type}==='nonLE' ? 'sap-icon://filter' : 'sap-icon://bar-code'}" size="1.25rem" color="#BB07FF" class="sapUiSmallMarginEnd" />
+				<Title id="goodsIssuePageTitle" text="{path:'view>/type', formatter:'.setPageTitle'}" class="suwGoodsIssueTitle"/>
+				<ToolbarSpacer/>
+				<Button id="clearFormButton" icon="sap-icon://redo" press="onClearFormPress"/>
+			</Toolbar>
+		</customHeader>
 		<content>
 			<l:VerticalLayout id="messageStripContainer" width="100%"></l:VerticalLayout>
 			<VBox height="100%" width="100%" direction="Column" alignItems="Center" justifyContent="Start">

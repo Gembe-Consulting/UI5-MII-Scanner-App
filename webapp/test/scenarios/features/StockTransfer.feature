@@ -18,6 +18,11 @@ Feature: Creating a stock transfer
 		Then I can see unitOfMeasureInput in action.StockTransfer view
 		Then I can see clearFormButton in action.StockTransfer view
 		Then I can see cancelButton with text 'Abbrechen' in action.StockTransfer view
+		Then I can see stockTransferPageIcon with src 'sap-icon://offsite-work' in action.StockTransfer view
+		Then I can see stockTransferPageIcon with color '#FFAC00' in action.StockTransfer view
+		Then I can see stockTransferPageIcon2 with src 'sap-icon://shipping-status' in action.StockTransfer view
+		Then I can see stockTransferPageIcon2 with color '#FFAC00' in action.StockTransfer view
+		Then I can see stockTransferPageTitle in action.StockTransfer view has css color '#FFAC00'
 		Then I cannot see saveButton in action.StockTransfer view
 #		Then on the Stock Transfer Page: I should see all input fields are initial
 
