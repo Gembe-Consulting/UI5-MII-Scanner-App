@@ -1,4 +1,4 @@
-<mvc:View controllerName="com.mii.scanner.controller.action.RollerConvoyer" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+<mvc:View controllerName="com.mii.scanner.controller.action.RollerConveyor" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
 	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
 	<Page id="rollerConveyorPage">
 		<customHeader>
@@ -28,13 +28,13 @@
 									<l:GridData span="XL2 L3 M4 S8"/>
 								</layoutData>
 							</HBox>
-							<Input value="{path: 'data>/MEINH', type:'.sapType.QUAN'}" editable="false">
+							<Input id="unitOfMeasureInput" value="{path: 'data>/MEINH', type:'.sapType.MEINH'}" editable="false">
 								<layoutData>
 									<l:GridData span="XL1 L1 M2 S4"/>
 								</layoutData>
 							</Input>
 							<Label text="{i18n>rollerConveyor.form.label.storageBin.text}"/>
-							<ComboBox id="storageBinSelction" showSecondaryValues="true" selectedKey="{data>/storageBin}" selectedItemId="{data>/storageBinItem}" change="onStorageBinSelectionChange">
+							<ComboBox id="storageBinSelection" showSecondaryValues="true" selectedKey="{data>/storageBin}" selectedItemId="{data>/storageBinItem}" change="onStorageBinSelectionChange">
 								<c:ListItem key="ROLLENBAHN" text="{i18n>rollerConveyor.comboBox.listItem-ROLLENBAHN.text}" additionalText="ROLLENBAHN"/>
 								<c:ListItem key="BEUM" text="{i18n>rollerConveyor.comboBox.listItem-BEUM.text}" additionalText="BEUM"/>
 								<c:ListItem key="STAPLER" text="{i18n>rollerConveyor.comboBox.listItem-STAPLER.text}" additionalText="STAPLER"/>

@@ -7,7 +7,7 @@ sap.ui.define([
 ], function(ActionBaseController, JSONModel, MessageBox, sapType, formatter) {
 	"use strict";
 
-	return ActionBaseController.extend("com.mii.scanner.controller.action.RollerConvoyer", {
+	return ActionBaseController.extend("com.mii.scanner.controller.action.RollerConveyor", {
 
 		sapType: sapType,
 		formatter: formatter,
@@ -63,7 +63,8 @@ sap.ui.define([
 
 			var fnResolve = function(oData) {
 				var oStorageUnit,
-					aResultList;
+					aResultList,
+					bStorageUnitValid;
 
 				try {
 
@@ -72,39 +73,44 @@ sap.ui.define([
 					if (aResultList.length === 1) {
 						oStorageUnit = this._formatStorageUnitData(oData.d.results[0].Rowset.results[0].Row.results[0]);
 						oSource.setValueState(sap.ui.core.ValueState.Success);
+						bStorageUnitValid = true;
 					} else {
-						throw oBundle.getText("rollerConvoyer.storageUnit.notFoundMessageText");
-					}
-
-					if (oStorageUnit.ISTME <= 0.001) {
 						this.addLogMessage({
-							text: oBundle.getText("rollerConvoyer.storageUnit.emptyMessageText", [sStorageUnitNumber])
+							text: oBundle.getText("rollerConveyor.messageText.storageUnitNotFound", [sStorageUnitNumber])
 						});
-						this.getModel("view")
-							.setProperty("/bStorageUnitValid", false);
 						oSource.setValueState(sap.ui.core.ValueState.Error);
-					} else {
-						this.getModel("view")
-							.setProperty("/bStorageUnitValid", true);
+						bStorageUnitValid = false;
 					}
 
-					this.getModel("data")
-						.setData(oStorageUnit, true);
+					/*
+										if (oStorageUnit.ISTME <= 0.001) {
+											this.addLogMessage({
+												text: oBundle.getText("rollerConveyor.messageText.storageUnitEmpty", [sStorageUnitNumber])
+											});
+											oSource.setValueState(sap.ui.core.ValueState.Error);
+											bStorageUnitValid = false;
+										} else {
+											bStorageUnitValid = true;
+										}
+					*/
+
+					this.getModel("data").setData(oStorageUnit, true);
 
 				} catch (err) {
-					MessageBox.error(oBundle.getText("messageTextStorageUnitNotFound", [sStorageUnitNumber]), {
+					MessageBox.error(oBundle.getText("rollerConveyor.errorMessageText.storageUnit"), {
 						title: err
 					});
 					oSource.setValueState(sap.ui.core.ValueState.Error);
+					bStorageUnitValid = false;
 				} finally {
-					this.updateViewControls(this.getModel("data")
-						.getData());
+					this.getModel("view").setProperty("/bStorageUnitValid", bStorageUnitValid);
+					this.updateViewControls(this.getModel("data").getData());
 				}
 
 			}.bind(this);
 
 			var fnReject = function(oError) {
-				MessageBox.error(oBundle.getText("rollerConvoyer.storageUnit.errorMessageText"));
+				MessageBox.error(oBundle.getText("rollerConveyor.storageUnit.errorMessageText"));
 			}.bind(this);
 
 			this.requestStorageUnitInfoService(sStorageUnitNumber)
@@ -126,6 +132,7 @@ sap.ui.define([
 
 		updateViewControls: function(oData) {
 			var oViewModel = this.getModel("view"),
+				bStorageUnitValid = oViewModel.getProperty("/bStorageUnitValid"),
 				bInputValuesComplete,
 				bNoErrorMessagesActive,
 				bReadyForPosting;
@@ -137,17 +144,13 @@ sap.ui.define([
 			bNoErrorMessagesActive = this.isMessageModelClean();
 
 			// we are ready for posting once we have complete and proper formatted input
-			bReadyForPosting = bNoErrorMessagesActive && bInputValuesComplete;
+			bReadyForPosting = bNoErrorMessagesActive && bInputValuesComplete && bStorageUnitValid;
 
 			oViewModel.setProperty("/bValid", bReadyForPosting);
 		},
 
 		isInputDataValid: function(oData) {
-			if (oData) {
-				return !!oData.storageUnit && !!oData.storageBin && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.unitOfMeasure && !!oData.stretcherSwitch;
-			} else {
-				return false;
-			}
+			return !!oData.LENUM && !!oData.storageUnit && !!oData.storageBin && !!oData.storageBinItem && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.MEINH;
 		}
 	});
 
