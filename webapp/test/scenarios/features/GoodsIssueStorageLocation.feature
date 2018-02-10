@@ -49,11 +49,16 @@ Feature: Creating goods issue posting to SAP ERP using storage location
 		Then on the Goods Issue Page: I should see the save button is disabled
 		
 	Scenario: Should validate order number
+		When I enter '1234567' into orderNumberInput in action.GoodsIssue view
+		Then I can see orderNumberInput with valueState 'Success' in action.GoodsIssue view
+		When I enter '1200666-004' into materialNumberInput in action.GoodsIssue view
+		When I enter '10' into quantityInput in action.GoodsIssue view
+		When I enter 'rb01' into storageLocationInput in action.GoodsIssue view
+		Then I can see saveButton in action.GoodsIssue view
 		When I enter '1000001' into orderNumberInput in action.GoodsIssue view
 		Then I can see orderNumberInput with valueState 'Error' in action.GoodsIssue view
 	 	 And I can see messageStrip with text 'Achtung: Auftrag '1000001' existiert nicht!' in action.GoodsIssue view
-		When I enter '1234567' into orderNumberInput in action.GoodsIssue view
-		Then I can see orderNumberInput with valueState 'Success' in action.GoodsIssue view
+	 	Then on the Goods Issue Page: I should see the save button is disabled
 		
 	Scenario: Should validate material number with order number
 		When I enter '1234567' into orderNumberInput in action.GoodsIssue view
