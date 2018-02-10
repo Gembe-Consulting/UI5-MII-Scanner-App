@@ -164,6 +164,7 @@ sap.ui.define([
 				} finally {
 					this.onClearFormPress({}, true /*bKeepMessageStrip*/ );
 				}
+				
 			}.bind(this);
 
 			fnResolveGoodsReceipt = function(oData) {
