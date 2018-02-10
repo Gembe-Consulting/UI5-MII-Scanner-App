@@ -1,3 +1,4 @@
+@wip
 Feature: External Login using deep linking
 	Users can login from an external application by passing 
 	URL parameter "IllumLoginName" and the desired hash.
