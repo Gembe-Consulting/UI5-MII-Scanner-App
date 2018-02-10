@@ -54,6 +54,11 @@ sap.ui.define([
 			var oSource = oEvent.getSource(),
 				sStorageUnitNumber = oEvent.getParameter("value"),
 				oBundle = this.getResourceBundle();
+				
+			if(this._isLastStorageUnit(sStorageUnitNumber)){
+				oSource.setValueState(sap.ui.core.ValueState.Success);
+				return true;
+			}
 
 			sStorageUnitNumber = this._padStorageUnitNumber(sStorageUnitNumber);
 
@@ -150,7 +155,7 @@ sap.ui.define([
 		},
 
 		isInputDataValid: function(oData) {
-			return !!oData.LENUM && !!oData.storageUnit && !!oData.storageBin && !!oData.storageBinItem && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.MEINH;
+			return !!oData.LENUM && !!oData.storageUnitNumber && !!oData.storageBin && !!oData.storageBinItem && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.MEINH;
 		},
 		
 		/**
