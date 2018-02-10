@@ -24,6 +24,7 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 		Then I can see goodsIssuePageTitle in action.GoodsIssue view has css color '#BB07FF'
 		Then on the Goods Issue Page: I should see the save button is disabled
 		Then on the Goods Issue Page: I should see all "with LE" input fields are initial
+#		Then on the Goods Issue Page: I should see data model and view  are initial
 
 	Scenario: Should enable save button if all required input fields are populated and should disable save button if form is cleared
 		When I enter '00000000109330000004' into storageUnitInput in action.GoodsIssue view
@@ -40,6 +41,10 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 		Then I can see quantityInput with value '' in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
 		When I enter '1,000' into quantityInput in action.GoodsIssue view
+		When I enter '00000000000000000001' into storageUnitInput in action.GoodsIssue view
+		When on the Goods Issue Page: I close the error message
+		Then on the Goods Issue Page: I should see the save button is disabled
+		When I enter '00000000109330000004' into storageUnitInput in action.GoodsIssue view
 		Then I can see saveButton in action.GoodsIssue view
 		When I click on clearFormButton in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
@@ -131,7 +136,9 @@ Feature: Creating goods issue posting to SAP ERP using storage unit number
 	
 	Scenario: Should show error message if entered order number does not exist
 		When I enter '00000000100000100011' into storageUnitInput in action.GoodsIssue view
-		 And I enter '1000001' into orderNumberInput in action.GoodsIssue view
+		When I enter '1234567' into orderNumberInput in action.GoodsIssue view
+		Then I can see saveButton in action.GoodsIssue view
+		When I enter '1000001' into orderNumberInput in action.GoodsIssue view
 		Then I can see messageStrip with text 'Achtung: Auftrag '1000001' existiert nicht!' in action.GoodsIssue view
 		 And I can see messageStrip with type 'Error' in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled

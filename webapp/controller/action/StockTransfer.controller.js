@@ -88,17 +88,16 @@ sap.ui.define([
 					// remap same properties
 					if (this.formatter.isEmptyStorageUnit(oStorageUnit.ISTME)) {
 						oDataModel.setProperty("/entryQuantity", null);
-						this.byId("quantityInput")
-							.focus();
+						this.byId("quantityInput").focus();
 					} else {
 						oDataModel.setProperty("/entryQuantity", oStorageUnit.ISTME);
 					}
+					
 				} catch (err) {
 					MessageBox.error(oBundle.getText("messageTextStockTransferError"));
 					oSource.setValueState(sap.ui.core.ValueState.Error);
 				} finally {
-					this.updateViewControls(this.getModel("data")
-						.getData());
+					this.updateViewControls(this.getModel("data").getData());
 				}
 
 			}.bind(this);
@@ -320,12 +319,7 @@ sap.ui.define([
 		 * - Quntity has been entered and is not zero
 		 */
 		isInputDataValid: function(oData) {
-			if (oData) {
-				return !!oData.targetStorageBinSelection && !!oData.storageUnitNumberInput && !!oData.LENUM && !!oData.entryQuantity && oData.entryQuantity !== "" && !this.formatter.isEmptyStorageUnit(oData.entryQuantity);
-			} else {
-				return false;
-			}
-		},
+			return !!oData.targetStorageBinSelection && !!oData.storageUnitNumberInput && !!oData.LENUM && !!oData.entryQuantity && oData.entryQuantity !== "" && !this.formatter.isEmptyStorageUnit(oData.entryQuantity);
 	});
 
 });

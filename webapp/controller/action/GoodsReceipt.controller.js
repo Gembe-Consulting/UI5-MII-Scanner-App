@@ -25,6 +25,7 @@ sap.ui.define([
 
 		_oInitView: {
 			bStorageUnitValid: true,
+			bOrderNumberValid: true,
 			bValid: false,
 			storageUnitNumberValueState: sap.ui.core.ValueState.None,
 			orderNumberValueState: sap.ui.core.ValueState.None
@@ -37,8 +38,7 @@ sap.ui.define([
 			var oModel = new JSONModel(),
 				oData;
 
-			jQuery(document)
-				.on("scannerDetectionComplete", this.handleBarcodeScanned.bind(this));
+			jQuery(document).on("scannerDetectionComplete", this.handleBarcodeScanned.bind(this));
 
 			oData = jQuery.extend({}, this._oInitData);
 			oModel.setData(oData);
@@ -79,40 +79,31 @@ sap.ui.define([
 
 			if (oQuery) {
 				if (oQuery.type) {
-					oView.getModel("view")
-						.setProperty("/type", oQuery.type);
+					oView.getModel("view").setProperty("/type", oQuery.type);
 				}
 				if (oQuery.LENUM) {
-					oView.getModel("data")
-						.setProperty("/LENUM", oQuery.LENUM);
-					this.byId("storageUnitInput")
-						.fireChange({
-							value: oQuery.LENUM
-						});
+					oView.getModel("data").setProperty("/LENUM", oQuery.LENUM);
+					this.byId("storageUnitInput").fireChange({
+						value: oQuery.LENUM
+					});
 				}
 				if (oQuery.AUFNR) {
-					oView.getModel("data")
-						.setProperty("/AUFNR", oQuery.AUFNR);
-					this.byId("orderNumberInput")
-						.fireChange({
-							value: oQuery.AUFNR
-						});
+					oView.getModel("data").setProperty("/AUFNR", oQuery.AUFNR);
+					this.byId("orderNumberInput").fireChange({
+						value: oQuery.AUFNR
+					});
 				}
 				if (oQuery.MEINH) {
-					oView.getModel("data")
-						.setProperty("/MEINH", oQuery.MEINH);
-					this.byId("unitOfMeasureInput")
-						.fireChange({
-							value: oQuery.MEINH
-						});
+					oView.getModel("data").setProperty("/MEINH", oQuery.MEINH);
+					this.byId("unitOfMeasureInput").fireChange({
+						value: oQuery.MEINH
+					});
 				}
 				if (oQuery.LGORT) {
-					oView.getModel("data")
-						.setProperty("/LGORT", oQuery.LGORT);
-					this.byId("storageLocationInput")
-						.fireChange({
-							value: oQuery.LGORT
-						});
+					oView.getModel("data").setProperty("/LGORT", oQuery.LGORT);
+					this.byId("storageLocationInput").fireChange({
+						value: oQuery.LGORT
+					});
 				}
 			}
 		},
@@ -133,6 +124,8 @@ sap.ui.define([
 
 		updateViewControls: function(oData) {
 			var oViewModel = this.getModel("view"),
+				bStorageUnitValid = oViewModel.getProperty("/bStorageUnitValid"),
+				bOrderNumberValid = oViewModel.getProperty("/bOrderNumberValid"),
 				bInputValuesComplete,
 				bNoErrorMessagesActive,
 				bReadyForPosting;
@@ -144,7 +137,7 @@ sap.ui.define([
 			bNoErrorMessagesActive = this.isMessageModelClean();
 
 			// we are ready for posting once we have complete and proper formatted input
-			bReadyForPosting = bNoErrorMessagesActive && bInputValuesComplete;
+			bReadyForPosting = bNoErrorMessagesActive && bInputValuesComplete && bStorageUnitValid && bOrderNumberValid;
 
 			oViewModel.setProperty("/bValid", bReadyForPosting);
 		},
@@ -152,7 +145,9 @@ sap.ui.define([
 		onStorageUnitNumberChange: function(oEvent) {
 			var oSource = oEvent.getSource(),
 				sStorageUnitNumber = oEvent.getParameter("value"),
-				oBundle = this.getResourceBundle();
+				oBundle = this.getResourceBundle(),
+				fnResolve,
+				fnReject;
 
 			sStorageUnitNumber = this._padStorageUnitNumber(sStorageUnitNumber);
 
@@ -163,8 +158,9 @@ sap.ui.define([
 
 			this.clearLogMessages();
 
-			var fnResolve = function(oData) {
+			fnResolve = function(oData) {
 				var oStorageUnit,
+					bStorageUnitValid = true,
 					aResultList;
 
 				try {
@@ -175,6 +171,7 @@ sap.ui.define([
 						oStorageUnit = this._formatStorageUnitData(oData.d.results[0].Rowset.results[0].Row.results[0]);
 						oSource.setValueState(sap.ui.core.ValueState.Success);
 					} else {
+						bStorageUnitValid = false;
 						throw oBundle.getText("messageTitleStorageUnitNotFound");
 					}
 
@@ -182,30 +179,25 @@ sap.ui.define([
 						this.addLogMessage({
 							text: oBundle.getText("messageTextStorageUnitAlreadyPosted", [sStorageUnitNumber])
 						});
-						this.getModel("view")
-							.setProperty("/bStorageUnitValid", false);
 						oSource.setValueState(sap.ui.core.ValueState.Error);
-					} else {
-						this.getModel("view")
-							.setProperty("/bStorageUnitValid", true);
+						bStorageUnitValid = false;
 					}
 
-					this.getModel("data")
-						.setData(oStorageUnit);
-
-					this.updateViewControls(this.getModel("data")
-						.getData());
+					this.getModel("data").setData(oStorageUnit);
 
 				} catch (err) {
 					MessageBox.error(oBundle.getText("messageTextStorageUnitNotFound", [sStorageUnitNumber]), {
 						title: err
 					});
 					oSource.setValueState(sap.ui.core.ValueState.Error);
-				} finally {}
+				} finally {
+					this.getModel("view").setProperty("/bStorageUnitValid", bStorageUnitValid);
+					this.updateViewControls(this.getModel("data").getData());
+				}
 
 			}.bind(this);
 
-			var fnReject = function(oError) {
+			fnReject = function(oError) {
 				MessageBox.error(oBundle.getText("messageTextGoodsReceiptError"));
 			}.bind(this);
 
@@ -346,6 +338,7 @@ sap.ui.define([
 			var fnResolve = function(oData) {
 				var aResultList,
 					oOrderHeader,
+					bOrderNumberValid = true,
 					oModel = this.getModel("data");
 
 				if (oData.d.results[0].Rowset.results.length > 0) {
@@ -354,17 +347,16 @@ sap.ui.define([
 
 				if (aResultList && aResultList.length === 1) {
 					oSource.setValueState(sap.ui.core.ValueState.Success);
-
-					this.updateViewControls(this.getModel("data")
-						.getData());
-
 				} else {
 					oSource.setValueState(sap.ui.core.ValueState.Error);
-
 					this.addLogMessage({
 						text: oBundle.getText("messageTextGoodsReceiptOrderNumberNotFoundError", [sOrderNumber])
 					});
+					bOrderNumberValid = false;
 				}
+				
+				this.getModel("view").setProperty("/bOrderNumberValid", bOrderNumberValid);
+				this.updateViewControls(oModel.getData());
 
 			}.bind(this);
 
