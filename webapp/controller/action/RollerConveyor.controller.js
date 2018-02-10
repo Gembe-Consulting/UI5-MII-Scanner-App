@@ -12,6 +12,8 @@ sap.ui.define([
 		sapType: sapType,
 		formatter: formatter,
 
+		lastStorageUnit: 90000000000000000000,
+
 		_oInitData: {
 			// entry data
 			storageUnitNumber: null,
@@ -121,13 +123,11 @@ sap.ui.define([
 		},
 
 		onQuantityChange: function(oEvent) {
-			this.updateViewControls(this.getModel("data")
-				.getData());
+			this.updateViewControls(this.getModel("data").getData());
 		},
 
 		onStorageBinSelectionChange: function(oEvent) {
-			this.updateViewControls(this.getModel("data")
-				.getData());
+			this.updateViewControls(this.getModel("data").getData());
 		},
 
 		updateViewControls: function(oData) {
@@ -151,6 +151,31 @@ sap.ui.define([
 
 		isInputDataValid: function(oData) {
 			return !!oData.LENUM && !!oData.storageUnit && !!oData.storageBin && !!oData.storageBinItem && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.MEINH;
+		},
+		
+		/**
+		 * Checks if a storage unit number is the last unit
+		 * 
+		 * @param {string|number} vStorageUnitNumber storage unit to test for
+		 * 
+		 * @return {boolean} true if is last, false if not last unit
+		 */
+		_isLastStorageUnit:function(vStorageUnitNumber){
+			return 	this.lastStorageUnit === parseInt(vStorageUnitNumber, 10);
+		},
+
+		/**
+		 * Creates a new storage unit aka. palette
+		 * - Calls /XMII/Runner?Transaction=SUMISA/Scanner/Rollenbahn/trx_NeuePalette
+		 * - Sends the storage unit number, storage bin, stretch program
+		 * - Sends teh LETZTE_LE falge if storage bin is "02" or "04"
+		 * 
+		 * @param {string|number} sStorageUnitNumber storage unit number to be created in MII
+		 * @param {string} sStorageBin storage bin to where storage unit will be stored
+		 * @param {string} sStretchProgram used stretch program
+		 */
+		_createNewStorageUnit: function(sStorageUnitNumber, sStorageBin, sStretchProgram) {
+
 		}
 	});
 
