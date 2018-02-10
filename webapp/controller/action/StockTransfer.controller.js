@@ -92,7 +92,7 @@ sap.ui.define([
 					} else {
 						oDataModel.setProperty("/entryQuantity", oStorageUnit.ISTME);
 					}
-					
+
 				} catch (err) {
 					MessageBox.error(oBundle.getText("messageTextStockTransferError"));
 					oSource.setValueState(sap.ui.core.ValueState.Error);
@@ -320,6 +320,7 @@ sap.ui.define([
 		 */
 		isInputDataValid: function(oData) {
 			return !!oData.targetStorageBinSelection && !!oData.storageUnitNumberInput && !!oData.LENUM && !!oData.entryQuantity && oData.entryQuantity !== "" && !this.formatter.isEmptyStorageUnit(oData.entryQuantity);
+		}
 	});
 
 });
