@@ -58,9 +58,34 @@ Feature: Creating a stock transfer at Roller Conveyor
 	@lastUnit
 	Scenario: Should display info message if last storage unit has been entered
 		When I enter '90000000000000000000' into storageUnitInput in action.RollerConveyor view
+		 And I enter 'st' into unitOfMeasureInput in action.RollerConveyor view
 		Then I can see storageUnitInput with valueState 'Success' in action.RollerConveyor view
 		 And I can see messageStrip with text 'Letzte Palette' in action.RollerConveyor view
 		 And I can see messageStrip with type 'Information' in action.StockTransfer view
+		 And I can see unitOfMeasureInput with value 'ST' in action.RollerConveyor view
+		 
+	@wip
+	@lastUnit
+	Scenario: Should repair input data if users enter last unit after successful validation
+		When I enter '2' into storageUnitInput in action.RollerConveyor view
+		 And I enter 'Rolltor' into storageBinSelection in action.RollerConveyor view
+		 And I enter '90000000000000000000' into storageUnitInput in action.RollerConveyor view
+		Then And I can see storageBinSelection with value '' in action.RollerConveyor view
+		 And I can see quantityInput with value '' in action.RollerConveyor view
+		 And I can see quantityInput with editable being 'true' in action.RollerConveyor view
+		 And I can see unitOfMeasureInput with value '' in action.RollerConveyor view
+		 And I can see unitOfMeasureInput with editable being 'true' in action.RollerConveyor view
+		 And I cannot see saveButton in action.RollerConveyor view
+		When I enter '2' into storageUnitInput in action.RollerConveyor view
+		 And I enter '12,852' into quantityInput in action.RollerConveyor view
+		 And I enter 'Stapler' into storageBinSelection in action.RollerConveyor view
+		 And I enter '90000000000000000000' into storageUnitInput in action.RollerConveyor view
+		Then And I can see storageBinSelection with value '' in action.RollerConveyor view
+		 And I can see quantityInput with value '' in action.RollerConveyor view
+		 And I can see quantityInput with editable being 'true' in action.RollerConveyor view
+		 And I can see unitOfMeasureInput with value '' in action.RollerConveyor view
+		 And I can see unitOfMeasureInput with editable being 'true' in action.RollerConveyor view
+		 
 		 
 	@wip
 	@lastUnit @emptyLE 

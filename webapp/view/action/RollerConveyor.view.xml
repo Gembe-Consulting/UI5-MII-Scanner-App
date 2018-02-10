@@ -22,13 +22,13 @@
 							<Input id="storageUnitInput" maxLength="20" change="onStorageUnitNumberChange" value="{path: 'data>/storageUnitNumber', type:'.sapType.LENUM'}" valueState="{view>/storageUnitNumberValueState}"/>
 							<Label text="{i18n>rollerConveyor.form.label.quantity.text}, {i18n>rollerConveyor.form.label.unitOfMeasure-S.text}"/>
 							<HBox alignItems="Center">
-								<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}"></Input>
+								<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}" editable="{path: 'data>/ISTME', formatter:'.formatter.isEmptyStorageUnit' }"></Input>
 								<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress" class="sapUiSmallMarginEnd" alt="CLEAR"></c:Icon>
 								<layoutData>
 									<l:GridData span="XL2 L3 M4 S8"/>
 								</layoutData>
 							</HBox>
-							<Input id="unitOfMeasureInput" value="{path: 'data>/MEINH', type:'.sapType.MEINH'}" editable="false">
+							<Input id="unitOfMeasureInput" value="{path: 'data>/unitOfMeasure', type:'.sapType.MEINH'}" editable="{= ${data>/storageUnitNumber} === 90000000000000000000 }">
 								<layoutData>
 									<l:GridData span="XL1 L1 M2 S4"/>
 								</layoutData>

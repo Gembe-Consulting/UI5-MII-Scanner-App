@@ -18,12 +18,14 @@ sap.ui.define([
 			// entry data
 			storageUnitNumber: null,
 			entryQuantity: null,
+			unitOfMeasure: null,
 			storageBinItem: null,
 			storageBin: null,
 			stretcherSwitch: false,
 			// external data from storage unit
 			LENUM: null,
-			MEINH: null
+			MEINH: null,
+			ISTME: null
 		},
 
 		_oInitView: {
@@ -50,25 +52,53 @@ sap.ui.define([
 		},
 
 		onStorageUnitNumberChange: function(oEvent) {
-			//this.updateViewControls(this.getModel("data").getData());
 			var oSource = oEvent.getSource(),
 				sStorageUnitNumber = oEvent.getParameter("value"),
-				oBundle = this.getResourceBundle();
-				
-			if(this._isLastStorageUnit(sStorageUnitNumber)){
+				oDataModel = this.getModel("data"),
+				oStorageBinSelection,
+				oSelectedStorageBinItem,
+				oBundle = this.getResourceBundle(),
+				fnResolve,
+				fnReject;
+
+			oSource.setValueState(sap.ui.core.ValueState.None);
+
+			if (!sStorageUnitNumber) {
+				return false;
+			}
+
+			// on last unit, set dummy storageUnit to hide info fragment and repair storage bin selection
+			if (this._isLastStorageUnit(sStorageUnitNumber)) {
+				oDataModel.setData({
+					entryQuantity: null,
+					unitOfMeasure: null,
+					LENUM: null,
+					MEINH: null,
+					ISTME: null
+				}, true);
+
 				oSource.setValueState(sap.ui.core.ValueState.Success);
+
+				//reset storage bin, if wrong was selected before
+
+				oStorageBinSelection = this.byId("storageBinSelection");
+
+				oSelectedStorageBinItem = oStorageBinSelection.getSelectedItem(oDataModel.getData("/storageBinItem"));
+
+				if (oSelectedStorageBinItem && !oSelectedStorageBinItem.getEnabled()) {
+					oStorageBinSelection.setSelectedItemId(); //clear
+				}
+
 				return true;
 			}
 
 			sStorageUnitNumber = this._padStorageUnitNumber(sStorageUnitNumber);
 
-			oSource.setValueState(sap.ui.core.ValueState.None);
-
 			this.showControlBusyIndicator(oSource);
 
 			this.clearLogMessages();
 
-			var fnResolve = function(oData) {
+			fnResolve = function(oData) {
 				var oStorageUnit,
 					aResultList,
 					bStorageUnitValid;
@@ -89,19 +119,16 @@ sap.ui.define([
 						bStorageUnitValid = false;
 					}
 
-					/*
-										if (oStorageUnit.ISTME <= 0.001) {
-											this.addLogMessage({
-												text: oBundle.getText("rollerConveyor.messageText.storageUnitEmpty", [sStorageUnitNumber])
-											});
-											oSource.setValueState(sap.ui.core.ValueState.Error);
-											bStorageUnitValid = false;
-										} else {
-											bStorageUnitValid = true;
-										}
-					*/
+					oDataModel.setData(oStorageUnit, true);
 
-					this.getModel("data").setData(oStorageUnit, true);
+					//remap some properties
+					oDataModel.setProperty("/unitOfMeasure", oStorageUnit.MEINH);
+
+					if (!this.formatter.isEmptyStorageUnit(oStorageUnit.ISTME)) {
+						oDataModel.setProperty("/entryQuantity", oStorageUnit.ISTME);
+					}else{
+						oDataModel.setProperty("/entryQuantity", 0);
+					}
 
 				} catch (err) {
 					MessageBox.error(oBundle.getText("rollerConveyor.errorMessageText.storageUnit"), {
@@ -111,12 +138,12 @@ sap.ui.define([
 					bStorageUnitValid = false;
 				} finally {
 					this.getModel("view").setProperty("/bStorageUnitValid", bStorageUnitValid);
-					this.updateViewControls(this.getModel("data").getData());
+					this.updateViewControls(oDataModel.getData());
 				}
 
 			}.bind(this);
 
-			var fnReject = function(oError) {
+			fnReject = function(oError) {
 				MessageBox.error(oBundle.getText("rollerConveyor.storageUnit.errorMessageText"));
 			}.bind(this);
 
@@ -155,9 +182,9 @@ sap.ui.define([
 		},
 
 		isInputDataValid: function(oData) {
-			return !!oData.LENUM && !!oData.storageUnitNumber && !!oData.storageBin && !!oData.storageBinItem && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.MEINH;
+			return !!oData.storageUnitNumber && !!oData.storageBin && !!oData.storageBinItem && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.unitOfMeasure;
 		},
-		
+
 		/**
 		 * Checks if a storage unit number is the last unit
 		 * 
@@ -165,8 +192,8 @@ sap.ui.define([
 		 * 
 		 * @return {boolean} true if is last, false if not last unit
 		 */
-		_isLastStorageUnit:function(vStorageUnitNumber){
-			return 	this.lastStorageUnit === parseInt(vStorageUnitNumber, 10);
+		_isLastStorageUnit: function(vStorageUnitNumber) {
+			return this.lastStorageUnit === parseInt(vStorageUnitNumber, 10);
 		},
 
 		/**
