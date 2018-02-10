@@ -47,7 +47,9 @@ sap.ui.define([
 		onStorageUnitNumberChange: function(oEvent) {
 			var oSource = oEvent.getSource(),
 				sStorageUnitNumber = oEvent.getParameter("value"),
-				oBundle = this.getResourceBundle();
+				oBundle = this.getResourceBundle(),
+				fnResolve,
+				fnReject;
 
 			sStorageUnitNumber = this._padStorageUnitNumber(sStorageUnitNumber);
 
@@ -57,7 +59,7 @@ sap.ui.define([
 
 			this.clearLogMessages();
 
-			var fnResolve = function(oData) {
+			fnResolve = function(oData) {
 				var oStorageUnit = {
 						LENUM: null,
 						AUFNR: null,
@@ -102,7 +104,7 @@ sap.ui.define([
 
 			}.bind(this);
 
-			var fnReject = function(oError) {
+			fnReject = function(oError) {
 				MessageBox.error(oBundle.getText("messageTextStockTransferError"));
 			}.bind(this);
 
@@ -121,8 +123,7 @@ sap.ui.define([
 				fnResolveGoodsReceipt,
 				fnReject;
 
-			this.getOwnerComponent()
-				.showBusyIndicator();
+			this.getOwnerComponent().showBusyIndicator();
 
 			fnResolveStockTransfer = function(oData) {
 				var aResults,
@@ -217,8 +218,7 @@ sap.ui.define([
 				sDefaultMoveType = "999",
 				sDefaultUnitOfMeasure = "KG",
 				oParam,
-				oStorageBinItem = this.byId("storageBinSelection")
-				.getSelectedItem(),
+				oStorageBinItem = this.byId("storageBinSelection").getSelectedItem(),
 				oStorageBinData = oStorageBinItem.data();
 
 			if (oDataModel.getProperty(sPath + "targetStorageBinSelection") === "BA01" || oDataModel.getProperty(sPath + "targetStorageBinSelection") === "BA02") {
@@ -279,18 +279,15 @@ sap.ui.define([
 		},
 
 		_isGoodsReceiptRequired: function() {
-			return this.formatter.isEmptyStorageUnit(this.getModel("data")
-				.getProperty("/ISTME"));
+			return this.formatter.isEmptyStorageUnit(this.getModel("data").getProperty("/ISTME"));
 		},
 
 		onStorageBinSelectionChange: function(oEvent) {
-			this.updateViewControls(this.getModel("data")
-				.getData());
+			this.updateViewControls(this.getModel("data").getData());
 		},
 
 		onQuantityChange: function(oEvent) {
-			this.updateViewControls(this.getModel("data")
-				.getData());
+			this.updateViewControls(this.getModel("data").getData());
 		},
 
 		updateViewControls: function(oData) {
@@ -322,5 +319,4 @@ sap.ui.define([
 			return !!oData.targetStorageBinSelection && !!oData.storageUnitNumberInput && !!oData.LENUM && !!oData.entryQuantity && oData.entryQuantity !== "" && !this.formatter.isEmptyStorageUnit(oData.entryQuantity);
 		}
 	});
-
 });
