@@ -4,7 +4,7 @@ sap.ui.define([], function() {
 	return {
 
 		/**
-		 * Checks if a given date is before current data
+		 * Checks if a given date is before current date
 		 * @public
 		 * @param {string} sDate the date you want to compare to
 		 * @param {string} sFormat the format the date is provided in (default: MM-DD-YYYY)
