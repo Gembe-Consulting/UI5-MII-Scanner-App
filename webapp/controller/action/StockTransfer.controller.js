@@ -164,6 +164,7 @@ sap.ui.define([
 				} finally {
 					this.onClearFormPress({}, true /*bKeepMessageStrip*/ );
 				}
+				
 			}.bind(this);
 
 			fnResolveGoodsReceipt = function(oData) {
@@ -218,8 +219,7 @@ sap.ui.define([
 				sDefaultMoveType = "999",
 				sDefaultUnitOfMeasure = "KG",
 				oParam,
-				oStorageBinItem = this.byId("storageBinSelection")
-				.getSelectedItem(),
+				oStorageBinItem = this.byId("storageBinSelection").getSelectedItem(),
 				oStorageBinData = oStorageBinItem.data();
 
 			if (oDataModel.getProperty(sPath + "targetStorageBinSelection") === "BA01" || oDataModel.getProperty(sPath + "targetStorageBinSelection") === "BA02") {
@@ -284,7 +284,7 @@ sap.ui.define([
 		},
 
 		onStorageBinSelectionChange: function(oEvent) {
-			this.updateViewControls(this.getModel("data")	.getData());
+			this.updateViewControls(this.getModel("data").getData());
 		},
 
 		onQuantityChange: function(oEvent) {
@@ -320,5 +320,4 @@ sap.ui.define([
 			return !!oData.targetStorageBinSelection && !!oData.storageUnitNumberInput && !!oData.LENUM && !!oData.entryQuantity && oData.entryQuantity !== "" && !this.formatter.isEmptyStorageUnit(oData.entryQuantity);
 		}
 	});
-
 });
