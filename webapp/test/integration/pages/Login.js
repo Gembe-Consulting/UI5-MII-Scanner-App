@@ -198,11 +198,11 @@ sap.ui.require([
 
 				theFooterShouldShowUsername: function(sExpectedValue) {
 					return this.waitFor({
-						id: "navListId",
+						controlType: "sap.m.Text",
 						viewName: sHomepageViewName,
 						viewNamespace: "com.mii.scanner.view.nav.",
 						matchers: new Properties({
-							footerText: new RegExp(sExpectedValue, "i")
+							text: new RegExp(sExpectedValue, "i")
 						}),
 						success: function() {
 							Opa5.assert.ok(true, "Page footer contains user name: " + sExpectedValue);

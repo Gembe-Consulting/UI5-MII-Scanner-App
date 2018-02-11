@@ -39,6 +39,9 @@ Feature: Creating goods receipt posting to SAP ERP
 		 And I can see orderNumberInput with value '1093300' in action.GoodsReceipt view
 		 And I can see orderNumberInput with editable being 'false' in action.GoodsReceipt view
 		 And I can see saveButton with enabled being 'true' in action.GoodsReceipt view
+		When I enter '00000000000000000001' into storageUnitInput in action.GoodsReceipt view
+		When on the Goods Receipt Page: I close the error message
+		Then on the Goods Receipt Page: I should see the save button is disabled
 		
 	Scenario: User enters a order number
 		When I enter '1093300' into orderNumberInput in action.GoodsReceipt view
@@ -61,6 +64,8 @@ Feature: Creating goods receipt posting to SAP ERP
 		When I enter '4712' into storageLocationInput in action.GoodsReceipt view
 		 And I press ENTER at storageLocationInput in action.GoodsReceipt view
 		Then on the Goods Receipt Page: I should see the save button is enabled
+		When I enter '1000001' into orderNumberInput in action.GoodsReceipt view
+		Then on the Goods Receipt Page: I should see the save button is disabled
 
 	Scenario: User clears the input form
 		When I enter '00000000109330000001' into storageUnitInput in action.GoodsReceipt view

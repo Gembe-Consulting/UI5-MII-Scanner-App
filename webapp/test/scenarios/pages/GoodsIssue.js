@@ -16,7 +16,15 @@ sap.ui.require([
 			onTheGoodsIssuePage: {
 				actions: {
 					iCloseTheErrorMessage: function() {
-
+						return this.waitFor({
+							searchOpenDialogs: true,
+							viewName: "sap.m.MessageBox",
+							actions: new Press(),
+							success: function() {
+								Opa5.assert.ok(true, "Error message box has been closed");
+							},
+							errorMessage: "Did not find the Error Message Box"
+						});
 					}
 				},
 				assertions: {

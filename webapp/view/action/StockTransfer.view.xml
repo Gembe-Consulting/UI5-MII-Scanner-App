@@ -5,7 +5,7 @@
 			<Toolbar>
 				<ToolbarSpacer/>
 				<c:Icon id="stockTransferPageIcon" src="sap-icon://offsite-work" size="2rem" color="#FFAC00" alt="GI"/>
-				<c:Icon id="stockTransferPageIcon2" src="sap-icon://shipping-status" size="1.25rem" color="#FFAC00" class="sapUiSmallMarginEnd" />
+				<c:Icon id="stockTransferPageIcon2" src="sap-icon://shipping-status" size="1.25rem" color="#FFAC00" class="sapUiSmallMarginEnd"/>
 				<Title id="stockTransferPageTitle" text="{i18n>titleStockTransfer}" class="suwStockTransferTitle"/>
 				<ToolbarSpacer/>
 				<Button id="clearFormButton" icon="sap-icon://redo" press="onClearFormPress"/>
@@ -32,12 +32,11 @@
 							<Label text="{i18n>lableTextFormStockTransferQuantity}, {i18n>lableTextFormStockTransferUnitOfMeasureShort}"/>
 							<HBox alignItems="Center">
 								<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}"
-									editable="{path:'data>/ISTME', formatter:'.formatter.isEmptyStorageUnit'}">
-									<layoutData>
-										<l:GridData span="XL2 L3 M4 S8"/>
-									</layoutData>
-								</Input>
+									editable="{path:'data>/ISTME', formatter:'.formatter.isEmptyStorageUnit'}"></Input>
 								<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress" class="sapUiSmallMarginEnd"></c:Icon>
+								<layoutData>
+									<l:GridData span="XL2 L3 M4 S8"/>
+								</layoutData>
 							</HBox>
 							<Input id="unitOfMeasureInput" value="{path: 'data>/MEINH', type:'.sapType.MEINS'}" editable="false">
 								<layoutData>

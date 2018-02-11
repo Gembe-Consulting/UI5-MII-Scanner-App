@@ -1,23 +1,12 @@
-sap.ui.define([], function() {
+sap.ui.define([
+	"com/mii/scanner/libs/momentjs/moment"
+	], function() {
 	"use strict";
 
 	return {
 
 		/**
-		 * Rounds the number unit value to 2 digits
-		 * @public
-		 * @param {string} sValue the number string to be rounded
-		 * @returns {string} sValue with 2 digits rounded
-		 */
-		numberUnit: function(sValue) {
-			if (!sValue) {
-				return "";
-			}
-			return parseFloat(sValue).toFixed(2);
-		},
-
-		/**
-		 * Checks if a given date is before current data
+		 * Checks if a given date is before current date
 		 * @public
 		 * @param {string} sDate the date you want to compare to
 		 * @param {string} sFormat the format the date is provided in (default: MM-DD-YYYY)
@@ -27,57 +16,40 @@ sap.ui.define([], function() {
 			var oToday = moment(),
 				oDate = moment(sDate, sFormat || "MM-DD-YYYY");
 
-			return oDate.isBefore(oToday);
+			return oDate.isBefore(oToday, 'day');
 		},
 
 		/**
 		 * Checks if a storage unit quantity is considered empty:
 		 * - if quantity is 0
 		 * - if qunatity is 0.001
+		 * - if quantity is null or undefined or ""
 		 * @public
 		 * @param {string|number} sQuantity the quantity of the storage unit (commonly ISTME)
-		 * @returns {boolean}
+		 * @returns {boolean} true if storage unit is considered empty, false if full
 		 */
 		isEmptyStorageUnit: function(sQuantity) {
 			var fQuantity = parseFloat(sQuantity),
 				fZero = 0.0,
 				fNearToZero = 0.001;
 
-			return (fQuantity === fZero) || (fQuantity === fNearToZero);
+			return !sQuantity || (fQuantity === fZero) || (fQuantity === fNearToZero);
 		},
 		/**
 		 * Checks if a storage unit quantity is considered full / non-empty:
 		 * - if quantity not 0
 		 * - if qunatity not 0.001
+		 * - if quantity is not null and not undefined and not ""
 		 * @public
 		 * @param {string|number} sQuantity the quantity of the storage unit (commonly ISTME)
-		 * @returns {boolean}
+		 * @returns {boolean} true if storage unit is considered full, false if empty
 		 */
 		isFullStorageUnit: function(sQuantity) {
 			var fQuantity = parseFloat(sQuantity),
 				fZero = 0.0,
 				fNearToZero = 0.001;
 
-			return (fQuantity !== fZero) && (fQuantity !== fNearToZero);
-		},
-
-		/**
-		 * Defines a value state based on the stock level
-		 *
-		 * @public
-		 * @param {number} iValue the stock level of a product
-		 * @returns {string} sValue the state for the stock level
-		 */
-		quantityState: function(iValue) {
-			if (iValue === 0) {
-				return "Error";
-			} else if (iValue <= 10) {
-				return "Warning";
-			} else {
-				return "Success";
-			}
+			return !!sQuantity && (fQuantity !== fZero) && (fQuantity !== fNearToZero);
 		}
-
 	};
-
 });

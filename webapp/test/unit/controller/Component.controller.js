@@ -7,11 +7,6 @@ sap.ui.require(
 		QUnit.module("Login unit");
 
 		function keyboardInputPreventionTestCase(oOptions) {
-			// Act
-			var sState = "test";
-
-			// Assert
-			oOptions.assert.strictEqual(sState, oOptions.expected, "The price state was correct");
 		}
 	}
 );

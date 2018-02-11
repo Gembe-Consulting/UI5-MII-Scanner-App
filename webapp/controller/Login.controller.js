@@ -23,7 +23,7 @@ sap.ui.define([
 			if (this._sInputBuffer === CONST_EMPTY_STRING) {
 				jQuery.sap.log.debug("this._sInputBuffer is empty => manual user input detected!", "Scanner-Input-Detection");
 				this._sInputBuffer = null; //invalidate
-				return;
+				return null;
 			} else {
 				this._sInputBuffer = sInput;
 			}
@@ -83,7 +83,7 @@ sap.ui.define([
 			var sCurrentInput = oEvent.getParameter("value"),
 				oInput = oEvent.getSource();
 
-			if (sCurrentInput.length != 0 && !this.getModel("device").getProperty("/system/desktop")) {
+			if (sCurrentInput.length !== 0 && !this.getModel("device").getProperty("/system/desktop")) {
 				this.purgeInputAfterDelay(oInput);
 			}
 
@@ -126,12 +126,6 @@ sap.ui.define([
 			this.getOwnerComponent().testUserLoginName(sUserInput)
 				.then(fnResolveHandler, fnRejectHandler);
 
-		},
-		
-		applicationVersion:function(){
-			return "bla 1.7";
 		}
-
 	});
-
 });
