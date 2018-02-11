@@ -1,7 +1,7 @@
 {
 	"name": "grunt-build",
 	"version": "0.0.1",
-	"description": "Grunt build",
+	"description": "UI5 Scanner App for MII",
 	"private": true,
 	"devDependencies": {
 		"grunt-text-replace": "",

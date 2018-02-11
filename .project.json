@@ -57,7 +57,7 @@
   },
   "hcpdeploy": {
     "account": "p1942861385trial",
-    "name": "demoscanner",
+    "name": "scannerapp",
     "lastVersionWeTriedToDeploy": "1.0.1"
   }
 }
