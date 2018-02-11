@@ -49,7 +49,7 @@ Feature: Creating a stock transfer
 		 And I can see quantityInput has focus in action.StockTransfer view
 		When I click on clearFormButton in action.StockTransfer view
 		Then I can see storageUnitInput with valueState 'None' in action.StockTransfer view
-		 And I can see quantityInput with editable being 'false' in action.StockTransfer view
+		 And I can see quantityInput with editable being 'true' in action.StockTransfer view
 		When I enter '00000000109330000014' into storageUnitInput in action.StockTransfer view
 		Then I can see storageUnitInput with value '109330000014' in action.StockTransfer view
 		 And I can see storageUnitInput with valueState 'Success' in action.StockTransfer view
