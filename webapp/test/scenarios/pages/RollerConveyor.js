@@ -80,8 +80,8 @@ sap.ui.require([
 
 								Opa5.assert.strictEqual(oView.getViewName(), "com.mii.scanner.view.action.RollerConveyor", "View " + oView.getViewName() + " found");
 
-								oDataModel = oView.getModel("data"),
-									oViewModel = oView.getModel("view");
+								oDataModel = oView.getModel("data");
+								oViewModel = oView.getModel("view");
 
 								Opa5.assert.propEqual(oDataModel.getData(), oExpectedDataData, "Data model is inital");
 
