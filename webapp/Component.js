@@ -147,8 +147,8 @@ sap.ui.define([
 		 * Only if current system is not a desktop device!
 		 */
 		setupScannerDetection: function() {
-
-			if (!this.getModel("device").getProperty("/system/desktop")) {
+			var bDesktop = this.getModel("device").getProperty("/system/desktop");
+			if (!bDesktop) {
 
 				jQuery(document).scannerDetection({
 					onComplete: function(sString) {
