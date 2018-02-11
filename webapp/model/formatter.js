@@ -21,7 +21,7 @@ sap.ui.define([], function() {
 		 * Checks if a storage unit quantity is considered empty:
 		 * - if quantity is 0
 		 * - if qunatity is 0.001
-		 * - if quantity is null or undefined
+		 * - if quantity is null or undefined or ""
 		 * @public
 		 * @param {string|number} sQuantity the quantity of the storage unit (commonly ISTME)
 		 * @returns {boolean} true if storage unit is considered empty, false if full
@@ -37,7 +37,7 @@ sap.ui.define([], function() {
 		 * Checks if a storage unit quantity is considered full / non-empty:
 		 * - if quantity not 0
 		 * - if qunatity not 0.001
-		 * - if quantity is null or undefined
+		 * - if quantity is not null and not undefined and not ""
 		 * @public
 		 * @param {string|number} sQuantity the quantity of the storage unit (commonly ISTME)
 		 * @returns {boolean} true if storage unit is considered full, false if empty
@@ -47,7 +47,7 @@ sap.ui.define([], function() {
 				fZero = 0.0,
 				fNearToZero = 0.001;
 
-			return !sQuantity || (fQuantity !== fZero) && (fQuantity !== fNearToZero);
+			return !!sQuantity && (fQuantity !== fZero) && (fQuantity !== fNearToZero);
 		}
 	};
 });
