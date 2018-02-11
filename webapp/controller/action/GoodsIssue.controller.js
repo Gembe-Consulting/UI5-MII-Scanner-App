@@ -69,55 +69,42 @@ sap.ui.define([
 			if (oQuery) {
 				if (oQuery.type) {
 					this._oInitView.type = oQuery.type; //update initial object
-					oView.getModel("view")
-						.setProperty("/type", oQuery.type);
+					oView.getModel("view").setProperty("/type", oQuery.type);
 				}
 				if (oQuery.LENUM) {
-					oView.getModel("data")
-						.setProperty("/storageUnitNumber", oQuery.LENUM);
-					this.byId("storageUnitInput")
-						.fireChange({
+					oView.getModel("data").setProperty("/storageUnitNumber", oQuery.LENUM);
+					this.byId("storageUnitInput").fireChange({
 							value: oQuery.LENUM
 						});
 				}
 				if (oQuery.AUFNR) {
-					oView.getModel("data")
-						.setProperty("/orderNumber", oQuery.AUFNR);
-					this.byId("orderNumberInput")
-						.fireChange({
+					oView.getModel("data").setProperty("/orderNumber", oQuery.AUFNR);
+					this.byId("orderNumberInput").fireChange({
 							value: oQuery.AUFNR
 						});
 				}
 				if (oQuery.MATNR) {
-					oView.getModel("data")
-						.setProperty("/materialNumber", oQuery.MATNR);
-					this.byId("materialNumberInput")
-						.fireChange({
+					oView.getModel("data").setProperty("/materialNumber", oQuery.MATNR);
+					this.byId("materialNumberInput").fireChange({
 							value: oQuery.MATNR
 						});
 				}
 				if (oQuery.MEINH) {
-					oView.getModel("data")
-						.setProperty("/unitOfMeasure", oQuery.MEINH);
-					this.byId("unitOfMeasureInput")
-						.fireChange({
+					oView.getModel("data").setProperty("/unitOfMeasure", oQuery.MEINH);
+					this.byId("unitOfMeasureInput").fireChange({
 							value: oQuery.MEINH
 						});
 				}
 				if (oQuery.LGORT) {
-					oView.getModel("data")
-						.setProperty("/storageLocation", oQuery.LGORT);
-					this.byId("storageLocationInput")
-						.fireChange({
+					oView.getModel("data").setProperty("/storageLocation", oQuery.LGORT);
+					this.byId("storageLocationInput").fireChange({
 							value: oQuery.LGORT
 						});
 				}
 				if (oQuery.SCHGT) {
 					oQuery.SCHGT = (oQuery.SCHGT == 'true');
-					oView.getModel("data")
-						.setProperty("/bulkMaterialIndicator", oQuery.SCHGT);
-					this.byId("bulkMaterialSwitch")
-						.fireChange({
+					oView.getModel("data").setProperty("/bulkMaterialIndicator", oQuery.SCHGT);
+					this.byId("bulkMaterialSwitch").fireChange({
 							value: oQuery.SCHGT
 						});
 				}
@@ -129,8 +116,7 @@ sap.ui.define([
 				fnResolve,
 				fnReject;
 
-			this.getOwnerComponent()
-				.showBusyIndicator();
+			this.getOwnerComponent().showBusyIndicator();
 
 			fnResolve = function(oData) {
 				var aResults,
@@ -521,8 +507,7 @@ sap.ui.define([
 		},
 
 		isInputDataValid: function(oData) {
-			switch (this.getModel("view")
-				.getProperty("/type")) {
+			switch (this.getModel("view").getProperty("/type")) {
 				case "withLE":
 					return !!oData.entryQuantity && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageUnitNumber;
 				case "nonLE":

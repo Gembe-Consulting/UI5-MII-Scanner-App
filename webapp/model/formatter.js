@@ -1,4 +1,6 @@
-sap.ui.define([], function() {
+sap.ui.define([
+	"com/mii/scanner/libs/momentjs/moment"
+	], function() {
 	"use strict";
 
 	return {
@@ -14,7 +16,7 @@ sap.ui.define([], function() {
 			var oToday = moment(),
 				oDate = moment(sDate, sFormat || "MM-DD-YYYY");
 
-			return oDate.isBefore(oToday);
+			return oDate.isBefore(oToday, 'day');
 		},
 
 		/**
