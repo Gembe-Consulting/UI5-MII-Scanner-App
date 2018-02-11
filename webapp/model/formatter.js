@@ -4,19 +4,6 @@ sap.ui.define([], function() {
 	return {
 
 		/**
-		 * Rounds the number unit value to 2 digits
-		 * @public
-		 * @param {string} sValue the number string to be rounded
-		 * @returns {string} sValue with 2 digits rounded
-		 */
-		numberUnit: function(sValue) {
-			if (!sValue) {
-				return "";
-			}
-			return parseFloat(sValue).toFixed(2);
-		},
-
-		/**
 		 * Checks if a given date is before current data
 		 * @public
 		 * @param {string} sDate the date you want to compare to
@@ -37,7 +24,7 @@ sap.ui.define([], function() {
 		 * - if quantity is null or undefined
 		 * @public
 		 * @param {string|number} sQuantity the quantity of the storage unit (commonly ISTME)
-		 * @returns {boolean}
+		 * @returns {boolean} true if storage unit is considered empty, false if full
 		 */
 		isEmptyStorageUnit: function(sQuantity) {
 			var fQuantity = parseFloat(sQuantity),
@@ -53,7 +40,7 @@ sap.ui.define([], function() {
 		 * - if quantity is null or undefined
 		 * @public
 		 * @param {string|number} sQuantity the quantity of the storage unit (commonly ISTME)
-		 * @returns {boolean}
+		 * @returns {boolean} true if storage unit is considered full, false if empty
 		 */
 		isFullStorageUnit: function(sQuantity) {
 			var fQuantity = parseFloat(sQuantity),
@@ -61,25 +48,6 @@ sap.ui.define([], function() {
 				fNearToZero = 0.001;
 
 			return !sQuantity || (fQuantity !== fZero) && (fQuantity !== fNearToZero);
-		},
-
-		/**
-		 * Defines a value state based on the stock level
-		 *
-		 * @public
-		 * @param {number} iValue the stock level of a product
-		 * @returns {string} sValue the state for the stock level
-		 */
-		quantityState: function(iValue) {
-			if (iValue === 0) {
-				return "Error";
-			} else if (iValue <= 10) {
-				return "Warning";
-			} else {
-				return "Success";
-			}
 		}
-
 	};
-
 });
