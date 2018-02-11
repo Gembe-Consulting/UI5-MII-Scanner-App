@@ -18,13 +18,6 @@ sap.ui.define([
 
 			// apply content density mode to root view
 			this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
-
-			// Register the view with the message manager
-			// for now, we do this in manifest file
-			//sap.ui.getCore().getMessageManager().registerObject(this.getView(), true);
-			
-			
 		}
 	});
-
 });

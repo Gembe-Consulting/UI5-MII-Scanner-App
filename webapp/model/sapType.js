@@ -2,12 +2,12 @@ sap.ui.define([
 	"sap/ui/model/type/Float",
 	"sap/ui/model/type/Integer",
 	"sap/ui/model/type/String"
-], function(Float) {
+], function(FloatType, IntegerType, StringType) {
 	"use strict";
 
 	return {
 
-		QUAN: new sap.ui.model.type.Float({
+		QUAN: new FloatType({
 			minIntegerDigits: 1, // minimal number of non-fraction digits
 			maxIntegerDigits: 12, // maximal number of non-fraction digits
 			minFractionDigits: 3, // minimal number of fraction digits
@@ -15,26 +15,26 @@ sap.ui.define([
 			emptyString: null // defines what empty string is parsed as and what is formatted as empty string
 		}),
 
-		LENUM: new sap.ui.model.type.Integer({
+		LENUM: new IntegerType({
 			minIntegerDigits: 1, // minimal number of non-fraction digits
 			maxIntegerDigits: 20, // maximal number of non-fraction digits
 			emptyString: null // defines what empty string is parsed as and what is formatted as empty string
 		}),
 
-		LGORT: new sap.ui.model.type.String(null, {
+		LGORT: new StringType(null, {
 			minLength: 4,
 			maxLength: 4,
 			search: "^((?!VG01|vg01).)*$"
 		}),
 
-		AUFNR: new sap.ui.model.type.String(null, {
+		AUFNR: new StringType(null, {
 			minLength: 7,
 			maxLength: 7,
 			startsWith: "1",
 			search: "^[0-9]*$"
 		}),
 
-		MEINS: new sap.ui.model.type.String(null, {
+		MEINS: new StringType(null, {
 			minLength: 1,
 			maxLength: 4
 		})

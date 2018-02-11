@@ -116,7 +116,6 @@ sap.ui.define([
 			switch (oInputType.key) {
 				case "LENUM":
 					return this.byId("storageUnitInput");
-					break;
 				default:
 					return null;
 			}
@@ -317,17 +316,15 @@ sap.ui.define([
 		},
 
 		isInputDataValid: function(oData) {
-			if (oData) {
-				return !!oData.AUFNR && !!oData.SOLLME && oData.SOLLME > 0 && oData.SOLLME !== "" && !!oData.MEINH && !!oData.LGORT && ((!!oData.LENUM && oData.LGORT === "1000") || (!oData.LENUM && oData.LGORT !== "1000"));
-			} else {
-				return false;
-			}
+			return !!oData.AUFNR && !!oData.SOLLME && oData.SOLLME > 0 && oData.SOLLME !== "" && !!oData.MEINH && !!oData.LGORT && ((!!oData.LENUM && oData.LGORT === "1000") || (!oData.LENUM && oData.LGORT !== "1000"));
 		},
 
 		onOrderNumberChange: function(oEvent) {
 			var oSource = oEvent.getSource(),
 				sOrderNumber = oEvent.getParameter("value"),
-				oBundle = this.getResourceBundle();
+				oBundle = this.getResourceBundle(),
+				fnResolve,
+				fnReject;
 
 			oSource.setValueState(sap.ui.core.ValueState.None);
 
@@ -335,9 +332,8 @@ sap.ui.define([
 
 			this.showControlBusyIndicator(oSource);
 
-			var fnResolve = function(oData) {
+			fnResolve = function(oData) {
 				var aResultList,
-					oOrderHeader,
 					bOrderNumberValid = true,
 					oModel = this.getModel("data");
 
@@ -360,7 +356,7 @@ sap.ui.define([
 
 			}.bind(this);
 
-			var fnReject = function(oError) {
+			fnReject = function(oError) {
 				MessageBox.error(oBundle.getText("messageTextGoodsReceiptError"));
 			}.bind(this);
 
@@ -376,18 +372,15 @@ sap.ui.define([
 				.getData());
 		},
 		onUnitOfMeasureChange: function(oEvent) {
-			var sUnitOfMeasure = oEvent.getParameter("value")
-				.toUpperCase(),
+			var sUnitOfMeasure = oEvent.getParameter("value").toUpperCase(),
 				oDataModel = this.getModel("data");
 
 			oDataModel.setProperty("/MEINH", sUnitOfMeasure);
 
-			this.updateViewControls(this.getModel("data")
-				.getData());
+			this.updateViewControls(this.getModel("data").getData());
 		},
 		onStorageLocationChange: function(oEvent) {
-			var sStorageLocation = oEvent.getParameter("value")
-				.toUpperCase(),
+			var sStorageLocation = oEvent.getParameter("value").toUpperCase(),
 				oBundle = this.getResourceBundle();
 
 			if (!this.isStorageLocationAllowed(sStorageLocation)) {
@@ -395,8 +388,7 @@ sap.ui.define([
 				MessageBox.error(oBundle.getText("messageTextWrongStorageLocation", [sStorageLocation]));
 			}
 
-			this.updateViewControls(this.getModel("data")
-				.getData());
+			this.updateViewControls(this.getModel("data").getData());
 		}
 
 	});
