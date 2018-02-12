@@ -28,6 +28,7 @@ Feature: Creating goods issue posting to SAP ERP using storage location
 		Then I can see goodsIssuePageTitle in action.GoodsIssue view has css color '#BB07FF'
 		Then on the Goods Issue Page: I should see the save button is disabled
 		Then on the Goods Issue Page: I should see all "non LE" input fields are initial
+		Then on the Goods Issue Page: I should see data model and view are initial
 		
 	Scenario: Should enable save button if all required input fields are populated and should disable save button if form is cleared
 		When I enter '1234567' into orderNumberInput in action.GoodsIssue view

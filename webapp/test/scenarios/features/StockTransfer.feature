@@ -24,7 +24,8 @@ Feature: Creating a stock transfer
 		Then I can see stockTransferPageIcon2 with color '#FFAC00' in action.StockTransfer view
 		Then I can see stockTransferPageTitle in action.StockTransfer view has css color '#FFAC00'
 		Then I cannot see saveButton in action.StockTransfer view
-#		Then on the Stock Transfer Page: I should see all input fields are initial
+		Then on the Stock Transfer Page: I should see all input fields are initial
+		Then on the Stock Transfer Page: I should see data model and view model are initial
 
 	Scenario: Should select the correct storage bin key when users select an entry from storage bin list
 		When I press ARROW_DOWN + ALT at storageBinSelection in action.StockTransfer view
