@@ -80,10 +80,14 @@ sap.ui.require([
 								success: function(oControl) {
 									switch (oControl.getMetadata().getName()) {
 										case "sap.m.Switch":
-											Opa5.assert.strictEqual(oControl.getState(), sEmptyValue, sControlId + " is cleared and has value "" + sEmptyValue + "" now.");
+											Opa5.assert.strictEqual(oControl.getState(), sEmptyValue, sControlId + " is cleared and has value "
+												" + sEmptyValue + "
+												" now.");
 											break;
 										case "sap.m.Input":
-											Opa5.assert.strictEqual(oControl.getValue(), sEmptyValue, sControlId + " is cleared and has value "" + sEmptyValue + "" now.");
+											Opa5.assert.strictEqual(oControl.getValue(), sEmptyValue, sControlId + " is cleared and has value "
+												" + sEmptyValue + "
+												" now.");
 											break;
 										default:
 											Opa5.assert.ok(false, sControlId + " is not valid for initial check.");
@@ -110,19 +114,67 @@ sap.ui.require([
 								success: function(oControl) {
 									switch (oControl.getMetadata().getName()) {
 										case "sap.m.Switch":
-											Opa5.assert.strictEqual(oControl.getState(), sEmptyValue, sControlId + " is cleared and has value "" + sEmptyValue + "" now.");
+											Opa5.assert.strictEqual(oControl.getState(), sEmptyValue, sControlId + " is cleared and has value "
+												" + sEmptyValue + "
+												" now.");
 											break;
 										case "sap.m.Input":
-											Opa5.assert.strictEqual(oControl.getValue(), sEmptyValue, sControlId + " is cleared and has value "" + sEmptyValue + "" now.");
+											Opa5.assert.strictEqual(oControl.getValue(), sEmptyValue, sControlId + " is cleared and has value "
+												" + sEmptyValue + "
+												" now.");
 											break;
 										default:
 											Opa5.assert.ok(false, sControlId + " is not valid for initial check.");
-									}	
+									}
 								}
 							});
 						}.bind(this));
 
 						return this;
+					},
+					iShouldSeeDataModelAndViewModelAreInitial: function() {
+						var oExpectedDataData = {
+								//entry screen data
+								entryQuantity: null,
+								unitOfMeasure: null,
+								orderNumber: null,
+								storageUnitNumber: null,
+								storageLocation: null,
+								materialNumber: null,
+								bulkMaterialIndicator: false,
+								//storage unit data
+								LENUM: null,
+								MEINH: null,
+								BESTQ: null,
+							},
+							oExpectedViewData = {
+								bStorageUnitValid: true,
+								bOrderNumberValid: true,
+								bValid: false,
+								storageUnitNumberValueState: sap.ui.core.ValueState.None,
+								orderNumberValueState: sap.ui.core.ValueState.None,
+								materialNumberValueState: sap.ui.core.ValueState.None
+							};
+
+						this.waitFor({
+							id: "rollerGoodsIssue",
+							viewName: sViewName,
+							success: function(oControl) {
+								var oView = oControl.getParent(),
+									oDataModel, oViewModel;
+
+								Opa5.assert.strictEqual(oView.getViewName(), "com.mii.scanner.view.action.GoodsIssue", "View " + oView.getViewName() + " found");
+
+								oDataModel = oView.getModel("data");
+								oViewModel = oView.getModel("view");
+
+								Opa5.assert.propEqual(oDataModel.getData(), oExpectedDataData, "Data model is inital");
+
+								Opa5.assert.propEqual(oViewModel.getData(), oExpectedViewData, "View model is inital");
+							},
+							errorMessage: "Could not find control"
+						});
+
 					}
 				}
 			}
