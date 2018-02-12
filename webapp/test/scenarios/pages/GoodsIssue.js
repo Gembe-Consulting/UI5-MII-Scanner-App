@@ -1,11 +1,11 @@
 sap.ui.require([
-		'sap/ui/test/Opa5',
-		'sap/ui/test/matchers/Interactable',
+		"sap/ui/test/Opa5",
+		"sap/ui/test/matchers/Interactable",
 		"sap/ui/test/matchers/Properties",
-		'sap/ui/test/matchers/PropertyStrictEquals',
+		"sap/ui/test/matchers/PropertyStrictEquals",
 		"sap/ui/test/matchers/Ancestor",
-		'sap/ui/test/actions/Press',
-		'sap/ui/test/actions/EnterText'
+		"sap/ui/test/actions/Press",
+		"sap/ui/test/actions/EnterText"
 	],
 	function(Opa5, Interactable, Properties, PropertyStrictEquals, Ancestor, Press, EnterText) {
 		"use strict";
@@ -80,10 +80,10 @@ sap.ui.require([
 								success: function(oControl) {
 									switch (oControl.getMetadata().getName()) {
 										case "sap.m.Switch":
-											Opa5.assert.strictEqual(oControl.getState(), sEmptyValue, sControlId + " is cleared and has value '" + sEmptyValue + "' now.");
+											Opa5.assert.strictEqual(oControl.getState(), sEmptyValue, sControlId + " is cleared and has value "" + sEmptyValue + "" now.");
 											break;
 										case "sap.m.Input":
-											Opa5.assert.strictEqual(oControl.getValue(), sEmptyValue, sControlId + " is cleared and has value '" + sEmptyValue + "' now.");
+											Opa5.assert.strictEqual(oControl.getValue(), sEmptyValue, sControlId + " is cleared and has value "" + sEmptyValue + "" now.");
 											break;
 										default:
 											Opa5.assert.ok(false, sControlId + " is not valid for initial check.");
@@ -110,10 +110,10 @@ sap.ui.require([
 								success: function(oControl) {
 									switch (oControl.getMetadata().getName()) {
 										case "sap.m.Switch":
-											Opa5.assert.strictEqual(oControl.getState(), sEmptyValue, sControlId + " is cleared and has value '" + sEmptyValue + "' now.");
+											Opa5.assert.strictEqual(oControl.getState(), sEmptyValue, sControlId + " is cleared and has value "" + sEmptyValue + "" now.");
 											break;
 										case "sap.m.Input":
-											Opa5.assert.strictEqual(oControl.getValue(), sEmptyValue, sControlId + " is cleared and has value '" + sEmptyValue + "' now.");
+											Opa5.assert.strictEqual(oControl.getValue(), sEmptyValue, sControlId + " is cleared and has value "" + sEmptyValue + "" now.");
 											break;
 										default:
 											Opa5.assert.ok(false, sControlId + " is not valid for initial check.");
