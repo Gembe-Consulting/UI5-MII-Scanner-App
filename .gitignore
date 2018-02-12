@@ -1,4 +1,6 @@
-/.che/
+# ignore all . folders but include . files
+.*/
+# others
 /dist/
 UIAdaptation_index.html
 changes_preview.js
