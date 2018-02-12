@@ -47,11 +47,6 @@ sap.ui.define([
 				}
 
 				this.iStartMyAppInAFrame(getFrameUrl(oOptions.hash, sUrlParameters));
-			},
-
-			iNavigateToPage: function(sHash) {
-				var oHashChanger = sap.ui.test.Opa5.getHashChanger();
-				oHashChanger.setHash(sHash);
 			}
 		});
 	});
