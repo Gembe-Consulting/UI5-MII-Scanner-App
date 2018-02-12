@@ -1,4 +1,4 @@
-Feature: Creating a stock transfer 
+Feature: Stock Transfer
 	Users can create a stock transfer, either with goods receipt to process order or without.
 	Entering a storage unit number will show the neccessarry data of that storage unit,
 	and pre-populate some input fields.
@@ -24,6 +24,7 @@ Feature: Creating a stock transfer
 		Then I can see stockTransferPageIcon2 with color '#FFAC00' in action.StockTransfer view
 		Then I can see stockTransferPageTitle in action.StockTransfer view has css color '#FFAC00'
 		Then I cannot see saveButton in action.StockTransfer view
+		Then on the Stock Transfer Page: I should see the save button is disabled
 		Then on the Stock Transfer Page: I should see all input fields are initial
 		Then on the Stock Transfer Page: I should see data model and view model are initial
 
@@ -60,7 +61,18 @@ Feature: Creating a stock transfer
 		Then I can see storageUnitInput with valueState 'Error' in action.StockTransfer view
 		 And I can see messageStrip with text 'Achtung: Palette '00000000000000000001' existiert nicht!' in action.StockTransfer view
 		 And I can see messageStrip with type 'Error' in action.StockTransfer view
-		 
+
+	Scenario: User clears the input form
+		When I enter '00000000109330000013' into storageUnitInput in action.StockTransfer view
+		When I enter '10,000' into quantityInput in action.StockTransfer view
+		When I press ARROW_DOWN + ALT at storageBinSelection in action.StockTransfer view
+		 And I click on 3rd item of storageBinSelection items in action.StockTransfer view
+		And I can see saveButton in action.StockTransfer view
+		When I click on clearFormButton in action.StockTransfer view
+		Then on the Stock Transfer Page: I should see the save button is disabled
+		Then on the Stock Transfer Page: I should see all input fields are initial
+		Then on the Stock Transfer Page: I should see data model and view model are initial
+		
 	Scenario: Should enable save Button once users provide all input and input is valid
 		When I look at the screen
 		Then I cannot see saveButton in action.StockTransfer view

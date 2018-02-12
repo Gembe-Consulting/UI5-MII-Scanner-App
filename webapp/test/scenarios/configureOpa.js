@@ -24,7 +24,6 @@ sap.ui.define([
 			}
 		}),
 		assertions: new Opa5({
-
 			iCanSeeControlHasFocus: function(sControlId, sViewName) {
 				var that = this;
 				return this.waitFor({

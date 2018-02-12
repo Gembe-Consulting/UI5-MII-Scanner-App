@@ -1,4 +1,4 @@
-Feature: Creating goods receipt posting to SAP ERP
+Feature: Goods Receipt
 	Users can post GRs by entering storage unit number (aka palette) to post a quantity.
 	Users also can post GRs by entering order number, quantity and storage location.
 	Entering a storage unit number will show the neccessarry data of that storage unit,
@@ -6,10 +6,7 @@ Feature: Creating goods receipt posting to SAP ERP
 	
 	Background:
 		Given I start the app from 'com/mii/scanner/app/mockServer.html'
-		When I enter 'phigem' into usernameInput in Login view
-		 And I click on loginButton in Login view
-		 And I click on navGoodsMovementItem in nav.Home view
-		 And I click on goodsReceiptItem in nav.GoodsMovement view
+		 When I navigate to /Start/Materialbewegung/WE
 		
 	Scenario: Should navigate to Goods Receipt Page and see all UI elements
 		Then I can see goodsReceiptPage in action.GoodsReceipt view

@@ -5,63 +5,34 @@ sap.ui.require([
 		"sap/ui/test/matchers/PropertyStrictEquals",
 		"sap/ui/test/matchers/Ancestor",
 		"sap/ui/test/actions/Press",
-		"sap/ui/test/actions/EnterText"
+		"sap/ui/test/actions/EnterText",
+		"com/mii/scanner/test/arrangement/Common"
 	],
-	function(Opa5, Interactable, Properties, PropertyStrictEquals, Ancestor, Press, EnterText) {
+	function(Opa5, Interactable, Properties, PropertyStrictEquals, Ancestor, Press, EnterText, Common) {
 		"use strict";
 		var sViewName = "action.GoodsIssue";
 
 		Opa5.createPageObjects({
 
 			onTheGoodsIssuePage: {
+				baseClass: Common,
 				actions: {
 					iCloseTheErrorMessage: function() {
-						return this.waitFor({
-							searchOpenDialogs: true,
-							viewName: "sap.m.MessageBox",
-							actions: new Press(),
-							success: function() {
-								Opa5.assert.ok(true, "Error message box has been closed");
-							},
-							errorMessage: "Did not find the Error Message Box"
-						});
+						return this.iCloseTheMessageBox();
 					}
 				},
 				assertions: {
+					
 					iShouldSeeTheSaveButtonIsDisabled: function() {
-						return this.waitFor({
-							id: "saveButton",
-							visible: false,
-							controlType: "sap.m.Button",
-							viewName: sViewName,
-							matchers: new PropertyStrictEquals({
-								name: "enabled",
-								value: false
-							}),
-							success: function(oButton) {
-								Opa5.assert.ok(oButton.getVisible(), "The save button is visible");
-								Opa5.assert.ok(!oButton.getEnabled(), "The save button is disabled");
-							},
-							errorMessage: "Did not find the enabled saveButton"
-						});
+						var bEnabled = false;
+						return this.iShouldSeeTheSaveButton(sViewName, bEnabled);
 					},
+					
 					iShouldSeeTheSaveButtonIsEnabled: function() {
-						return this.waitFor({
-							id: "saveButton",
-							visible: false,
-							controlType: "sap.m.Button",
-							viewName: sViewName,
-							matchers: new PropertyStrictEquals({
-								name: "enabled",
-								value: true
-							}),
-							success: function(oButton) {
-								Opa5.assert.ok(oButton.getVisible(), "The save button is visible");
-								Opa5.assert.ok(oButton.getEnabled(), "The save button is enabled");
-							},
-							errorMessage: "Did not find the enabled saveButton"
-						});
+						var bEnabled = true;
+						return this.iShouldSeeTheSaveButton(sViewName, bEnabled);
 					},
+					
 					iShouldSeeAllNonLeInputFieldsAreInitial: function() {
 
 						var oInitialControlData = {
@@ -94,6 +65,7 @@ sap.ui.require([
 
 						return this;
 					},
+					
 					iShouldSeeAllWithLeInputFieldsAreInitial: function() {
 
 						var oInitialControlData = {
@@ -124,6 +96,7 @@ sap.ui.require([
 
 						return this;
 					},
+					
 					iShouldSeeDataModelAndViewModelAreInitial: function() {
 						var oExpectedDataData = {
 								//entry screen data
@@ -149,7 +122,7 @@ sap.ui.require([
 							};
 
 						this.waitFor({
-							id: "rollerGoodsIssue",
+							id: "goodsIssuePage",
 							viewName: sViewName,
 							success: function(oControl) {
 								var oView = oControl.getParent(),

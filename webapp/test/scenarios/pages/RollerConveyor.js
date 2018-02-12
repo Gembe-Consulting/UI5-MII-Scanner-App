@@ -5,19 +5,32 @@ sap.ui.require([
 		"sap/ui/test/matchers/PropertyStrictEquals",
 		"sap/ui/test/matchers/Ancestor",
 		"sap/ui/test/actions/Press",
-		"sap/ui/test/actions/EnterText"
+		"sap/ui/test/actions/EnterText",
+		"com/mii/scanner/test/arrangement/Common"
 	],
-	function(Opa5, Interactable, Properties, PropertyStrictEquals, Ancestor, Press, EnterText) {
+	function(Opa5, Interactable, Properties, PropertyStrictEquals, Ancestor, Press, EnterText, Common) {
 		"use strict";
 		var sViewName = "action.RollerConveyor";
 
 		Opa5.createPageObjects({
 
 			onTheRollerConveyorPage: {
+				baseClass: Common,
 				actions: {
 
 				},
 				assertions: {
+
+					iShouldSeeTheSaveButtonIsDisabled: function() {
+						var bEnabled = false;
+						return this.iShouldSeeTheSaveButton(sViewName, bEnabled);
+					},
+
+					iShouldSeeTheSaveButtonIsEnabled: function() {
+						var bEnabled = true;
+						return this.iShouldSeeTheSaveButton(sViewName, bEnabled);
+					},
+
 					iShouldSeeAllInputFieldsAreInitial: function() {
 
 						var oInitialControlData = {
