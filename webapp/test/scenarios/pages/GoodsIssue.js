@@ -22,17 +22,17 @@ sap.ui.require([
 					}
 				},
 				assertions: {
-					
+
 					iShouldSeeTheSaveButtonIsDisabled: function() {
 						var bEnabled = false;
 						return this.iShouldSeeTheSaveButton(sViewName, bEnabled);
 					},
-					
+
 					iShouldSeeTheSaveButtonIsEnabled: function() {
 						var bEnabled = true;
 						return this.iShouldSeeTheSaveButton(sViewName, bEnabled);
 					},
-					
+
 					iShouldSeeAllNonLeInputFieldsAreInitial: function() {
 
 						var oInitialControlData = {
@@ -65,7 +65,7 @@ sap.ui.require([
 
 						return this;
 					},
-					
+
 					iShouldSeeAllWithLeInputFieldsAreInitial: function() {
 
 						var oInitialControlData = {
@@ -96,7 +96,7 @@ sap.ui.require([
 
 						return this;
 					},
-					
+
 					iShouldSeeDataModelAndViewModelAreInitial: function() {
 						var oExpectedDataData = {
 								//entry screen data
@@ -111,8 +111,10 @@ sap.ui.require([
 								LENUM: null,
 								MEINH: null,
 								BESTQ: null,
+								VFDAT: null
 							},
 							oExpectedViewData = {
+								type: "nonLE",
 								bStorageUnitValid: true,
 								bOrderNumberValid: true,
 								bValid: false,
