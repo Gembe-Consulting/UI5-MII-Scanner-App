@@ -4,7 +4,7 @@ Feature: Navigation between pages with correct labels
 		Given I start the app from 'com/mii/scanner/app/mockServer.html'
 	
 	Scenario: Should show start page
-		When I navigate to "/Start"
+		When I navigate to /Start
 		Then I can see the sap.m.Label control deeply nested inside navGoodsMovementItem with text 'Materialbewegungen' in nav.Home view
 		Then I can see the sap.ui.core.Icon control deeply nested inside navGoodsMovementItem with color '#330066' in nav.Home view
 		Then I can see the sap.ui.core.Icon control deeply nested inside navGoodsMovementItem with src 'sap-icon://product' in nav.Home view
@@ -13,7 +13,7 @@ Feature: Navigation between pages with correct labels
 		Then I can see the sap.ui.core.Icon control deeply nested inside navStatusChangeItem with src 'sap-icon://journey-change' in nav.Home view
 		
 	Scenario: Should show goods movement page
-		When I navigate to "/Start/Materialbewegung"
+		When I navigate to /Materialbewegung
 		Then I can see the sap.m.Label control deeply nested inside goodsReceiptItem with text 'WE' in nav.GoodsMovement view
 		Then I can see the sap.ui.core.Icon control deeply nested inside goodsReceiptItem with color '#1F35DE' in nav.GoodsMovement view
 		Then I can see the sap.ui.core.Icon control deeply nested inside goodsReceiptItem with src 'sap-icon://inbox' in nav.GoodsMovement view

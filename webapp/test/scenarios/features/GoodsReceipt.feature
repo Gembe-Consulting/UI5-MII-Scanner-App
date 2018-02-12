@@ -6,7 +6,7 @@ Feature: Goods Receipt
 	
 	Background:
 		Given I start the app from 'com/mii/scanner/app/mockServer.html'
-		 When I navigate to /Start/Materialbewegung/WE
+		 When I navigate to /WE
 		
 	Scenario: Should navigate to Goods Receipt Page and see all UI elements
 		Then I can see goodsReceiptPage in action.GoodsReceipt view

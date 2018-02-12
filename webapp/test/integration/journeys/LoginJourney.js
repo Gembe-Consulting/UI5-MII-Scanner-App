@@ -75,7 +75,7 @@ sap.ui.require(["sap/ui/test/opaQunit"], function(opaTest) {
 	opaTest("Should navigate to a deep page, while having a valid user model", function(Given, When, Then) {
 		// Arrangements
 		// Actions
-		When.onHomePage.iEnterNewHashToAnotherPage("/Start/Materialbewegung/WE");
+		When.onHomePage.iEnterNewHashToAnotherPage("/WE");
 		// Assertions
 		Then.onGoodsReceiptPage.theAppShouldNavigateToGoodsReceiptPage();
 	});

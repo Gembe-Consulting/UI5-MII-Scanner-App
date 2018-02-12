@@ -3,7 +3,7 @@ Feature: Goods Issue using storage unit number
 	
 	Background:
 		Given I start the app from 'com/mii/scanner/app/mockServer.html'
-		 When I navigate to /Start/Materialbewegung/WA?type=withLE
+		 When I navigate to /WA?type=withLE
 		
 	Scenario: Should navigate to Goods Issue Page (with LE) and see all UI elements
 		Then I can see goodsIssuePage in action.GoodsIssue view

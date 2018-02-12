@@ -5,7 +5,7 @@ Feature: Stock Transfer
 	
 	Background:
 		Given I start the app from 'com/mii/scanner/app/mockServer.html'
-		When I navigate to "Start/Materialbewegung/UL"
+		 When I navigate to /UML
 		
 	Scenario: Should navigate to Stock Transfer Page and see all UI elements
 		Then I can see stockTransferPage in action.StockTransfer view

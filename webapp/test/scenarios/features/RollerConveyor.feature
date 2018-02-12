@@ -3,7 +3,7 @@ Feature: Creating a stock transfer at Roller Conveyor
 	
 	Background:
 		Given I start the app from 'com/mii/scanner/app/mockServer.html'
-		When I navigate to "Start/Materialbewegung/ROL"
+		 When I navigate to /ROL
 		
 	Scenario: Should navigate to Roller Conveyor Page and see all UI elements with initial data
 		Then I can see rollerConveyorPage in action.RollerConveyor view

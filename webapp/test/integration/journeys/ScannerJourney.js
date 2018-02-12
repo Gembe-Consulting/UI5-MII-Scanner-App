@@ -49,11 +49,11 @@ sap.ui.require(["sap/ui/test/opaQunit"], function(opaTest) {
 	
 	QUnit.module("Scanning barcodes from hardware to browser, without input field focus");
 
-	opaTest("Should find the correct input field for STORAGE BIN", function(Given, When, Then) {
+	opaTest("Should find the correct input field for Storage Unit", function(Given, When, Then) {
 		// Arrangements
 		Given.iTeardownMyApp();
 		Given.iStartTheApp({
-				hash: "/Start/Materialbewegung/WE",
+				hash: "/WE",
 				illumLoginName: "phigem"
 		});
 		
@@ -66,6 +66,12 @@ sap.ui.require(["sap/ui/test/opaQunit"], function(opaTest) {
 	});
 
 	opaTest("Should find the correct input field for PROCESS ORDER / PHASE", function(Given, When, Then) {
+		// Arrangements
+		// Actions
+		// Assertions
+	});
+	
+	opaTest("Should find the correct input field for STORAGE BIN", function(Given, When, Then) {
 		// Arrangements
 		// Actions
 		// Assertions

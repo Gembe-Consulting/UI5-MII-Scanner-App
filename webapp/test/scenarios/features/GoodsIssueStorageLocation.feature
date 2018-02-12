@@ -4,7 +4,7 @@ Feature: Goods Issue using storage location
 	
 	Background:
 		Given I start the app from 'com/mii/scanner/app/mockServer.html'
-		 When I navigate to /Start/Materialbewegung/WA?type=nonLE
+		 When I navigate to /WA?type=nonLE
 		
 	Scenario: Should navigate to Goods Issue Page (non LE) and see all UI elements
 		Then I can see goodsIssuePage in action.GoodsIssue view

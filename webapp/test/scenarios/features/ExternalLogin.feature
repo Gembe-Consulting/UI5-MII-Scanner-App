@@ -11,7 +11,7 @@ Feature: External Login using deep linking
 		Then I can see loginPage in Login view
 @wip		
 	Scenario: Should force login on deep linking if username is wrong
-		Given I start the app on "/Start/Materialbewegung/WE" using remote user "wrong_user_name"
+		Given I start the app on "/WE" using remote user "wrong_user_name"
 		When I look at the screen
 		Then I can see loginPage in Login view
 @wip		
@@ -30,21 +30,21 @@ Feature: External Login using deep linking
 		Then I can see loginPage in Login view
 @wip		
 	Scenario: User can perform login and open deep page for goods movement
-		Given I start the app on "/Start/Materialbewegung" using remote user "phigem"
+		Given I start the app on "/Materialbewegung" using remote user "phigem"
 		When I look at the screen
 		Then I can see goodsMovementPage in nav.GoodsMovement view
 @wip		
 	Scenario: User can perform login and open deep page status change
-		Given I start the app on "/Start/Statusmeldung" using remote user "phigem"
+		Given I start the app on "/Statusmeldung" using remote user "phigem"
 		When I look at the screen
 		Then I can see statusChangePage in nav.StatusChange view
 @wip		
 	Scenario: User can perform login and open deep page for creating goods receipt
-		Given I start the app on "/Start/Materialbewegung/WE" using remote user "phigem"
+		Given I start the app on "/WE" using remote user "phigem"
 		When I look at the screen
 		Then I can see goodsReceiptPage in action.GoodsReceipt view
 @wip		
 	Scenario: User can perform login and open deep page for operation start
-		Given I start the app on "/Start/Statusmeldung/VS" using remote user "phigem"
+		Given I start the app on "/VS" using remote user "phigem"
 		When I look at the screen
 		Then I can see startOperationPage in action.StartOperation view
