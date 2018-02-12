@@ -1,11 +1,6 @@
 [FEATURE] Add support for storage location and order number in Goods Receipt page
-[INTERNAL] Change readme.md  -rename to REDAME.md  -add commit message format
-[INTERNAL] Change readme.md  -rename to REDAME.md  -add commit message format
-[INTERNAL] Create CHANGES.md
-[INTERNAL] Add CHANGELOG.md to project
 [FEATURE] (goodsissue) Add custom colorized header with icons
 [FEATURE] (stocktransfer) Add custom colorized header with icon
-[INTERNAL] Replace icon size by sapUiSmallMarginEnd
 [FEATURE] (rollerconveyoer) Add custom colorized header with icon
 [FIX] Adjust page title to navigation
 [FEATURE] Improve visual appearance
@@ -15,12 +10,10 @@
 - Remove footer containing user name from List control
 - Add footer containing username to Page control
 [FEATURE] Re-align quantity input and uom
-[INTERNAL] Prevent grunt build on git push
 [FEATURE] Implement roller convoyer
 -Add and wire ui controls
 -Add completness check
 -Add storage unit validation
-[INTERNAL] Prevent grunt build on git push and line break on chained methods
 [FEATURE] Improve Roller Conveyor Page
 -Add basic test scenario
 -Add test support for ui controls
@@ -31,10 +24,7 @@ Affected pages:
 - Goods Receipt
 - Goods Issue
 Stock transfer is not affected, because non-existing storage unit is handled using initial storage unit object. This method does also allow to hide storage unit info fragment.
-[TEST] Set external login feature as WIP
 [FIX] Missing }
-[STYLE] Reformat chained methods
-[STYLE] Reformat chained methods
 [FEATURE] Add most important test cases
 [FEATURE] Accept 90000000000000000000 as storage unit indicating last unit
 [FEATURE] Disable Rollenbahn and Stapler if users enter last unit
@@ -42,17 +32,5 @@ Stock transfer is not affected, because non-existing storage unit is handled usi
 -Repair pre-selected storage bin on change to last LE
 -Repair entry quantity and unit
 [FIX] Make emptyStorageUnit formatter detect null as empty
-[INTERNAL] Cleanup formatter code
-[INTERNAL] Remove content of prepareUserModel form models.js
-[INTERNAL] Replace full qualified name by shortcut
-[TEST] Add missing test for null, undefined and ''
 [FIX] Detect null, undefined and '' as empty unit
-[INTERNAL] Fix typo in comment
-[INTERNAL][TEST][STYLE] Adding some tests and beautify some files
 [Internal] Version update
-[INTERNAL] Update chnagelog
-[INTERNAL] Update changelog
-[TEST] Fix feature
-[STYLE] Fix missing semicolon
-[INTERNAL] Build
-[INTERNAL] Update Build properties

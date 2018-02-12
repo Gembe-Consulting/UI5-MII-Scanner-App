@@ -1,5 +1,33 @@
 # Changelog
+
 All notable changes to this project will be documented in this file.
+
+============================================================================================================
+git log --after 11/02/2018 --pretty=format:"%s%n%b" --reverse --no-merges | grep -v '^$' | grep -v '\[INTERNAL\]' | grep -v '\[CHORE\]' | grep -v '\[TEST\]' | grep -v '\[STYLE\]'> LATEST_FEATURES_FIXES.md
+git log --after 11/02/2018 --pretty=format:"%s%n%b" --reverse --no-merges | grep -v '^$' > LATEST_CHANGES.md
+============================================================================================================
+
+[<TYPE>] (<scope>): <subject>
+
+<body>
+
+<footer>
+
+Allowed <TYPE> values:
+- FEATURE (new feature for the user, not a new INTERNAL|CHORE type feature )
+- FIX (bug fix for the user, not a INTERNAL|CHORE type fix )
+- TEST (no production code change; adding missing tests, refactoring tests, etc )
+- STYLE (no production code change; formatting, missing semi colons, etc )
+- REFACTOR (no production code change; renaming methods, moving objects, etc )
+- INTERNAL|CHORE (no production code change; changing dev environment, updating grunt tasks, etc )
+
+Examples:
+
+[FEATURE] (goods issue page): add, remove, change, replace, start ...
+[FIX] (roller conveyor page): fix, repair, stop
+
+============================================================================================================
+
 
 ##[1.1.80.2018-02-11]
 [FIX] Compare initial quantity to '' (instead of 0,000)
