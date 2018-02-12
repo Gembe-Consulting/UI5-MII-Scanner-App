@@ -147,6 +147,8 @@ sap.ui.define([
 			oDataModel.updateBindings(true);
 
 			oViewModel.setProperty("/", oNewInitialView);
+			// force update to also override invalid values
+			oViewModel.updateBindings(true);
 
 			if (!bKeepMessageStrip) {
 				this.clearLogMessages();
