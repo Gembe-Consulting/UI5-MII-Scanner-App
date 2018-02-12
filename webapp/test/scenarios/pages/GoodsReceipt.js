@@ -99,20 +99,42 @@ sap.ui.require([
 
 						return this;
 					},
-					iShouldSeeTheBusyIndicator: function() {
-						
-						return this.waitFor({
-							viewName: "sap.m.MessageBox",
-							check: function() {
-								var sErrorMessage;
-								return !!sap.ui.test.Opa5.getJQuery()(".sapMMessageBoxError").length && sap.ui.test.Opa5.getJQuery()(".sapMMessageBoxError").find(".sapMMsgBoxText").text() === sErrorMessage;
+					iShouldSeeDataModelAndViewModelAreInitial: function() {
+						var oExpectedDataData = {
+								LENUM: null,
+								AUFNR: null,
+								SOLLME: null,
+								MEINH: null,
+								LGORT: null,
+								BESTQ: null
 							},
-							success: function(oMessageBox) {
-								Opa5.assert.ok(true, "Error message box is shown");
-							},
-							errorMessage: "Did not find the Error Message Box"
+							oExpectedViewData = {
+								bStorageUnitValid: true,
+								bOrderNumberValid: true,
+								bValid: false,
+								storageUnitNumberValueState: sap.ui.core.ValueState.None,
+								orderNumberValueState: sap.ui.core.ValueState.None
+							};
 
+						this.waitFor({
+							id: "goodsReceiptPage",
+							viewName: sViewName,
+							success: function(oControl) {
+								var oView = oControl.getParent(),
+									oDataModel, oViewModel;
+
+								Opa5.assert.strictEqual(oView.getViewName(), "com.mii.scanner.view.action.ReceiptPage", "View " + oView.getViewName() + " found");
+
+								oDataModel = oView.getModel("data");
+								oViewModel = oView.getModel("view");
+
+								Opa5.assert.propEqual(oDataModel.getData(), oExpectedDataData, "Data model is inital");
+
+								Opa5.assert.propEqual(oViewModel.getData(), oExpectedViewData, "View model is inital");
+							},
+							errorMessage: "Could not find control"
 						});
+
 					}
 				}
 			}
