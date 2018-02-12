@@ -1,11 +1,11 @@
 sap.ui.require([
-		'sap/ui/test/Opa5',
-		'sap/ui/test/matchers/Interactable',
+		"sap/ui/test/Opa5",
+		"sap/ui/test/matchers/Interactable",
 		"sap/ui/test/matchers/Properties",
-		'sap/ui/test/matchers/PropertyStrictEquals',
+		"sap/ui/test/matchers/PropertyStrictEquals",
 		"sap/ui/test/matchers/Ancestor",
-		'sap/ui/test/actions/Press',
-		'sap/ui/test/actions/EnterText'
+		"sap/ui/test/actions/Press",
+		"sap/ui/test/actions/EnterText"
 	],
 	function(Opa5, Interactable, Properties, PropertyStrictEquals, Ancestor, Press, EnterText) {
 		"use strict";
@@ -63,7 +63,7 @@ sap.ui.require([
 						});
 					},
 					iCanSeeTheErrorMessage: function() {
-						var sErrorMessage = "Lagerort 'VG01' ist nicht für Buchungen vorgesehen.\nBitte korrigieren sie ihre Eingabe!";
+						var sErrorMessage = "Lagerort "VG01" ist nicht für Buchungen vorgesehen.\nBitte korrigieren sie ihre Eingabe!";
 						return this.waitFor({
 							searchOpenDialogs: true,
 							viewName: "sap.m.MessageBox",
@@ -92,7 +92,7 @@ sap.ui.require([
 								id: sControlId,
 								viewName: sViewName,
 								success: function(oControl) {
-									Opa5.assert.strictEqual(oControl.getValue(), sEmptyValue, sControlId + " is cleared and has value '" + sEmptyValue + "' now.");
+									Opa5.assert.strictEqual(oControl.getValue(), sEmptyValue, sControlId + " is cleared and has value "" + sEmptyValue + "" now.");
 								}
 							});
 						}.bind(this));
