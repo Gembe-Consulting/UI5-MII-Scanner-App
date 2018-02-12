@@ -35,19 +35,13 @@ sap.ui.require([
 									var sControlClassName = oControl.getMetadata().getName();
 									switch (sControlClassName) {
 										case "sap.m.Switch":
-											Opa5.assert.strictEqual(oControl.getState(), sEmptyValue, sControlClassName + " " + sControlId + " is cleared and has value "
-												" + sEmptyValue + "
-												" now.");
+											Opa5.assert.strictEqual(oControl.getState(), sEmptyValue, sControlClassName + " " + sControlId + " is cleared and has value '" + sEmptyValue + "' now.");
 											break;
 										case "sap.m.Input":
-											Opa5.assert.strictEqual(oControl.getValue(), sEmptyValue, sControlClassName + " " + sControlId + " is cleared and has value "
-												" + sEmptyValue + "
-												" now.");
+											Opa5.assert.strictEqual(oControl.getValue(), sEmptyValue, sControlClassName + " " + sControlId + " is cleared and has value '" + sEmptyValue + "' now.");
 											break;
 										case "sap.m.ComboBox":
-											Opa5.assert.strictEqual(oControl.getValue(), sEmptyValue, sControlClassName + " " + sControlId + " is cleared and has value "
-												" + sEmptyValue + "
-												" now.");
+											Opa5.assert.strictEqual(oControl.getValue(), sEmptyValue, sControlClassName + " " + sControlId + " is cleared and has value '" + sEmptyValue + "' now.");
 											break;
 										default:
 											Opa5.assert.ok(false, sControlId + " is not valid for initial check.");

@@ -63,7 +63,7 @@ sap.ui.require([
 						});
 					},
 					iCanSeeTheErrorMessage: function() {
-						var sErrorMessage = "Lagerort "VG01" ist nicht für Buchungen vorgesehen.\nBitte korrigieren sie ihre Eingabe!";
+						var sErrorMessage = "Lagerort 'VG01' ist nicht für Buchungen vorgesehen.\nBitte korrigieren sie ihre Eingabe!";
 						return this.waitFor({
 							searchOpenDialogs: true,
 							viewName: "sap.m.MessageBox",
@@ -92,7 +92,7 @@ sap.ui.require([
 								id: sControlId,
 								viewName: sViewName,
 								success: function(oControl) {
-									Opa5.assert.strictEqual(oControl.getValue(), sEmptyValue, sControlId + " is cleared and has value "" + sEmptyValue + "" now.");
+									Opa5.assert.strictEqual(oControl.getValue(), sEmptyValue, sControlId + " is cleared and has value '" + sEmptyValue + "' now.");
 								}
 							});
 						}.bind(this));
@@ -123,7 +123,7 @@ sap.ui.require([
 								var oView = oControl.getParent(),
 									oDataModel, oViewModel;
 
-								Opa5.assert.strictEqual(oView.getViewName(), "com.mii.scanner.view.action.ReceiptPage", "View " + oView.getViewName() + " found");
+								Opa5.assert.strictEqual(oView.getViewName(), "com.mii.scanner.view.action.GoodsReceipt", "View " + oView.getViewName() + " found");
 
 								oDataModel = oView.getModel("data");
 								oViewModel = oView.getModel("view");
