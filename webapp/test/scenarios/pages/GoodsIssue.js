@@ -44,26 +44,7 @@ sap.ui.require([
 							"bulkMaterialSwitch": false
 						};
 
-						jQuery.each(oInitialControlData, function(sControlId, sEmptyValue) {
-							this.waitFor({
-								id: sControlId,
-								viewName: sViewName,
-								success: function(oControl) {
-									switch (oControl.getMetadata().getName()) {
-										case "sap.m.Switch":
-											Opa5.assert.strictEqual(oControl.getState(), sEmptyValue, sControlId + " is cleared and has value '" + sEmptyValue + "' now.");
-											break;
-										case "sap.m.Input":
-											Opa5.assert.strictEqual(oControl.getValue(), sEmptyValue, sControlId + " is cleared and has value '" + sEmptyValue + "' now.");
-											break;
-										default:
-											Opa5.assert.ok(false, sControlId + " is not valid for initial check.");
-									}
-								}
-							});
-						}.bind(this));
-
-						return this;
+						return this.iShouldSeeAllInputFieldsAreInitial(oInitialControlData);
 					},
 
 					iShouldSeeAllWithLeInputFieldsAreInitial: function() {
@@ -74,6 +55,11 @@ sap.ui.require([
 							"quantityInput": "",
 							"unitOfMeasureInput": ""
 						};
+
+						return this.iShouldSeeAllInputFieldsAreInitial(oInitialControlData);
+					},
+
+					iShouldSeeAllInputFieldsAreInitial: function(oInitialControlData) {
 
 						jQuery.each(oInitialControlData, function(sControlId, sEmptyValue) {
 							this.waitFor({
@@ -107,7 +93,9 @@ sap.ui.require([
 							orderNumberValueState: sap.ui.core.ValueState.None,
 							materialNumberValueState: sap.ui.core.ValueState.None
 						};
+
 						return this.iShouldSeeDataModelAndViewModelAreInitial(oExpectedViewData);
+
 					},
 
 					iShouldSeeDataModelAndViewModelNonLeAreInitial: function() {
@@ -120,7 +108,9 @@ sap.ui.require([
 							orderNumberValueState: sap.ui.core.ValueState.None,
 							materialNumberValueState: sap.ui.core.ValueState.None
 						};
+
 						return this.iShouldSeeDataModelAndViewModelAreInitial(oExpectedViewData);
+
 					},
 
 					iShouldSeeDataModelAndViewModelAreInitial: function(oExpectedViewData) {
