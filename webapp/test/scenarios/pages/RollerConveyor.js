@@ -84,7 +84,7 @@ sap.ui.require([
 								storageBinValueState: sap.ui.core.ValueState.None
 							};
 
-						this.waitFor({
+						return this.waitFor({
 							id: "rollerConveyorPage",
 							viewName: sViewName,
 							success: function(oControl) {

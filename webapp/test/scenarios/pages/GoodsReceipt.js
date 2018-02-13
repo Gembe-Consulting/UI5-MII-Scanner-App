@@ -76,7 +76,7 @@ sap.ui.require([
 								orderNumberValueState: sap.ui.core.ValueState.None
 							};
 
-						this.waitFor({
+						return this.waitFor({
 							id: "goodsReceiptPage",
 							viewName: sViewName,
 							success: function(oControl) {

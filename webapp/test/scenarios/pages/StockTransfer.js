@@ -78,7 +78,7 @@ sap.ui.require([
 								storageUnitNumberValueState: sap.ui.core.ValueState.None
 							};
 
-						this.waitFor({
+						return this.waitFor({
 							id: "stockTransferPage",
 							viewName: sViewName,
 							success: function(oControl) {
