@@ -16,12 +16,11 @@ sap.ui.define([
 
 		_oInitData: {
 			// entry data
-			storageUnitNumber: null,
+			storageUnit: null,
 			entryQuantity: null,
 			unitOfMeasure: null,
-			storageBinItem: null,
 			storageBin: null,
-			stretcherSwitch: false,
+			stretcherActive: false,
 			// external data from storage unit
 			LENUM: null,
 			MEINH: null,
@@ -31,7 +30,7 @@ sap.ui.define([
 		_oInitView: {
 			bValid: false,
 			bStorageUnitValid: true,
-			storageUnitNumberValueState: sap.ui.core.ValueState.None,
+			storageUnitValueState: sap.ui.core.ValueState.None,
 			storageBinValueState: sap.ui.core.ValueState.None
 		},
 
@@ -56,7 +55,7 @@ sap.ui.define([
 				sStorageUnitNumber = oEvent.getParameter("value"),
 				oDataModel = this.getModel("data"),
 				oStorageBinSelection,
-				oSelectedStorageBinItem,
+				oStorageBin,
 				oBundle = this.getResourceBundle(),
 				fnResolve,
 				fnReject;
@@ -83,9 +82,9 @@ sap.ui.define([
 
 				oStorageBinSelection = this.byId("storageBinSelection");
 
-				oSelectedStorageBinItem = oStorageBinSelection.getSelectedItem(oDataModel.getData("/storageBinItem"));
+				oStorageBin = oStorageBinSelection.getSelectedItem();
 
-				if (oSelectedStorageBinItem && !oSelectedStorageBinItem.getEnabled()) {
+				if (oStorageBin && !oStorageBin.getEnabled()) {
 					oStorageBinSelection.setSelectedItemId(); //clear
 				}
 
@@ -126,7 +125,7 @@ sap.ui.define([
 
 					if (!this.formatter.isEmptyStorageUnit(oStorageUnit.ISTME)) {
 						oDataModel.setProperty("/entryQuantity", oStorageUnit.ISTME);
-					}else{
+					} else {
 						oDataModel.setProperty("/entryQuantity", 0);
 					}
 
@@ -182,7 +181,7 @@ sap.ui.define([
 		},
 
 		isInputDataValid: function(oData) {
-			return !!oData.storageUnitNumber && !!oData.storageBin && !!oData.storageBinItem && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.unitOfMeasure;
+			return !!oData.storageUnit && !!oData.storageBin && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.unitOfMeasure;
 		},
 
 		/**

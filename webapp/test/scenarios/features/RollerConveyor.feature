@@ -1,4 +1,4 @@
-Feature: Creating a stock transfer at Roller Conveyor
+Feature: Roller Conveyor
 	Users can....
 	
 	Background:
@@ -8,8 +8,7 @@ Feature: Creating a stock transfer at Roller Conveyor
 	Scenario: Should navigate to Roller Conveyor Page and see all UI elements with initial data
 		Then I can see rollerConveyorPage in action.RollerConveyor view
 		Then I can see storageUnitInput with editable being 'true' in action.RollerConveyor view
-		Then I can see storageUnitInput with value '' in action.RollerConveyor view
-		Then I can see quantityInput with value '' in action.RollerConveyor view
+		Then I can see quantityInput with editable being 'true' in action.RollerConveyor view
 		Then I can see clearQuantityInputIcon in action.RollerConveyor view
 		Then I can see unitOfMeasureInput with editable being 'false' in action.RollerConveyor view
 		Then I can see storageBinSelection with editable being 'true' in action.RollerConveyor view

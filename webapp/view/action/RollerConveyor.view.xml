@@ -19,29 +19,37 @@
 						emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
 						<f:content>
 							<Label text="{i18n>rollerConveyor.form.label.storageUnit.text}"/>
-							<Input id="storageUnitInput" maxLength="20" change="onStorageUnitNumberChange" value="{path: 'data>/storageUnitNumber', type:'.sapType.LENUM'}" valueState="{view>/storageUnitNumberValueState}"/>
+							<Input id="storageUnitInput" value="{path: 'data>/storageUnit', type:'.sapType.LENUM'}" change="onStorageUnitInputChange"
+								valueState="{view>/storageUnitValueState}" maxLength="20" class="noScannerInput"/>
 							<Label text="{i18n>rollerConveyor.form.label.quantity.text}, {i18n>rollerConveyor.form.label.unitOfMeasure-S.text}"/>
 							<HBox alignItems="Center">
-								<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}" editable="{path: 'data>/ISTME', formatter:'.formatter.isEmptyStorageUnit' }"></Input>
+								<Input id="quantityInput" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}" change="onQuantityChange"
+									editable="{path: 'data>/ISTME', formatter:'.formatter.isEmptyStorageUnit' }" textAlign="End"></Input>
 								<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress" class="sapUiSmallMarginEnd" alt="CLEAR"></c:Icon>
 								<layoutData>
 									<l:GridData span="XL2 L3 M4 S8"/>
 								</layoutData>
 							</HBox>
-							<Input id="unitOfMeasureInput" value="{path: 'data>/unitOfMeasure', type:'.sapType.MEINH'}" editable="{= ${data>/storageUnitNumber} === 90000000000000000000 }">
+							<Input id="unitOfMeasureInput" value="{path: 'data>/unitOfMeasure', type:'.sapType.MEINH'}"
+								editable="{= ${data>/storageUnit} === 90000000000000000000 }">
 								<layoutData>
 									<l:GridData span="XL1 L1 M2 S4"/>
 								</layoutData>
 							</Input>
 							<Label text="{i18n>rollerConveyor.form.label.storageBin.text}"/>
-							<ComboBox id="storageBinSelection" showSecondaryValues="true" selectedKey="{data>/storageBin}" selectedItemId="{data>/storageBinItem}" change="onStorageBinSelectionChange">
-								<c:ListItem key="ROLLENBAHN" text="{i18n>rollerConveyor.comboBox.listItem-ROLLENBAHN.text}" additionalText="ROLLENBAHN" enabled="{= ${data>/storageUnitNumber} !== 90000000000000000000 }"/>
-								<c:ListItem key="BEUM" text="{i18n>rollerConveyor.comboBox.listItem-BEUM.text}" additionalText="BEUM" />
-								<c:ListItem key="STAPLER" text="{i18n>rollerConveyor.comboBox.listItem-STAPLER.text}" additionalText="STAPLER" enabled="{= ${data>/storageUnitNumber} !== 90000000000000000000 }"/>
-								<c:ListItem key="PALE" text="{i18n>rollerConveyor.comboBox.listItem-PALE.text}" additionalText="PALE" />
+							<ComboBox id="storageBinSelection" selectedKey="{data>/storageBin}" 
+								change="onStorageBinSelectionChange" selectionChange="onStorageBinSelectionChange"
+								showSecondaryValues="true" filterSecondaryValues="true">
+								<c:ListItem key="ROLLENBAHN" text="{i18n>rollerConveyor.comboBox.listItem-ROLLENBAHN.text}" additionalText="ROLLENBAHN"
+									enabled="{= ${data>/storageUnit} !== 90000000000000000000 }"/>
+								<c:ListItem key="BEUM" text="{i18n>rollerConveyor.comboBox.listItem-BEUM.text}" additionalText="BEUM"/>
+								<c:ListItem key="STAPLER" text="{i18n>rollerConveyor.comboBox.listItem-STAPLER.text}" additionalText="STAPLER"
+									enabled="{= ${data>/storageUnit} !== 90000000000000000000 }"/>
+								<c:ListItem key="PALE" text="{i18n>rollerConveyor.comboBox.listItem-PALE.text}" additionalText="PALE"/>
 							</ComboBox>
 							<Label text="{i18n>rollerConveyor.form.label.stretcher.text}"/>
-							<Switch id="stretcherActiveSwitch" customTextOn="{i18n>switchCustomOnYes}" customTextOff="{i18n>switchCustomOffNo}" state="{data>/stretchSwitch}"></Switch>
+							<Switch id="stretcherActiveSwitch" customTextOn="{i18n>switchCustomOnYes}" customTextOff="{i18n>switchCustomOffNo}"
+								state="{data>/stretcherActive}"></Switch>
 						</f:content>
 					</f:SimpleForm>
 					<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>

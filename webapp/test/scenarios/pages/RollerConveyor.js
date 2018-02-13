@@ -36,6 +36,7 @@ sap.ui.require([
 						var oInitialControlData = {
 							"storageUnitInput": "",
 							"unitOfMeasureInput": "",
+							"quantityInput": "",
 							"storageBinSelection": "",
 							"stretcherActiveSwitch": false
 						};
@@ -68,19 +69,20 @@ sap.ui.require([
 					iShouldSeeDataModelAndViewModelAreInitial: function() {
 						var oExpectedDataData = {
 								// entry data
-								storageUnitNumber: null,
+								storageUnit: null,
 								entryQuantity: null,
-								storageBinItem: null,
+								unitOfMeasure: null,
 								storageBin: null,
-								stretcherSwitch: false,
+								stretcherActive: false,
 								// external data from storage unit
 								LENUM: null,
-								MEINH: null
+								MEINH: null,
+								ISTME: null
 							},
 							oExpectedViewData = {
 								bValid: false,
 								bStorageUnitValid: true,
-								storageUnitNumberValueState: sap.ui.core.ValueState.None,
+								storageUnitValueState: sap.ui.core.ValueState.None,
 								storageBinValueState: sap.ui.core.ValueState.None
 							};
 
