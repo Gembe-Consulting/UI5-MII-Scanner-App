@@ -146,22 +146,4 @@ sap.ui.require(["sap/ui/test/opaQunit"], function(opaTest) {
 		// Assertions
 		Then.onTheLoginPage.theAppShouldNotNavigateAndStayOnLoginPage();
 	});
-
-	opaTest("Should not navigate using browser forward", function(Given, When, Then) {
-		// Arrangements
-		// Actions
-		When.onTheApp.iPressOnTheForwardButton();
-
-		// Assertions
-		Then.onTheLoginPage.theAppShouldNotNavigateAndStayOnLoginPage();
-	});
-
-	opaTest("Should not navigate using browser backward", function(Given, When, Then) {
-		// Arrangements
-		// Actions
-		When.onTheApp.iPressOnTheBackButton();
-
-		// Assertions
-		Then.onTheLoginPage.theAppShouldNotNavigateAndStayOnLoginPage();
-	});
 });
