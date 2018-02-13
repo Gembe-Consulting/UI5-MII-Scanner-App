@@ -43,6 +43,7 @@ sap.ui.define([
 
 			// set the browser page title based on navigation
 			this.getRouter().attachTitleChanged(function(oEvent) {
+				/*global document*/
 				document.title = oEvent.getParameter("title");
 			});
 
