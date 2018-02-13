@@ -89,7 +89,7 @@ sap.ui.require([
 							bStorageUnitValid: true,
 							bOrderNumberValid: true,
 							bValid: false,
-							storageUnitNumberValueState: sap.ui.core.ValueState.None,
+							storageUnitValueState: sap.ui.core.ValueState.None,
 							orderNumberValueState: sap.ui.core.ValueState.None,
 							materialNumberValueState: sap.ui.core.ValueState.None
 						};
@@ -104,7 +104,7 @@ sap.ui.require([
 							bStorageUnitValid: true,
 							bOrderNumberValid: true,
 							bValid: false,
-							storageUnitNumberValueState: sap.ui.core.ValueState.None,
+							storageUnitValueState: sap.ui.core.ValueState.None,
 							orderNumberValueState: sap.ui.core.ValueState.None,
 							materialNumberValueState: sap.ui.core.ValueState.None
 						};
@@ -119,7 +119,7 @@ sap.ui.require([
 							entryQuantity: null,
 							unitOfMeasure: null,
 							orderNumber: null,
-							storageUnitNumber: null,
+							storageUnit: null,
 							storageLocation: null,
 							materialNumber: null,
 							bulkMaterialIndicator: false,

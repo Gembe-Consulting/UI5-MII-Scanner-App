@@ -1,4 +1,4 @@
-Feature: Goods Issue using storage unit number
+Feature: Goods Issue with LE
 	Users can post GIs by entering storage unit number (aka palette) to post a quantity.
 	
 	Background:

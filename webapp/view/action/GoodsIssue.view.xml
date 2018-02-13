@@ -31,31 +31,31 @@
 						emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
 						<f:content>
 							<Label text="{i18n>lableTextFormGoodsIssueStorageUnit}"/>
-							<Input id="storageUnitInput" value="{data>/storageUnitNumber}" visible="{=${view>/type}!=='nonLE'}" change="onStorageUnitNumberChange"
-								maxLength="20" valueState="{view>/storageUnitNumberValueState}"/>
+							<Input id="storageUnitInput" value="{data>/storageUnit}" change="onStorageUnitInputChange" valueState="{view>/storageUnitNumberValueState}"
+								visible="{=${view>/type}!=='nonLE'}" maxLength="20" class="noScannerInput"/>
 							<Label text="{i18n>lableTextFormGoodsIssueOrder}"/>
-							<Input id="orderNumberInput" change="onOrderNumberChange" value="{path: 'data>/orderNumber', type:'.sapType.AUFNR'}" maxLength="7"
-								valueState="{view>/orderNumberValueState}"></Input>
+							<Input id="orderNumberInput" change="onOrderNumberInputChange" value="{path: 'data>/orderNumber', type:'.sapType.AUFNR'}" maxLength="7"
+								valueState="{view>/orderNumberValueState}" class="noScannerInput"></Input>
 							<Label text="{i18n>lableTextFormGoodsIssueMaterial}"/>
-							<Input id="materialNumberInput" change="onMaterialNumberChange" value="{path: 'data>/materialNumber', type:'.sapType.MATNR'}" maxLength="11"
-								visible="{=${view>/type}==='nonLE'}" valueState="{view>/materialNumberValueState}"></Input>
+							<Input id="materialNumberInput" value="{path: 'data>/materialNumber', type:'.sapType.MATNR'}" change="onMaterialNumberInputChange"
+								valueState="{view>/materialNumberValueState}" visible="{=${view>/type}==='nonLE'}" maxLength="11" class="noScannerInput"></Input>
 							<Label text="{i18n>lableTextFormGoodsIssueQuantity}, {i18n>lableTextFormGoodsIssueUnitOfMeasureShort}"/>
 							<HBox alignItems="Center">
-								<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}"></Input>
+								<Input id="quantityInput" textAlign="End" change="onQuantityInputChange" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}"></Input>
 								<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress" class="sapUiSmallMarginEnd"></c:Icon>
 								<layoutData>
 									<l:GridData span="XL2 L3 M4 S8"/>
 								</layoutData>
 							</HBox>
-							<Input id="unitOfMeasureInput" change="onUnitOfMeasureChange" value="{path: 'data>/unitOfMeasure', type:'.sapType.MEINS'}" maxLength="4"
-								editable="{=${view>/type}==='nonLE'}">
+							<Input id="unitOfMeasureInput" value="{path: 'data>/unitOfMeasure', type:'.sapType.MEINS'}" change="onUnitOfMeasureInputChange"
+								editable="{=${view>/type}==='nonLE'}" maxLength="4">
 								<layoutData>
 									<l:GridData span="XL1 L1 M2 S4"/>
 								</layoutData>
 							</Input>
 							<Label text="{i18n>lableTextFormGoodsIssueStorageLocation}"/>
-							<Input id="storageLocationInput" maxLength="4" change="onStorageLocationChange"
-								value="{path: 'data>/storageLocation', type:'.sapType.LGORT'}" visible="{=${view>/type}==='nonLE'}"></Input>
+							<Input id="storageLocationInput" value="{path: 'data>/storageLocation', type:'.sapType.LGORT'}" change="onStorageLocationInputChange"
+								visible="{=${view>/type}==='nonLE'}" maxLength="4" class="noScannerInput"></Input>
 							<Label text="{i18n>lableTextFormGoodsIssueBulkMaterial}"/>
 							<Switch id="bulkMaterialSwitch" state="{data>/bulkMaterialIndicator}" customTextOn="{i18n>switchCustomOnYes}"
 								customTextOff="{i18n>switchCustomOffNo}" visible="{=${view>/type}==='nonLE'}" tooltip="{i18n>lableTextFormGoodsIssueBulkMaterialTooltip}"></Switch>

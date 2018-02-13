@@ -19,7 +19,7 @@ sap.ui.define([
 			entryQuantity: null,
 			unitOfMeasure: null,
 			orderNumber: null,
-			storageUnitNumber: null,
+			storageUnit: null,
 			storageLocation: null,
 			materialNumber: null,
 			bulkMaterialIndicator: false,
@@ -34,7 +34,7 @@ sap.ui.define([
 			bStorageUnitValid: true,
 			bOrderNumberValid: true,
 			bValid: false,
-			storageUnitNumberValueState: sap.ui.core.ValueState.None,
+			storageUnitValueState: sap.ui.core.ValueState.None,
 			orderNumberValueState: sap.ui.core.ValueState.None,
 			materialNumberValueState: sap.ui.core.ValueState.None
 		},
@@ -72,7 +72,7 @@ sap.ui.define([
 					oView.getModel("view").setProperty("/type", oQuery.type);
 				}
 				if (oQuery.LENUM) {
-					oView.getModel("data").setProperty("/storageUnitNumber", oQuery.LENUM);
+					oView.getModel("data").setProperty("/storageUnit", oQuery.LENUM);
 					this.byId("storageUnitInput").fireChange({
 							value: oQuery.LENUM
 						});
@@ -176,9 +176,9 @@ sap.ui.define([
 
 				oParam;
 
-			if (oDataModel.getProperty(sPath + "storageUnitNumber") && oViewModel.getProperty("/type") === "withLE") {
+			if (oDataModel.getProperty(sPath + "storageUnit") && oViewModel.getProperty("/type") === "withLE") {
 				oParam = {
-					"Param.1": oDataModel.getProperty(sPath + "storageUnitNumber"),
+					"Param.1": oDataModel.getProperty(sPath + "storageUnit"),
 					"Param.2": oDataModel.getProperty(sPath + "orderNumber"),
 					//"Param.3": oDataModel.getProperty(sPath + "storageLocation"),
 					"Param.4": oDataModel.getProperty(sPath + "entryQuantity"),
@@ -196,7 +196,7 @@ sap.ui.define([
 				};
 			} else {
 				oParam = {
-					//"Param.1": oDataModel.getProperty(sPath + "storageUnitNumber"),
+					//"Param.1": oDataModel.getProperty(sPath + "storageUnit"),
 					"Param.2": oDataModel.getProperty(sPath + "orderNumber"),
 					"Param.3": oDataModel.getProperty(sPath + "storageLocation"),
 					"Param.4": oDataModel.getProperty(sPath + "entryQuantity"),
@@ -327,16 +327,16 @@ sap.ui.define([
 		/*
 		 * bestq === "S" || bestq === "Q" || bestq === "R"
 		 */
-		onStorageUnitNumberChange: function(oEvent) {
+		onStorageUnitInputChange: function(oEvent) {
 			var oSource = oEvent.getSource(),
-				sStorageUnitNumber = oEvent.getParameter("value"),
+				sStorageUnit = oEvent.getParameter("value"),
 				oBundle = this.getResourceBundle(),
 				fnResolve,
 				fnReject;
 
-			sStorageUnitNumber = this._padStorageUnitNumber(sStorageUnitNumber);
+			sStorageUnit = this._padStorageUnitNumber(sStorageUnit);
 
-			jQuery.sap.log.info("Start gathering data for palette " + sStorageUnitNumber);
+			jQuery.sap.log.info("Start gathering data for palette " + sStorageUnit);
 
 			oSource.setValueState(sap.ui.core.ValueState.None);
 			this.showControlBusyIndicator(oSource);
@@ -365,7 +365,7 @@ sap.ui.define([
 					if (oStorageUnit.ISTME <= 0) {
 						oSource.setValueState(sap.ui.core.ValueState.Error);
 						this.addLogMessage({
-							text: oBundle.getText("messageTextStorageUnitIsEmpty", [sStorageUnitNumber])
+							text: oBundle.getText("messageTextStorageUnitIsEmpty", [sStorageUnit])
 						});
 						bStorageUnitDataValid = false;
 					}
@@ -393,7 +393,7 @@ sap.ui.define([
 					}
 
 				} catch (err) {
-					MessageBox.error(oBundle.getText("messageTextStorageUnitNotFound", [sStorageUnitNumber]), {
+					MessageBox.error(oBundle.getText("messageTextStorageUnitNotFound", [sStorageUnit]), {
 						title: err
 					});
 					bStorageUnitDataValid = false;
@@ -408,14 +408,14 @@ sap.ui.define([
 				MessageBox.error(oBundle.getText("messageTextGoodsIssueError"));
 			}.bind(this);
 
-			this.requestStorageUnitInfoService(sStorageUnitNumber)
+			this.requestStorageUnitInfoService(sStorageUnit)
 				.then(fnResolve, fnReject)
 				.then(function() {
 					this.hideControlBusyIndicator(oSource);
 				}.bind(this));
 		},
 
-		onOrderNumberChange: function(oEvent) {
+		onOrderNumberInputChange: function(oEvent) {
 			var oSource = oEvent.getSource(),
 				sOrderNumber = oEvent.getParameter("value"),
 				oBundle = this.getResourceBundle(),
@@ -468,11 +468,11 @@ sap.ui.define([
 
 		},
 
-		onQuantityChange: function(oEvent) {
+		onQuantityInputChange: function(oEvent) {
 			this.updateViewControls(this.getModel("data").getData());
 		},
 
-		onUnitOfMeasureChange: function(oEvent) {
+		onUnitOfMeasureInputChange: function(oEvent) {
 			var sUnitOfMeasure = oEvent.getParameter("value")
 				.toUpperCase(),
 				oSource = oEvent.getSource(),
@@ -484,14 +484,14 @@ sap.ui.define([
 
 		},
 
-		onMaterialNumberChange: function(oEvent) {
+		onMaterialNumberInputChange: function(oEvent) {
 			var oModel = this.getModel("data"),
 				oSource = oEvent.getSource();
 
 			this.validateComponentWithdrawal(oModel.getProperty("/orderNumber"), oModel.getProperty("/materialNumber"), oSource);
 		},
 
-		onStorageLocationChange: function(oEvent) {
+		onStorageLocationInputChange: function(oEvent) {
 			var sStorageLocation = oEvent.getParameter("value")
 				.toUpperCase(),
 				oBundle = this.getResourceBundle(),
@@ -509,7 +509,7 @@ sap.ui.define([
 		isInputDataValid: function(oData) {
 			switch (this.getModel("view").getProperty("/type")) {
 				case "withLE":
-					return !!oData.entryQuantity && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageUnitNumber;
+					return !!oData.entryQuantity && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageUnit;
 				case "nonLE":
 					return !!oData.entryQuantity && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageLocation && !!oData.materialNumber;
 				default:
