@@ -20,18 +20,19 @@
 						<f:content>
 							<Label text="{i18n>lableTextFormStockTransferStorageBinTarget}"/>
 							<ComboBox id="storageBinSelection" selectedKey="{data>/storageBin}"
-								items="{ path: 'storageBinList>/d/results/0/Rowset/results/0/Row/results' }" showSecondaryValues="true" filterSecondaryValues="true"
-								change="onStorageBinSelectionChange" selectionChange="onStorageBinSelectionChange"
-								valueState="{= ${data>/storageBin} === null ? 'None': ${data>/storageBin} === '' ? 'Error' : 'Success' }">
+								items="{ path: 'storageBinList>/d/results/0/Rowset/results/0/Row/results' }" change="onStorageBinSelectionChange"
+								selectionChange="onStorageBinSelectionChange"
+								valueState="{= ${data>/storageBin} === null ? 'None': ${data>/storageBin} === '' ? 'Error' : 'Success' }" showSecondaryValues="true"
+								filterSecondaryValues="true" maxLength="20" class="noScannerInput">
 								<c:ListItem key="{storageBinList>LGRPLTZ}" text="{storageBinList>LGRTXT}" additionalText="{storageBinList>LGRPLTZ}"
 									storageBinData:storageType="{storageBinList>LGRTYP}"/>
 							</ComboBox>
 							<Label text="{i18n>lableTextFormStockTransferStorageUnit}"/>
-							<Input id="storageUnitInput" class="noScannerInput" maxLength="20" change="onStorageUnitInputChange"
-								value="{path: 'data>/storageUnit', type:'.sapType.LENUM'}" valueState="{view>/storageUnitInputValueState}"></Input>
+							<Input id="storageUnitInput" value="{path: 'data>/storageUnit', type:'.sapType.LENUM'}" change="onStorageUnitInputChange"
+								valueState="{view>/storageUnitInputValueState}" maxLength="20" class="noScannerInput"></Input>
 							<Label text="{i18n>lableTextFormStockTransferQuantity}, {i18n>lableTextFormStockTransferUnitOfMeasureShort}"/>
 							<HBox alignItems="Center">
-								<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}"
+								<Input id="quantityInput" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}" change="onQuantityChange" textAlign="End"
 									editable="{path:'data>/ISTME', formatter:'.formatter.isEmptyStorageUnit'}"></Input>
 								<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress" class="sapUiSmallMarginEnd"></c:Icon>
 								<layoutData>
