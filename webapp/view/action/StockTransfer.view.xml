@@ -39,7 +39,7 @@
 									<l:GridData span="XL2 L3 M4 S8"/>
 								</layoutData>
 							</HBox>
-							<Input id="unitOfMeasureInput" value="{path: 'data>/MEINH', type:'.sapType.MEINS'}" editable="false">
+							<Input id="unitOfMeasureInput" value="{path: 'data>/MEINH', type:'.sapType.MEINS'}" editable="false" maxLength="4">
 								<layoutData>
 									<l:GridData span="XL1 L1 M2 S4"/>
 								</layoutData>

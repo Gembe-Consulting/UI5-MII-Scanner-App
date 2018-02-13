@@ -31,15 +31,14 @@
 								</layoutData>
 							</HBox>
 							<Input id="unitOfMeasureInput" value="{path: 'data>/unitOfMeasure', type:'.sapType.MEINH'}"
-								editable="{= ${data>/storageUnit} === 90000000000000000000 }">
+								editable="{= ${data>/storageUnit} === 90000000000000000000 }" maxLength="4">
 								<layoutData>
 									<l:GridData span="XL1 L1 M2 S4"/>
 								</layoutData>
 							</Input>
 							<Label text="{i18n>rollerConveyor.form.label.storageBin.text}"/>
-							<ComboBox id="storageBinSelection" selectedKey="{data>/storageBin}" 
-								change="onStorageBinSelectionChange" selectionChange="onStorageBinSelectionChange"
-								showSecondaryValues="true" filterSecondaryValues="true">
+							<ComboBox id="storageBinSelection" selectedKey="{data>/storageBin}" change="onStorageBinSelectionChange"
+								selectionChange="onStorageBinSelectionChange" showSecondaryValues="true" filterSecondaryValues="true" maxLength="20" class="noScannerInput">
 								<c:ListItem key="ROLLENBAHN" text="{i18n>rollerConveyor.comboBox.listItem-ROLLENBAHN.text}" additionalText="ROLLENBAHN"
 									enabled="{= ${data>/storageUnit} !== 90000000000000000000 }"/>
 								<c:ListItem key="BEUM" text="{i18n>rollerConveyor.comboBox.listItem-BEUM.text}" additionalText="BEUM"/>

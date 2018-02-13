@@ -30,10 +30,10 @@
 							<Label text="{i18n>lableTextFormGoodsReceiptStorageUnit}"/>
 							<Input id="storageUnitInput" class="noScannerInput" maxLength="20" change="onStorageUnitNumberChange"
 								value="{path: 'data>/LENUM', type:'.sapType.LENUM'}" editable="{= ${data>/LGORT}==='1000' || ${data>/LGORT}==='' || ${data>/LGORT}===null}"
-								valueState="{view>/storageUnitNumberValueState}"></Input>
+								valueState="{view>/storageUnitNumberValueState}" maxLength="20" class="noScannerInput"></Input>
 							<Label text="{i18n>lableTextFormGoodsReceiptOrder}"/>
-							<Input id="orderNumberInput" class="noScannerInput" maxLength="7" change="onOrderNumberChange"
-								value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}" editable="{=${data>/LENUM}===null}" valueState="{view>/orderNumberValueState}"></Input>
+							<Input id="orderNumberInput" value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}" change="onOrderNumberChange"
+								editable="{=${data>/LENUM}===null}" valueState="{view>/orderNumberValueState}" maxLength="7" class="noScannerInput"></Input>
 							<Label text="{i18n>lableTextFormGoodsReceiptQuantity}, {i18n>lableTextFormGoodsReceiptUnitOfMeasureShort}"/>
 							<HBox alignItems="Center">
 								<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}"
@@ -43,15 +43,15 @@
 									<l:GridData span="XL2 L3 M4 S8"/>
 								</layoutData>
 							</HBox>
-							<Input id="unitOfMeasureInput" change="onUnitOfMeasureChange" value="{path: 'data>/MEINH', type:'.sapType.MEINS'}"
-								editable="{=${data>/LENUM}===null}">
+							<Input id="unitOfMeasureInput"  value="{path: 'data>/MEINH', type:'.sapType.MEINS'}" change="onUnitOfMeasureChange"
+								editable="{=${data>/LENUM}===null}" maxLength="4">
 								<layoutData>
 									<l:GridData span="XL1 L1 M2 S4"/>
 								</layoutData>
 							</Input>
 							<Label text="{i18n>lableTextFormGoodsReceiptStorageLocation}"/>
-							<Input id="storageLocationInput" class="noScannerInput" maxLength="4" change="onStorageLocationChange"
-								value="{path: 'data>/LGORT', type: '.sapType.LGORT'}" editable="{=${data>/LENUM}===null}"></Input>
+							<Input id="storageLocationInput" change="onStorageLocationChange"
+								value="{path: 'data>/LGORT', type: '.sapType.LGORT'}" editable="{=${data>/LENUM}===null}"  maxLength="4" class="noScannerInput"></Input>
 						</f:content>
 					</f:SimpleForm>
 					<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>
