@@ -34,7 +34,10 @@ sap.ui.require([
 					iShouldSeeAllInputFieldsAreInitial: function() {
 
 						var oInitialControlData = {
-							"storageUnitInput": ""
+							"storageUnitInput": "",
+							"quantityInput": "",
+							"unitOfMeasureInput": "",
+							"storageBinSelection": ""
 						};
 
 						jQuery.each(oInitialControlData, function(sControlId, sEmptyValue) {
@@ -66,16 +69,15 @@ sap.ui.require([
 					iShouldSeeDataModelAndViewModelAreInitial: function() {
 						var oExpectedDataData = {
 								//uswer input data
-								storageUnitNumberInput: null,
+								storageUnit: null,
 								entryQuantity: null,
-								targetStorageBinSelection: null,
-								targetStorageBinItemSelection: null,
+								storageBin: null,
 								//external data
 								LENUM: null
 							},
 							oExpectedViewData = {
 								bValid: false,
-								storageUnitNumberValueState: sap.ui.core.ValueState.None
+								storageUnitInputValueState: sap.ui.core.ValueState.None
 							};
 
 						return this.waitFor({

@@ -14,18 +14,17 @@ sap.ui.define([
 		formatter: formatter,
 
 		_oInitData: {
-			//uswer input data
-			storageUnitNumberInput: null,
+			//user input data
+			storageUnit: null,
 			entryQuantity: null,
-			targetStorageBinSelection: null,
-			targetStorageBinItemSelection: null,
+			storageBin: null,
 			//external data
 			LENUM: null
 		},
 
 		_oInitView: {
 			bValid: false,
-			storageUnitNumberValueState: sap.ui.core.ValueState.None
+			storageUnitInputValueState: sap.ui.core.ValueState.None
 		},
 
 		onInit: function() {
@@ -44,7 +43,7 @@ sap.ui.define([
 			this.setModel(new JSONModel(jQuery.extend({}, this._oInitView)), "view");
 		},
 
-		onStorageUnitNumberChange: function(oEvent) {
+		onStorageUnitInputChange: function(oEvent) {
 			var oSource = oEvent.getSource(),
 				sStorageUnitNumber = oEvent.getParameter("value"),
 				oBundle = this.getResourceBundle(),
@@ -141,9 +140,9 @@ sap.ui.define([
 
 					if (!sFatalError) {
 						if (bPerformGoodsReceipt) {
-							sSuccessMessage = oBundle.getText("messageTextStockTransferPostingWithGoodsReceiptSuccessfull", [oDataModel.getProperty("/storageUnitNumberInput"), oDataModel.getProperty("/targetStorageBinSelection")]);
+							sSuccessMessage = oBundle.getText("messageTextStockTransferPostingWithGoodsReceiptSuccessfull", [oDataModel.getProperty("/storageUnit"), oDataModel.getProperty("/storageBin")]);
 						} else {
-							sSuccessMessage = oBundle.getText("messageTextStockTransferPostingSuccessfull", [oDataModel.getProperty("/storageUnitNumberInput"), oDataModel.getProperty("/targetStorageBinSelection")]);
+							sSuccessMessage = oBundle.getText("messageTextStockTransferPostingSuccessfull", [oDataModel.getProperty("/storageUnit"), oDataModel.getProperty("/storageBin")]);
 						}
 
 						this.addLogMessage({
@@ -222,7 +221,7 @@ sap.ui.define([
 				oStorageBinItem = this.byId("storageBinSelection").getSelectedItem(),
 				oStorageBinData = oStorageBinItem.data();
 
-			if (oDataModel.getProperty(sPath + "targetStorageBinSelection") === "BA01" || oDataModel.getProperty(sPath + "targetStorageBinSelection") === "BA02") {
+			if (oDataModel.getProperty(sPath + "storageBin") === "BA01" || oDataModel.getProperty(sPath + "storageBin") === "BA02") {
 				oDataModel.setProperty(sPath + "BWART", "311");
 				oDataModel.setProperty(sPath + "NLTYP", "");
 			}
@@ -242,7 +241,7 @@ sap.ui.define([
 				"Param.13": oDataModel.getProperty(sPath + "LGTYP"),
 				"Param.14": oDataModel.getProperty(sPath + "LGPLA") || "",
 				"Param.15": oDataModel.getProperty(sPath + "NLTYP") || oStorageBinData.storageType || "",
-				"Param.16": oDataModel.getProperty(sPath + "targetStorageBinSelection")
+				"Param.16": oDataModel.getProperty(sPath + "storageBin")
 			};
 
 			return oStockTransferModel.loadMiiData(oStockTransferModel._sServiceUrl, oParam);
@@ -311,13 +310,13 @@ sap.ui.define([
 
 		/**
 		 * Posting is allowed when
-		 * - Storage bins has been selected
+		 * - Storage bin has been selected
 		 * - Storage unit has been entered
 		 * - Storage unit is valid
 		 * - Quntity has been entered and is not zero
 		 */
 		isInputDataValid: function(oData) {
-			return !!oData.targetStorageBinSelection && !!oData.storageUnitNumberInput && !!oData.LENUM && !!oData.entryQuantity && oData.entryQuantity !== "" && !this.formatter.isEmptyStorageUnit(oData.entryQuantity);
+			return !!oData.storageBin && !!oData.storageUnit && !!oData.LENUM && !!oData.entryQuantity && oData.entryQuantity !== "" && !this.formatter.isEmptyStorageUnit(oData.entryQuantity);
 		}
 	});
 });

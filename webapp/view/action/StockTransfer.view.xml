@@ -19,16 +19,16 @@
 						emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
 						<f:content>
 							<Label text="{i18n>lableTextFormStockTransferStorageBinTarget}"/>
-							<ComboBox id="storageBinSelection" showSecondaryValues="true" filterSecondaryValues="true" change="onStorageBinSelectionChange"
-								selectionChange="onStorageBinSelectionChange" items="{ path: 'storageBinList>/d/results/0/Rowset/results/0/Row/results' }"
-								selectedKey="{data>/targetStorageBinSelection}" selectedItemId="{data>/targetStorageBinItemSelection}"
-								valueState="{= ${data>/targetStorageBinSelection} === null ? 'None': ${data>/targetStorageBinSelection} === '' ? 'Error' : 'Success' }">
+							<ComboBox id="storageBinSelection" selectedKey="{data>/storageBin}"
+								items="{ path: 'storageBinList>/d/results/0/Rowset/results/0/Row/results' }" showSecondaryValues="true" filterSecondaryValues="true"
+								change="onStorageBinSelectionChange" selectionChange="onStorageBinSelectionChange"
+								valueState="{= ${data>/storageBin} === null ? 'None': ${data>/storageBin} === '' ? 'Error' : 'Success' }">
 								<c:ListItem key="{storageBinList>LGRPLTZ}" text="{storageBinList>LGRTXT}" additionalText="{storageBinList>LGRPLTZ}"
 									storageBinData:storageType="{storageBinList>LGRTYP}"/>
 							</ComboBox>
 							<Label text="{i18n>lableTextFormStockTransferStorageUnit}"/>
-							<Input id="storageUnitInput" class="noScannerInput" maxLength="20" change="onStorageUnitNumberChange"
-								value="{path: 'data>/storageUnitNumberInput', type:'.sapType.LENUM'}" valueState="{view>/storageUnitNumberValueState}"></Input>
+							<Input id="storageUnitInput" class="noScannerInput" maxLength="20" change="onStorageUnitInputChange"
+								value="{path: 'data>/storageUnit', type:'.sapType.LENUM'}" valueState="{view>/storageUnitInputValueState}"></Input>
 							<Label text="{i18n>lableTextFormStockTransferQuantity}, {i18n>lableTextFormStockTransferUnitOfMeasureShort}"/>
 							<HBox alignItems="Center">
 								<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}"
