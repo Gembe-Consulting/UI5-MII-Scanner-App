@@ -97,33 +97,50 @@ sap.ui.require([
 						return this;
 					},
 
-					iShouldSeeDataModelAndViewModelAreInitial: function() {
-						var oExpectedDataData = {
-								//entry screen data
-								entryQuantity: null,
-								unitOfMeasure: null,
-								orderNumber: null,
-								storageUnitNumber: null,
-								storageLocation: null,
-								materialNumber: null,
-								bulkMaterialIndicator: false,
-								//storage unit data
-								LENUM: null,
-								MEINH: null,
-								BESTQ: null,
-								VFDAT: null
-							},
-							oExpectedViewData = {
-								type: "nonLE",
-								bStorageUnitValid: true,
-								bOrderNumberValid: true,
-								bValid: false,
-								storageUnitNumberValueState: sap.ui.core.ValueState.None,
-								orderNumberValueState: sap.ui.core.ValueState.None,
-								materialNumberValueState: sap.ui.core.ValueState.None
-							};
+					iShouldSeeDataModelAndViewModelWithLeAreInitial: function() {
+						var oExpectedViewData = {
+							type: "withLE",
+							bStorageUnitValid: true,
+							bOrderNumberValid: true,
+							bValid: false,
+							storageUnitNumberValueState: sap.ui.core.ValueState.None,
+							orderNumberValueState: sap.ui.core.ValueState.None,
+							materialNumberValueState: sap.ui.core.ValueState.None
+						};
+						return this.iShouldSeeDataModelAndViewModelAreInitial(oExpectedViewData);
+					},
 
-						this.waitFor({
+					iShouldSeeDataModelAndViewModelNonLeAreInitial: function() {
+						var oExpectedViewData = {
+							type: "nonLE",
+							bStorageUnitValid: true,
+							bOrderNumberValid: true,
+							bValid: false,
+							storageUnitNumberValueState: sap.ui.core.ValueState.None,
+							orderNumberValueState: sap.ui.core.ValueState.None,
+							materialNumberValueState: sap.ui.core.ValueState.None
+						};
+						return this.iShouldSeeDataModelAndViewModelAreInitial(oExpectedViewData);
+					},
+
+					iShouldSeeDataModelAndViewModelAreInitial: function(oExpectedViewData) {
+						var oExpectedDataData = {
+							//entry screen data
+							entryQuantity: null,
+							unitOfMeasure: null,
+							orderNumber: null,
+							storageUnitNumber: null,
+							storageLocation: null,
+							materialNumber: null,
+							bulkMaterialIndicator: false,
+							//storage unit data
+							LENUM: null,
+							MEINH: null,
+							BESTQ: null,
+							VFDAT: null
+						};
+
+						return this.waitFor({
 							id: "goodsIssuePage",
 							viewName: sViewName,
 							success: function(oControl) {

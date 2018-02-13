@@ -21,7 +21,7 @@ Feature: Goods Issue using storage unit number
 		Then I can see goodsIssuePageTitle in action.GoodsIssue view has css color '#BB07FF'
 		Then on the Goods Issue Page: I should see the save button is disabled
 		Then on the Goods Issue Page: I should see all "with LE" input fields are initial
-		Then on the Goods Issue Page: I should see data model and view model are initial
+		Then on the Goods Issue Page: I should see data model and view model "with LE" are initial
 
 	Scenario: Should enable save button if all required input fields are populated and should disable save button if form is cleared
 		When I enter '00000000109330000004' into storageUnitInput in action.GoodsIssue view
@@ -54,7 +54,7 @@ Feature: Goods Issue using storage unit number
 		When I click on clearFormButton in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
 		Then on the Goods Issue Page: I should see all "with LE" input fields are initial
-		Then on the Goods Issue Page: I should see data model and view model are initial
+		Then on the Goods Issue Page: I should see data model and view model "with LE" are initial
 
 	Scenario: Should show storage unit data if LE was entered
 		When I look at the screen
