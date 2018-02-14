@@ -23,7 +23,7 @@
 								items="{ path: 'storageBinList>/d/results/0/Rowset/results/0/Row/results' }" change="onStorageBinSelectionChange"
 								selectionChange="onStorageBinSelectionChange"
 								valueState="{= ${data>/storageBin} === null ? 'None': ${data>/storageBin} === '' ? 'Error' : 'Success' }" showSecondaryValues="true"
-								filterSecondaryValues="true" maxLength="20" class="noScannerInput">
+								filterSecondaryValues="true" class="noScannerInput">
 								<c:ListItem key="{storageBinList>LGRPLTZ}" text="{storageBinList>LGRTXT}" additionalText="{storageBinList>LGRPLTZ}"
 									storageBinData:storageType="{storageBinList>LGRTYP}"/>
 							</ComboBox>
