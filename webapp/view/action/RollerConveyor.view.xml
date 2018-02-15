@@ -25,7 +25,7 @@
 							<HBox alignItems="Center">
 								<Input id="quantityInput" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}" change="onQuantityChange"
 									editable="{path: 'data>/ISTME', formatter:'.formatter.isEmptyStorageUnit' }" textAlign="End"></Input>
-								<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress" class="sapUiSmallMarginEnd" alt="CLEAR"></c:Icon>
+								<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress" size="{=${device>/system/desktop}===true ? '1.25rem' : '1.75rem'}" class="sapUiSmallMarginEnd" alt="CLEAR"></c:Icon>
 								<layoutData>
 									<l:GridData span="XL2 L3 M4 S8"/>
 								</layoutData>
@@ -38,7 +38,7 @@
 							</Input>
 							<Label text="{i18n>rollerConveyor.form.label.storageBin.text}"/>
 							<ComboBox id="storageBinSelection" selectedKey="{data>/storageBin}" change="onStorageBinSelectionChange"
-								selectionChange="onStorageBinSelectionChange" showSecondaryValues="true" filterSecondaryValues="true" maxLength="20" class="noScannerInput">
+								selectionChange="onStorageBinSelectionChange" showSecondaryValues="true" filterSecondaryValues="true" class="noScannerInput">
 								<c:ListItem key="ROLLENBAHN" text="{i18n>rollerConveyor.comboBox.listItem-ROLLENBAHN.text}" additionalText="ROLLENBAHN"
 									enabled="{= ${data>/storageUnit} !== 90000000000000000000 }"/>
 								<c:ListItem key="BEUM" text="{i18n>rollerConveyor.comboBox.listItem-BEUM.text}" additionalText="BEUM"/>

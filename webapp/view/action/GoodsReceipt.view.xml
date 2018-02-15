@@ -28,7 +28,7 @@
 						emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
 						<f:content>
 							<Label text="{i18n>lableTextFormGoodsReceiptStorageUnit}"/>
-							<Input id="storageUnitInput" class="noScannerInput" maxLength="20" change="onStorageUnitNumberChange"
+							<Input id="storageUnitInput" change="onStorageUnitNumberChange"
 								value="{path: 'data>/LENUM', type:'.sapType.LENUM'}" editable="{= ${data>/LGORT}==='1000' || ${data>/LGORT}==='' || ${data>/LGORT}===null}"
 								valueState="{view>/storageUnitNumberValueState}" maxLength="20" class="noScannerInput"></Input>
 							<Label text="{i18n>lableTextFormGoodsReceiptOrder}"/>
@@ -38,7 +38,7 @@
 							<HBox alignItems="Center">
 								<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}"
 									editable="{view>/bStorageUnitValid}"></Input>
-								<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress" class="sapUiSmallMarginEnd"></c:Icon>
+								<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress" size="{=${device>/system/desktop}===true ? '1.25rem' : '1.75rem'}" class="sapUiSmallMarginEnd"></c:Icon>
 								<layoutData>
 									<l:GridData span="XL2 L3 M4 S8"/>
 								</layoutData>
