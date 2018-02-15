@@ -276,7 +276,7 @@ sap.ui.define([
 				oDataModel = this.getModel("data"),
 				oGoodsReceiptModel = this.getModel("goodsMovement"),
 
-				sDefaultPlant = "1000",
+				sDefaultPlant = this._sStorageLocationWarehouse,
 				sDefaultMoveType = "101",
 				sDefaultUnitOfMeasure = "KG",
 
@@ -325,7 +325,7 @@ sap.ui.define([
 		},
 
 		isInputDataValid: function(oData) {
-			return !!oData.AUFNR && !!oData.SOLLME && oData.SOLLME > 0 && oData.SOLLME !== "" && !!oData.MEINH && !!oData.LGORT && ((!!oData.LENUM && oData.LGORT === "1000") || (!oData.LENUM && oData.LGORT !== "1000"));
+			return !!oData.AUFNR && !!oData.SOLLME && oData.SOLLME > 0 && oData.SOLLME !== "" && !!oData.MEINH && !!oData.LGORT && ((!!oData.LENUM && oData.LGORT === this._sStorageLocationWarehouse) || (!oData.LENUM && oData.LGORT !== this._sStorageLocationWarehouse));
 		},
 
 		onOrderNumberChange: function(oEvent) {
