@@ -1,4 +1,4 @@
-Feature: Goods Issue non LE
+Feature: Goods Issue without LE
 	Users also can post GIs by entering order number, quantity and storage location.
 	Users can choose to post bulk matrial.
 	
