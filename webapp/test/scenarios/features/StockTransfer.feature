@@ -49,6 +49,7 @@ Feature: Stock Transfer
 		 And I can see quantityInput with editable being 'true' in action.StockTransfer view
 		 And I can see quantityInput with value '' in action.StockTransfer view
 		 And I can see quantityInput has focus in action.StockTransfer view
+		 And I can see clearQuantityInputIcon in action.StockTransfer view
 		When I click on clearFormButton in action.StockTransfer view
 		Then I can see storageUnitInput with valueState 'None' in action.StockTransfer view
 		 And I can see quantityInput with editable being 'true' in action.StockTransfer view
@@ -57,6 +58,7 @@ Feature: Stock Transfer
 		 And I can see storageUnitInput with valueState 'Success' in action.StockTransfer view
 		 And I can see quantityInput with editable being 'false' in action.StockTransfer view
 		 And I can see quantityInput with value '300,000' in action.StockTransfer view
+		 And I cannot see clearQuantityInputIcon in action.StockTransfer view
 		When I enter '00000000000000000001' into storageUnitInput in action.StockTransfer view
 		Then I can see storageUnitInput with valueState 'Error' in action.StockTransfer view
 		 And I can see messageStrip with text 'Achtung: Palette '00000000000000000001' existiert nicht!' in action.StockTransfer view
