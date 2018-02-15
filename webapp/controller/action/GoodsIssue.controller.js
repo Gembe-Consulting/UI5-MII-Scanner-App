@@ -383,6 +383,7 @@ sap.ui.define([
 					oDataModel.setData(oStorageUnit, bMergeData);
 
 					// map data from storage unit to main model if neccessary
+					oDataModel.setProperty("/storageUnit", oStorageUnit.LENUM);
 					oDataModel.setProperty("/storageLocation", oStorageUnit.LGORT);
 					oDataModel.setProperty("/unitOfMeasure", oStorageUnit.MEINH);
 					oDataModel.setProperty("/materialNumber", oStorageUnit.MATNR);

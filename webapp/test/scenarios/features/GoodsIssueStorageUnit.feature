@@ -25,6 +25,7 @@ Feature: Goods Issue with LE
 
 	Scenario: Should enable save button if all required input fields are populated and should disable save button if form is cleared
 		When I enter '00000000109330000004' into storageUnitInput in action.GoodsIssue view
+		Then I can see storageUnitInput with value '109330000004' in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
 		When I enter '1093300' into orderNumberInput in action.GoodsIssue view
 		Then I can see saveButton in action.GoodsIssue view
@@ -48,7 +49,7 @@ Feature: Goods Issue with LE
 
 	Scenario: Should init data model and input fields if users clear form
 		When I enter '00000000109330000004' into storageUnitInput in action.GoodsIssue view
-		 When I enter '1093300' into orderNumberInput in action.GoodsIssue view
+		When I enter '1093300' into orderNumberInput in action.GoodsIssue view
 		 And I enter '10' into quantityInput in action.GoodsIssue view
 		Then I can see saveButton in action.GoodsIssue view
 		When I click on clearFormButton in action.GoodsIssue view
