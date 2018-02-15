@@ -14,6 +14,9 @@ sap.ui.define([
 
 		_aDisallowedStorageLocations: ["VG01"],
 
+		_sStorageLocationWarehouse: "1000",
+		_sDefaultUnitOfMeasure: "KG",
+
 		_oInitData: {
 			LENUM: null,
 			AUFNR: null,
@@ -356,7 +359,7 @@ sap.ui.define([
 					});
 					bOrderNumberValid = false;
 				}
-				
+
 				this.getModel("view").setProperty("/bOrderNumberValid", bOrderNumberValid);
 				this.updateViewControls(oModel.getData());
 
@@ -387,11 +390,21 @@ sap.ui.define([
 		},
 		onStorageLocationChange: function(oEvent) {
 			var sStorageLocation = oEvent.getParameter("value").toUpperCase(),
-				oBundle = this.getResourceBundle();
+				oBundle = this.getResourceBundle(),
+				oDataModel = this.getModel("data");
 
+			// check if storage location is allowed
 			if (!this.isStorageLocationAllowed(sStorageLocation)) {
 				//oEvent.getSource().setValue("");
 				MessageBox.error(oBundle.getText("messageTextWrongStorageLocation", [sStorageLocation]));
+			}
+
+			// propose default unit of measure if storage location is not 1000 and uom was not entered before 
+			// clear unit of measure if storage location is 1000
+			if (sStorageLocation !== this._sStorageLocationWarehouse && !oDataModel.getProperty("/MEINH")) {
+				oDataModel.setProperty("/MEINH", this._sDefaultUnitOfMeasure);
+			} else if(sStorageLocation === this._sStorageLocationWarehouse){
+				oDataModel.setProperty("/MEINH", null);
 			}
 
 			this.updateViewControls(this.getModel("data").getData());

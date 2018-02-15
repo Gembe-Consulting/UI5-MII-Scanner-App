@@ -64,7 +64,16 @@ Feature: Goods Receipt
 		Then on the Goods Receipt Page: I should see the save button is enabled
 		When I enter '1000001' into orderNumberInput in action.GoodsReceipt view
 		Then on the Goods Receipt Page: I should see the save button is disabled
-
+		
+	Scenario: Should propose unit of measure if users enter storage location not equal 1000
+		When I enter 'RB01' into storageLocationInput in action.GoodsReceipt view
+		Then I can see unitOfMeasureInput with value 'KG' in action.GoodsReceipt view
+		When I enter '1000' into storageLocationInput in action.GoodsReceipt view
+		Then I can see unitOfMeasureInput with value '' in action.GoodsReceipt view
+		When I enter 'ST' into unitOfMeasureInput in action.GoodsReceipt view
+		 And I enter 'RB01' into storageLocationInput in action.GoodsReceipt view
+		Then I can see unitOfMeasureInput with value 'ST' in action.GoodsReceipt view
+	
 	Scenario: User clears the input form
 		When I enter '00000000109330000001' into storageUnitInput in action.GoodsReceipt view
 		Then on the Goods Receipt Page: I should see the save button is enabled
