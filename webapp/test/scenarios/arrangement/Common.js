@@ -53,14 +53,14 @@ sap.ui.define([
 				}
 
 				this.iStartMyAppInAFrame(getFrameUrl(oOptions.hash, sUrlParameters));
-				
+
 				return this;
 			},
-			
+
 			iNavigateToPage: function(sHash) {
 				var oHashChanger = sap.ui.test.Opa5.getHashChanger();
 				oHashChanger.setHash(sHash);
-				
+
 				return this;
 			},
 
@@ -100,13 +100,51 @@ sap.ui.define([
 				});
 			},
 
-			iCloseTheMessageBox: function() {
+			iCloseTheMessageBox: function(sButtonText) {
+				var oButtonToPress = null,
+					sButtonText = sButtonText || "Schließen";
+
+				this.waitFor({
+					searchOpenDialogs: true,
+					viewName: "sap.m.MessageBox",
+					controlType: "sap.m.Button",
+					check: function(aButtons) {
+						return aButtons.filter(function(oButton) {
+							if (oButton.getText() !== sButtonText) {
+								return false;
+							}
+
+							oButtonToPress = oButton;
+							return true;
+						});
+					},
+					success: function(oMessageBox) {
+						Opa5.assert.ok(true, "Message Box has been found");
+					},
+					errorMessage: "Did not find the Message Box"
+				});
+
 				return this.waitFor({
 					searchOpenDialogs: true,
 					viewName: "sap.m.MessageBox",
+					controlType: "sap.m.Button",
+					matchers: new PropertyStrictEquals({
+						name: "text",
+						value: sButtonText
+					}),
+					check: function(aButtons) {
+						//now you can compare oControl with aControlsFromThisWaitFor
+						//or you can compare sap.ui.test.Opa.getContext().control with aControlsFromThisWaitFor
+						return aButtons.filter(function(oButton) {
+							if (oButton.getId() !== oButtonToPress.getId()) {
+								return false;
+							}
+							return true;
+						});
+					},
 					actions: new Press(),
-					success: function(oMessageBox) {
-						Opa5.assert.ok(true, "Message Box has been closed");
+					success: function(oButton) {
+						Opa5.assert.ok(true, "Button to close the Message Box has been pressed");
 					},
 					errorMessage: "Did not find the Message Box"
 				});
