@@ -8,8 +8,8 @@
 							<HBox alignItems="Center" justifyContent="Start" class="sapUiResponsiveMargin">
 								<c:Icon src="sap-icon://product" size="3rem" height="5rem" width="8rem" color="#330066" alt="WABE"/>
 								<VBox>
-									<Label text="{i18n>itemTextGoodsMovement}" design="Bold"/>
-									<Label text="{i18n>itemInfoGoodsMovement}" visible="{= !${device>/system/phone} }"/>
+									<Label text="{i18n>itemTextGoodsMovement}" design="Bold" class="sapUiSmallMarginBegin"/>
+									<Label text="{i18n>itemInfoGoodsMovement}" visible="{= !${device>/system/phone} }" class="sapUiSmallMarginBegin"/>
 								</VBox>
 							</HBox>
 						</content>
@@ -22,8 +22,8 @@
 							<HBox alignItems="Center" justifyContent="Start" class="sapUiResponsiveMargin">
 								<c:Icon src="sap-icon://journey-change" size="3rem" height="5rem" width="8rem" color="#007700" alt="STATUS"/>
 								<VBox>
-									<Label text="{i18n>itemTextStatusChange}" design="Bold"/>
-									<Label text="{i18n>itemInfoStatusChange}" visible="{= !${device>/system/phone} }"/>
+									<Label text="{i18n>itemTextStatusChange}" design="Bold" class="sapUiSmallMarginBegin"/>
+									<Label text="{i18n>itemInfoStatusChange}" visible="{= !${device>/system/phone} }" class="sapUiSmallMarginBegin"/>
 								</VBox>
 							</HBox>
 						</content>
@@ -38,7 +38,7 @@
 						<content>
 							<HBox alignItems="Center" justifyContent="Start" class="sapUiResponsiveMargin">
 								<c:Icon src="sap-icon://log" size="2rem" height="4rem" width="8rem" color="#ee0000" alt="LOGOUT"/>
-								<Label text="{i18n>itemTextLogout}"/>
+								<Label text="{i18n>itemTextLogout}" class="sapUiSmallMarginBegin"/>
 							</HBox>
 						</content>
 						<customData>

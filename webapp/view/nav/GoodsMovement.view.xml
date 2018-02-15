@@ -12,7 +12,7 @@
 								</HBox>
 								<VBox width="100%">
 									<Label text="{i18n>itemLabelTextGoodsReceipt}" design="Bold" class="sapUiSmallMarginBegin"/>
-									<Label text="{i18n>itemInfoTextGoodsReceipt}" visible="{= !${device>/system/phone} }"/>
+									<Label text="{i18n>itemInfoTextGoodsReceipt}" visible="{= !${device>/system/phone} }" class="sapUiSmallMarginBegin"/>
 								</VBox>
 							</HBox>
 						</content>
@@ -20,7 +20,6 @@
 							<c:CustomData key="target" value="goodsReceipt"/>
 						</customData>
 					</CustomListItem>
-					
 					<CustomListItem id="goodsIssueWithLEItem" type="Navigation" press="onNavForward" tooltip="{i18n>itemLabelTextGoodsIssueWithLETooltip}">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
@@ -30,7 +29,7 @@
 								</HBox>
 								<VBox width="100%">
 									<Label text="{i18n>itemLabelTextGoodsIssueWithLE}" design="Bold" class="sapUiSmallMarginBegin"/>
-									<Label text="{i18n>itemInfoTextGoodsIssueWithLE}" visible="{= !${device>/system/phone} }"/>
+									<Label text="{i18n>itemInfoTextGoodsIssueWithLE}" visible="{= !${device>/system/phone} }" class="sapUiSmallMarginBegin"/>
 								</VBox>
 							</HBox>
 						</content>
@@ -39,7 +38,6 @@
 							<c:CustomData key="type" value="withLE"/>
 						</customData>
 					</CustomListItem>
-					
 					<CustomListItem id="goodsIssueNonLEItem" type="Navigation" press="onNavForward" tooltip="{i18n>itemLabelTextGoodsIssueNonLETooltip}">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
@@ -49,7 +47,7 @@
 								</HBox>
 								<VBox width="100%">
 									<Label text="{i18n>itemLabelTextGoodsIssueNonLE}" design="Bold" class="sapUiSmallMarginBegin"/>
-									<Label text="{i18n>itemInfoTextGoodsIssueNonLE}" visible="{= !${device>/system/phone} }"/>
+									<Label text="{i18n>itemInfoTextGoodsIssueNonLE}" visible="{= !${device>/system/phone} }" class="sapUiSmallMarginBegin"/>
 								</VBox>
 							</HBox>
 						</content>
@@ -58,7 +56,6 @@
 							<c:CustomData key="type" value="nonLE"/>
 						</customData>
 					</CustomListItem>
-
 					<CustomListItem id="rollerConveyorItem" type="Navigation" press="onNavForward" tooltip="{i18n>itemLabelTextRollerConveyorTooltip}">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
@@ -68,7 +65,7 @@
 								</HBox>
 								<VBox width="100%">
 									<Label text="{i18n>itemLabelTextRollerConveyor}" design="Bold" class="sapUiSmallMarginBegin"/>
-									<Label text="{i18n>itemInfoTextRollerConveyor}" visible="{= !${device>/system/phone} }"/>
+									<Label text="{i18n>itemInfoTextRollerConveyor}" visible="{= !${device>/system/phone} }" class="sapUiSmallMarginBegin"/>
 								</VBox>
 							</HBox>
 						</content>
@@ -76,7 +73,6 @@
 							<c:CustomData key="target" value="rollerConveyor"/>
 						</customData>
 					</CustomListItem>
-					
 					<CustomListItem id="stockTransferItem" type="Navigation" press="onNavForward" tooltip="{i18n>itemLabelTextStockTransferTooltip}">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
@@ -86,7 +82,7 @@
 								</HBox>
 								<VBox width="100%">
 									<Label text="{i18n>itemLabelTextStockTransfer}" design="Bold" class="sapUiSmallMarginBegin"/>
-									<Label text="{i18n>itemInfoTextStockTransfer}" visible="{= !${device>/system/phone} }"/>
+									<Label text="{i18n>itemInfoTextStockTransfer}" visible="{= !${device>/system/phone} }" class="sapUiSmallMarginBegin"/>
 								</VBox>
 							</HBox>
 						</content>
@@ -94,7 +90,6 @@
 							<c:CustomData key="target" value="stockTransfer"/>
 						</customData>
 					</CustomListItem>
-					
 				</items>
 			</List>
 		</content>
