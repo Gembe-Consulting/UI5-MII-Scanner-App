@@ -3,8 +3,8 @@
 All notable changes to this project will be documented in this file.
 
 ============================================================================================================
-git log --after 11/02/2018 --pretty=format:"%s%n%b" --reverse --no-merges | grep -v '^$' | grep -v '\[INTERNAL\]' | grep -v '\[CHORE\]' | grep -v '\[TEST\]' | grep -v '\[STYLE\]'> LATEST_FEATURES_FIXES.md
-git log --after 11/02/2018 --pretty=format:"%s%n%b" --reverse --no-merges | grep -v '^$' > LATEST_CHANGES.md
+git log --after 08/02/2018 --pretty=format:"%s%n%b" --reverse --no-merges | grep -v '^$' | grep -v -i '\[INTERNAL\]' | grep -v -i '\[CHORE\]' | grep -v -i '\[TEST\]' | grep -v -i '\[STYLE\]'> LATEST_FEATURES_FIXES.md
+git log --after 08/02/2018 --pretty=format:"%s%n%b" --reverse --no-merges | grep -v '^$' > LATEST_CHANGES.md
 ============================================================================================================
 
 [<TYPE>] (<scope>): <subject>
@@ -29,7 +29,9 @@ Examples:
 ============================================================================================================
 
 
-##[1.1.80.2018-02-11]
+##[1.1.90.2018-02-15]
+[INTERNAL][FIX] replace 'is' property check with 'being'
+[FIX] Not comparing css color properly (rgb vs hex)
 [FIX] Compare initial quantity to '' (instead of 0,000)
 [FIX] Ensure to update view controls if quantity has been cleared
 [FIX] Don't override previous user quantity input with storage unit data
@@ -91,6 +93,57 @@ Stock transfer is not affected, because non-existing storage unit is handled usi
 [INTERNAL] Fix typo in comment
 [INTERNAL][TEST][STYLE] Adding some tests and beautify some files
 [Internal] Version update
+[INTERNAL] Update chnagelog
+[INTERNAL] Update changelog
+[TEST] Fix feature
+[STYLE] Fix missing semicolon
+[INTERNAL] Build
+[INTERNAL] Update Build properties
+[INTERNAL] Update readme and changelog
+[INTERNAL] Add latest features and fixes as separate logs
+[INTERNAL] add latest features and fixes as separate logs and update changelog
+[INTERNAL] (eslint): update linting rules
+[INTERNAL] (build): update grunt build
+[TEST] (action): add test step to check for initial data/view model
+[TEST] (roller conveyor): replace ' with "
+[TEST] (goods receipt): add test for view model and data model
+[TEST] (goods receipt): replace ' with "
+[STYLE] (goods issue): replace ' with "
+[TEST] (goods issue): add test for view model and data model
+[TEST] (stock transfer): add test step file
+- add test for initial UI elements
+- add test for view model and data model
+[TEST][FIX] (action pages): Fix syntax error after ' -> " convertion
+[TEST] (common): remove navigation action (use generic gherkin step instead)
+[TEST] (all): rework to prevent breaking DRY guideline
+[INTERNAL] (manifest, i18n): Rework routing pattern and title to be retrieved from resource bundle
+[TEST] (routing, navigation): Adjust all navigation tests to new pattern
+[Test] (goods issue): Fix incomplete initial data
+[FIX] (stock transfer): Try to fix targetStorageBinItemSelection being "" instead of null
+[INTERNAL] (eslint): ignore dist folder
+[INTERNAL] (component): add eslint global "document"
+[TEST] (opa, login). remove check for navigation on login page
+This check is not needed on desktop devices
+[Test] (goods issue): add test for initial view object for both nonLE and withLE
+[TEST] (pages): add return statement
+[TEST] (goods issue): refactor initial input field check to be more DRY
+[STYLE] (roller conveyor): refactor some control ids and data property names
+[STYLE] (roller conveyor): refactor some control ids and data property names
+[STYLE] (stock transfer): adopt naming conventions on ids and properties
+[STYLE] (goods issue): adopt naming conventions on ids and properties
+[INTERNAL] (action pages): add missing maxLength properies
+[INTERNAL] (git): try to ignore .che/project.json
+[FIX] (stock transfer): remove maxLength property from storageBin selection (not supported)
+[FEATURE] (action navigation pages): remove gap between items
+[FEATURE] (action pages): increase font size of clear quantity icon on mobile devices
+[FEATURE] (action nav): add small margin to text
+[FEATURE] (goods receipt): propose default unit of measure
+- set KG if storage location is not 1000 and uom was not entered before 
+- clear  if storage location is 1000
+[FEATURE] (goods issue): remove leading zero after LE validation
+[FEATURE] (stock transfer): hide clear quantity icon, if LE is not empty
+Fixes being able to clear quantity, even if quantity input is not editable
+[TEST] (goods issue): rename OPA feature
 
 ## [1.1.75.2018-02-08]
 FIX] Unit of measure is not discovered from order component after material entry
