@@ -77,6 +77,16 @@ sap.ui.define([
 		},
 
 		requestStorageUnitInfoService: function(sStorageUnitNumber) {
+			
+			if (!sStorageUnitNumber) {
+				return Promise.reject({
+					message: "Input parameters not complete",
+					statusCode: 0,
+					statusText: "sStorageUnitNumber=" + sStorageUnitNumber,
+					responseText: "Please provide all input parameters to perform the call!"
+				});
+			}
+			
 			var oStorageUnitModel = this.getModel("storageUnit"),
 				oParam = {
 					"Param.1": sStorageUnitNumber
