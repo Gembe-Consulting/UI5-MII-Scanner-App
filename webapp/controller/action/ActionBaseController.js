@@ -77,7 +77,7 @@ sap.ui.define([
 		},
 
 		requestStorageUnitInfoService: function(sStorageUnitNumber) {
-			
+
 			if (!sStorageUnitNumber) {
 				return Promise.reject({
 					message: "Input parameters not complete",
@@ -86,7 +86,7 @@ sap.ui.define([
 					responseText: "Please provide all input parameters to perform the call!"
 				});
 			}
-			
+
 			var oStorageUnitModel = this.getModel("storageUnit"),
 				oParam = {
 					"Param.1": sStorageUnitNumber
@@ -173,20 +173,37 @@ sap.ui.define([
 				oQuantityInputControl
 					.setValue("")
 					.focus();
-				
+
 				// fire change event to trigger validation
 				oQuantityInputControl.fireChange({
 					value: ""
 				});
-				
-			}else{
+
+			} else {
 				MessageBox.error("Der feldinhalt konnte nicht gelöscht werden: Kein Control mit ID quantityInput gefunden!");
 			}
 
 		},
 
+		_isDataModelInitial: function(oCurrentData, oInitialData) {
+			return jQuery.sap.equal(oCurrentData, oInitialData, 2, true) //(a, b, maxDepth?, contains?) : boolean
+		},
+		
+		/**
+		 * checks if data model of the action page is inital (no changes by user)
+		 * shows confirm dialog if data has been entered
+		 * navigates bask without dialog if no data has changed
+		 */
 		onCancelAction: function(oEvent) {
-			this.handleConfirmationMessageBoxPress(oEvent);
+			var oCurrentData = this.getModel("data").getData(),
+				oInitialData = this._oInitData;
+				
+			if (!this._isDataModelInitial(oCurrentData, oInitialData)) {
+				this.handleConfirmationMessageBoxPress(oEvent);
+			}else{
+				this.onNavBack();
+			}
+			
 		},
 
 		addLogMessage: function(oMessage) {
