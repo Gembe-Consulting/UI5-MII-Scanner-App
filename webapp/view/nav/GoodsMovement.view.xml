@@ -3,7 +3,7 @@
 		<content>
 			<List mode="None" width="100%" class="sapUiSmallMarginTop" inset="{= !${device>/system/phone} }">
 				<items>
-					<CustomListItem id="goodsReceiptItem" type="Navigation" press="onNavForward" class="sapUiResponsiveMargin" tooltip="{i18n>itemLabelTextGoodsReceiptTooltip}">
+					<CustomListItem id="goodsReceiptItem" type="Navigation" press="onNavForward" tooltip="{i18n>itemLabelTextGoodsReceiptTooltip}">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<HBox width="8rem" justifyContent="Center">
@@ -21,7 +21,7 @@
 						</customData>
 					</CustomListItem>
 					
-					<CustomListItem id="goodsIssueWithLEItem" type="Navigation" press="onNavForward" class="sapUiResponsiveMargin" tooltip="{i18n>itemLabelTextGoodsIssueWithLETooltip}">
+					<CustomListItem id="goodsIssueWithLEItem" type="Navigation" press="onNavForward" tooltip="{i18n>itemLabelTextGoodsIssueWithLETooltip}">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<HBox width="8rem" justifyContent="Center">
@@ -40,7 +40,7 @@
 						</customData>
 					</CustomListItem>
 					
-					<CustomListItem id="goodsIssueNonLEItem" type="Navigation" press="onNavForward" class="sapUiResponsiveMargin" tooltip="{i18n>itemLabelTextGoodsIssueNonLETooltip}">
+					<CustomListItem id="goodsIssueNonLEItem" type="Navigation" press="onNavForward" tooltip="{i18n>itemLabelTextGoodsIssueNonLETooltip}">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<HBox width="8rem" justifyContent="Center">
@@ -59,7 +59,7 @@
 						</customData>
 					</CustomListItem>
 
-					<CustomListItem id="rollerConveyorItem" type="Navigation" press="onNavForward" class="sapUiResponsiveMargin" tooltip="{i18n>itemLabelTextRollerConveyorTooltip}">
+					<CustomListItem id="rollerConveyorItem" type="Navigation" press="onNavForward" tooltip="{i18n>itemLabelTextRollerConveyorTooltip}">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<HBox width="8rem" justifyContent="Center">
@@ -77,7 +77,7 @@
 						</customData>
 					</CustomListItem>
 					
-					<CustomListItem id="stockTransferItem" type="Navigation" press="onNavForward" class="sapUiResponsiveMargin" tooltip="{i18n>itemLabelTextStockTransferTooltip}">
+					<CustomListItem id="stockTransferItem" type="Navigation" press="onNavForward" tooltip="{i18n>itemLabelTextStockTransferTooltip}">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<HBox width="8rem" justifyContent="Center">
