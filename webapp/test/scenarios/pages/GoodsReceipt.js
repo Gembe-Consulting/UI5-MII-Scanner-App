@@ -19,6 +19,9 @@ sap.ui.require([
 					iCloseTheErrorMessage: function() {
 						return this.iCloseTheMessageBox();
 					},
+					iConfirmTheMessageBox: function() {
+						return this.iCloseTheMessageBox("Ja");
+					}
 				},
 				assertions: {
 					iShouldSeeTheSaveButtonIsDisabled: function() {
