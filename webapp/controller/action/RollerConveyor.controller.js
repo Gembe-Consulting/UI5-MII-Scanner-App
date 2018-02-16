@@ -64,6 +64,11 @@ sap.ui.define([
 			// on last unit, set dummy storageUnit to hide info fragment and repair storage bin selection
 			if (this._isLastStorageUnit(sStorageUnitNumber)) {
 				
+				this.addLogMessage({
+					text: oBundle.getText("rollerConveyor.messageText.lastStorageUnit"),
+					type: sap.ui.core.MessageType.Information
+				});
+						
 				return this.setAndRepairDataModel(oSource);
 			}
 
@@ -102,7 +107,7 @@ sap.ui.define([
 					if (!this.formatter.isEmptyStorageUnit(oStorageUnit.ISTME)) {
 						oDataModel.setProperty("/entryQuantity", oStorageUnit.ISTME);
 					} else {
-						oDataModel.setProperty("/entryQuantity", 0);
+						oDataModel.setProperty("/entryQuantity", null);
 					}
 
 				} catch (err) {
