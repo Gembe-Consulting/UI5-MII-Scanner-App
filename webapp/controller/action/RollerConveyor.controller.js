@@ -38,19 +38,14 @@ sap.ui.define([
 			//call super class onInit to apply user login protection. DO NOT DELETE!
 			ActionBaseController.prototype.onInit.call(this);
 
-			var oModel = new JSONModel(),
-				oData;
-
 			//jQuery(document).on("scannerDetectionComplete", this.handleBarcodeScanned.bind(this));
 
-			oData = jQuery.extend({}, this._oInitData);
-			oModel.setData(oData);
-			this.setModel(oModel, "data");
-
+			this.setModel(new JSONModel(jQuery.extend({}, this._oInitData)), "data");
+			
 			this.setModel(new JSONModel(jQuery.extend({}, this._oInitView)), "view");
 		},
 
-		onStorageUnitNumberChange: function(oEvent) {
+		onStorageUnitInputChange: function(oEvent) {
 			var oSource = oEvent.getSource(),
 				sStorageUnitNumber = oEvent.getParameter("value"),
 				oDataModel = this.getModel("data"),
@@ -68,27 +63,8 @@ sap.ui.define([
 
 			// on last unit, set dummy storageUnit to hide info fragment and repair storage bin selection
 			if (this._isLastStorageUnit(sStorageUnitNumber)) {
-				oDataModel.setData({
-					entryQuantity: null,
-					unitOfMeasure: null,
-					LENUM: null,
-					MEINH: null,
-					ISTME: null
-				}, true);
-
-				oSource.setValueState(sap.ui.core.ValueState.Success);
-
-				//reset storage bin, if wrong was selected before
-
-				oStorageBinSelection = this.byId("storageBinSelection");
-
-				oStorageBin = oStorageBinSelection.getSelectedItem();
-
-				if (oStorageBin && !oStorageBin.getEnabled()) {
-					oStorageBinSelection.setSelectedItemId(); //clear
-				}
-
-				return true;
+				
+				return this.setAndRepairDataModel(oSource);
 			}
 
 			sStorageUnitNumber = this._padStorageUnitNumber(sStorageUnitNumber);
@@ -152,7 +128,32 @@ sap.ui.define([
 					this.hideControlBusyIndicator(oSource);
 				}.bind(this));
 		},
+		
+		setAndRepairDataModel:function(oSource){
+			var oDataModel = this.getModel("data"),
+				oStorageBinControl,
+				oStorageBin;
+			
+				oDataModel.setData({
+					entryQuantity: null,
+					unitOfMeasure: null,
+					LENUM: null,
+					MEINH: null,
+					ISTME: null
+				}, true);
+				
+				oSource.setValueState(sap.ui.core.ValueState.Success);
+				
+				//reset storage bin, if wrong was selected before
+				oStorageBinControl = this.byId("storageBinSelection");
+				oStorageBin = oStorageBinControl.getSelectedItem();
 
+				if (oStorageBin && !oStorageBin.getEnabled()) {
+					oStorageBinControl.setSelectedItemId(); //clear value
+				}
+				
+				return true;
+		},
 		onQuantityChange: function(oEvent) {
 			this.updateViewControls(this.getModel("data").getData());
 		},

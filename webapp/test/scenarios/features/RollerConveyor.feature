@@ -38,6 +38,7 @@ Feature: Roller Conveyor
 		 And I can see unitOfMeasureInput with editable being 'false' in action.RollerConveyor view
 		 And I cannot see saveButton in action.RollerConveyor view
 		When I enter 'Rolltor' into storageBinSelection in action.RollerConveyor view
+		Then I can see storageBinSelection with valueState 'Success' in action.RollerConveyor view
 		Then I can see saveButton in action.RollerConveyor view
 	
 	@fullLE
@@ -52,8 +53,21 @@ Feature: Roller Conveyor
 		 And I can see unitOfMeasureInput with editable being 'false' in action.RollerConveyor view
 		 And I cannot see saveButton in action.RollerConveyor view
 		When I enter 'Stapler' into storageBinSelection in action.RollerConveyor view
+		Then I can see storageBinSelection with valueState 'Success' in action.RollerConveyor view
 		Then I can see saveButton in action.RollerConveyor view
 	
+	Scenario: Should repair input if users enter last unit number 
+		When I enter '10' into quantityInput in action.RollerConveyor view
+		 And I press ARROW_DOWN + ALT at storageBinSelection in action.RollerConveyor view
+		 And I click on first item of storageBinSelection items in action.RollerConveyor view
+		 And I can see storageBinSelection with valueState 'Success' in action.RollerConveyor view
+		 And I enter '90000000000000000000' into storageUnitInput in action.RollerConveyor view
+		Then I can see storageUnitInput with value '90000000000000000000' in action.RollerConveyor view
+		 And I can see storageUnitInput with valueState 'Success' in action.RollerConveyor view
+		 And I can see storageBinSelection with value '' in action.RollerConveyor view
+		 And I can see storageBinSelection with valueState 'Error' in action.RollerConveyor view
+		 And I can see quantityInput with value '' in action.RollerConveyor view
+		 And I can see unitOfMeasureInput with editable being 'true' in action.RollerConveyor view
 	
 	@fullLE
 	@currentUnit

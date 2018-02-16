@@ -38,7 +38,9 @@
 							</Input>
 							<Label text="{i18n>rollerConveyor.form.label.storageBin.text}"/>
 							<ComboBox id="storageBinSelection" selectedKey="{data>/storageBin}" change="onStorageBinSelectionChange"
-								selectionChange="onStorageBinSelectionChange" showSecondaryValues="true" filterSecondaryValues="true" class="noScannerInput">
+								selectionChange="onStorageBinSelectionChange" 
+								valueState="{= ${data>/storageBin} === null ? 'None': ${data>/storageBin} === '' ? 'Error' : 'Success' }"
+								showSecondaryValues="true" filterSecondaryValues="true" class="noScannerInput">
 								<c:ListItem key="ROLLENBAHN" text="{i18n>rollerConveyor.comboBox.listItem-ROLLENBAHN.text}" additionalText="ROLLENBAHN"
 									enabled="{= ${data>/storageUnit} !== 90000000000000000000 }"/>
 								<c:ListItem key="BEUM" text="{i18n>rollerConveyor.comboBox.listItem-BEUM.text}" additionalText="BEUM"/>
