@@ -14,6 +14,12 @@ sap.ui.define([
 
 		lastStorageUnit: 90000000000000000000,
 
+		mapStorageBinToRessource: [{
+			BEUM: "00123456"
+		}, {
+			PALE: "00654321"
+		}],
+
 		_oInitData: {
 			// entry data
 			storageUnit: null,
@@ -41,8 +47,28 @@ sap.ui.define([
 			//jQuery(document).on("scannerDetectionComplete", this.handleBarcodeScanned.bind(this));
 
 			this.setModel(new JSONModel(jQuery.extend({}, this._oInitData)), "data");
-			
+
 			this.setModel(new JSONModel(jQuery.extend({}, this._oInitView)), "view");
+		},
+
+		onSave: function(oEvent) {
+			var sMessageString,
+				oDataModel = this.getModel("data");
+				
+			if (this._isLastStorageUnit(oDataModel.getProperty("/storageUnit"))) {
+				sMessageString = "Letzte Palette an " + oDataModel.getProperty("/storageBin");
+			}
+			
+			this.getCurrentlyRunningOrder(oDataModel.getProperty("/storageBin"));
+			
+			this._createStockTransfer()
+				
+			this._createGoodsReceipt(sBwA)
+
+			this.addLogMessage({
+				text: sMessageString,
+				type: sap.ui.core.MessageType.Success
+			});
 		},
 
 		onStorageUnitInputChange: function(oEvent) {
@@ -63,12 +89,12 @@ sap.ui.define([
 
 			// on last unit, set dummy storageUnit to hide info fragment and repair storage bin selection
 			if (this._isLastStorageUnit(sStorageUnitNumber)) {
-				
+
 				this.addLogMessage({
 					text: oBundle.getText("rollerConveyor.messageText.lastStorageUnit"),
 					type: sap.ui.core.MessageType.Information
 				});
-						
+
 				return this.setAndRepairDataModel(oSource);
 			}
 
@@ -133,42 +159,42 @@ sap.ui.define([
 					this.hideControlBusyIndicator(oSource);
 				}.bind(this));
 		},
-		
-		setAndRepairDataModel:function(oSource){
+
+		setAndRepairDataModel: function(oSource) {
 			var oDataModel = this.getModel("data"),
 				oStorageBinControl,
 				oStorageBin;
-			
-				oDataModel.setData({
-					entryQuantity: null,
-					unitOfMeasure: null,
-					LENUM: null,
-					MEINH: null,
-					ISTME: null
-				}, true);
-				
-				oSource.setValueState(sap.ui.core.ValueState.Success);
-				
-				//reset storage bin, if wrong was selected before
-				oStorageBinControl = this.byId("storageBinSelection");
-				oStorageBin = oStorageBinControl.getSelectedItem();
 
-				if (oStorageBin && !oStorageBin.getEnabled()) {
-					oStorageBinControl.setSelectedItemId(); //clear value
-				}
-				
-				return true;
+			oDataModel.setData({
+				entryQuantity: null,
+				unitOfMeasure: null,
+				LENUM: null,
+				MEINH: null,
+				ISTME: null
+			}, true);
+
+			oSource.setValueState(sap.ui.core.ValueState.Success);
+
+			//reset storage bin, if wrong was selected before
+			oStorageBinControl = this.byId("storageBinSelection");
+			oStorageBin = oStorageBinControl.getSelectedItem();
+
+			if (oStorageBin && !oStorageBin.getEnabled()) {
+				oStorageBinControl.setSelectedItemId(); //clear value
+			}
+
+			return true;
 		},
 		onQuantityInputChange: function(oEvent) {
 			this.updateViewControls(this.getModel("data").getData());
 		},
-		
+
 		onUnitOfMeasureInputChange: function(oEvent) {
 			var sUoM = oEvent.getParameter("value"),
 				oDataModel = this.getModel("data");
-			
+
 			oDataModel.setProperty("/unitOfMeasure", sUoM.toUpperCase());
-			
+
 			this.updateViewControls(oDataModel.getData());
 		},
 
@@ -220,8 +246,35 @@ sap.ui.define([
 		 * @param {string} sStorageBin storage bin to where storage unit will be stored
 		 * @param {string} sStretchProgram used stretch program
 		 */
-		_createNewStorageUnit: function(sStorageUnitNumber, sStorageBin, sStretchProgram) {
+		createNewStorageUnit: function(sStorageUnitNumber, sStorageBin, sStretchProgram) {
 
+		},
+
+		findRessourceOfStorageBin: function(sStorageBin) {
+			return this.mapStorageBinToRessource.reduce(o => o[sStorageBin]);
+		},
+		
+		_createGoodsReceipt:function(sBwA){
+			if(sBwA === 101){
+				return "Normal-Wareneingang mit echt BwA 101";
+			}else{
+				return "Spezial-Wareneingang mit pseudo BwA 555";
+			}
+		},
+		
+		_createStockTransfer:function(){
+			return "Spezial-Umbuchung mit pseudo BwA 999";
+		},
+
+		getCurrentlyRunningOrder: function(sStorageBin) {
+
+			var sRessource = this.findRessourceOfStorageBin(sStorageBin);
+
+			if (sRessource === '00123456') {
+				return "Prozessauftrag 4711";
+			} else {
+				return "Prozessauftrag 4712";
+			}
 		}
 	});
 

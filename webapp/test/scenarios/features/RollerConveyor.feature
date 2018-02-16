@@ -132,7 +132,7 @@ Feature: Roller Conveyor
 		 And I enter 'BEUM' into storageBinSelection in action.RollerConveyor view
 		 And I press 'ENTER' at storageBinSelection in action.RollerConveyor view
 		 And I click on saveButton in action.RollerConveyor view
-		Then I can see messageStrip with text 'Letzte Palette an Beumer\nProzessauftrag 4711\nSpezial-Wareneingang mit pseudo BwA 555\nSpezial-Umbuchung mit pseudo BwA 999' in action.RollerConveyor view
+		Then I can see messageStrip with text 'Letzte Palette an BEUM\nProzessauftrag 4711\nSpezial-Wareneingang mit pseudo BwA 555\nSpezial-Umbuchung mit pseudo BwA 999' in action.RollerConveyor view
 		 And I can see messageStrip with type 'Success' in action.RollerConveyor view
 
 	@lastUnit @emptyLE @Palettierer 
@@ -144,7 +144,7 @@ Feature: Roller Conveyor
 		 And I enter 'PALE' into storageBinSelection in action.RollerConveyor view
 		 And I press 'ENTER' at storageBinSelection in action.RollerConveyor view
 		 And I click on saveButton in action.RollerConveyor view
-		Then I can see messageStrip with text 'Letzte Palette an Palettierer\nProzessauftrag 4712\nSpezial-Wareneingang mit pseudo BwA 555\nSpezial-Umbuchung mit pseudo BwA 999' in action.RollerConveyor view
+		Then I can see messageStrip with text 'Letzte Palette an PALE\nProzessauftrag 4712\nSpezial-Wareneingang mit pseudo BwA 555\nSpezial-Umbuchung mit pseudo BwA 999' in action.RollerConveyor view
 		 And I can see messageStrip with type 'Success' in action.RollerConveyor view
 		 
 	@currentUnit @emptyLE
