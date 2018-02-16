@@ -33,6 +33,24 @@ sap.ui.require([
 						return this.iShouldSeeTheSaveButton(sViewName, bEnabled);
 					},
 
+					iShouldSeeStoragebinselectionContains2EnabledItems: function() {
+						var iNumberOfItems = 2,
+							sControlId = "storageBinSelection",
+							sViewName = "action.RollerConveyor";
+
+						return this.waitFor({
+							id: sControlId,
+							viewName: sViewName,
+							success: function(oControl) {
+								var activeItems = oControl.getItems().filter(item => item.getEnabled());
+								
+								Opa5.assert.strictEqual(activeItems.length, 2, sControlId + " has 2 active items");
+								Opa5.assert.strictEqual(activeItems[0].getKey(), "BEUM", "First active item is BEUM");
+								Opa5.assert.strictEqual(activeItems[1].getKey(), "PALE", "Second active item is PALE");
+							}
+						});
+					},
+
 					iShouldSeeAllInputFieldsAreInitial: function() {
 
 						var oInitialControlData = {
