@@ -159,8 +159,17 @@ sap.ui.define([
 				
 				return true;
 		},
-		onQuantityChange: function(oEvent) {
+		onQuantityInputChange: function(oEvent) {
 			this.updateViewControls(this.getModel("data").getData());
+		},
+		
+		onUnitOfMeasureInputChange: function(oEvent) {
+			var sUoM = oEvent.getParameter("value"),
+				oDataModel = this.getModel("data");
+			
+			oDataModel.setProperty("/unitOfMeasure", sUoM.toUpperCase());
+			
+			this.updateViewControls(oDataModel.getData());
 		},
 
 		onStorageBinSelectionChange: function(oEvent) {

@@ -23,14 +23,14 @@
 								valueState="{view>/storageUnitValueState}" maxLength="20" class="noScannerInput"/>
 							<Label text="{i18n>rollerConveyor.form.label.quantity.text}, {i18n>rollerConveyor.form.label.unitOfMeasure-S.text}"/>
 							<HBox alignItems="Center">
-								<Input id="quantityInput" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}" change="onQuantityChange"
+								<Input id="quantityInput" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}" change="onQuantityInputChange"
 									editable="{path: 'data>/ISTME', formatter:'.formatter.isEmptyStorageUnit' }" textAlign="End"></Input>
 								<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress" size="{=${device>/system/desktop}===true ? '1.25rem' : '1.75rem'}" class="sapUiSmallMarginEnd" alt="CLEAR"></c:Icon>
 								<layoutData>
 									<l:GridData span="XL2 L3 M4 S8"/>
 								</layoutData>
 							</HBox>
-							<Input id="unitOfMeasureInput" value="{path: 'data>/unitOfMeasure', type:'.sapType.MEINH'}"
+							<Input id="unitOfMeasureInput" value="{path: 'data>/unitOfMeasure', type:'.sapType.MEINH'}" change="onUnitOfMeasureInputChange"
 								editable="{= ${data>/storageUnit} === 90000000000000000000 }" maxLength="4">
 								<layoutData>
 									<l:GridData span="XL1 L1 M2 S4"/>
