@@ -16,7 +16,8 @@ sap.ui.define([
 	"use strict";
 
 	Opa5.extendConfig({
-
+			timeout: 5,
+            pollingInterval: 100,
 		arrangements: new Common(),
 		actions: new Opa5({
 			iLookAtTheScreen: function() {
