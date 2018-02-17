@@ -35,13 +35,13 @@ Feature: Determinate Input Fields from an external Application
 	Scenario: Should open Goods Issue Page (withLE) with given storage unit number
 		Given I start the app on "/Materialbewegung" using remote user "phigem"
 		When I navigate to "/WA?type=withLE&LENUM=00000000109330000004"
-		Then I can see storageUnitInput with value '00000000109330000004' in action.GoodsIssue view
+		Then I can see storageUnitInput with value '109330000004' in action.GoodsIssue view
 		 And I can see storageUnitFragmentBatchText with text '0109331231' in action.GoodsIssue view
 		
 	Scenario: Should open Goods Issue Page (withLE) with all possible input values
 		Given I start the app on "/Materialbewegung" using remote user "phigem"
 		When I navigate to "/WA?type=withLE&LENUM=00000000109330000004&AUFNR=1234567"
-		Then I can see storageUnitInput with value '00000000109330000004' in action.GoodsIssue view
+		Then I can see storageUnitInput with value '109330000004' in action.GoodsIssue view
 		 And I can see orderNumberInput with value '1234567' in action.GoodsIssue view
 		 And I can see storageUnitFragmentBatchText with text '0109331231' in action.GoodsIssue view
 		 

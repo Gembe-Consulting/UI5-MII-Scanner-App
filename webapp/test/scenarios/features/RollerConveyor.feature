@@ -28,89 +28,95 @@ Feature: Roller Conveyor
 	
 	@emptyLE
 	@currentUnit
-	@wip 
 	Scenario: Should validate empty storage unit number and check completeness
-		When I enter '1' into storageUnitInput in action.RollerConveyor view
+		When I enter '00000000109330000015' into storageUnitInput in action.RollerConveyor view
 		Then I can see storageUnitInput with valueState 'Success' in action.RollerConveyor view
 		 And I can see quantityInput with value '' in action.RollerConveyor view
 		 And I can see quantityInput with editable being 'true' in action.RollerConveyor view
-		 And I can see unitOfMeasureInput with value 'XX' in action.RollerConveyor view
+		 And I can see unitOfMeasureInput with value 'KG' in action.RollerConveyor view
 		 And I can see unitOfMeasureInput with editable being 'false' in action.RollerConveyor view
 		 And I cannot see saveButton in action.RollerConveyor view
-		When I enter 'Rolltor' into storageBinSelection in action.RollerConveyor view
+		When I press ARROW_DOWN + ALT at storageBinSelection in action.RollerConveyor view
+		 And I click on first item of storageBinSelection items in action.RollerConveyor view
+		Then I can see storageBinSelection with valueState 'Success' in action.RollerConveyor view
+		Then I cannot see saveButton in action.RollerConveyor view
+		When I enter '100,123' into quantityInput in action.RollerConveyor view
 		Then I can see saveButton in action.RollerConveyor view
 	
 	@fullLE
 	@currentUnit
-	@wip
 	Scenario: Should validate full storage unit number and check completeness
-		When I enter '2' into storageUnitInput in action.RollerConveyor view
+		When I enter '00000000109330000016' into storageUnitInput in action.RollerConveyor view
 		Then I can see storageUnitInput with valueState 'Success' in action.RollerConveyor view
-		 And I can see quantityInput with value '1,2' in action.RollerConveyor view
+		 And I can see quantityInput with value '543,789' in action.RollerConveyor view
 		 And I can see quantityInput with editable being 'false' in action.RollerConveyor view
-		 And I can see unitOfMeasureInput with value 'XY' in action.RollerConveyor view
+		 And I can see unitOfMeasureInput with value 'MG' in action.RollerConveyor view
 		 And I can see unitOfMeasureInput with editable being 'false' in action.RollerConveyor view
 		 And I cannot see saveButton in action.RollerConveyor view
-		When I enter 'Stapler' into storageBinSelection in action.RollerConveyor view
+		When I press ARROW_DOWN + ALT at storageBinSelection in action.RollerConveyor view
+		 And I click on 3rd item of storageBinSelection items in action.RollerConveyor view
+		Then I can see storageBinSelection with valueState 'Success' in action.RollerConveyor view
+		Then I can see saveButton in action.RollerConveyor view
+
+	@lastLE
+	Scenario: Should display info message if last storage unit has been entered
+		When I enter '90000000000000000000' into storageUnitInput in action.RollerConveyor view
+		 And I enter 'st' into unitOfMeasureInput in action.RollerConveyor view
+		 And I enter '4711' into quantityInput in action.RollerConveyor view
+		 And I press ARROW_DOWN + ALT at storageBinSelection in action.RollerConveyor view
+		 And I click on 4th item of storageBinSelection items in action.RollerConveyor view
+		Then I can see storageUnitInput with valueState 'Success' in action.RollerConveyor view
+		 And I can see storageBinSelection with valueState 'Success' in action.RollerConveyor view
+		 And I can see messageStrip with text 'Letzte Palette!' in action.RollerConveyor view
+		 And I can see messageStrip with type 'Information' in action.RollerConveyor view
+		 And I can see unitOfMeasureInput with value 'ST' in action.RollerConveyor view
 		Then I can see saveButton in action.RollerConveyor view
 	
+	@lastLE
+	Scenario: Should repair input if users enter last unit number 
+		When I enter '10' into quantityInput in action.RollerConveyor view
+		 And I press ARROW_DOWN + ALT at storageBinSelection in action.RollerConveyor view
+		 And I click on first item of storageBinSelection items in action.RollerConveyor view
+		 And I can see storageBinSelection with valueState 'Success' in action.RollerConveyor view
+		 And I enter '90000000000000000000' into storageUnitInput in action.RollerConveyor view
+		Then I can see storageUnitInput with value '90000000000000000000' in action.RollerConveyor view
+		 And I can see storageUnitInput with valueState 'Success' in action.RollerConveyor view
+		 And I can see storageBinSelection with value '' in action.RollerConveyor view
+		 And I can see storageBinSelection with valueState 'Error' in action.RollerConveyor view
+		 And I can see quantityInput with value '' in action.RollerConveyor view
+		 And I can see unitOfMeasureInput with editable being 'true' in action.RollerConveyor view
 	
-	@fullLE
-	@currentUnit
-	@wip 
 	Scenario: User clears the input form
-		When I enter '1' into storageUnitInput in action.RollerConveyor view
-		When I enter '10,000' into quantityInput in action.RollerConveyor view
-		When I enter 'Rolltor' into storageBinSelection in action.RollerConveyor view
-		And I can see saveButton in action.RollerConveyor view
+		When I enter '00000000109330000015' into storageUnitInput in action.RollerConveyor view
+		 And I enter '10,000' into quantityInput in action.RollerConveyor view
+		 And I press ARROW_DOWN + ALT at storageBinSelection in action.RollerConveyor view
+		 And I click on first item of storageBinSelection items in action.RollerConveyor view
+		Then I can see saveButton in action.RollerConveyor view
 		When I click on clearFormButton in action.RollerConveyor view
 		Then on the Roller Conveyor Page: I should see the save button is disabled
 		Then on the Roller Conveyor Page: I should see all input fields are initial
 		Then on the Roller Conveyor Page: I should see data model and view model are initial
-		
-	@lastUnit
-	@wip 
-	Scenario: Should display info message if last storage unit has been entered
 		When I enter '90000000000000000000' into storageUnitInput in action.RollerConveyor view
-		 And I enter 'st' into unitOfMeasureInput in action.RollerConveyor view
-		Then I can see storageUnitInput with valueState 'Success' in action.RollerConveyor view
-		 And I can see messageStrip with text 'Letzte Palette' in action.RollerConveyor view
-		 And I can see messageStrip with type 'Information' in action.StockTransfer view
-		 And I can see unitOfMeasureInput with value 'ST' in action.RollerConveyor view
-		 
-	@lastUnit
-	@wip 
-	Scenario: Should repair input data if users enter last unit after successful validation
-		When I enter '2' into storageUnitInput in action.RollerConveyor view
-		 And I enter 'Rolltor' into storageBinSelection in action.RollerConveyor view
-		 And I enter '90000000000000000000' into storageUnitInput in action.RollerConveyor view
-		Then And I can see storageBinSelection with value '' in action.RollerConveyor view
-		 And I can see quantityInput with value '' in action.RollerConveyor view
-		 And I can see quantityInput with editable being 'true' in action.RollerConveyor view
-		 And I can see unitOfMeasureInput with value '' in action.RollerConveyor view
-		 And I can see unitOfMeasureInput with editable being 'true' in action.RollerConveyor view
-		 And I cannot see saveButton in action.RollerConveyor view
-		When I enter '2' into storageUnitInput in action.RollerConveyor view
-		 And I enter '12,852' into quantityInput in action.RollerConveyor view
-		 And I enter 'Stapler' into storageBinSelection in action.RollerConveyor view
-		 And I enter '90000000000000000000' into storageUnitInput in action.RollerConveyor view
-		Then And I can see storageBinSelection with value '' in action.RollerConveyor view
-		 And I can see quantityInput with value '' in action.RollerConveyor view
-		 And I can see quantityInput with editable being 'true' in action.RollerConveyor view
-		 And I can see unitOfMeasureInput with value '' in action.RollerConveyor view
-		 And I can see unitOfMeasureInput with editable being 'true' in action.RollerConveyor view
-		 
+		 And I enter '11,000' into quantityInput in action.RollerConveyor view
+		 And I enter 'kg' into unitOfMeasureInput in action.RollerConveyor view
+		 And I press ARROW_DOWN + ALT at storageBinSelection in action.RollerConveyor view
+		 And I click on 2nd item of storageBinSelection items in action.RollerConveyor view
+		Then I can see saveButton in action.RollerConveyor view
+		When I click on clearFormButton in action.RollerConveyor view
+		Then on the Roller Conveyor Page: I should see the save button is disabled
+		Then on the Roller Conveyor Page: I should see all input fields are initial
+		Then on the Roller Conveyor Page: I should see data model and view model are initial
+
 	@lastUnit @emptyLE 
-	@wip 
 	Scenario: When entering last unit, you should not be able to select Rolltor or Stapler, only Beumer and Palettierer and you should be able to enter quantity and unit
 		When I enter '90000000000000000000' into storageUnitInput in action.RollerConveyor view
 		Then I can see storageUnitInput with valueState 'Success' in action.RollerConveyor view
 		 And I can see quantityInput with value '' in action.RollerConveyor view
 		 And I can see quantityInput with editable being 'true' in action.RollerConveyor view
-		 And I can see unitOfMeasure with editable being 'true' in action.RollerConveyor view
-		 And storageBinSelection in action.RollerConveyor view contains 2 items
+		 And I can see unitOfMeasureInput with editable being 'true' in action.RollerConveyor view
+		Then on the Roller Conveyor Page: I should see storageBinSelection contains 2 enabled items
 		When I press ARROW_DOWN + ALT at storageBinSelection in action.RollerConveyor view
-		 And I click on first item of storageBinSelection items in action.RollerConveyor view
+		 And I click on 2nd item of storageBinSelection items in action.RollerConveyor view
 		Then I can see storageBinSelection with selectedKey 'BEUM' in action.RollerConveyor view
 		 And I can see storageBinSelection with valueState 'Success' in action.RollerConveyor view
 		When I click on last item of storageBinSelection items in action.RollerConveyor view
@@ -126,7 +132,7 @@ Feature: Roller Conveyor
 		 And I enter 'BEUM' into storageBinSelection in action.RollerConveyor view
 		 And I press 'ENTER' at storageBinSelection in action.RollerConveyor view
 		 And I click on saveButton in action.RollerConveyor view
-		Then I can see messageStrip with text 'Letzte Palette an Beumer\nProzessauftrag 4711\nSpezial-Wareneingang mit pseudo BwA 555\nSpezial-Umbuchung mit pseudo BwA 999' in action.RollerConveyor view
+		Then I can see messageStrip with text 'Letzte Palette an BEUM\nProzessauftrag 4711\nSpezial-Wareneingang mit pseudo BwA 555\nSpezial-Umbuchung mit pseudo BwA 999' in action.RollerConveyor view
 		 And I can see messageStrip with type 'Success' in action.RollerConveyor view
 
 	@lastUnit @emptyLE @Palettierer 
@@ -138,7 +144,7 @@ Feature: Roller Conveyor
 		 And I enter 'PALE' into storageBinSelection in action.RollerConveyor view
 		 And I press 'ENTER' at storageBinSelection in action.RollerConveyor view
 		 And I click on saveButton in action.RollerConveyor view
-		Then I can see messageStrip with text 'Letzte Palette an Palettierer\nProzessauftrag 4712\nSpezial-Wareneingang mit pseudo BwA 555\nSpezial-Umbuchung mit pseudo BwA 999' in action.RollerConveyor view
+		Then I can see messageStrip with text 'Letzte Palette an PALE\nProzessauftrag 4712\nSpezial-Wareneingang mit pseudo BwA 555\nSpezial-Umbuchung mit pseudo BwA 999' in action.RollerConveyor view
 		 And I can see messageStrip with type 'Success' in action.RollerConveyor view
 		 
 	@currentUnit @emptyLE

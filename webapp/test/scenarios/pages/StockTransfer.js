@@ -17,7 +17,9 @@ sap.ui.require([
 			onTheStockTransferPage: {
 				baseClass: Common,
 				actions: {
-
+					iConfirmTheMessageBox: function() {
+						return this.iCloseTheMessageBox("Ja");
+					}
 				},
 				assertions: {
 

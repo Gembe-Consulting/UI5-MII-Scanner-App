@@ -50,6 +50,29 @@ sap.ui.define([
 				fNearToZero = 0.001;
 
 			return !!sQuantity && (fQuantity !== fZero) && (fQuantity !== fNearToZero);
+		},
+		
+		/**
+		 * Checks if a storage unit number is the last unit
+		 * - if number is equal to 90000000000000000000
+		 * @public
+		 * @param {string|number} vStorageUnitNumber storage unit to test for
+		 * @return {boolean} true if is last, false if not last unit
+		 */
+		isLastStorageUnit: function(vStorageUnitNumber) {
+			var iLastStorageUnit: 90000000000000000000;
+			return iLastStorageUnit === parseInt(vStorageUnitNumber, 10);
+		},
+		
+		/**
+		 * Checks if a storage unit number is NOT the last unit
+		 * - if number is not equal to 90000000000000000000
+		 * @public
+		 * @param {string|number} vStorageUnitNumber storage unit to test for
+		 * @return {boolean} true if is not last, false if last unit
+		 */
+		isNotLastStorageUnit: function(vStorageUnitNumber) {
+			return !this.isLastStorageUnit(vStorageUnitNumber);
 		}
 	};
 });

@@ -12,7 +12,11 @@ sap.ui.define([
 		sapType: sapType,
 		formatter: formatter,
 
-		lastStorageUnit: 90000000000000000000,
+		mapStorageBinToRessource: [{
+			BEUM: "00123456"
+		}, {
+			PALE: "00654321"
+		}],
 
 		_oInitData: {
 			// entry data
@@ -38,19 +42,34 @@ sap.ui.define([
 			//call super class onInit to apply user login protection. DO NOT DELETE!
 			ActionBaseController.prototype.onInit.call(this);
 
-			var oModel = new JSONModel(),
-				oData;
-
 			//jQuery(document).on("scannerDetectionComplete", this.handleBarcodeScanned.bind(this));
 
-			oData = jQuery.extend({}, this._oInitData);
-			oModel.setData(oData);
-			this.setModel(oModel, "data");
+			this.setModel(new JSONModel(jQuery.extend({}, this._oInitData)), "data");
 
 			this.setModel(new JSONModel(jQuery.extend({}, this._oInitView)), "view");
 		},
 
-		onStorageUnitNumberChange: function(oEvent) {
+		onSave: function(oEvent) {
+			var sMessageString,
+				oDataModel = this.getModel("data");
+
+			if (this.formatter.isLastStorageUnit(oDataModel.getProperty("/storageUnit"))) {
+				sMessageString = "Letzte Palette an " + oDataModel.getProperty("/storageBin");
+			}
+
+			this.getCurrentlyRunningOrder(oDataModel.getProperty("/storageBin"));
+
+			this._createStockTransfer()
+
+			this._createGoodsReceipt(sBwA)
+
+			this.addLogMessage({
+				text: sMessageString,
+				type: sap.ui.core.MessageType.Success
+			});
+		},
+
+		onStorageUnitInputChange: function(oEvent) {
 			var oSource = oEvent.getSource(),
 				sStorageUnitNumber = oEvent.getParameter("value"),
 				oDataModel = this.getModel("data"),
@@ -67,28 +86,14 @@ sap.ui.define([
 			}
 
 			// on last unit, set dummy storageUnit to hide info fragment and repair storage bin selection
-			if (this._isLastStorageUnit(sStorageUnitNumber)) {
-				oDataModel.setData({
-					entryQuantity: null,
-					unitOfMeasure: null,
-					LENUM: null,
-					MEINH: null,
-					ISTME: null
-				}, true);
+			if (this.formatter.isLastStorageUnit(sStorageUnitNumber)) {
 
-				oSource.setValueState(sap.ui.core.ValueState.Success);
+				this.addLogMessage({
+					text: oBundle.getText("rollerConveyor.messageText.lastStorageUnit"),
+					type: sap.ui.core.MessageType.Information
+				});
 
-				//reset storage bin, if wrong was selected before
-
-				oStorageBinSelection = this.byId("storageBinSelection");
-
-				oStorageBin = oStorageBinSelection.getSelectedItem();
-
-				if (oStorageBin && !oStorageBin.getEnabled()) {
-					oStorageBinSelection.setSelectedItemId(); //clear
-				}
-
-				return true;
+				return this.setAndRepairDataModel(oSource);
 			}
 
 			sStorageUnitNumber = this._padStorageUnitNumber(sStorageUnitNumber);
@@ -126,7 +131,7 @@ sap.ui.define([
 					if (!this.formatter.isEmptyStorageUnit(oStorageUnit.ISTME)) {
 						oDataModel.setProperty("/entryQuantity", oStorageUnit.ISTME);
 					} else {
-						oDataModel.setProperty("/entryQuantity", 0);
+						oDataModel.setProperty("/entryQuantity", null);
 					}
 
 				} catch (err) {
@@ -153,8 +158,42 @@ sap.ui.define([
 				}.bind(this));
 		},
 
-		onQuantityChange: function(oEvent) {
+		setAndRepairDataModel: function(oSource) {
+			var oDataModel = this.getModel("data"),
+				oStorageBinControl,
+				oStorageBin;
+
+			oDataModel.setData({
+				entryQuantity: null,
+				unitOfMeasure: null,
+				LENUM: null,
+				MEINH: null,
+				ISTME: null
+			}, true);
+
+			oSource.setValueState(sap.ui.core.ValueState.Success);
+
+			//reset storage bin, if wrong was selected before
+			oStorageBinControl = this.byId("storageBinSelection");
+			oStorageBin = oStorageBinControl.getSelectedItem();
+
+			if (oStorageBin && !oStorageBin.getEnabled()) {
+				oStorageBinControl.setSelectedItemId(); //clear value
+			}
+
+			return true;
+		},
+		onQuantityInputChange: function(oEvent) {
 			this.updateViewControls(this.getModel("data").getData());
+		},
+
+		onUnitOfMeasureInputChange: function(oEvent) {
+			var sUoM = oEvent.getParameter("value"),
+				oDataModel = this.getModel("data");
+
+			oDataModel.setProperty("/unitOfMeasure", sUoM.toUpperCase());
+
+			this.updateViewControls(oDataModel.getData());
 		},
 
 		onStorageBinSelectionChange: function(oEvent) {
@@ -185,17 +224,6 @@ sap.ui.define([
 		},
 
 		/**
-		 * Checks if a storage unit number is the last unit
-		 * 
-		 * @param {string|number} vStorageUnitNumber storage unit to test for
-		 * 
-		 * @return {boolean} true if is last, false if not last unit
-		 */
-		_isLastStorageUnit: function(vStorageUnitNumber) {
-			return this.lastStorageUnit === parseInt(vStorageUnitNumber, 10);
-		},
-
-		/**
 		 * Creates a new storage unit aka. palette
 		 * - Calls /XMII/Runner?Transaction=SUMISA/Scanner/Rollenbahn/trx_NeuePalette
 		 * - Sends the storage unit number, storage bin, stretch program
@@ -205,8 +233,35 @@ sap.ui.define([
 		 * @param {string} sStorageBin storage bin to where storage unit will be stored
 		 * @param {string} sStretchProgram used stretch program
 		 */
-		_createNewStorageUnit: function(sStorageUnitNumber, sStorageBin, sStretchProgram) {
+		createNewStorageUnit: function(sStorageUnitNumber, sStorageBin, sStretchProgram) {
 
+		},
+
+		findRessourceOfStorageBin: function(sStorageBin) {
+			return this.mapStorageBinToRessource.reduce(o => o[sStorageBin]);
+		},
+
+		_createGoodsReceipt: function(sBwA) {
+			if (sBwA === 101) {
+				return "Normal-Wareneingang mit echt BwA 101";
+			} else {
+				return "Spezial-Wareneingang mit pseudo BwA 555";
+			}
+		},
+
+		_createStockTransfer: function() {
+			return "Spezial-Umbuchung mit pseudo BwA 999";
+		},
+
+		getCurrentlyRunningOrder: function(sStorageBin) {
+
+			var sRessource = this.findRessourceOfStorageBin(sStorageBin);
+
+			if (sRessource === '00123456') {
+				return "Prozessauftrag 4711";
+			} else {
+				return "Prozessauftrag 4712";
+			}
 		}
 	});
 

@@ -581,6 +581,56 @@
 							"VFDAT": "03-05-2018",
 							"LGORT": "1000",
 							"RowId": 14
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(2)",
+								"type": "QueryTemplate.Row"
+							},
+							"LENUM": "00000000109330000015",
+							"AUFNR": "1093300",
+							"LGPLA": "PRODUKTION",
+							"LGTYP": "900",
+							"MATNR": "1700948-030",
+							"MAKTX": "Empty LE",
+							"GESME": "0.0",
+							"LETYT": "Industriepalette",
+							"MEINH": "KG",
+							"UMREZ": "1",
+							"GEWEI": "KG",
+							"MGEWI": "0.0",
+							"CHARG": "0109330001",
+							"SOLLME": "300.0",
+							"ISTME": "0.001",
+							"TARGETME": "300.0",
+							"BESTQ": "0",
+							"VFDAT": "03-05-2018",
+							"LGORT": "1000",
+							"RowId": 15
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(2)",
+								"type": "QueryTemplate.Row"
+							},
+							"LENUM": "00000000109330000016",
+							"AUFNR": "1093300",
+							"LGPLA": "PRODUKTION",
+							"LGTYP": "900",
+							"MATNR": "1700948-030",
+							"MAKTX": "Full LE",
+							"GESME": "300.0",
+							"LETYT": "Industriepalette",
+							"MEINH": "MG",
+							"UMREZ": "1",
+							"GEWEI": "MG",
+							"MGEWI": "301.8",
+							"CHARG": "0109330001",
+							"SOLLME": "300.0",
+							"ISTME": "543.789",
+							"TARGETME": "300.0",
+							"BESTQ": "0",
+							"VFDAT": "03-05-2018",
+							"LGORT": "1000",
+							"RowId": 16
 						}]
 					}
 				}]
