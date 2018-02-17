@@ -36,10 +36,10 @@ sap.ui.define([
 		onLiveInput: function(oEvent) {
 			var sCurrentInput = oEvent.getParameter("value"),
 				oInput = oEvent.getSource(),
-				bIsDesktop = this.getModel("device").getProperty("/system/desktop");
+				bMobile = this.getModel("device").getProperty("/browser/mobile");
 
 			// TODO: warum auch ungleich length 0?
-			if (!bIsDesktop && sCurrentInput.length !== 0) {
+			if (bMobile && sCurrentInput.length !== 0) {
 				this.purgeInputAfterDelay(oInput);
 			}
 		},

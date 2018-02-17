@@ -120,11 +120,11 @@ sap.ui.define([
 
 		discoverIllumLoginName: function() {
 			var oDiscoverdIllumLoginName,
-				bIsDesktop = this.getModel("device").getProperty("/system/desktop"),
+				bMobile = this.getModel("device").getProperty("/browser/mobile"),
 				sIllumLoginName;
 
 			return oDiscoverdIllumLoginName = new Promise(function(resolve, reject) {
-				if (bIsDesktop) {
+				if (!bMobile) {
 					sIllumLoginName = $("#IllumLoginName").val();
 					if (!!sIllumLoginName) {
 						resolve(sIllumLoginName);
@@ -168,8 +168,8 @@ sap.ui.define([
 		 * Only if current system is not a desktop device!
 		 */
 		setupScannerDetection: function() {
-			var bDesktop = this.getModel("device").getProperty("/system/desktop");
-			if (!bDesktop) {
+			var bMobile= this.getModel("device").getProperty("/browser/mobile");
+			if (bMobile) {
 
 				jQuery(document).scannerDetection({
 					onComplete: function(sString) {

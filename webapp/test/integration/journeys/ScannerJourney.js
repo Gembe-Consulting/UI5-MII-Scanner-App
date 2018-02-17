@@ -13,7 +13,7 @@ sap.ui.require(["sap/ui/test/opaQunit"], function(opaTest) {
 		// Arrangements
 		// -Define possible initial states, e.g. the app is started, or specific data exists. 
 		// -For performance reasons, starting the app is usually done only in the first test case of a journey.
-		Given.iStartTheApp();
+		Given.iStartTheApp().and.iUseDevice("mobile");
 
 		// Actions
 		// -Define possible events triggered by a user, e.g. entering some text, clicking a button, navigating to another page.
@@ -26,66 +26,33 @@ sap.ui.require(["sap/ui/test/opaQunit"], function(opaTest) {
 		and.thePageShouldHaveLoginButton().
 		and.theAppShouldNotNavigateAndStayOnLoginPage();
 	});
+	
+	opaTest("Should not allow navigation without user model", function(Given, When, Then) {
+		// Arrangements
+		// Actions
+		When.onTheLoginPage.iLookAtTheScreen().and.iEnterNewHashToAnotherPage("/WE");
+
+		// Assertions
+		Then.onTheApp.shouldNavigateTo("Forbidden");
+	});
 
 	opaTest("Should prevent login, if input takes longer than 75ms", function(Given, When, Then) {
-		// Arrangements
+		// Arrangements#
+		Given.onTheApp.iEnterNewHashToAnotherPage("/");
 		// Actions
 		When.onTheScannerLoginPage.iTypeInUsername("foobar");
 
 		// Assertions
-		Then.onTheScannerLoginPage
-			.theInputFieldShouldPurgeInput().
+		Then.onTheScannerLoginPage.theInputFieldShouldPurgeInput().
 		and.theAppShouldShowLoginPage();
 	});
 
-	opaTest("Should perform login, if username has been submitted within 75ms", function(Given, When, Then) {
+	opaTest("Should allow login, if username has been submitted within 75ms", function(Given, When, Then) {
 		// Arrangements
 		// Actions
 		When.onTheScannerLoginPage.iTypeInUsernameAndSubmitVeryFast("phigem");
 
 		// Assertions
 		Then.onHomePage.theAppShouldNavigateToHomePage();
-	});
-	
-	QUnit.module("Scanning barcodes from hardware to browser, without input field focus");
-
-	opaTest("Should find the correct input field for Storage Unit", function(Given, When, Then) {
-		// Arrangements
-		Given.iTeardownMyApp();
-		Given.iStartTheApp({
-				hash: "/WE",
-				illumLoginName: "phigem"
-		});
-		
-		// Actions
-		//When.onHomePage.iEnterNewHashToAnotherPage("/Start/Materialbewegung/WE");
-		When.onGoodsReceiptPage.iScanTheBarcode("109330000001");
-		
-		// Assertions
-		Then.onGoodsReceiptPage.iShouldSeeTheMessageBox("Storage Unit 109330000001 scanned");
-	});
-
-	opaTest("Should find the correct input field for PROCESS ORDER / PHASE", function(Given, When, Then) {
-		// Arrangements
-		// Actions
-		// Assertions
-	});
-	
-	opaTest("Should find the correct input field for STORAGE BIN", function(Given, When, Then) {
-		// Arrangements
-		// Actions
-		// Assertions
-	});
-
-	opaTest("Should find the correct input field for STORAGE LOCATION", function(Given, When, Then) {
-		// Arrangements
-		// Actions
-		// Assertions
-	});
-
-	opaTest("Should find the correct input field for INCIDENT REASON", function(Given, When, Then) {
-		// Arrangements
-		// Actions
-		// Assertions
 	});
 });

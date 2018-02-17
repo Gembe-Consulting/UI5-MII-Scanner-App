@@ -13,7 +13,7 @@ sap.ui.require(["sap/ui/test/opaQunit"], function(opaTest) {
 		// Arrangements
 		// -Define possible initial states, e.g. the app is started, or specific data exists. 
 		// -For performance reasons, starting the app is usually done only in the first test case of a journey.
-		Given.iStartTheApp();
+		Given.iStartTheApp().and.iUseDevice("desktop");
 
 		// Actions
 		// -Define possible events triggered by a user, e.g. entering some text, clicking a button, navigating to another page.
@@ -57,7 +57,7 @@ sap.ui.require(["sap/ui/test/opaQunit"], function(opaTest) {
 	opaTest("Should navigate to homepage on correct username", function(Given, When, Then) {
 		// Arrangements
 		// Actions
-		When.onTheLoginPage.iEnterUsername("phigem").and.iPressOnLoginButton();
+		When.onTheLoginPage.iEnterUsername("pHigEm").and.iPressOnLoginButton();
 
 		// Assertions
 		Then.onHomePage.theAppShouldNavigateToHomePage();

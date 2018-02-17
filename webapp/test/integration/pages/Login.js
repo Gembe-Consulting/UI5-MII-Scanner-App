@@ -143,13 +143,6 @@ sap.ui.require([
 		onHomePage: {
 			baseClass: Common,
 			actions: {
-				iEnterNewHashToAnotherPage: function(sHash) {
-					return this.waitFor({
-						success: function() {
-							Opa5.getHashChanger().setHash(sHash);
-						}
-					});
-				},
 				iPressTheNavigatenItem: function(sNavItemId) {
 					return this.waitFor({
 						id: sNavItemId,

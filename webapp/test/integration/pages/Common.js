@@ -27,21 +27,46 @@ sap.ui.define([
 				var sUrlParameters;
 				oOptions = oOptions || {
 					delay: 0,
-					mobile: false,
-					illumLoginName: ""
+					mobile: false
 				};
 
 				sUrlParameters = "serverDelay=" + oOptions.delay;
 
-				if (oOptions.illumLoginName !== "") {
-					sUrlParameters = sUrlParameters + "&IllumLoginName=" + oOptions.illumLoginName;
-				}
-
 				this.iStartMyAppInAFrame(getFrameUrl(oOptions.hash, sUrlParameters));
+
+				return this;
 			},
 
 			iLookAtTheScreen: function() {
 				return this;
+			},
+
+			iUseDevice: function(sDevice) {
+				var bMobile = sDevice === "mobile" ? true : false;
+
+				return this.waitFor({
+					check: function() {
+						return this.hasAppStarted();
+					},
+					success: function() {
+						sap.ui.test.Opa5.getWindow().sap.ui.Device._update(bMobile);
+					},
+					autoWait: true,
+					errorMessage: "Could not wait for the application to be loaded"
+				});
+			},
+			
+			iEnterNewHashToAnotherPage: function(sHash) {
+				return this.waitFor({
+					success: function() {
+						Opa5.getHashChanger().setHash(sHash);
+					}
+				});
+			},
+			
+			theAppShouldNavigateToForbiddenPage:function(){
+				
 			}
+
 		});
 	});
