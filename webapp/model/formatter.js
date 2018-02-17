@@ -1,6 +1,6 @@
 sap.ui.define([
 	"com/mii/scanner/libs/momentjs/moment"
-	], function() {
+], function() {
 	"use strict";
 
 	return {
@@ -51,7 +51,7 @@ sap.ui.define([
 
 			return !!sQuantity && (fQuantity !== fZero) && (fQuantity !== fNearToZero);
 		},
-		
+
 		/**
 		 * Checks if a storage unit number is the last unit
 		 * - if number is equal to 90000000000000000000
@@ -60,10 +60,10 @@ sap.ui.define([
 		 * @return {boolean} true if is last, false if not last unit
 		 */
 		isLastStorageUnit: function(vStorageUnitNumber) {
-			var iLastStorageUnit: 90000000000000000000;
+			var iLastStorageUnit = 90000000000000000000;
 			return iLastStorageUnit === parseInt(vStorageUnitNumber, 10);
 		},
-		
+
 		/**
 		 * Checks if a storage unit number is NOT the last unit
 		 * - if number is not equal to 90000000000000000000
