@@ -3,8 +3,8 @@ sap.ui.define([
 ], function(BaseController) {
 	"use strict";
 
-	var CONST_INPUT_BUFFER_DURATION = 75;
-	var CONST_EMPTY_STRING = "";
+	const CONST_INPUT_BUFFER_DURATION = 75;
+	const CONST_EMPTY_STRING = "";
 
 	return BaseController.extend("com.mii.scanner.controller.Login", {
 
