@@ -72,7 +72,8 @@ sap.ui.define([
 		 * @return {boolean} true if is not last, false if last unit
 		 */
 		isNotLastStorageUnit: function(vStorageUnitNumber) {
-			return !this.isLastStorageUnit(vStorageUnitNumber);
+			var iLastStorageUnit = 90000000000000000000;
+			return iLastStorageUnit !== parseInt(vStorageUnitNumber, 10);
 		}
 	};
 });
