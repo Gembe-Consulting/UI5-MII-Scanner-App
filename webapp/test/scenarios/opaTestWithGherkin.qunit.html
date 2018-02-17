@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Opa tests forScanner App written in Gherkin using a Component</title>
+	<title>Opa tests for Scanner App written in Gherkin</title>
 	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 	<meta charset="utf-8">
 
@@ -33,13 +33,7 @@
 			});
 			
 			testHarness.test({
-				featurePath: "com/mii/scanner/test/features/ExternalLogin", 
-				steps: Steps,
-				generateMissingSteps : true
-			});
-			
-			testHarness.test({
-				featurePath: "com/mii/scanner/test/features/DeterminateInputFieldsFromExternalApplication", 
+				featurePath: "com/mii/scanner/test/features/CallFromExternalApplication", 
 				steps: Steps,
 				generateMissingSteps : true
 			});

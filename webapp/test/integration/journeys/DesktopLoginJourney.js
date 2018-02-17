@@ -7,13 +7,13 @@ sap.ui.require(["sap/ui/test/opaQunit"], function(opaTest) {
 	 * Test cases in this format are easy to understand, even by non-technical people.
 	 */
 
-	QUnit.module("Login on mobile/scanner device");
+	QUnit.module("Login on desktop device");
 
 	opaTest("Should show login screen on empty navigation", function(Given, When, Then) {
 		// Arrangements
 		// -Define possible initial states, e.g. the app is started, or specific data exists. 
 		// -For performance reasons, starting the app is usually done only in the first test case of a journey.
-		Given.iStartTheApp().and.iUseDevice("mobile");
+		Given.iStartTheApp().and.iUseDevice("desktop");
 
 		// Actions
 		// -Define possible events triggered by a user, e.g. entering some text, clicking a button, navigating to another page.
@@ -22,37 +22,52 @@ sap.ui.require(["sap/ui/test/opaQunit"], function(opaTest) {
 		// Assertions
 		// -Define possible verifications, e.g. do we have the correct amount of items displayed, does a label display the right data, is a list filled. 
 		// -At the end of the test case, the app is destroyed again. This is typically done only once in the last test case of the journey for performance reasons.
-		Then.onTheLoginPage.thePageShouldHaveLoginInput().
-		and.thePageShouldHaveLoginButton().
+		Then.onTheLoginPage.thePageShouldHaveLoginInput().and.thePageShouldHaveLoginButton().and.theAppShouldNotNavigateAndStayOnLoginPage();
+	});
+
+	opaTest("Should prevent navigation on empty username", function(Given, When, Then) {
+		// Arrangements
+		// Actions
+		When.onTheLoginPage.iPressOnLoginButton();
+
+		// Assertions
+		Then.onTheLoginPage.theAppShouldNotNavigateAndStayOnLoginPage();
+	});
+
+	opaTest("Should allow keyboard input on desktop devices", function(Given, When, Then) {
+		// Arrangements
+		// Actions
+		When.onTheLoginPage.iEnterUsername("foobar");
+
+		// Assertions
+		Then.onTheLoginPage.theInputFieldShouldContainUsername("foobar");
+	});
+
+	opaTest("Should prevent navigation to homepage on wrong username", function(Given, When, Then) {
+		// Arrangements
+		// Actions
+		When.onTheLoginPage.iPressOnLoginButton();
+
+		// Assertions
+		Then.onTheLoginPage.theAppShouldShowLoginError().
+		and.theInputFieldShouldContainUsername("foobar").
 		and.theAppShouldNotNavigateAndStayOnLoginPage();
 	});
-	
-	opaTest("Should not allow navigation without user model", function(Given, When, Then) {
+
+	opaTest("Should navigate to homepage on correct username", function(Given, When, Then) {
 		// Arrangements
 		// Actions
-		When.onTheLoginPage.iLookAtTheScreen().and.iEnterNewHashToAnotherPage("/WE");
-
-		// Assertions
-		Then.onTheApp.shouldNavigateTo("Forbidden");
-	});
-
-	opaTest("Should prevent login, if input takes longer than 75ms", function(Given, When, Then) {
-		// Arrangements#
-		Given.onTheApp.iEnterNewHashToAnotherPage("/");
-		// Actions
-		When.onTheScannerLoginPage.iTypeInUsername("foobar");
-
-		// Assertions
-		Then.onTheScannerLoginPage.theInputFieldShouldPurgeInput().
-		and.theAppShouldShowLoginPage();
-	});
-
-	opaTest("Should allow login, if username has been submitted within 75ms", function(Given, When, Then) {
-		// Arrangements
-		// Actions
-		When.onTheScannerLoginPage.iTypeInUsernameAndSubmitVeryFast("phigem");
+		When.onTheLoginPage.iEnterUsername("pHigEm").and.iPressOnLoginButton();
 
 		// Assertions
 		Then.onHomePage.theAppShouldNavigateToHomePage();
 	});
+
+	opaTest("Should show username in footer", function(Given, When, Then) {
+		// Arrangements
+		// Actions
+		// Assertions
+		Then.onHomePage.theFooterShouldShowUsername("phigem");
+	});
+
 });

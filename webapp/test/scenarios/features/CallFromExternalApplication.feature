@@ -1,4 +1,4 @@
-Feature: Determinate Input Fields from an external Application
+Feature: Pass data from external application
 	Users can call a deep Link to this app, providing query parameters.
 	The app will pre-populate the given input fields with the provided data.
 	
