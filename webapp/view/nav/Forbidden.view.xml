@@ -1,0 +1,15 @@
+<mvc:View
+	controllerName="com.mii.scanner.controller.nav.Forbidden"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m">
+
+	<MessagePage
+		title="{i18n>forbidden.messagePage.title}"
+		text="{i18n>forbidden.messagePage.text}"
+		icon="sap-icon://permission">
+		<customDescription>
+			<Link id="link" text="{i18n>forbidden.messagePage.link.text}" press="onLinkPressed" />
+		</customDescription>
+	</MessagePage>
+
+</mvc:View>

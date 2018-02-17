@@ -3,75 +3,29 @@ sap.ui.define([
 ], function(BaseController) {
 	"use strict";
 
-	const CONST_INPUT_BUFFER_DURATION = 75;
-	const CONST_EMPTY_STRING = "";
-
 	return BaseController.extend("com.mii.scanner.controller.Login", {
 
-		/**
-		 * Dient zur Erkennung von Scanner-Eingaben und Unterscheidung ggü. manuelle Eingaben.
-		 * Schreibt die aktuelle Zeichenkette in den Puffer. 
-		 * Nach einer Zeitspanne CONST_INPUT_BUFFER_DURATION, wird der Puffer mit CONST_EMPTY_STRING überschrieben.
-		 * Nach der Zeitspanne wird die Funktion null zurückgeben.
-		 * 
-		 * @return	sInput [String] die eingegebene Zeichenkette 
-		 *			oder null wenn der Puffer leer ist
-		 */
-		checkInputType: function(sInput) {
-
-			// If has been initialised, remove data form input field
-			if (this._sInputBuffer === CONST_EMPTY_STRING) {
-				jQuery.sap.log.debug("this._sInputBuffer is empty => manual user input detected!", "Scanner-Input-Detection");
-				this._sInputBuffer = null; //invalidate
-				return null;
-			} else {
-				this._sInputBuffer = sInput;
-			}
-
-			setTimeout(function() {
-				this._sInputBuffer = CONST_EMPTY_STRING;
-				jQuery.sap.log.debug("this._sInputBuffer cleared after " + CONST_INPUT_BUFFER_DURATION + " ms", "Scanner-Input-Detection");
-			}.bind(this), CONST_INPUT_BUFFER_DURATION);
-
-			return sInput;
-		},
 
 		/**
-		 * Aufruf bei jedem keyup-event.
-		 * Prüft den aktullen Wert des Feldes, mit dem Wert im aktuellen Puffer. Sollte der Puffer != Eingabewert sein, gehen wir davon aus,
-		 * dass der Wert per Keyboard eingegeben wurde.
+		 * Löscht die aktuelle Zeichenkette im Einagebfeld nach einer bestimmten Zeitspanne.
 		 */
-		onInput: function(oEvent) {
-			var sCurrentInput = oEvent.getParameter("value"),
-				oInput = oEvent.getSource(),
-				sDetectedInput;
+		purgeInputAfterDelay: function(oInput, iUseDelay) {
+			var iDelay = iUseDelay ? iUseDelay : 75, // default 75ms
+				_tsStart = jQuery.sap.now(),
+				_tsFinish = null;
 
-			sDetectedInput = this.checkInputType(sCurrentInput);
-
-			if (sDetectedInput !== sCurrentInput) {
-				oInput.setValue(CONST_EMPTY_STRING);
-				jQuery.sap.log.debug("Cleard Input field.", "Scanner-Input-Detection");
-			}
-
-		},
-
-		/**
-		 * Löscht die aktuelle Zeichenkette im Einagebfeld nach einer bestimmten Zeitspanne CONST_INPUT_BUFFER_DURATION.
-		 */
-		purgeInputAfterDelay: function(oInput, iDelay) {
-			iDelay = iDelay ? iDelay : CONST_INPUT_BUFFER_DURATION;
-
-			var _tsStart = jQuery.sap.now();
-			var _tsFinish = null;
-
-			setTimeout(function() {
-				var sOldValue = oInput.getValue();
+			function purgeInput(oControl) {
+				var sOldValue = oControl.getValue();
 				if (sOldValue) {
-					oInput.setValue("");
+					oControl.setValue("");
 					_tsFinish = jQuery.sap.now();
-					jQuery.sap.log.debug("Input '" + sOldValue + "' has been purged after " + (_tsFinish - _tsStart) + " ms (target: " + iDelay + " ms", "Scanner-Input-Detection");
+					jQuery.sap.log.info("Input '" + sOldValue + "' has been purged after " + (_tsFinish - _tsStart) + " ms (target: " + iDelay + " ms", "Scanner-Input-Detection");
 				}
-			}.bind(this), iDelay);
+			}
+
+			//delayedCall(iDelay, oObject to be scoped on, method to be called after delay, aParameters to be passed to method?) : string	
+			jQuery.sap.delayedCall(iDelay, this, purgeInput, [oInput]);
+
 		},
 
 		/**
@@ -81,39 +35,48 @@ sap.ui.define([
 		 */
 		onLiveInput: function(oEvent) {
 			var sCurrentInput = oEvent.getParameter("value"),
-				oInput = oEvent.getSource();
+				oInput = oEvent.getSource(),
+				bIsDesktop = this.getModel("device").getProperty("/system/desktop");
 
-			if (sCurrentInput.length !== 0 && !this.getModel("device").getProperty("/system/desktop")) {
+			// TODO: warum auch ungleich length 0?
+			if (!bIsDesktop && sCurrentInput.length !== 0) {
 				this.purgeInputAfterDelay(oInput);
 			}
-
 		},
 
 		onLogin: function(oEvent) {
 			var oInputControl = this.getView().byId("usernameInput"),
 				sUserInput = oInputControl.getValue(),
-				that = this;
+				oBundle = this.getResourceBundle(),
+				fnResolveHandler,
+				fnRejectHandler;
 
 			//prevent login, if user did not enter an username into login input
-			if (!sUserInput && sUserInput.length <= 0) {
+			if (!sUserInput || sUserInput.length <= 0) {
 				return;
 			}
+			
+			sap.ui.core.BusyIndicator.show(0);
 
-			var fnResolveHandler = function(oUser) {
-				jQuery.sap.log.info("Welcome " + oUser.USERVNAME + " " + oUser.USERNNAME);
-				// Remove error
-				oInputControl.setValueState(sap.ui.core.ValueState.None);
-				// Remove user input
-				oInputControl.setValue("");
-				// Navigate to homepage
-				that.getRouter().navTo("home");
+			// Reset value state
+			oInputControl.setValueState(sap.ui.core.ValueState.None);
+
+			/**
+			 * Remove user input
+			 * Navigate to homepage
+			 */
+			fnResolveHandler = function(oUser) {
+				this.getRouter().navTo("home", {}, true /*bReplace*/);
+				oInputControl.setValue();
 			}.bind(this);
 
-			var fnRejectHandler = function(oError) {
-				jQuery.sap.log.warning("Benutzeranfrage abgelehnt: ", JSON.stringify(oError), this.toString());
-				// set error state and error text
-				oInputControl.setValueState(sap.ui.core.ValueState.Error)
-					.setValueStateText("Benutzername '" + sUserInput + "' ist nicht gültig.");
+			/**
+			 * set error state and error text
+			 */
+			fnRejectHandler = function(oError) {
+				oInputControl
+					.setValueState(sap.ui.core.ValueState.Error)
+					.setValueStateText(oBundle.getText("login.message.usernameIncorrect", [sUserInput]));
 			}.bind(this);
 
 			/* The following logic relys on a Promise
@@ -123,8 +86,11 @@ sap.ui.define([
 			 * Because .then() always returns a new promise, it’s possible to chain promises with precise control 
 			 * over how and where errors are handled. 
 			 */
-			this.getOwnerComponent().testUserLoginName(sUserInput)
-				.then(fnResolveHandler, fnRejectHandler);
+			this.getOwnerComponent()
+				.testUserLoginName(sUserInput)
+				.then(fnResolveHandler, fnRejectHandler)
+				.catch(jQuery.noop)
+				.then(this.getOwnerComponent().hideBusyIndicator); //ensure to always remove busy
 
 		}
 	});

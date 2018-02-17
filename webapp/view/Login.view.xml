@@ -1,11 +1,11 @@
 <mvc:View controllerName="com.mii.scanner.controller.Login" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
-	<Page id="loginPage" title="{i18n>titleLogin}">
+	<Page id="loginPage" title="{i18n>login.pageTitle.text}">
 		<content>
 			<HBox alignItems="Center" justifyContent="Center" class="sapUiLargeMarginTopBottom">
-				<Label text="{i18n>userNameLableText}" labelFor="userIdInput" class="sapUiSmallMarginEnd"/>
-				<Input id="usernameInput" required="true" submit="onLogin" placeholder="{i18n>userNameInputPlaceholder}" liveChange="onLiveInput"/>
+				<Label text="{i18n>login.label.username.text}" labelFor="userIdInput" class="sapUiSmallMarginEnd"/>
+				<Input id="usernameInput" liveChange="onLiveInput" submit="onLogin" placeholder="{i18n>login.input.username.placeholder}" required="true"/>
 			</HBox>
-			<Button id="loginButton" text="{i18n>loginButtonText}" press="onLogin" width="100%"/>
+			<Button id="loginButton" press="onLogin" text="{i18n>login.button.text}" width="100%"/>
 		</content>
 		<footer>
 			<Toolbar>

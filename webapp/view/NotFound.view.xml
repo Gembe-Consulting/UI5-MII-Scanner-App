@@ -4,13 +4,11 @@
 	xmlns="sap.m">
 
 	<MessagePage
-		title="{i18n>notFoundTitle}"
-		text="{i18n>notFoundText}"
-		icon="{sap-icon://document}"
-		id="page"
-		description="">
+		title="{i18n>notFound.messagePage.title}"
+		text="{i18n>notFound.messagePage.text}"
+		icon="sap-icon://document">
 		<customDescription>
-			<Link id="link" text="{i18n>backToHome}" press="onLinkPressed" />
+			<Link id="link" text="{i18n>notFound.messagePage.link.text}" press="onLinkPressed" />
 		</customDescription>
 	</MessagePage>
 

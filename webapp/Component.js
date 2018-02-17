@@ -33,19 +33,7 @@ sap.ui.define([
 
 			this.setupScannerDetection();
 
-			// create the views based on the url/hash
-			this.getRouter().initialize();
-
-			// purge username from user modele, once login page is displayed
-			this.getRouter().getTarget("login").attachDisplay(function(oEvent) {
-				this.getModel("user").setProperty("/", {});
-			}.bind(this));
-
-			// set the browser page title based on navigation
-			this.getRouter().attachTitleChanged(function(oEvent) {
-				/*global document*/
-				document.title = oEvent.getParameter("title");
-			});
+			this.setupRouting();
 
 		},
 
@@ -58,67 +46,62 @@ sap.ui.define([
 		 *	- rejected - The action relating to the promise failed
 		 *	- pending - Hasn't fulfilled or rejected yet
 		 *	- settled - Has fulfilled or rejected
+		 * 
+		 * see https://scotch.io/tutorials/javascript-promises-for-dummies
+		 * 
 		 */
 		testUserLoginName: function(sUserInput) {
-			var sUserInput = sUserInput ? sUserInput : this._getIllumLoginName(),
-				sUserInputUpper = sUserInput ? sUserInput.toUpperCase() : "",
-				oModel = this.getModel("user"),
-				oLoginUser,
-				that = this;
+			var sUserInputUpper = sUserInput ? sUserInput.toUpperCase() : "",
+				getUserLoginName, validateUserLoginName, updateUserModel, onLoginError;
 
 			this.showBusyIndicator();
 
-			return new Promise(function(fulfill, reject) {
+			validateUserLoginName = function(oLoginResult) {
+				var oUser;
 
-				this._getUserLogin(sUserInputUpper)
-					.then(function(oData) {
-							oLoginUser = oModel.getProperty("/d/results/0/Rowset/results/0/Row/results/0/");
-							if (that._validateUserData(oLoginUser, sUserInputUpper)) {
-								// resolve promise
-								fulfill(that._setUserModel(oLoginUser));
-							} else {
-								oModel.setProperty("/", {});
-								reject(new Error("Username '" + sUserInput + "' not found!"));
-							}
-						},
-						function(oError) {
-							reject(oError);
-						})
-					.then(this.hideBusyIndicator);
-			}.bind(this));
-		},
+				try {
+					oUser = oLoginResult.d.results[0].Rowset.results[0].Row.results[0];
+				} catch (err) {
+					jQuery.sap.log.error("Das Resultset enthält keine Benutzerdaten!", [err], ["Component.testUserLoginName"])
+					return Promise.reject(err);
+				}
 
-		_getIllumLoginName: function() {
-			var sUserId;
+				if (oUser && oUser.USERLOGIN === sUserInputUpper) {
+					return oUser;
+				} else {
+					return Promise.reject("Der zurückgegeben Username entspricht nicht der Benutzereingabe!", [], ["Component.testUserLoginName"]);
+				}
+			}.bind(this);
 
-			if (this.getModel("device").getProperty("/system/desktop")) {
-				sUserId = $("#IllumLoginName").val();
-			}
+			updateUserModel = function(oUser) {
+				this.getModel("user").setProperty("/", oUser);
+			}.bind(this);
 
-			return sUserId;
-		},
+			onLoginError = function(oError) {
+				this.resetUserModel({});
+				this.hideBusyIndicator();
 
-		_setUserModel: function(oLoginUser) {
-			var oModel = this.getModel("user");
+				throw oError; //re-throw to inform Login about error
+			}.bind(this);
 
-			// Set user model
-			oModel.setProperty("/", oLoginUser);
-
-			return oLoginUser;
+			return this.getUserLoginName(sUserInputUpper)
+				.then( /*onFulfilled*/ validateUserLoginName)
+				.then( /*onFulfilled*/ updateUserModel)
+				.catch( /*onRejected*/ onLoginError)
+				.then( /*onFulfilled*/ this.hideBusyIndicator);
 		},
 
 		/**
 		 * @return a Promise containig user data {__metadata: {…}, USERLOGIN: string, USERNNAME: string || null, USERVNAME: string || null, RowId: int}
 		 * It may, or may not contain the user data. Its on the caller to check this.
 		 */
-		_getUserLogin: function(sUserInput) {
+		getUserLoginName: function(sUserInput) {
 			var oModel = this.getModel("user"),
 				oParam = {
 					"Param.1": sUserInput
 				};
 
 			return oModel.loadMiiData(oModel._sServiceUrl, oParam);
-
 		},
 
 		/** 
@@ -135,12 +118,49 @@ sap.ui.define([
 			return true;
 		},
 
-		/**
-		 * Compares the USERLOGIN against user input
-		 */
-		_validateUserData: function(oUser, sUserInput) {
-			// if user was not found, oUser is undefined
-			return oUser && oUser.USERLOGIN === sUserInput;
+		discoverIllumLoginName: function() {
+			var oDiscoverdIllumLoginName,
+				bIsDesktop = this.getModel("device").getProperty("/system/desktop"),
+				sIllumLoginName;
+
+			return oDiscoverdIllumLoginName = new Promise(function(resolve, reject) {
+				if (bIsDesktop) {
+					sIllumLoginName = $("#IllumLoginName").val();
+					if (!!sIllumLoginName) {
+						resolve(sIllumLoginName);
+						return;
+					} else {
+						reject(new Error("Could not read #IllumLoginName"));
+						return;
+					}
+				}
+				reject(new Error("This is a mobile device, we are not allowed to read #IllumLoginName"));
+			});
+		},
+
+		resetUserModel: function(oObject) {
+			var oEmpty = oObject || {};
+			return this.getModel("user").setProperty("/", oEmpty);
+		},
+
+		forceRedirectToLoginPage: function(oError) {
+			this.resetUserModel();
+			this.getRouter().navTo("forbidden", {}, true /*bReplace*/ );
+		},
+
+		setupRouting: function() {
+			// create the views based on the url/hash
+			this.getRouter().initialize();
+
+			// purge username from user modele, once login page is displayed
+			this.getRouter().getTarget("login").attachDisplay(function(oEvent) {
+				this.resetUserModel();
+			}.bind(this));
+
+			// set the browser page title based on navigation
+			this.getRouter().attachTitleChanged(function(oEvent) {
+				document.title = oEvent.getParameter("title");
+			});
 		},
 
 		/**
@@ -197,24 +217,7 @@ sap.ui.define([
 		 */
 		setupSpaceAndTime: function() {
 			var sCurrentLocale = sap.ui.getCore().getConfiguration().getLanguage();
-
 			moment.locale(sCurrentLocale);
-		},
-
-		/**
-		 * The component is destroyed by UI5 automatically.
-		 * In this method, the ErrorHandler is destroyed.
-		 * @public
-		 * @override
-		 */
-		destroy: function() {
-			this._oErrorHandler.destroy();
-			// call the base component's destroy function
-			UIComponent.prototype.destroy.apply(this, arguments);
-		},
-
-		_getDefaultRoutePattern: function(sRouteName) {
-			return this.getRouter().getRoute(sRouteName).getPattern();
 		},
 
 		/**
@@ -240,6 +243,18 @@ sap.ui.define([
 			return this._sContentDensityClass;
 		},
 
+		/**
+		 * The component is destroyed by UI5 automatically.
+		 * In this method, the ErrorHandler is destroyed.
+		 * @public
+		 * @override
+		 */
+		destroy: function() {
+			this._oErrorHandler.destroy();
+			// call the base component's destroy function
+			UIComponent.prototype.destroy.apply(this, arguments);
+		},
+
 		hideBusyIndicator: function() {
 			sap.ui.core.BusyIndicator.hide();
 		},
@@ -249,6 +264,9 @@ sap.ui.define([
 			sap.ui.core.BusyIndicator.show(iDelay);
 		},
 
+		_getDefaultRoutePattern: function(sRouteName) {
+			return this.getRouter().getRoute(sRouteName).getPattern();
+		}
 	});
 
 });

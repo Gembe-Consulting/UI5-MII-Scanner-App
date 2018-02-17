@@ -154,6 +154,12 @@
 					"target": [
 						"login"
 					]
+				},{
+					"pattern": "{{manifest.routing.route.pattern.forbidden}}",
+					"name": "forbidden",
+					"target": [
+						"forbidden"
+					]
 				},
 				{
 					"pattern": "{{manifest.routing.route.pattern.home}}",
@@ -219,7 +225,7 @@
 					]
 				},
 				{
-					"pattern": "{{manifest.routing.route.pattern.statusChange,resumeOperation}}:?query:",
+					"pattern": "{{manifest.routing.route.pattern.statusChange.resumeOperation}}:?query:",
 					"name": "resumeOperation",
 					"target": [
 						"resumeOperation"
@@ -323,6 +329,13 @@
 					"viewId": "notFound",
 					"transition": "slide",
 					"title": "{{manifest.routing.target.title.notFound}}"
+				},
+				"forbidden": {
+					"viewName": "Forbidden",
+					"viewPath": "com.mii.scanner.view.nav",
+					"viewId": "forbidden",
+					"transition": "slide",
+					"title": "{{manifest.routing.target.title.forbidden}}"
 				}
 			}
 		},

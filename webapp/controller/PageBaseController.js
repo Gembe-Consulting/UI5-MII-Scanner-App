@@ -1,7 +1,6 @@
 sap.ui.define([
-	"com/mii/scanner/controller/BaseController",
-	"sap/m/MessageBox"
-], function(BaseController, MessageBox) {
+	"com/mii/scanner/controller/BaseController"
+], function(BaseController) {
 	"use strict";
 
 	return BaseController.extend("com.mii.scanner.controller.PageBaseController", {
@@ -11,21 +10,19 @@ sap.ui.define([
 
 			this.getView().addEventDelegate({
 				"onBeforeShow": function(oEvent) {
-					//First try to read user model
-					//Next try fetching user from URL
-					if (!this.getOwnerComponent().isUserLoggedIn()) {
-						this.getOwnerComponent().testUserLoginName().then(
-							function(oUser) {
-								jQuery.sap.log.info("User logged in.", "Login status", this.toString());
-							}.bind(this),
-							function(oError) {
-								jQuery.sap.log.warning(oError.message, "Login status", this.toString());
-								// redirect to login
-								this.getRouter().navTo("login", {}, true);
-							}.bind(this)
-						);
-					} else {
-						jQuery.sap.log.info("User logged in.", "Login status", this.toString());
+
+					var oComponent = this.getOwnerComponent(),
+						onResolvedUser, onRejectedUser;
+					
+					onRejectedUser = jQuery.proxy(oComponent.forceRedirectToLoginPage, oComponent);
+					onResolvedUser = jQuery.proxy(oComponent.testUserLoginName, oComponent);
+					
+					// First try to read user model. If no uer model is present
+					// Try to discover/fetch IllumLoginName vom html body
+					// Test discovered IllumLoginName against MII backend
+					// If this username is invalid, we will redirect to login page
+					if (!oComponent.isUserLoggedIn()) {
+						oComponent.discoverIllumLoginName().then(onResolvedUser, onRejectedUser);
 					}
 				}
 			}, this);
