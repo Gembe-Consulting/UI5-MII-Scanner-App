@@ -31,7 +31,7 @@
 								</layoutData>
 							</HBox>
 							<Input id="unitOfMeasureInput" value="{path: 'data>/unitOfMeasure', type:'.sapType.MEINH'}" change="onUnitOfMeasureInputChange"
-								editable="{= ${data>/storageUnit} === 90000000000000000000 }" maxLength="4">
+								editable="{path: 'data>/storageUnit',' formatter:'.formatter.isLastStorageUnit'}" maxLength="4">
 								<layoutData>
 									<l:GridData span="XL1 L1 M2 S4"/>
 								</layoutData>
@@ -42,10 +42,10 @@
 								valueState="{= ${data>/storageBin} === null ? 'None': ${data>/storageBin} === '' ? 'Error' : 'Success' }"
 								showSecondaryValues="true" filterSecondaryValues="true" class="noScannerInput">
 								<c:ListItem key="ROLLENBAHN" text="{i18n>rollerConveyor.comboBox.listItem-ROLLENBAHN.text}" additionalText="ROLLENBAHN"
-									enabled="{= ${data>/storageUnit} !== 90000000000000000000 }"/>
+									enabled="{path: 'data>/storageUnit',' formatter:'.formatter.isNotLastStorageUnit'}"/>
 								<c:ListItem key="BEUM" text="{i18n>rollerConveyor.comboBox.listItem-BEUM.text}" additionalText="BEUM"/>
 								<c:ListItem key="STAPLER" text="{i18n>rollerConveyor.comboBox.listItem-STAPLER.text}" additionalText="STAPLER"
-									enabled="{= ${data>/storageUnit} !== 90000000000000000000 }"/>
+									enabled="{path: 'data>/storageUnit',' formatter:'.formatter.isNotLastStorageUnit'}"/>
 								<c:ListItem key="PALE" text="{i18n>rollerConveyor.comboBox.listItem-PALE.text}" additionalText="PALE"/>
 							</ComboBox>
 							<Label text="{i18n>rollerConveyor.form.label.stretcher.text}"/>

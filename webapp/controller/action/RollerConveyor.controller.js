@@ -12,8 +12,6 @@ sap.ui.define([
 		sapType: sapType,
 		formatter: formatter,
 
-		lastStorageUnit: 90000000000000000000,
-
 		mapStorageBinToRessource: [{
 			BEUM: "00123456"
 		}, {
@@ -54,15 +52,15 @@ sap.ui.define([
 		onSave: function(oEvent) {
 			var sMessageString,
 				oDataModel = this.getModel("data");
-				
-			if (this._isLastStorageUnit(oDataModel.getProperty("/storageUnit"))) {
+
+			if (this.formatter.isLastStorageUnit(oDataModel.getProperty("/storageUnit"))) {
 				sMessageString = "Letzte Palette an " + oDataModel.getProperty("/storageBin");
 			}
-			
+
 			this.getCurrentlyRunningOrder(oDataModel.getProperty("/storageBin"));
-			
+
 			this._createStockTransfer()
-				
+
 			this._createGoodsReceipt(sBwA)
 
 			this.addLogMessage({
@@ -88,7 +86,7 @@ sap.ui.define([
 			}
 
 			// on last unit, set dummy storageUnit to hide info fragment and repair storage bin selection
-			if (this._isLastStorageUnit(sStorageUnitNumber)) {
+			if (this.formatter.isLastStorageUnit(sStorageUnitNumber)) {
 
 				this.addLogMessage({
 					text: oBundle.getText("rollerConveyor.messageText.lastStorageUnit"),
@@ -226,17 +224,6 @@ sap.ui.define([
 		},
 
 		/**
-		 * Checks if a storage unit number is the last unit
-		 * 
-		 * @param {string|number} vStorageUnitNumber storage unit to test for
-		 * 
-		 * @return {boolean} true if is last, false if not last unit
-		 */
-		_isLastStorageUnit: function(vStorageUnitNumber) {
-			return this.lastStorageUnit === parseInt(vStorageUnitNumber, 10);
-		},
-
-		/**
 		 * Creates a new storage unit aka. palette
 		 * - Calls /XMII/Runner?Transaction=SUMISA/Scanner/Rollenbahn/trx_NeuePalette
 		 * - Sends the storage unit number, storage bin, stretch program
@@ -253,16 +240,16 @@ sap.ui.define([
 		findRessourceOfStorageBin: function(sStorageBin) {
 			return this.mapStorageBinToRessource.reduce(o => o[sStorageBin]);
 		},
-		
-		_createGoodsReceipt:function(sBwA){
-			if(sBwA === 101){
+
+		_createGoodsReceipt: function(sBwA) {
+			if (sBwA === 101) {
 				return "Normal-Wareneingang mit echt BwA 101";
-			}else{
+			} else {
 				return "Spezial-Wareneingang mit pseudo BwA 555";
 			}
 		},
-		
-		_createStockTransfer:function(){
+
+		_createStockTransfer: function() {
 			return "Spezial-Umbuchung mit pseudo BwA 999";
 		},
 
