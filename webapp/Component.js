@@ -52,7 +52,9 @@ sap.ui.define([
 		 */
 		testUserLoginName: function(sUserInput) {
 			var sUserInputUpper = sUserInput ? sUserInput.toUpperCase() : "",
-				getUserLoginName, validateUserLoginName, updateUserModel, onLoginError;
+				validateUserLoginName, 
+				updateUserModel, 
+				onLoginError;
 
 			this.showBusyIndicator();
 
@@ -80,7 +82,6 @@ sap.ui.define([
 			onLoginError = function(oError) {
 				this.resetUserModel({});
 				this.hideBusyIndicator();
-
 				throw oError; //re-throw to inform Login about error
 			}.bind(this);
 
