@@ -45,7 +45,7 @@ module.exports = function(grunt) {
 		}
 	};
 	
-	grunt.loadNpmTasks('grunt-replace');
+	grunt.loadNpmTasks('grunt-text-replace');
 	grunt.loadNpmTasks("@sap/grunt-sapui5-bestpractice-build");
 
 	grunt.config.merge(oConfig);
