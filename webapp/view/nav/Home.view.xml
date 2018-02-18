@@ -1,7 +1,7 @@
 <mvc:View controllerName="com.mii.scanner.controller.nav.NavBaseController" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc">
-	<Page id="homePage" title="{i18n>titleHome}" showNavButton="true" navButtonPress="onNavBack">
+	<Page id="homePage" title="{i18n>titleHome}" >
 		<content>
-			<List mode="None" width="100%" class="sapUiSmallMarginTop" inset="{= !${device>/system/phone} }">
+			<List mode="None" width="100%" class="sapUiSmallMarginTop" inset="{= ${device>/system/desktop} }">
 				<items>
 					<CustomListItem id="navGoodsMovementItem" type="Navigation" press="onNavForward" class="sapUiResponsiveMargin">
 						<content>
@@ -32,9 +32,9 @@
 						</customData>
 					</CustomListItem>
 					<!-- Start Dummy Spacer -->
-					<CustomListItem type="Inactive" class="sapUiResponsiveMargin"/>
+					<CustomListItem type="Inactive" class="sapUiResponsiveMargin" visible="{= !${device>/system/desktop} }"/>
 					<!-- End Dummy Spacer -->
-					<CustomListItem id="navLogoutItem" type="Active" press="onNavForward" class="sapUiResponsiveMargin">
+					<CustomListItem id="navLogoutItem" type="Active" press="onNavForward" class="sapUiResponsiveMargin" visible="{= !${device>/system/desktop} }">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start" class="sapUiResponsiveMargin">
 								<c:Icon src="sap-icon://log" size="2rem" height="4rem" width="8rem" color="#ee0000" alt="LOGOUT"/>
