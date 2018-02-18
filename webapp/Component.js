@@ -123,7 +123,7 @@ sap.ui.define([
 				bMobile = this.getModel("device").getProperty("/browser/mobile"),
 				sIllumLoginName;
 
-			return oDiscoverdIllumLoginName = new Promise(function(resolve, reject) {
+			oDiscoverdIllumLoginName = new Promise(function(resolve, reject) {
 				if (!bMobile) {
 					sIllumLoginName = $("#IllumLoginName").val();
 					if (!!sIllumLoginName) {
@@ -136,6 +136,8 @@ sap.ui.define([
 				}
 				reject(new Error("This is a mobile device, we are not allowed to read #IllumLoginName"));
 			});
+			
+			return oDiscoverdIllumLoginName;
 		},
 
 		resetUserModel: function(oObject) {
