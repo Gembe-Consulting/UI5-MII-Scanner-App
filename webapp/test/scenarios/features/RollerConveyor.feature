@@ -124,51 +124,43 @@ Feature: Roller Conveyor
 		 And I can see storageBinSelection with valueState 'Success' in action.RollerConveyor view
 		 
 	@lastUnit @emptyLE @Beumer
-	@wip 
 	Scenario: When entering last unit, and when selecting Beumer, then you should find process order, and then post 555, and then post 999
 		When I enter '90000000000000000000' into storageUnitInput in action.RollerConveyor view
 		 And I enter '100,123' into quantityInput in action.RollerConveyor view
-		 And I enter 'KG' into unitOfMeasure in action.RollerConveyor view
-		 And I enter 'BEUM' into storageBinSelection in action.RollerConveyor view
-		 And I press 'ENTER' at storageBinSelection in action.RollerConveyor view
+		 And I enter 'KG' into unitOfMeasureInput in action.RollerConveyor view
+		 And I press ARROW_DOWN + ALT at storageBinSelection in action.RollerConveyor view
+		 And I click on 2nd item of storageBinSelection items in action.RollerConveyor view
 		 And I click on saveButton in action.RollerConveyor view
-		Then I can see messageStrip with text 'Letzte Palette an BEUM\nProzessauftrag 4711\nSpezial-Wareneingang mit pseudo BwA 555\nSpezial-Umbuchung mit pseudo BwA 999' in action.RollerConveyor view
+		Then I can see messageStrip with text 'Letzte Palette - Spezial-Wareneingang mit pseudo BwA 555 - Spezial-Umbuchung mit pseudo BwA 999' in action.RollerConveyor view
 		 And I can see messageStrip with type 'Success' in action.RollerConveyor view
 
 	@lastUnit @emptyLE @Palettierer 
-	@wip 
 	Scenario: When entering last unit, and when selecting Palettierer, then you should find process order, and then post 555, and then post 999
 		When I enter '90000000000000000000' into storageUnitInput in action.RollerConveyor view
 		 And I enter '321,456' into quantityInput in action.RollerConveyor view
-		 And I enter 'KG' into unitOfMeasure in action.RollerConveyor view
-		 And I enter 'PALE' into storageBinSelection in action.RollerConveyor view
-		 And I press 'ENTER' at storageBinSelection in action.RollerConveyor view
+		 And I enter 'KG' into unitOfMeasureInput in action.RollerConveyor view
+		 And I press ARROW_DOWN + ALT at storageBinSelection in action.RollerConveyor view
+		 And I click on last item of storageBinSelection items in action.RollerConveyor view
 		 And I click on saveButton in action.RollerConveyor view
-		Then I can see messageStrip with text 'Letzte Palette an PALE\nProzessauftrag 4712\nSpezial-Wareneingang mit pseudo BwA 555\nSpezial-Umbuchung mit pseudo BwA 999' in action.RollerConveyor view
+		Then I can see messageStrip with text 'Letzte Palette - Spezial-Wareneingang mit pseudo BwA 555 - Spezial-Umbuchung mit pseudo BwA 999' in action.RollerConveyor view
 		 And I can see messageStrip with type 'Success' in action.RollerConveyor view
 		 
 	@currentUnit @emptyLE
-	@wip 
 	Scenario: When entering current unit with stock quantity = 0 (empty), then you should post 101, then you should post 999
-		When I enter '1' into storageUnitInput in action.RollerConveyor view
-		 And I can see quantityInput with value '' in action.RollerConveyor view
-		 And I can see quantityInput with editable being 'true' in action.RollerConveyor view
-		 And I can see unitOfMeasure with editable being 'false' in action.RollerConveyor view
-		 And I enter 'ROLLENBAHN' into storageBinSelection in action.RollerConveyor view
-		 And I press 'ENTER' at storageBinSelection in action.RollerConveyor view
+		When I enter '00000000109330000015' into storageUnitInput in action.RollerConveyor view
+		 And I enter '47,11' into quantityInput in action.RollerConveyor view
+		 And I enter 'KG' into unitOfMeasureInput in action.RollerConveyor view
+		 And I press ARROW_DOWN + ALT at storageBinSelection in action.RollerConveyor view
+		 And I click on first item of storageBinSelection items in action.RollerConveyor view
 		 And I click on saveButton in action.RollerConveyor view
-		Then I can see messageStrip with text 'Laufende Palette an Rollenbahn\nProzessauftrag 1000001\Normal-Wareneingang mit echt BwA 101\nSpezial-Umbuchung mit pseudo BwA 999' in action.RollerConveyor view
+		Then I can see messageStrip with text 'Laufende Palette - Normal-Wareneingang mit echt BwA 101 - Spezial-Umbuchung mit pseudo BwA 999' in action.RollerConveyor view
 		 And I can see messageStrip with type 'Success' in action.RollerConveyor view
 		 
 	@currentUnit @fullLE
-	@wip 
 	Scenario: When entering current unit with stock quantity > 0 (full), then you should post 999
-		When I enter '2' into storageUnitInput in action.RollerConveyor view
-		 And I can see quantityInput with value '987,456' in action.RollerConveyor view
-		 And I can see quantityInput with editable being 'false' in action.RollerConveyor view
-		 And I can see unitOfMeasure with editable being 'false' in action.RollerConveyor view
-		 And I enter 'STAPLER' into storageBinSelection in action.RollerConveyor view
-		 And I press 'ENTER' at storageBinSelection in action.RollerConveyor view
+		When I enter '00000000109330000016' into storageUnitInput in action.RollerConveyor view
+		 And I press ARROW_DOWN + ALT at storageBinSelection in action.RollerConveyor view
+		 And I click on 3rd item of storageBinSelection items in action.RollerConveyor view
 		 And I click on saveButton in action.RollerConveyor view
-		Then I can see messageStrip with text 'Laufende Palette an Stapler\nProzessauftrag 2000002\nSpezial-Umbuchung mit pseudo BwA 999' in action.RollerConveyor view
+		Then I can see messageStrip with text 'Laufende Palette - Spezial-Umbuchung mit pseudo BwA 999' in action.RollerConveyor view
 		 And I can see messageStrip with type 'Success' in action.RollerConveyor view

@@ -186,7 +186,7 @@ sap.ui.define([
 		},
 
 		_isDataModelInitial: function(oCurrentData, oInitialData) {
-			return jQuery.sap.equal(oCurrentData, oInitialData, 2, true) //(a, b, maxDepth?, contains?) : boolean
+			return jQuery.sap.equal(oCurrentData, oInitialData, 2, true); //(a, b, maxDepth?, contains?) : boolean
 		},
 		
 		/**
