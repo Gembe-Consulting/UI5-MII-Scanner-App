@@ -55,7 +55,7 @@ sap.ui.define([
 					}
 
 					if (!oResponse.success) {
-						sMessage = Response.status + ": " + oResponse.error || "Fatal application exception.";
+						sMessage = oResponse.status + ": " + oResponse.error || "Fatal application exception.";
 						sStatusCode = oResponse.statusCode || "999";
 
 						jQuery.sap.log.debug("MockServer: response sent with: " + sStatusCode + ": " + sMessage, JSON.stringify(oResponse.data), "MII-Mockserver");
@@ -110,7 +110,7 @@ sap.ui.define([
 			// configure mock server with a delay of 1s
 			MockServer.config({
 				autoRespond: true,
-				autoRespondAfter: (oUriParameters.get("serverDelay") || 0)
+				autoRespondAfter: (oUriParameters.get("serverDelay") || 1000)
 			});
 
 			var oMockServerConfig = _createMockServer(sMockServerUrl, sJsonFilesUrl, this);
