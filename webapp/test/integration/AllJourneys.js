@@ -23,8 +23,8 @@ sap.ui.require([
 
 	sap.ui.require([
 		"com/mii/scanner/test/integration/journeys/DesktopLoginJourney",
-		"com/mii/scanner/test/integration/journeys/MobileLoginJourney",
 		"com/mii/scanner/test/integration/journeys/Navigation",
+		"com/mii/scanner/test/integration/journeys/MobileLoginJourney"
 	], function() {
 		QUnit.start();
 	});

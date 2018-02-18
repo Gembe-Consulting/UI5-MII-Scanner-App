@@ -13,8 +13,9 @@ sap.ui.require(["sap/ui/test/opaQunit"], function(opaTest) {
 		// Arrangements
 		// -Define possible initial states, e.g. the app is started, or specific data exists. 
 		// -For performance reasons, starting the app is usually done only in the first test case of a journey.
-		Given.iEnterNewHashToAnotherPage("/Anmeldung").and.iUseDevice("mobile");
-
+		Given.iTeardownMyApp();
+		Given.iStartTheApp().and.iUseDevice("mobile");
+		
 		// Actions
 		// -Define possible events triggered by a user, e.g. entering some text, clicking a button, navigating to another page.
 		When.onTheLoginPage.iLookAtTheScreen();
@@ -55,4 +56,13 @@ sap.ui.require(["sap/ui/test/opaQunit"], function(opaTest) {
 		// Assertions
 		Then.onHomePage.theAppShouldNavigateToHomePage();
 	});
+	
+	opaTest("Should navigate to login screen on logout", function(Given, When, Then) {
+		// Arrangements
+		// Actions
+		When.onHomePage.iPressTheLogoutItem("navLogoutItem");
+
+		// Assertions
+		Then.onTheLoginPage.theAppShouldNotNavigateAndStayOnLoginPage();
+	});	
 });
