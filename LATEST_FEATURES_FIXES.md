@@ -55,3 +55,24 @@ This check is not needed on desktop devices
 [FEATURE] (goods issue): remove leading zero after LE validation
 [FEATURE] (stock transfer): hide clear quantity icon, if LE is not empty
 Fixes being able to clear quantity, even if quantity input is not editable
+[FEATURE] (action pages): only show cancle confirmation if data has been changed
+[FEATURE] (roller conveyor): detect last unit and repair user input if required
+[FEATURE] (roller conveyor): detect last unit and show message
+[FEATURE] (roller conveyor): convert entered unit into uppercase
+[REFACTOR] (roller conveyor): move isLastStorageUnit to formatter and add isNotLastStorageUnit formatter
+[REFACTOR] (login): make var to const
+[FEATURE] (login): rework how this app handles login and authentication
+There are two scenarios to consider: Navigation from Mobile device and form Desktop device.
+From a desktop, we always navigate to a deep page like "/Start" or "/WE" (= not login page). Users are always authenticated by SAP NetWeaver.
+However, from a mobile device, we always navigate to "/Anmeldung" (= login page) while being authenticated by SAP NetWeaver using an default dummy user. This is why we force the user to enter his username. On successful login, we set the user model. To prevent navigation to a deeper page without an user model, all pages are based on PageBaseConroller that attaches a onBeforeNavigation event. Each time this even triggers, we check if the user model is set and valid. If not, we navigate to login page.
+To prevent desktop devices to be forced to navigatio to login page, we will read the IllumLoginName and fire a validation request to MII.
+[FIX] (roller conveyor): misspell in binding to check storage unit empty or full
+[FIX] (formatter): fix typo in storage unit empty/full formatter
+[FIX] (formatter): make isNotLastStorageUnit more atomic
+[FEATURE] (home): remove back navigation and hise Logout item on desktop devices
+[FIX] (roller conveyor): fix not being able to lint "=>" operator
+[FEATURE] (formatter): add null-check to last storage unit formatter
+remember to set &serverDelay=0 when doing opa tests
+[FEATURE] (models): add error messages to all models
+also add message toasts on request complete when debugging is active
+[FEATURE] (roller conveyor): prepare posting support
