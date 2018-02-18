@@ -61,7 +61,7 @@ sap.ui.define([
 		 */
 		isLastStorageUnit: function(vStorageUnitNumber) {
 			var iLastStorageUnit = 90000000000000000000;
-			return iLastStorageUnit === parseInt(vStorageUnitNumber, 10);
+			return vStorageUnitNumber && iLastStorageUnit === parseInt(vStorageUnitNumber, 10);
 		},
 
 		/**
@@ -73,7 +73,7 @@ sap.ui.define([
 		 */
 		isNotLastStorageUnit: function(vStorageUnitNumber) {
 			var iLastStorageUnit = 90000000000000000000;
-			return iLastStorageUnit !== parseInt(vStorageUnitNumber, 10);
+			return vStorageUnitNumber && iLastStorageUnit !== parseInt(vStorageUnitNumber, 10);
 		}
 	};
 });

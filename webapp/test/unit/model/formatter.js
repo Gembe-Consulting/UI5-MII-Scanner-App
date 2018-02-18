@@ -172,4 +172,52 @@ sap.ui.define([
 		//System under Test + Act
 		assert.ok(!formatter.isFullStorageUnit(sQuantity), sQuantity + " is not considered as full storage unit");
 	});
+	
+	QUnit.test("Should detect '90000000000000000000' as last storage unit", 2, function(assert) {
+		//Arrange
+		var sStorageUnit = "90000000000000000000";
+		//System under Test + Act
+		assert.ok(formatter.isLastStorageUnit(sStorageUnit), sStorageUnit + " is considered as last storage unit");
+		assert.ok(!formatter.isNotLastStorageUnit(sStorageUnit), sStorageUnit + " is considered as last storage unit");
+	});
+	
+	QUnit.test("Should detect 90000000000000000000 as last storage unit", 2, function(assert) {
+		//Arrange
+		var iStorageUnit = 90000000000000000000;
+		//System under Test + Act
+		assert.ok(formatter.isLastStorageUnit(iStorageUnit), iStorageUnit + " is considered as last storage unit");
+		assert.ok(!formatter.isNotLastStorageUnit(iStorageUnit), iStorageUnit + " is considered as last storage unit");
+	});
+	
+	QUnit.test("Should not detect '00000000000123458' as last storage unit", 2, function(assert) {
+		//Arrange
+		var sStorageUnit = "00000000000123458";
+		//System under Test + Act
+		assert.ok(formatter.isNotLastStorageUnit(sStorageUnit), sStorageUnit + " is considered as last storage unit");
+		assert.ok(!formatter.isLastStorageUnit(sStorageUnit), sStorageUnit + " is considered as last storage unit");
+	});
+	
+	QUnit.test("Should not detect 00000000000123458 as last storage unit", 2, function(assert) {
+		//Arrange
+		var iStorageUnit = 123458;
+		//System under Test + Act
+		assert.ok(formatter.isNotLastStorageUnit(iStorageUnit), iStorageUnit + " is considered as last storage unit");
+		assert.ok(!formatter.isLastStorageUnit(iStorageUnit), iStorageUnit + " is considered as last storage unit");
+	});
+	
+	QUnit.test("Should not detect '', null or undefined as last storage unit", 6, function(assert) {
+		//Arrange
+		var isEmpty = "";
+		var isNull = null;
+		var isUndefined = undefined;
+		
+		//System under Test + Act
+		assert.ok(!formatter.isNotLastStorageUnit(isEmpty), isEmpty + " is not considered as last storage unit");
+		assert.ok(!formatter.isNotLastStorageUnit(isNull), isNull + " is not considered as last storage unit");
+		assert.ok(!formatter.isNotLastStorageUnit(isUndefined), isUndefined + " is not considered as last storage unit");
+		
+		assert.ok(!formatter.isLastStorageUnit(isEmpty), isEmpty + " is not considered as last storage unit");
+		assert.ok(!formatter.isLastStorageUnit(isNull), isNull + " is not considered as last storage unit");
+		assert.ok(!formatter.isLastStorageUnit(isUndefined), isUndefined + " is not considered as last storage unit");
+	});
 });
