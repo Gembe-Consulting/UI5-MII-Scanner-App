@@ -238,7 +238,7 @@ sap.ui.define([
 		},
 
 		findRessourceOfStorageBin: function(sStorageBin) {
-			return this.mapStorageBinToRessource.reduce(o => o[sStorageBin]);
+			return this.mapStorageBinToRessource.reduce(function(o){ return o[sStorageBin]});
 		},
 
 		_createGoodsReceipt: function(sBwA) {
