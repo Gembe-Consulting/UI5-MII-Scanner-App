@@ -220,7 +220,7 @@
 	},
 	"globals": {
 		"moment": true,
-		"document":true,
+		"document": true,
 		"com": true,
 		"oData": false,
 		"sakp": false,

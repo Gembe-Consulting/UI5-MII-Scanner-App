@@ -70,13 +70,4 @@ sap.ui.require(["sap/ui/test/opaQunit"], function(opaTest) {
 		// Assertions
 		Then.onTheApp.shouldNavigateTo("Home");
 	});
-
-	opaTest("Should navigate to login screen on logout", function(Given, When, Then) {
-		// Arrangements
-		// Actions
-		When.onHomePage.iPressTheLogoutItem("navLogoutItem");
-
-		// Assertions
-		Then.onTheLoginPage.theAppShouldNotNavigateAndStayOnLoginPage();
-	});
 });

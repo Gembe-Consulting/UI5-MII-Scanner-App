@@ -1,7 +1,8 @@
 sap.ui.define([
 	"sap/ui/base/Object",
-	"sap/m/MessageBox"
-], function(UI5Object, MessageBox) {
+	"sap/m/MessageBox",
+	"sap/m/MessageToast"
+], function(UI5Object, MessageBox, MessageToast) {
 	"use strict";
 
 	return UI5Object.extend("com.mii.scanner.controller.ErrorHandler", {
@@ -16,14 +17,37 @@ sap.ui.define([
 		constructor: function(oComponent) {
 			this._oResourceBundle = oComponent.getModel("i18n").getResourceBundle();
 			this._oComponent = oComponent;
-			this._oModel = oComponent.getModel("user");
 			this._bMessageOpen = false;
 			this._sErrorText = this._oResourceBundle.getText("errorText");
 
-			this._oModel.attachRequestFailed(function(oEvent) {
-				var oParams = oEvent.getParameters();
-				this._showServiceError(oParams.response);
-			}, this);
+			// getting a namespace from manifest (component metadata) and access models
+			var oManifestModels = oComponent.getMetadata().getManifestEntry("sap.ui5").models;
+
+			var mapRequestEvents = function(sModelName) {
+
+				var oModel = oComponent.getModel(sModelName);
+
+				var showErrorMessage = function(oEvent) {
+					var oParams = oEvent.getParameters();
+					this._showServiceError(JSON.stringify(oParams), "Fehler: " + oEvent.sId + " in " + sModelName + "-Service");
+				};
+
+				var showMessageToast = function(oEvent) {
+					var oParams = oEvent.getParameters();
+					this._showServiceRequestToast(oEvent.sId + " to " + sModelName+ "\nreturning success=" + oEvent.getParameter("success"));
+				};
+
+				oModel.attachRequestFailed(showErrorMessage, this);
+
+				oModel.attachParseError(showErrorMessage, this);
+
+				if (jQuery.sap.debug()) {
+					oModel.attachRequestSent(showMessageToast, this);
+					oModel.attachRequestCompleted(showMessageToast, this);
+				}
+			}.bind(this);
+
+			Object.keys(oManifestModels).forEach(mapRequestEvents);
 		},
 
 		/**
@@ -32,7 +56,7 @@ sap.ui.define([
 		 * @param {string} sDetails a technical error to be displayed on request
 		 * @private
 		 */
-		_showServiceError: function(sDetails) {
+		_showServiceError: function(sDetails, sTitle) {
 			if (this._bMessageOpen) {
 				return;
 			}
@@ -40,6 +64,7 @@ sap.ui.define([
 			MessageBox.error(
 				this._sErrorText, {
 					id: "serviceErrorMessageBox",
+					title: sTitle,
 					details: sDetails,
 					styleClass: this._oComponent.getContentDensityClass(),
 					actions: [MessageBox.Action.CLOSE],
@@ -48,6 +73,23 @@ sap.ui.define([
 					}.bind(this)
 				}
 			);
+		},
+
+		_showServiceRequestToast: function(sMessage) {
+			sap.m.MessageToast.show(sMessage, {
+				duration: 2000, // default 3000
+				width: "15em", // default
+				my: "center bottom", // default
+				at: "center bottom", // default
+				of: window, // default
+				offset: "0 0", // default
+				collision: "fit fit", // default
+				onClose: null, // default
+				autoClose: true, // default
+				animationTimingFunction: "ease", // default
+				animationDuration: 1000, // default
+				closeOnBrowserNavigation: false // default true
+			});
 		}
 	});
 });

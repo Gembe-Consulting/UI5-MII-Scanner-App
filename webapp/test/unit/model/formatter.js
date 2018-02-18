@@ -17,28 +17,28 @@ sap.ui.define([
 
 	QUnit.test("Should detect yesterday as past date", function(assert) {
 		var yesterday = new Date(Date.now() - 864e5),
-			sYesterday = [yesterday.getFullYear(), yesterday.getMonth()+1, yesterday.getDate()].join("-");
+			sYesterday = [yesterday.getFullYear(), yesterday.getMonth() + 1, yesterday.getDate()].join("-");
 
 		pastDateTestCase.call(this, assert, sYesterday, "YYYY-MM-DD", true);
 	});
 
 	QUnit.test("Should not detect tomorrow as past date", function(assert) {
 		var tomorrow = new Date(Date.now() + 864e5),
-			sTomorrow = [tomorrow.getFullYear(), tomorrow.getMonth()+1, tomorrow.getDate()].join("-");
+			sTomorrow = [tomorrow.getFullYear(), tomorrow.getMonth() + 1, tomorrow.getDate()].join("-");
 
 		pastDateTestCase.call(this, assert, sTomorrow, "YYYY-MM-DD", false);
 	});
 
 	QUnit.test("Should not detect today as past date", function(assert) {
 		var today = new Date(),
-			sToday = [today.getFullYear(), today.getMonth()+1, today.getDate()].join("-");
+			sToday = [today.getFullYear(), today.getMonth() + 1, today.getDate()].join("-");
 
 		pastDateTestCase.call(this, assert, sToday, "YYYY-MM-DD", false);
 	});
 
 	QUnit.test("Should detect last year as past date in default format", function(assert) {
-		var lastYear = new Date(Date.now() - 864e5*365),
-			sLastYear = [lastYear.getMonth()+1, lastYear.getDate(), lastYear.getFullYear()].join("-");
+		var lastYear = new Date(Date.now() - 864e5 * 365),
+			sLastYear = [lastYear.getMonth() + 1, lastYear.getDate(), lastYear.getFullYear()].join("-");
 
 		pastDateTestCase.call(this, assert, sLastYear, null, true);
 	});
@@ -171,5 +171,55 @@ sap.ui.define([
 		var sQuantity = "";
 		//System under Test + Act
 		assert.ok(!formatter.isFullStorageUnit(sQuantity), sQuantity + " is not considered as full storage unit");
+	});
+
+	QUnit.module("Test formatter function 'isLastStorageUnit and isNotLastStorageUnit'", {});
+
+	QUnit.test("Should detect '90000000000000000000' as last storage unit", 2, function(assert) {
+		//Arrange
+		var sStorageUnit = "90000000000000000000";
+		//System under Test + Act
+		assert.strictEqual(formatter.isLastStorageUnit(sStorageUnit), true, sStorageUnit + " is considered as last storage unit");
+		assert.strictEqual(formatter.isNotLastStorageUnit(sStorageUnit), false, sStorageUnit + " is not considered as not last storage unit");
+	});
+
+	QUnit.test("Should detect 90000000000000000000 as last storage unit", 2, function(assert) {
+		//Arrange
+		var iStorageUnit = 90000000000000000000;
+		//System under Test + Act
+		assert.strictEqual(formatter.isLastStorageUnit(iStorageUnit), true, iStorageUnit + " is considered as last storage unit");
+		assert.strictEqual(formatter.isNotLastStorageUnit(iStorageUnit), false, iStorageUnit + " is not considered as not last storage unit");
+	});
+
+	QUnit.test("Should not detect '00000000000123458' as last storage unit", 2, function(assert) {
+		//Arrange
+		var sStorageUnit = "00000000000123458";
+		//System under Test + Act
+		assert.strictEqual(formatter.isNotLastStorageUnit(sStorageUnit), true, sStorageUnit + " is considered as not last storage unit");
+		assert.strictEqual(formatter.isLastStorageUnit(sStorageUnit), false, sStorageUnit + " is not considered as last storage unit");
+	});
+
+	QUnit.test("Should not detect 00000000000123458 as last storage unit", 2, function(assert) {
+		//Arrange
+		var iStorageUnit = 123458;
+		//System under Test + Act
+		assert.strictEqual(formatter.isNotLastStorageUnit(iStorageUnit), true, iStorageUnit + " is considered as not last storage unit");
+		assert.strictEqual(formatter.isLastStorageUnit(iStorageUnit), false, iStorageUnit + " is not considered as last storage unit");
+	});
+
+	QUnit.test("Should not detect '', null or undefined as last storage unit", 6, function(assert) {
+		//Arrange
+		var isEmpty = "";
+		var isNull = null;
+		var isUndefined = undefined;
+
+		//System under Test + Act
+		assert.strictEqual(formatter.isNotLastStorageUnit(isEmpty), true, isEmpty + " is not considered as last storage unit");
+		assert.strictEqual(formatter.isNotLastStorageUnit(isNull), true, isNull + " is not considered as last storage unit");
+		assert.strictEqual(formatter.isNotLastStorageUnit(isUndefined), true, isUndefined + " is not considered as last storage unit");
+
+		assert.strictEqual(formatter.isLastStorageUnit(isEmpty), false, isEmpty + " is not considered as last storage unit");
+		assert.strictEqual(formatter.isLastStorageUnit(isNull), false, isNull + " is not considered as last storage unit");
+		assert.strictEqual(formatter.isLastStorageUnit(isUndefined), false, isUndefined + " is not considered as last storage unit");
 	});
 });

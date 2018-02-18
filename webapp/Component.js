@@ -52,7 +52,9 @@ sap.ui.define([
 		 */
 		testUserLoginName: function(sUserInput) {
 			var sUserInputUpper = sUserInput ? sUserInput.toUpperCase() : "",
-				getUserLoginName, validateUserLoginName, updateUserModel, onLoginError;
+				validateUserLoginName, 
+				updateUserModel, 
+				onLoginError;
 
 			this.showBusyIndicator();
 
@@ -62,7 +64,7 @@ sap.ui.define([
 				try {
 					oUser = oLoginResult.d.results[0].Rowset.results[0].Row.results[0];
 				} catch (err) {
-					jQuery.sap.log.error("Das Resultset enthält keine Benutzerdaten!", [err], ["Component.testUserLoginName"])
+					jQuery.sap.log.error("Das Resultset enthält keine Benutzerdaten!", [err], ["Component.testUserLoginName"]);
 					return Promise.reject(err);
 				}
 
@@ -80,7 +82,6 @@ sap.ui.define([
 			onLoginError = function(oError) {
 				this.resetUserModel({});
 				this.hideBusyIndicator();
-
 				throw oError; //re-throw to inform Login about error
 			}.bind(this);
 
@@ -123,7 +124,7 @@ sap.ui.define([
 				bMobile = this.getModel("device").getProperty("/browser/mobile"),
 				sIllumLoginName;
 
-			return oDiscoverdIllumLoginName = new Promise(function(resolve, reject) {
+			oDiscoverdIllumLoginName = new Promise(function(resolve, reject) {
 				if (!bMobile) {
 					sIllumLoginName = $("#IllumLoginName").val();
 					if (!!sIllumLoginName) {
@@ -136,6 +137,8 @@ sap.ui.define([
 				}
 				reject(new Error("This is a mobile device, we are not allowed to read #IllumLoginName"));
 			});
+			
+			return oDiscoverdIllumLoginName;
 		},
 
 		resetUserModel: function(oObject) {
