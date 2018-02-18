@@ -62,7 +62,7 @@ sap.ui.define([
 				try {
 					oUser = oLoginResult.d.results[0].Rowset.results[0].Row.results[0];
 				} catch (err) {
-					jQuery.sap.log.error("Das Resultset enthält keine Benutzerdaten!", [err], ["Component.testUserLoginName"])
+					jQuery.sap.log.error("Das Resultset enthält keine Benutzerdaten!", [err], ["Component.testUserLoginName"]);
 					return Promise.reject(err);
 				}
 
