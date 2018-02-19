@@ -30,7 +30,10 @@
 					
 					new sap.m.Shell({
 	            		app : new sap.ui.core.ComponentContainer({
-			               name : "com.mii.scanner"
+			               name : "com.mii.scanner",
+			               settings: {
+								id: "scanner"
+							}
 	            		})
 					}).placeAt("content");
 				});
