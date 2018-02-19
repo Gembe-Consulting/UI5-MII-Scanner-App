@@ -2,7 +2,10 @@ sap.ui.define([
 	"com/mii/scanner/libs/momentjs/moment"
 ], function() {
 	"use strict";
-
+	
+	const LAST_STORAGE_UNIT_NUMBERS = [90025311000000000000, 90024811000000000000];
+	const ZERO_STOCK_STORAGE_UNIT_QUANTITIES = [0.0, 0.001];
+	
 	return {
 
 		/**
@@ -32,8 +35,9 @@ sap.ui.define([
 			var fQuantity = parseFloat(sQuantity),
 				fZero = 0.0,
 				fNearToZero = 0.001;
+				//ZERO_STOCK_STORAGE_UNIT_QUANTITIES
 
-			return !sQuantity || (fQuantity === fZero) || (fQuantity === fNearToZero);
+			return !sQuantity || ZERO_STOCK_STORAGE_UNIT_QUANTITIES.includes(parseFloat(sQuantity));//!sQuantity || (fQuantity === fZero) || (fQuantity === fNearToZero);
 		},
 		/**
 		 * Checks if a storage unit quantity is considered full / non-empty:
@@ -48,34 +52,35 @@ sap.ui.define([
 			var fQuantity = parseFloat(sQuantity),
 				fZero = 0.0,
 				fNearToZero = 0.001;
-
-			return !!sQuantity && (fQuantity !== fZero) && (fQuantity !== fNearToZero);
+				//ZERO_STOCK_STORAGE_UNIT_QUANTITIES
+			
+			return !!sQuantity && !ZERO_STOCK_STORAGE_UNIT_QUANTITIES.includes(parseFloat(sQuantity));//!!sQuantity && (fQuantity !== fZero) && (fQuantity !== fNearToZero);
 		},
 
 		/**
 		 * Checks if a storage unit number is the last unit
-		 * - if number is equal to 90000000000000000000
+		 * - if number is equal to 90025311000000000000 or 90024811000000000000
 		 * - and if vStorageUnitNumber is not empty, null or undefined
 		 * @public
 		 * @param {string|number} vStorageUnitNumber storage unit to test for
 		 * @return {boolean} true if is last, false if not last unit
 		 */
 		isLastStorageUnit: function(vStorageUnitNumber) {
-			var iLastStorageUnit = 90000000000000000000;
-			return !!vStorageUnitNumber && iLastStorageUnit === parseInt(vStorageUnitNumber, 10);
+			return LAST_STORAGE_UNIT_NUMBERS.includes(parseInt(vStorageUnitNumber, 10));
+			//return !!vStorageUnitNumber && 90000000000000000000 === parseInt(vStorageUnitNumber, 10);
 		},
 
 		/**
 		 * Checks if a storage unit number is NOT the last unit
-		 * - if number is not equal to 90000000000000000000
+		 * - if number is not equal to 90025311000000000000 and 90024811000000000000
 		 * - or if vStorageUnitNumber is not empty, null or undefined
 		 * @public
 		 * @param {string|number} vStorageUnitNumber storage unit to test for
 		 * @return {boolean} true if is not last, false if last unit
 		 */
 		isNotLastStorageUnit: function(vStorageUnitNumber) {
-			var iLastStorageUnit = 90000000000000000000;
-			return !vStorageUnitNumber || iLastStorageUnit !== parseInt(vStorageUnitNumber, 10);
+			return !LAST_STORAGE_UNIT_NUMBERS.includes(parseInt(vStorageUnitNumber, 10));
+			//return !vStorageUnitNumber || 90000000000000000000 !== parseInt(vStorageUnitNumber, 10);
 		}
 	};
 });
