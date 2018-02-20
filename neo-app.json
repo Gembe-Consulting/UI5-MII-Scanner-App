@@ -47,5 +47,12 @@
 			"entryPath": "/test-resources"
 		},
 		"description": "SAPUI5 Test Resources"
+	}, {
+		"path": "/themedesignerPath",
+		"target": {
+			"type": "application",
+			"name": "themedesigner"
+		},
+		"description": "Route for UI theme designer"
 	}]
 }
