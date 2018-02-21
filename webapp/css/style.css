@@ -1,19 +1,23 @@
-.suwGoodsReceiptTitle{
+.sap-phone .suwIncreadedInputFontSize .sapMInputBaseInner {
+	font-size: 1.5rem;
+}
+
+.sapMTitle .suwGoodsReceiptTitle{
    color: #1F35DE !important;
    font-weight: bold;
 }
 
-.suwGoodsIssueTitle{
+.sapMTitle .suwGoodsIssueTitle{
    color: #BB07FF !important;
    font-weight: bold;
 }
 
-.suwStockTransferTitle{
+.sapMTitle .suwStockTransferTitle{
    color: #FFAC00 !important;
    font-weight: bold;
 }
 
-.suwRollerConveyorTitle{
+.sapMTitle .suwRollerConveyorTitle{
    color: #05B074 !important;
    font-weight: bold;
 }
