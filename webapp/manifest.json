@@ -155,7 +155,8 @@
 					"target": [
 						"login"
 					]
-				},{
+				},
+				{
 					"pattern": "{{manifest.routing.route.pattern.forbidden}}",
 					"name": "forbidden",
 					"target": [
