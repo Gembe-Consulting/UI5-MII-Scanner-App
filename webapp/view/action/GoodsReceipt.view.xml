@@ -28,14 +28,14 @@
 					<Label text="{i18n>lableTextFormGoodsReceiptStorageUnit}"/>
 					<Input id="storageUnitInput" change="onStorageUnitNumberChange" value="{path: 'data>/LENUM', type:'.sapType.LENUM'}"
 						editable="{= ${data>/LGORT}==='1000' || ${data>/LGORT}==='' || ${data>/LGORT}===null}" valueState="{view>/storageUnitNumberValueState}"
-						maxLength="20" class="noScannerInput"></Input>
+						maxLength="20" class="noScannerInput suwIncreadedInputFontSize"></Input>
 					<Label text="{i18n>lableTextFormGoodsReceiptOrder}"/>
 					<Input id="orderNumberInput" value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}" change="onOrderNumberChange"
-						editable="{=${data>/LENUM}===null}" valueState="{view>/orderNumberValueState}" maxLength="7" class="noScannerInput"></Input>
+						editable="{=${data>/LENUM}===null}" valueState="{view>/orderNumberValueState}" maxLength="7" class="noScannerInput suwIncreadedInputFontSize"></Input>
 					<Label text="{i18n>lableTextFormGoodsReceiptQuantity}, {i18n>lableTextFormGoodsReceiptUnitOfMeasureShort}"/>
 					<HBox alignItems="Center">
 						<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}"
-							editable="{view>/bStorageUnitValid}"></Input>
+							editable="{view>/bStorageUnitValid}" class="suwIncreadedInputFontSize"></Input>
 						<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress"
 							size="{=${device>/system/desktop}===true ? '1.25rem' : '1.75rem'}" class="sapUiSmallMarginEnd"></c:Icon>
 						<layoutData>
@@ -43,14 +43,14 @@
 						</layoutData>
 					</HBox>
 					<Input id="unitOfMeasureInput" value="{path: 'data>/MEINH', type:'.sapType.MEINS'}" change="onUnitOfMeasureChange"
-						editable="{=${data>/LENUM}===null}" maxLength="4">
+						editable="{=${data>/LENUM}===null}" maxLength="4" class="suwIncreadedInputFontSize"> 
 						<layoutData>
 							<l:GridData span="XL1 L1 M2 S4"/>
 						</layoutData>
 					</Input>
 					<Label text="{i18n>lableTextFormGoodsReceiptStorageLocation}"/>
 					<Input id="storageLocationInput" change="onStorageLocationChange" value="{path: 'data>/LGORT', type: '.sapType.LGORT'}"
-						editable="{=${data>/LENUM}===null}" maxLength="4" class="noScannerInput"></Input>
+						editable="{=${data>/LENUM}===null}" maxLength="4" class="noScannerInput suwIncreadedInputFontSize"></Input>
 				</f:content>
 			</f:SimpleForm>
 			<!-- Storage Unit Info Form -->
