@@ -1,6 +1,16 @@
-<mvc:View controllerName="com.mii.scanner.controller.action.ResumeOperation" xmlns="sap.m" xmlns:c="sap.ui.core"
-	xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
+<mvc:View controllerName="com.mii.scanner.controller.action.ResumeOperation" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
 	<Page title="{i18n>titleResumeOperation}" showNavButton="true" navButtonPress="onNavBack" showSubHeader="{= !${device>/system/phone} }">
+		<customHeader>
+			<Toolbar id="header">
+				<ToolbarSpacer/>
+				<c:Icon id="stockTransferPageIcon" src="sap-icon://offsite-work" size="2rem" color="#FFAC00" alt="GI"/>
+				<c:Icon id="stockTransferPageIcon2" src="sap-icon://shipping-status" size="1.25rem" color="#FFAC00" class="sapUiSmallMarginEnd"/>
+				<Title id="stockTransferPageTitle" text="{i18n>titleStockTransfer}" class="suwStockTransferTitle"/>
+				<ToolbarSpacer/>
+				<Button id="clearFormButton" icon="sap-icon://redo" press="onClearFormPress"/>
+			</Toolbar>
+		</customHeader>
 		<subHeader>
 			<Bar>
 				<contentMiddle>
@@ -9,7 +19,7 @@
 			</Bar>
 		</subHeader>
 		<content>
-			<f:SimpleForm title="{i18n>titleFormResumeOperation}" editable="true" layout="ResponsiveGridLayout">
+			<f:SimpleForm id="dataEntry" title="{i18n>titleFormResumeOperation}" editable="true" layout="ResponsiveGridLayout">
 				<f:content>
 					<Label text="{i18n>lableTextFormResumeOperationOrderNumber}"/>
 					<Input value="{ORDERID}"/>
@@ -19,10 +29,10 @@
 			</f:SimpleForm>
 		</content>
 		<footer>
-			<Toolbar>
+			<Toolbar id="footer">
 				<ToolbarSpacer/>
-				<Button type="Accept" text="{i18n>textButtonSaveResumeOperation}" press="onSave"/>
-				<Button type="Reject" text="{i18n>textButtonCancelResumeOperation}" press="onCancelAction"/>
+				<Button id="saveButton" type="Accept" text="{i18n>textButtonSaveResumeOperation}" press="onSave"/>
+				<Button id="cancelButton" type="Reject" text="{i18n>textButtonCancelResumeOperation}" press="onCancelAction"/>
 			</Toolbar>
 		</footer>
 	</Page>

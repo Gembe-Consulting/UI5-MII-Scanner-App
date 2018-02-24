@@ -1,8 +1,18 @@
 <mvc:View controllerName="com.mii.scanner.controller.action.StartOperation" xmlns="sap.m" xmlns:c="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
 	<Page id="startOperationPage" title="{i18n>titleStartOperation}" showNavButton="true" navButtonPress="onNavBack">
+		<customHeader>
+			<Toolbar id="header">
+				<ToolbarSpacer/>
+				<c:Icon id="stockTransferPageIcon" src="sap-icon://offsite-work" size="2rem" color="#FFAC00" alt="GI"/>
+				<c:Icon id="stockTransferPageIcon2" src="sap-icon://shipping-status" size="1.25rem" color="#FFAC00" class="sapUiSmallMarginEnd"/>
+				<Title id="stockTransferPageTitle" text="{i18n>titleStockTransfer}" class="suwStockTransferTitle"/>
+				<ToolbarSpacer/>
+				<Button id="clearFormButton" icon="sap-icon://redo" press="onClearFormPress"/>
+			</Toolbar>
+		</customHeader>
 		<content>
-			<f:SimpleForm title="{i18n>titleFormStartOperation}" editable="true" layout="ResponsiveGridLayout">
+			<f:SimpleForm id="dataEntry" title="{i18n>titleFormStartOperation}" editable="true" layout="ResponsiveGridLayout">
 				<f:content>
 					<Label text="{i18n>lableTextFormStartOperationOrderNumber}"/>
 					<Input value="{ORDERID}"/>
@@ -33,10 +43,10 @@
 			</f:SimpleForm>
 		</content>
 		<footer>
-			<Toolbar>
+			<Toolbar id="footer">
 				<ToolbarSpacer/>
-				<Button type="Accept" text="{i18n>textButtonSaveStartOperation}" press="onSave"/>
-				<Button type="Reject" text="{i18n>textButtonCancelStartOperation}" press="onCancelAction"/>
+				<Button id="saveButton" type="Accept" text="{i18n>textButtonSaveStartOperation}" press="onSave"/>
+				<Button id="cancelButton" type="Reject" text="{i18n>textButtonCancelStartOperation}" press="onCancelAction"/>
 			</Toolbar>
 		</footer>
 	</Page>

@@ -2,7 +2,7 @@
 	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
 	<Page id="goodsReceiptPage" title="" showNavButton="false">
 		<customHeader>
-			<Toolbar>
+			<Toolbar id="header">
 				<ToolbarSpacer/>
 				<c:Icon id="goodsReceiptPageIcon" src="sap-icon://inbox" size="2rem" color="#1F35DE" alt="GR" class="sapUiSmallMarginEnd"/>
 				<Title id="goodsReceiptPageTitle" text="{i18n>titleGoodsReceipt}" class="suwGoodsReceiptTitle"/>
@@ -22,7 +22,7 @@
 				Beispiel:
 					labelSpanS="12" => auf kleinen devices wird die Lablezeile auf die komplette Zeile gespannt
 			-->
-			<f:SimpleForm editable="true" layout="ResponsiveGridLayout" breakpointM="500" labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12"
+			<f:SimpleForm id="dataEntry" editable="true" layout="ResponsiveGridLayout" breakpointM="500" labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12"
 				emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
 				<f:content>
 					<Label text="{i18n>lableTextFormGoodsReceiptStorageUnit}"/>
@@ -57,7 +57,7 @@
 			<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>
 		</content>
 		<footer>
-			<Toolbar>
+			<Toolbar id="footer">
 				<ToolbarSpacer/>
 				<Button id="saveButton" type="Accept" text="{i18n>textButtonSaveGoodsReceipt}" press="onSave" enabled="{view>/bValid}"/>
 				<Button id="cancelButton" type="Reject" text="{i18n>textButtonCancelGoodsReceipt}" press="onCancelAction"/>

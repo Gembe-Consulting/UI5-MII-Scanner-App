@@ -2,7 +2,7 @@
 	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
 	<Page id="goodsIssuePage">
 		<customHeader>
-			<Toolbar>
+			<Toolbar id="header">
 				<ToolbarSpacer/>
 				<c:Icon id="goodsIssuePageIcon" src="sap-icon://outbox" size="2rem" color="#BB07FF" alt="GI"/>
 				<c:Icon id="goodsIssuePageIcon2" src="{= ${view>/type}==='nonLE' ? 'sap-icon://filter' : 'sap-icon://bar-code'}" size="1.25rem"
@@ -27,7 +27,7 @@
 						<c:Icon id="expirationDateIndicatorIcon" src="sap-icon://quality-issue" color="#f9a429" size="4rem" class="sapUiMediumMarginBeginEnd"/>
 						<c:Icon id="expirationDateOutOfDateIcon" src="sap-icon://date-time" color="#f9a429" size="3rem" class="sapUiMediumMarginBeginEnd"/>
 					</HBox>
-					<f:SimpleForm editable="true" layout="ResponsiveGridLayout" breakpointM="500" 
+					<f:SimpleForm id="dataEntry" editable="true" layout="ResponsiveGridLayout" breakpointM="500" 
 						labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12"
 						emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
 						<f:content>
@@ -74,7 +74,7 @@
 			<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>
 		</content>
 		<footer>
-			<Toolbar>
+			<Toolbar id="footer">
 				<ToolbarSpacer/>
 				<Button id="saveButton" type="Accept" text="{i18n>textButtonSaveGoodsIssue}" press="onSave" enabled="{view>/bValid}"/>
 				<Button id="cancelButton" type="Reject" text="{i18n>textButtonCancelGoodsIssue}" press="onCancelAction"/>

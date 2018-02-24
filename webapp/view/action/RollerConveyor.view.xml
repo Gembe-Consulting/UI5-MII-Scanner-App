@@ -2,7 +2,7 @@
 	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
 	<Page id="rollerConveyorPage">
 		<customHeader>
-			<Toolbar>
+			<Toolbar id="header">
 				<ToolbarSpacer/>
 				<c:Icon id="rollerConveyorPageIcon" src="sap-icon://instance" size="2rem" color="#05B074" alt="RC"/>
 				<c:Icon id="rollerConveyorPageIcon2" src="sap-icon://process" size="1.25rem" color="#05B074" class="sapUiSmallMarginEnd" alt="RC2"/>
@@ -13,7 +13,7 @@
 		</customHeader>
 		<content>
 			<l:VerticalLayout id="messageStripContainer" width="100%"></l:VerticalLayout>
-			<f:SimpleForm editable="true" layout="ResponsiveGridLayout" breakpointM="500" labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12"
+			<f:SimpleForm id="dataEntry" editable="true" layout="ResponsiveGridLayout" breakpointM="500" labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12"
 				emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
 				<f:content>
 					<Label text="{i18n>rollerConveyor.form.label.storageUnit.text}"/>
@@ -56,7 +56,7 @@
 			<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>
 		</content>
 		<footer>
-			<Toolbar>
+			<Toolbar id="footer">
 				<ToolbarSpacer/>
 				<Button id="saveButton" type="Accept" text="{i18n>rollerConveyor.saveButton.text}" press="onSave" enabled="{view>/bValid}"/>
 				<Button id="cancelButton" type="Reject" text="{i18n>rollerConveyor.canceButton.text}" press="onCancelAction"/>

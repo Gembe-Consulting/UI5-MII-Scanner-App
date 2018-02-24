@@ -2,7 +2,7 @@
 	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:storageBinData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 	<Page id="stockTransferPage">
 		<customHeader>
-			<Toolbar>
+			<Toolbar id="header">
 				<ToolbarSpacer/>
 				<c:Icon id="stockTransferPageIcon" src="sap-icon://offsite-work" size="2rem" color="#FFAC00" alt="GI"/>
 				<c:Icon id="stockTransferPageIcon2" src="sap-icon://shipping-status" size="1.25rem" color="#FFAC00" class="sapUiSmallMarginEnd"/>
@@ -13,7 +13,7 @@
 		</customHeader>
 		<content>
 			<l:VerticalLayout id="messageStripContainer" width="100%"></l:VerticalLayout>
-			<f:SimpleForm editable="true" layout="ResponsiveGridLayout" breakpointM="500" labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12"
+			<f:SimpleForm id="dataEntry" editable="true" layout="ResponsiveGridLayout" breakpointM="500" labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12"
 				emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
 				<f:content>
 					<Label text="{i18n>lableTextFormStockTransferStorageBinTarget}"/>
@@ -49,7 +49,7 @@
 			<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>
 		</content>
 		<footer>
-			<Toolbar>
+			<Toolbar id="footer">
 				<ToolbarSpacer/>
 				<Button id="saveButton" type="Accept" text="{i18n>textButtonSaveStockTransfer}" press="onSave" enabled="{view>/bValid}"/>
 				<Button id="cancelButton" type="Reject" text="{i18n>textButtonCancelStockTransfer}" press="onCancelAction"/>
