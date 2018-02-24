@@ -13,42 +13,40 @@
 		</customHeader>
 		<content>
 			<l:VerticalLayout id="messageStripContainer" width="100%"></l:VerticalLayout>
-			<VBox height="100%" width="100%" direction="Column" alignItems="Center" justifyContent="Start">
-				<items>
-					<f:SimpleForm editable="true" layout="ResponsiveGridLayout" breakpointM="400" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
-						emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
-						<f:content>
-							<Label text="{i18n>lableTextFormStockTransferStorageBinTarget}"/>
-							<ComboBox id="storageBinSelection" selectedKey="{data>/storageBin}"
-								items="{ path: 'storageBinList>/d/results/0/Rowset/results/0/Row/results' }" change="onStorageBinSelectionChange"
-								selectionChange="onStorageBinSelectionChange"
-								valueState="{= ${data>/storageBin} === null ? 'None': ${data>/storageBin} === '' ? 'Error' : 'Success' }" showSecondaryValues="true"
-								filterSecondaryValues="true" class="noScannerInput">
-								<c:ListItem key="{storageBinList>LGRPLTZ}" text="{storageBinList>LGRTXT}" additionalText="{storageBinList>LGRPLTZ}"
-									storageBinData:storageType="{storageBinList>LGRTYP}"/>
-							</ComboBox>
-							<Label text="{i18n>lableTextFormStockTransferStorageUnit}"/>
-							<Input id="storageUnitInput" value="{path: 'data>/storageUnit', type:'.sapType.LENUM'}" change="onStorageUnitInputChange"
-								valueState="{view>/storageUnitInputValueState}" maxLength="20" class="noScannerInput"></Input>
-							<Label text="{i18n>lableTextFormStockTransferQuantity}, {i18n>lableTextFormStockTransferUnitOfMeasureShort}"/>
-							<HBox alignItems="Center">
-								<Input id="quantityInput" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}" change="onQuantityChange" textAlign="End"
-									editable="{path:'data>/ISTME', formatter:'.formatter.isEmptyStorageUnit'}"></Input>
-								<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" visible="{path:'data>/ISTME', formatter:'.formatter.isEmptyStorageUnit'}" press="onClearQuantityInputPress" size="{=${device>/system/desktop}===true ? '1.25rem' : '1.75rem'}" class="sapUiSmallMarginEnd"></c:Icon>
-								<layoutData>
-									<l:GridData span="XL2 L3 M4 S8"/>
-								</layoutData>
-							</HBox>
-							<Input id="unitOfMeasureInput" value="{path: 'data>/MEINH', type:'.sapType.MEINS'}" editable="false" maxLength="4">
-								<layoutData>
-									<l:GridData span="XL1 L1 M2 S4"/>
-								</layoutData>
-							</Input>
-						</f:content>
-					</f:SimpleForm>
-					<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>
-				</items>
-			</VBox>
+			<f:SimpleForm editable="true" layout="ResponsiveGridLayout" breakpointM="500" labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12"
+				emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
+				<f:content>
+					<Label text="{i18n>lableTextFormStockTransferStorageBinTarget}"/>
+					<ComboBox id="storageBinSelection" selectedKey="{data>/storageBin}"
+						items="{ path: 'storageBinList>/d/results/0/Rowset/results/0/Row/results' }" change="onStorageBinSelectionChange"
+						selectionChange="onStorageBinSelectionChange"
+						valueState="{= ${data>/storageBin} === null ? 'None': ${data>/storageBin} === '' ? 'Error' : 'Success' }" showSecondaryValues="true"
+						filterSecondaryValues="true" class="noScannerInput">
+						<c:ListItem key="{storageBinList>LGRPLTZ}" text="{storageBinList>LGRTXT}" additionalText="{storageBinList>LGRPLTZ}"
+							storageBinData:storageType="{storageBinList>LGRTYP}"/>
+					</ComboBox>
+					<Label text="{i18n>lableTextFormStockTransferStorageUnit}"/>
+					<Input id="storageUnitInput" value="{path: 'data>/storageUnit', type:'.sapType.LENUM'}" change="onStorageUnitInputChange"
+						valueState="{view>/storageUnitInputValueState}" maxLength="20" class="noScannerInput"></Input>
+					<Label text="{i18n>lableTextFormStockTransferQuantity}, {i18n>lableTextFormStockTransferUnitOfMeasureShort}"/>
+					<HBox alignItems="Center">
+						<Input id="quantityInput" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}" change="onQuantityChange" textAlign="End"
+							editable="{path:'data>/ISTME', formatter:'.formatter.isEmptyStorageUnit'}"></Input>
+						<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" visible="{path:'data>/ISTME', formatter:'.formatter.isEmptyStorageUnit'}"
+							press="onClearQuantityInputPress" size="{=${device>/system/desktop}===true ? '1.25rem' : '1.75rem'}" class="sapUiSmallMarginEnd"></c:Icon>
+						<layoutData>
+							<l:GridData span="XL2 L3 M5 S8"/>
+						</layoutData>
+					</HBox>
+					<Input id="unitOfMeasureInput" value="{path: 'data>/MEINH', type:'.sapType.MEINS'}" editable="false" maxLength="4">
+						<layoutData>
+							<l:GridData span="XL1 L1 M2 S4"/>
+						</layoutData>
+					</Input>
+				</f:content>
+			</f:SimpleForm>
+			<!-- Storage Unit Info Form -->
+			<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>
 		</content>
 		<footer>
 			<Toolbar>

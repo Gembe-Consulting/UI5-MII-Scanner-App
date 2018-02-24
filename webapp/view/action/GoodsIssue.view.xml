@@ -14,7 +14,7 @@
 		</customHeader>
 		<content>
 			<l:VerticalLayout id="messageStripContainer" width="100%"></l:VerticalLayout>
-			<VBox height="100%" width="100%" direction="Column" alignItems="Center" justifyContent="Start">
+			<VBox width="100%" direction="Column" alignItems="Center" justifyContent="Start">
 				<items>
 					<HBox visible="{= ${data>/BESTQ}!=='0' &amp;&amp; ${data>/BESTQ}!==null}" alignItems="Center">
 						<c:Icon id="specialStockIndicatorIcon" src="sap-icon://quality-issue" color="#f9a429" size="4rem" class="sapUiMediumMarginBeginEnd"/>
@@ -27,7 +27,8 @@
 						<c:Icon id="expirationDateIndicatorIcon" src="sap-icon://quality-issue" color="#f9a429" size="4rem" class="sapUiMediumMarginBeginEnd"/>
 						<c:Icon id="expirationDateOutOfDateIcon" src="sap-icon://date-time" color="#f9a429" size="3rem" class="sapUiMediumMarginBeginEnd"/>
 					</HBox>
-					<f:SimpleForm editable="true" layout="ResponsiveGridLayout" breakpointM="400" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+					<f:SimpleForm editable="true" layout="ResponsiveGridLayout" breakpointM="500" 
+						labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12"
 						emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
 						<f:content>
 							<!-- LENUM -->
@@ -48,7 +49,7 @@
 								<Input id="quantityInput" textAlign="End" change="onQuantityInputChange" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}"></Input>
 								<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress" size="{=${device>/system/desktop}===true ? '1.25rem' : '1.75rem'}" class="sapUiSmallMarginEnd"></c:Icon>
 								<layoutData>
-									<l:GridData span="XL2 L3 M4 S8"/>
+									<l:GridData span="XL2 L3 M5 S8"/>
 								</layoutData>
 							</HBox>
 							<Input id="unitOfMeasureInput" value="{path: 'data>/unitOfMeasure', type:'.sapType.MEINS'}" change="onUnitOfMeasureInputChange"
@@ -67,9 +68,10 @@
 								customTextOff="{i18n>switchCustomOffNo}" visible="{=${view>/type}==='nonLE'}" tooltip="{i18n>lableTextFormGoodsIssueBulkMaterialTooltip}"></Switch>
 						</f:content>
 					</f:SimpleForm>
-					<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>
 				</items>
 			</VBox>
+			<!-- Storage Unit Info Form -->
+			<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>
 		</content>
 		<footer>
 			<Toolbar>

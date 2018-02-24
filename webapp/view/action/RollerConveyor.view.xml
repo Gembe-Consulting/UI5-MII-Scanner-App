@@ -13,49 +13,47 @@
 		</customHeader>
 		<content>
 			<l:VerticalLayout id="messageStripContainer" width="100%"></l:VerticalLayout>
-			<VBox height="100%" width="100%" direction="Column" alignItems="Center" justifyContent="Start">
-				<items>
-					<f:SimpleForm editable="true" layout="ResponsiveGridLayout" breakpointM="400" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
-						emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
-						<f:content>
-							<Label text="{i18n>rollerConveyor.form.label.storageUnit.text}"/>
-							<Input id="storageUnitInput" value="{path: 'data>/storageUnit', type:'.sapType.LENUM'}" change="onStorageUnitInputChange"
-								valueState="{view>/storageUnitValueState}" maxLength="20" class="noScannerInput"/>
-							<Label text="{i18n>rollerConveyor.form.label.quantity.text}, {i18n>rollerConveyor.form.label.unitOfMeasure-S.text}"/>
-							<HBox alignItems="Center">
-								<Input id="quantityInput" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}" change="onQuantityInputChange"
-									editable="{path: 'data>/ISTME', formatter:'.formatter.isEmptyStorageUnit' }" textAlign="End"></Input>
-								<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress" size="{=${device>/system/desktop}===true ? '1.25rem' : '1.75rem'}" class="sapUiSmallMarginEnd" alt="CLEAR"></c:Icon>
-								<layoutData>
-									<l:GridData span="XL2 L3 M4 S8"/>
-								</layoutData>
-							</HBox>
-							<Input id="unitOfMeasureInput" value="{path: 'data>/unitOfMeasure', type:'.sapType.MEINH'}" change="onUnitOfMeasureInputChange"
-								editable="{path: 'data>/storageUnit', formatter:'.formatter.isLastStorageUnit'}" maxLength="4">
-								<layoutData>
-									<l:GridData span="XL1 L1 M2 S4"/>
-								</layoutData>
-							</Input>
-							<Label text="{i18n>rollerConveyor.form.label.storageBin.text}"/>
-							<ComboBox id="storageBinSelection" selectedKey="{data>/storageBin}" change="onStorageBinSelectionChange"
-								selectionChange="onStorageBinSelectionChange" 
-								valueState="{= ${data>/storageBin} === null ? 'None': ${data>/storageBin} === '' ? 'Error' : 'Success' }"
-								showSecondaryValues="true" filterSecondaryValues="true" class="noScannerInput">
-								<c:ListItem key="ROLLENBAHN" text="{i18n>rollerConveyor.comboBox.listItem-ROLLENBAHN.text}" additionalText="ROLLENBAHN"
-									enabled="{path: 'data>/storageUnit', formatter:'.formatter.isNotLastStorageUnit'}"/>
-								<c:ListItem key="BEUM" text="{i18n>rollerConveyor.comboBox.listItem-BEUM.text}" additionalText="BEUM"/>
-								<c:ListItem key="STAPLER" text="{i18n>rollerConveyor.comboBox.listItem-STAPLER.text}" additionalText="STAPLER"
-									enabled="{path: 'data>/storageUnit', formatter:'.formatter.isNotLastStorageUnit'}"/>
-								<c:ListItem key="PALE" text="{i18n>rollerConveyor.comboBox.listItem-PALE.text}" additionalText="PALE"/>
-							</ComboBox>
-							<Label text="{i18n>rollerConveyor.form.label.stretcher.text}"/>
-							<Switch id="stretcherActiveSwitch" customTextOn="{i18n>switchCustomOnYes}" customTextOff="{i18n>switchCustomOffNo}"
-								state="{data>/stretcherActive}"></Switch>
-						</f:content>
-					</f:SimpleForm>
-					<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>
-				</items>
-			</VBox>
+			<f:SimpleForm editable="true" layout="ResponsiveGridLayout" breakpointM="500" labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12"
+				emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
+				<f:content>
+					<Label text="{i18n>rollerConveyor.form.label.storageUnit.text}"/>
+					<Input id="storageUnitInput" value="{path: 'data>/storageUnit', type:'.sapType.LENUM'}" change="onStorageUnitInputChange"
+						valueState="{view>/storageUnitValueState}" maxLength="20" class="noScannerInput"/>
+					<Label text="{i18n>rollerConveyor.form.label.quantity.text}, {i18n>rollerConveyor.form.label.unitOfMeasure-S.text}"/>
+					<HBox alignItems="Center">
+						<Input id="quantityInput" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}" change="onQuantityInputChange"
+							editable="{path: 'data>/ISTME', formatter:'.formatter.isEmptyStorageUnit' }" textAlign="End"></Input>
+						<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress"
+							size="{=${device>/system/desktop}===true ? '1.25rem' : '1.75rem'}" class="sapUiSmallMarginEnd" alt="CLEAR"></c:Icon>
+						<layoutData>
+							<l:GridData span="XL2 L3 M5 S8"/>
+						</layoutData>
+					</HBox>
+					<Input id="unitOfMeasureInput" value="{path: 'data>/unitOfMeasure', type:'.sapType.MEINH'}" change="onUnitOfMeasureInputChange"
+						editable="{path: 'data>/storageUnit', formatter:'.formatter.isLastStorageUnit'}" maxLength="4">
+						<layoutData>
+							<l:GridData span="XL1 L1 M2 S4"/>
+						</layoutData>
+					</Input>
+					<Label text="{i18n>rollerConveyor.form.label.storageBin.text}"/>
+					<ComboBox id="storageBinSelection" selectedKey="{data>/storageBin}" change="onStorageBinSelectionChange"
+						selectionChange="onStorageBinSelectionChange"
+						valueState="{= ${data>/storageBin} === null ? 'None': ${data>/storageBin} === '' ? 'Error' : 'Success' }" showSecondaryValues="true"
+						filterSecondaryValues="true" class="noScannerInput">
+						<c:ListItem key="ROLLENBAHN" text="{i18n>rollerConveyor.comboBox.listItem-ROLLENBAHN.text}" additionalText="ROLLENBAHN"
+							enabled="{path: 'data>/storageUnit', formatter:'.formatter.isNotLastStorageUnit'}"/>
+						<c:ListItem key="BEUM" text="{i18n>rollerConveyor.comboBox.listItem-BEUM.text}" additionalText="BEUM"/>
+						<c:ListItem key="STAPLER" text="{i18n>rollerConveyor.comboBox.listItem-STAPLER.text}" additionalText="STAPLER"
+							enabled="{path: 'data>/storageUnit', formatter:'.formatter.isNotLastStorageUnit'}"/>
+						<c:ListItem key="PALE" text="{i18n>rollerConveyor.comboBox.listItem-PALE.text}" additionalText="PALE"/>
+					</ComboBox>
+					<Label text="{i18n>rollerConveyor.form.label.stretcher.text}"/>
+					<Switch id="stretcherActiveSwitch" customTextOn="{i18n>switchCustomOnYes}" customTextOff="{i18n>switchCustomOffNo}"
+						state="{data>/stretcherActive}"></Switch>
+				</f:content>
+			</f:SimpleForm>
+			<!-- Storage Unit Info Form -->
+			<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>
 		</content>
 		<footer>
 			<Toolbar>
