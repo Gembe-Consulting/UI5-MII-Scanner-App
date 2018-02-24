@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 				"overwrite": true, // overwrite matched source files
 				"replacements": [{
 					"from": "../resources/sap-ui-core.js",
-					"to": "https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+					"to": "https://"+"sapui5.hana.ondemand.com/resources/sap-ui-core.js"
 				}]
 			}
 		},
