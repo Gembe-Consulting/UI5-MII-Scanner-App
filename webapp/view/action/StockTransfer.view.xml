@@ -16,7 +16,7 @@
 			<f:SimpleForm id="dataEntry" editable="true" layout="ResponsiveGridLayout" breakpointM="500" labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12"
 				emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
 				<f:content>
-					<Label text="{i18n>lableTextFormStockTransferStorageBinTarget}"/>
+					<Label text="{i18n>lableTextFormStockTransferStorageBinTarget}" labelFor="storageBinSelection"/>
 					<ComboBox id="storageBinSelection" selectedKey="{data>/storageBin}"
 						items="{ path: 'storageBinList>/d/results/0/Rowset/results/0/Row/results' }" change="onStorageBinSelectionChange"
 						selectionChange="onStorageBinSelectionChange"
@@ -25,10 +25,10 @@
 						<c:ListItem key="{storageBinList>LGRPLTZ}" text="{storageBinList>LGRTXT}" additionalText="{storageBinList>LGRPLTZ}"
 							storageBinData:storageType="{storageBinList>LGRTYP}"/>
 					</ComboBox>
-					<Label text="{i18n>lableTextFormStockTransferStorageUnit}"/>
+					<Label text="{i18n>lableTextFormStockTransferStorageUnit}" labelFor="storageUnitInput"/>
 					<Input id="storageUnitInput" value="{path: 'data>/storageUnit', type:'.sapType.LENUM'}" change="onStorageUnitInputChange"
 						valueState="{view>/storageUnitInputValueState}" maxLength="20" class="noScannerInput suwIncreadedInputFontSize"></Input>
-					<Label text="{i18n>lableTextFormStockTransferQuantity}, {i18n>lableTextFormStockTransferUnitOfMeasureShort}"/>
+					<Label text="{i18n>lableTextFormStockTransferQuantity}, {i18n>lableTextFormStockTransferUnitOfMeasureShort}" labelFor="quantityInput"/>
 					<HBox alignItems="Center">
 						<Input id="quantityInput" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}" change="onQuantityChange" textAlign="End"
 							editable="{path:'data>/ISTME', formatter:'.formatter.isEmptyStorageUnit'}" class="suwIncreadedInputFontSize"></Input>

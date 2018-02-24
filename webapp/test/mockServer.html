@@ -8,7 +8,7 @@
 
 		<!-- Bootstrap the UI5 core library -->
 		<script id="sap-ui-bootstrap"
-			src="../../resources/sap-ui-core-dbg.js"
+			src="../../resources/sap-ui-core.js"
 			data-sap-ui-loglevel="ALL"
 			data-sap-ui-libs="sap.ui.core, sap.ui.layout, sap.m"
 			data-sap-ui-theme="sap_belize"
@@ -28,8 +28,8 @@
 					// set up test service for local testing
 					mockserver.init();
 					
-					new sap.m.Shell({
-	            		app : new sap.ui.core.ComponentContainer({
+					new sap.m.Shell("shell",{
+	            		app : new sap.ui.core.ComponentContainer("container",{
 			               name : "com.mii.scanner",
 			               settings: {
 								id: "scanner"

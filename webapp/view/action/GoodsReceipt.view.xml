@@ -1,6 +1,6 @@
 <mvc:View controllerName="com.mii.scanner.controller.action.GoodsReceipt" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
 	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
-	<Page id="goodsReceiptPage" title="" showNavButton="false">
+	<Page id="goodsReceiptPage">
 		<customHeader>
 			<Toolbar id="header">
 				<ToolbarSpacer/>
@@ -22,17 +22,18 @@
 				Beispiel:
 					labelSpanS="12" => auf kleinen devices wird die Lablezeile auf die komplette Zeile gespannt
 			-->
-			<f:SimpleForm id="dataEntry" editable="true" layout="ResponsiveGridLayout" breakpointM="500" labelSpanXL="4" labelSpanL="4" labelSpanM="3" labelSpanS="12"
-				emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
+			<f:SimpleForm id="dataEntry" editable="true" layout="ResponsiveGridLayout" breakpointM="500" labelSpanXL="4" labelSpanL="4" labelSpanM="3"
+				labelSpanS="12" emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
 				<f:content>
-					<Label text="{i18n>lableTextFormGoodsReceiptStorageUnit}"/>
+					<Label text="{i18n>lableTextFormGoodsReceiptStorageUnit}" labelFor="storageUnitInput"/>
 					<Input id="storageUnitInput" change="onStorageUnitNumberChange" value="{path: 'data>/LENUM', type:'.sapType.LENUM'}"
 						editable="{= ${data>/LGORT}==='1000' || ${data>/LGORT}==='' || ${data>/LGORT}===null}" valueState="{view>/storageUnitNumberValueState}"
 						maxLength="20" class="noScannerInput suwIncreadedInputFontSize"></Input>
-					<Label text="{i18n>lableTextFormGoodsReceiptOrder}"/>
+					<Label text="{i18n>lableTextFormGoodsReceiptOrder}" labelFor="orderNumberInput"/>
 					<Input id="orderNumberInput" value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}" change="onOrderNumberChange"
-						editable="{=${data>/LENUM}===null}" valueState="{view>/orderNumberValueState}" maxLength="7" class="noScannerInput suwIncreadedInputFontSize"></Input>
-					<Label text="{i18n>lableTextFormGoodsReceiptQuantity}, {i18n>lableTextFormGoodsReceiptUnitOfMeasureShort}"/>
+						editable="{=${data>/LENUM}===null}" valueState="{view>/orderNumberValueState}" maxLength="7"
+						class="noScannerInput suwIncreadedInputFontSize"></Input>
+					<Label text="{i18n>lableTextFormGoodsReceiptQuantity}, {i18n>lableTextFormGoodsReceiptUnitOfMeasureShort}" labelFor="quantityInput"/>
 					<HBox alignItems="Center">
 						<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}"
 							editable="{view>/bStorageUnitValid}" class="suwIncreadedInputFontSize"></Input>
@@ -43,12 +44,12 @@
 						</layoutData>
 					</HBox>
 					<Input id="unitOfMeasureInput" value="{path: 'data>/MEINH', type:'.sapType.MEINS'}" change="onUnitOfMeasureChange"
-						editable="{=${data>/LENUM}===null}" maxLength="4" class="suwIncreadedInputFontSize"> 
+						editable="{=${data>/LENUM}===null}" maxLength="4" class="suwIncreadedInputFontSize">
 						<layoutData>
 							<l:GridData span="XL1 L1 M2 S4"/>
 						</layoutData>
 					</Input>
-					<Label text="{i18n>lableTextFormGoodsReceiptStorageLocation}"/>
+					<Label text="{i18n>lableTextFormGoodsReceiptStorageLocation}" labelFor="storageLocationInput"/>
 					<Input id="storageLocationInput" change="onStorageLocationChange" value="{path: 'data>/LGORT', type: '.sapType.LGORT'}"
 						editable="{=${data>/LENUM}===null}" maxLength="4" class="noScannerInput suwIncreadedInputFontSize"></Input>
 				</f:content>

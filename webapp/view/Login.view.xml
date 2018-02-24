@@ -2,7 +2,7 @@
 	<Page id="loginPage" title="{i18n>login.pageTitle.text}">
 		<content>
 			<HBox alignItems="Center" justifyContent="Center" class="sapUiLargeMarginTopBottom">
-				<Label text="{i18n>login.label.username.text}" labelFor="userIdInput" class="sapUiSmallMarginEnd"/>
+				<Label text="{i18n>login.label.username.text}" labelFor="usernameInput" class="sapUiSmallMarginEnd"/>
 				<Input id="usernameInput" liveChange="onLiveInput" submit="onLogin" placeholder="{i18n>login.input.username.placeholder}" required="true"/>
 			</HBox>
 			<Button id="loginButton" press="onLogin" text="{i18n>login.button.text}" width="100%"/>

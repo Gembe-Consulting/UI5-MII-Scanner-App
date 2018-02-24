@@ -16,10 +16,10 @@
 			<f:SimpleForm id="dataEntry" editable="true" layout="ResponsiveGridLayout" breakpointM="500" labelSpanXL="4" labelSpanL="4" labelSpanM="3"
 				labelSpanS="12" emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
 				<f:content>
-					<Label text="{i18n>rollerConveyor.form.label.storageUnit.text}"/>
+					<Label text="{i18n>rollerConveyor.form.label.storageUnit.text}" labelFor="storageUnitInput"/>
 					<Input id="storageUnitInput" value="{path: 'data>/storageUnit', type:'.sapType.LENUM'}" change="onStorageUnitInputChange"
 						valueState="{view>/storageUnitValueState}" maxLength="20" class="noScannerInput suwIncreadedInputFontSize"/>
-					<Label text="{i18n>rollerConveyor.form.label.quantity.text}, {i18n>rollerConveyor.form.label.unitOfMeasure-S.text}"/>
+					<Label text="{i18n>rollerConveyor.form.label.quantity.text}, {i18n>rollerConveyor.form.label.unitOfMeasure-S.text}" labelFor="quantityInput"/>
 					<HBox alignItems="Center">
 						<Input id="quantityInput" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}" change="onQuantityInputChange"
 							editable="{path: 'data>/ISTME', formatter:'.formatter.isEmptyStorageUnit' }" textAlign="End" class="suwIncreadedInputFontSize"></Input>
@@ -35,7 +35,7 @@
 							<l:GridData span="XL1 L1 M2 S4"/>
 						</layoutData>
 					</Input>
-					<Label text="{i18n>rollerConveyor.form.label.storageBin.text}"/>
+					<Label text="{i18n>rollerConveyor.form.label.storageBin.text}" labelFor="storageBinSelection"/>
 					<ComboBox id="storageBinSelection" selectedKey="{data>/storageBin}" change="onStorageBinSelectionChange"
 						selectionChange="onStorageBinSelectionChange"
 						valueState="{= ${data>/storageBin} === null ? 'None': ${data>/storageBin} === '' ? 'Error' : 'Success' }" showSecondaryValues="true"
@@ -47,7 +47,7 @@
 							enabled="{path: 'data>/storageUnit', formatter:'.formatter.isNotLastStorageUnit'}"/>
 						<c:ListItem key="PALE" text="{i18n>rollerConveyor.comboBox.listItem-PALE.text}" additionalText="PALE"/>
 					</ComboBox>
-					<Label text="{i18n>rollerConveyor.form.label.stretcher.text}"/>
+					<Label text="{i18n>rollerConveyor.form.label.stretcher.text}" labelFor="stretcherActiveSwitch"/>
 					<Switch id="stretcherActiveSwitch" customTextOn="{i18n>switchCustomOnYes}" customTextOff="{i18n>switchCustomOffNo}"
 						state="{data>/stretcherActive}"></Switch>
 				</f:content>
