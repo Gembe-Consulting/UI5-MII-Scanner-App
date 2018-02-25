@@ -25,6 +25,8 @@ sap.ui.define([
 
 			// initialize the error handler with the component
 			this._oErrorHandler = new ErrorHandler(this);
+			
+			this.bDebugMode = jQuery.sap.debug();
 
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
@@ -110,6 +112,11 @@ sap.ui.define([
 		 */
 		isUserLoggedIn: function() {
 			var oModel = this.getModel("user");
+			
+			//always return true if we are in debug mode
+			if(this.bDebugMode){
+				return true;
+			}
 
 			if (!oModel || !oModel.getProperty("/USERLOGIN") || oModel.getProperty("/USERLOGIN") === "") {
 				jQuery.sap.log.warning("User nicht angemeldet", "this.getModel('user') undefined or property USERLOGIN not given or empty.", this.toString());
