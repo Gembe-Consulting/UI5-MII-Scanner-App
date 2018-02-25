@@ -40,12 +40,12 @@
 						selectionChange="onStorageBinSelectionChange"
 						valueState="{= ${data>/storageBin} === null ? 'None': ${data>/storageBin} === '' ? 'Error' : 'Success' }" showSecondaryValues="true"
 						filterSecondaryValues="true" class="noScannerInput suwIncreadedInputFontSize">
-						<c:ListItem key="ROLLENBAHN" text="{i18n>rollerConveyor.comboBox.listItem-ROLLENBAHN.text}" additionalText="ROLLENBAHN"
+						<c:ListItem key="ROLLENBAHN" text="{i18n>rollerConveyor.comboBox.listItem-ROLLENBAHN.name}" additionalText="{i18n>rollerConveyor.comboBox.listItem-ROLLENBAHN.text}"
 							enabled="{path: 'data>/storageUnit', formatter:'.formatter.isNotLastStorageUnit'}"/>
-						<c:ListItem key="BEUM" text="{i18n>rollerConveyor.comboBox.listItem-BEUM.text}" additionalText="BEUM"/>
-						<c:ListItem key="STAPLER" text="{i18n>rollerConveyor.comboBox.listItem-STAPLER.text}" additionalText="STAPLER"
+						<c:ListItem key="BEUM" text="{i18n>rollerConveyor.comboBox.listItem-BEUM.name}" additionalText="{i18n>rollerConveyor.comboBox.listItem-BEUM.text}"/>
+						<c:ListItem key="STAPLER" text="{i18n>rollerConveyor.comboBox.listItem-STAPLER.name}" additionalText="{i18n>rollerConveyor.comboBox.listItem-STAPLER.text}"
 							enabled="{path: 'data>/storageUnit', formatter:'.formatter.isNotLastStorageUnit'}"/>
-						<c:ListItem key="PALE" text="{i18n>rollerConveyor.comboBox.listItem-PALE.text}" additionalText="PALE"/>
+						<c:ListItem key="PALE" text="{i18n>rollerConveyor.comboBox.listItem-PALE.name}" additionalText="{i18n>rollerConveyor.comboBox.listItem-PALE.text}"/>
 					</ComboBox>
 					<Label text="{i18n>rollerConveyor.form.label.stretcher.text}" labelFor="stretcherActiveSwitch"/>
 					<Switch id="stretcherActiveSwitch" customTextOn="{i18n>switchCustomOnYes}" customTextOff="{i18n>switchCustomOffNo}"

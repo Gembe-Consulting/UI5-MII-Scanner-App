@@ -22,7 +22,7 @@
 						selectionChange="onStorageBinSelectionChange"
 						valueState="{= ${data>/storageBin} === null ? 'None': ${data>/storageBin} === '' ? 'Error' : 'Success' }" showSecondaryValues="true"
 						filterSecondaryValues="true" class="noScannerInput suwIncreadedInputFontSize">
-						<c:ListItem key="{storageBinList>LGRPLTZ}" text="{storageBinList>LGRTXT}" additionalText="{storageBinList>LGRPLTZ}"
+						<c:ListItem key="{storageBinList>LGRPLTZ}" text="{storageBinList>LGRPLTZ}" additionalText="{storageBinList>LGRTXT}"
 							storageBinData:storageType="{storageBinList>LGRTYP}"/>
 					</ComboBox>
 					<Label text="{i18n>lableTextFormStockTransferStorageUnit}" labelFor="storageUnitInput"/>
