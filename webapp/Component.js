@@ -23,10 +23,12 @@ sap.ui.define([
 			// call the base component's init function
 			UIComponent.prototype.init.apply(this, arguments);
 
+			this._bDebugMode = jQuery.sap.debug();
+
 			// initialize the error handler with the component
 			this._oErrorHandler = new ErrorHandler(this);
 			
-			this.bDebugMode = jQuery.sap.debug();
+
 
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
@@ -114,7 +116,7 @@ sap.ui.define([
 			var oModel = this.getModel("user");
 			
 			//always return true if we are in debug mode
-			if(this.bDebugMode){
+			if(this._bDebugMode){
 				oModel.setProperty("/USERLOGIN", "DEBUG-USER");
 				return true;
 			}
@@ -252,6 +254,10 @@ sap.ui.define([
 				}
 			}
 			return this._sContentDensityClass;
+		},
+		
+		getDebugMode:function(){
+			return this._bDebugMode === "true";
 		},
 
 		/**
