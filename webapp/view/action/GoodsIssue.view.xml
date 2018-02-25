@@ -65,17 +65,22 @@
 							<Input id="storageLocationInput" value="{path: 'data>/storageLocation', type:'.sapType.LGORT'}" change="onStorageLocationInputChange"
 								visible="{=${view>/type}==='nonLE'}" maxLength="4" class="noScannerInput suwIncreadedInputFontSize">
 								<layoutData>
-									<l:GridData span="XL2 L3 M5 S8"/>
+									<l:GridData span="XL1 L2 M2 S5"/>
 								</layoutData>
 							</Input>
+							<Text id="bulkMaterialText" text="{i18n>lableTextFormGoodsIssueBulkMaterial}:" visible="{=${view>/type}==='nonLE'}" wrapping="true"
+								textAlign="End">
+								<layoutData>
+									<l:GridData span="XL1 L1 M3 S4"/>
+								</layoutData>
+							</Text>
 							<Switch id="bulkMaterialSwitch" state="{data>/bulkMaterialIndicator}" customTextOn="{i18n>switchCustomOnYes}"
 								customTextOff="{i18n>switchCustomOffNo}" visible="{=${view>/type}==='nonLE'}" tooltip="{i18n>lableTextFormGoodsIssueBulkMaterialTooltip}">
 								<layoutData>
-									<l:GridData span="XL1 L1 M2 S4"/>
+									<l:GridData span="XL1 L1 M2 S3"/>
 								</layoutData>
 							</Switch>
 							<!-- BULK -->
-							
 						</f:content>
 					</f:SimpleForm>
 				</items>
