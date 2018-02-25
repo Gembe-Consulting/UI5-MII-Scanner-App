@@ -31,6 +31,8 @@
 					//check if URL is in debug mode => set locale strage accordingly
 					if(jQuery.sap.getUriParameters().get("sap-ui-debug") === "true"){
 						localStorage.setItem("sap-ui-debug", true);
+					}else{
+						localStorage.removeItem("sap-ui-debug");
 					}
 					
 					new sap.m.Shell("shell",{
