@@ -116,7 +116,7 @@ Feature: Roller Conveyor
 		 And I can see quantityInput with value '' in action.RollerConveyor view
 		 And I can see quantityInput with editable being 'true' in action.RollerConveyor view
 		 And I can see unitOfMeasureInput with editable being 'true' in action.RollerConveyor view
-		Then on the Roller Conveyor Page: I should see storageBinSelection contains 2 enabled items
+		Then on the Roller Conveyor Page: I should see storageBinSelection contains other 2 enabled items
 		When I press ARROW_DOWN + ALT at storageBinSelection in action.RollerConveyor view
 		 And I click on 2nd item of storageBinSelection items in action.RollerConveyor view
 		Then I can see storageBinSelection with selectedKey 'BEUM' in action.RollerConveyor view
@@ -128,8 +128,8 @@ Feature: Roller Conveyor
 	@lastUnit @emptyLE @Beumer BEUM: "00248110"
 	Scenario: When entering last unit, and when selecting Beumer, then you should find process order, and then post 555, and then post 999
 		When I enter '90024811000000000000' into storageUnitInput in action.RollerConveyor view
-		Then on the Roller Conveyor Page: I should see storageBinSelection contains 1 enabled item
 		Then I can see storageBinSelection with selectedKey 'BEUM' in action.RollerConveyor view
+		 And I can see storageBinSelection with value 'BEUMER' in action.RollerConveyor view
 		 And I can see storageUnitInput with valueState 'Success' in action.RollerConveyor view
 		 And I can see quantityInput with value '' in action.RollerConveyor view
 		 And I can see quantityInput with editable being 'true' in action.RollerConveyor view
@@ -143,8 +143,8 @@ Feature: Roller Conveyor
 	@lastUnit @emptyLE @Palettierer PALE: "00253110"
 	Scenario: When entering last unit, and when selecting Palettierer, then you should find process order, and then post 555, and then post 999
 		When I enter '90025311000000000000' into storageUnitInput in action.RollerConveyor view
-		Then on the Roller Conveyor Page: I should see storageBinSelection contains 1 enabled item
 		Then I can see storageBinSelection with selectedKey 'PALE' in action.RollerConveyor view
+		 And I can see storageBinSelection with value 'PALETTIERER' in action.RollerConveyor view
 		 And I can see storageUnitInput with valueState 'Success' in action.RollerConveyor view
 		 And I can see quantityInput with value '' in action.RollerConveyor view
 		 And I can see quantityInput with editable being 'true' in action.RollerConveyor view

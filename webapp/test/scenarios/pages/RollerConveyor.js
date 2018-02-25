@@ -44,13 +44,29 @@ sap.ui.require([
 							success: function(oControl) {
 								var activeItems = oControl.getItems().filter(item => item.getEnabled());
 								
-								Opa5.assert.strictEqual(activeItems.length, 2, sControlId + " has 2 active items");
+								Opa5.assert.strictEqual(activeItems.length, iNumberOfItems, sControlId + " has "+iNumberOfItems+" active items");
+								Opa5.assert.strictEqual(activeItems[0].getKey(), "ROLLENBAHN", "First active item is ROLLENBAHN");
+								Opa5.assert.strictEqual(activeItems[1].getKey(), "STAPLER", "Second active item is STAPLER");
+							}
+						});
+					},
+					iShouldSeeStoragebinselectionContainsOther2EnabledItems: function() {
+						var iNumberOfItems = 2,
+							sControlId = "storageBinSelection",
+							sViewName = "action.RollerConveyor";
+
+						return this.waitFor({
+							id: sControlId,
+							viewName: sViewName,
+							success: function(oControl) {
+								var activeItems = oControl.getItems().filter(item => item.getEnabled());
+								
+								Opa5.assert.strictEqual(activeItems.length, iNumberOfItems, sControlId + " has "+iNumberOfItems+" active items");
 								Opa5.assert.strictEqual(activeItems[0].getKey(), "BEUM", "First active item is BEUM");
 								Opa5.assert.strictEqual(activeItems[1].getKey(), "PALE", "Second active item is PALE");
 							}
 						});
 					},
-
 					iShouldSeeAllInputFieldsAreInitial: function() {
 
 						var oInitialControlData = {

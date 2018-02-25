@@ -1,5 +1,5 @@
 <mvc:View controllerName="com.mii.scanner.controller.action.RollerConveyor" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
-	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
+	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:storageBinData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 	<Page id="rollerConveyorPage">
 		<customHeader>
 			<Toolbar id="header">
@@ -40,12 +40,21 @@
 						selectionChange="onStorageBinSelectionChange"
 						valueState="{= ${data>/storageBin} === null ? 'None': ${data>/storageBin} === '' ? 'Error' : 'Success' }" showSecondaryValues="true"
 						filterSecondaryValues="true" class="noScannerInput suwIncreadedInputFontSize">
+						
 						<c:ListItem key="ROLLENBAHN" text="{i18n>rollerConveyor.comboBox.listItem-ROLLENBAHN.name}" additionalText="{i18n>rollerConveyor.comboBox.listItem-ROLLENBAHN.text}"
 							enabled="{path: 'data>/storageUnit', formatter:'.formatter.isNotLastStorageUnit'}"/>
-						<c:ListItem key="BEUM" text="{i18n>rollerConveyor.comboBox.listItem-BEUM.name}" additionalText="{i18n>rollerConveyor.comboBox.listItem-BEUM.text}"/>
+							
+						<c:ListItem key="BEUM" text="{i18n>rollerConveyor.comboBox.listItem-BEUM.name}" additionalText="{i18n>rollerConveyor.comboBox.listItem-BEUM.text}"
+								enabled="{path: 'data>/storageUnit', formatter:'.formatter.isLastStorageUnit'}"
+								storageBinData:ressource="00248110"/>
+						
 						<c:ListItem key="STAPLER" text="{i18n>rollerConveyor.comboBox.listItem-STAPLER.name}" additionalText="{i18n>rollerConveyor.comboBox.listItem-STAPLER.text}"
 							enabled="{path: 'data>/storageUnit', formatter:'.formatter.isNotLastStorageUnit'}"/>
-						<c:ListItem key="PALE" text="{i18n>rollerConveyor.comboBox.listItem-PALE.name}" additionalText="{i18n>rollerConveyor.comboBox.listItem-PALE.text}"/>
+							
+						<c:ListItem key="PALE" text="{i18n>rollerConveyor.comboBox.listItem-PALE.name}" additionalText="{i18n>rollerConveyor.comboBox.listItem-PALE.text}"
+							enabled="{path: 'data>/storageUnit', formatter:'.formatter.isLastStorageUnit'}"
+							storageBinData:ressource="00253110"/>
+						
 					</ComboBox>
 					<Label text="{i18n>rollerConveyor.form.label.stretcher.text}" labelFor="stretcherActiveSwitch"/>
 					<Switch id="stretcherActiveSwitch" customTextOn="{i18n>switchCustomOnYes}" customTextOff="{i18n>switchCustomOffNo}"
