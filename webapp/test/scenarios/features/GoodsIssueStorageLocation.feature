@@ -14,6 +14,7 @@ Feature: Goods Issue without LE
 		Then I can see orderNumberInput in action.GoodsIssue view
 		Then I can see storageLocationInput in action.GoodsIssue view
 		Then I can see materialNumberInput in action.GoodsIssue view
+		Then I can see bulkMaterialText in action.GoodsIssue view
 		Then I can see bulkMaterialSwitch in action.GoodsIssue view
 		Then I can see clearQuantityInputIcon with src 'sap-icon://eraser' in action.GoodsIssue view
 		Then I can see clearFormButton in action.GoodsIssue view
@@ -23,6 +24,7 @@ Feature: Goods Issue without LE
 		Then I can see goodsIssuePageIcon2 with src 'sap-icon://filter' in action.GoodsIssue view
 		Then I can see goodsIssuePageIcon2 with color '#BB07FF' in action.GoodsIssue view
 		Then I can see goodsIssuePageTitle in action.GoodsIssue view has css color '#BB07FF'
+		Then I cannot see storageUnitInput in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
 		Then on the Goods Issue Page: I should see all "non LE" input fields are initial
 		Then on the Goods Issue Page: I should see data model and view model "non LE" are initial

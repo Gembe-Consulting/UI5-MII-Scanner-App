@@ -19,6 +19,10 @@ Feature: Goods Issue with LE
 		Then I can see goodsIssuePageIcon2 with src 'sap-icon://bar-code' in action.GoodsIssue view
 		Then I can see goodsIssuePageIcon2 with color '#BB07FF' in action.GoodsIssue view
 		Then I can see goodsIssuePageTitle in action.GoodsIssue view has css color '#BB07FF'
+		Then I cannot see bulkMaterialSwitch in action.GoodsIssue view
+		Then I cannot see materialNumberInput in action.GoodsIssue view
+		Then I cannot see storageLocationInput in action.GoodsIssue view
+		hen I cannot see bulkMaterialText in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
 		Then on the Goods Issue Page: I should see all "with LE" input fields are initial
 		Then on the Goods Issue Page: I should see data model and view model "with LE" are initial
@@ -61,7 +65,7 @@ Feature: Goods Issue with LE
 		When I look at the screen
 		Then I can see quantityInput with value '' in action.GoodsIssue view
 		When I enter '00000000109330000004' into storageUnitInput in action.GoodsIssue view
-		Then I can see storageUnitFragmentMaterialInfoText with text '1700948-030 - Zucker-Fett-VBT V185 RSPO-MB 600, BB' in action.GoodsIssue view
+		Then I can see storageUnitFragmentMaterialInfoText with text '1700948-030\nZucker-Fett-VBT V185 RSPO-MB 600, BB' in action.GoodsIssue view
 		 And I can see quantityInput with value '217,321' in action.GoodsIssue view
 		 And I can see unitOfMeasureInput with value 'KG' in action.GoodsIssue view
 		 And I can see storageUnitFragmentBatchText with text '0109331231' in action.GoodsIssue view
@@ -122,7 +126,7 @@ Feature: Goods Issue with LE
 	Scenario: Should show show warning message if users enter a storage unit with material number that is not contained in order component list (Unplanned Withdrawal)
 		When I enter '00000000109330000008' into storageUnitInput in action.GoodsIssue view
 		 And I enter '1234567' into orderNumberInput in action.GoodsIssue view
-		Then I can see storageUnitFragmentMaterialInfoText with text '0000000-000 - UNPLANNED WITHDRAWAL of Zucker-Fett-VBT' in action.GoodsIssue view
+		Then I can see storageUnitFragmentMaterialInfoText with text '0000000-000\nUNPLANNED WITHDRAWAL of Zucker-Fett-VBT' in action.GoodsIssue view
 		 And I can see messageStrip with text 'Ungeplante Entnahme: Komponente '0000000-000' für Auftrag '1234567' nicht vorgesehen!' in action.GoodsIssue view
 		 And I can see messageStrip with type 'Warning' in action.GoodsIssue view
 		 And I can see orderNumberInput with valueState 'Warning' in action.GoodsIssue view
