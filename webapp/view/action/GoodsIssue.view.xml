@@ -2,7 +2,7 @@
 	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
 	<Page id="goodsIssuePage">
 		<customHeader>
-			<Toolbar>
+			<Toolbar id="header">
 				<ToolbarSpacer/>
 				<c:Icon id="goodsIssuePageIcon" src="sap-icon://outbox" size="2rem" color="#BB07FF" alt="GI"/>
 				<c:Icon id="goodsIssuePageIcon2" src="{= ${view>/type}==='nonLE' ? 'sap-icon://filter' : 'sap-icon://bar-code'}" size="1.25rem"
@@ -14,7 +14,7 @@
 		</customHeader>
 		<content>
 			<l:VerticalLayout id="messageStripContainer" width="100%"></l:VerticalLayout>
-			<VBox height="100%" width="100%" direction="Column" alignItems="Center" justifyContent="Start">
+			<VBox width="100%" direction="Column" alignItems="Center" justifyContent="Start">
 				<items>
 					<HBox visible="{= ${data>/BESTQ}!=='0' &amp;&amp; ${data>/BESTQ}!==null}" alignItems="Center">
 						<c:Icon id="specialStockIndicatorIcon" src="sap-icon://quality-issue" color="#f9a429" size="4rem" class="sapUiMediumMarginBeginEnd"/>
@@ -27,52 +27,69 @@
 						<c:Icon id="expirationDateIndicatorIcon" src="sap-icon://quality-issue" color="#f9a429" size="4rem" class="sapUiMediumMarginBeginEnd"/>
 						<c:Icon id="expirationDateOutOfDateIcon" src="sap-icon://date-time" color="#f9a429" size="3rem" class="sapUiMediumMarginBeginEnd"/>
 					</HBox>
-					<f:SimpleForm editable="true" layout="ResponsiveGridLayout" breakpointM="400" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
-						emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
+					<f:SimpleForm id="dataEntry" editable="true" layout="ResponsiveGridLayout" breakpointM="500" labelSpanXL="4" labelSpanL="4" labelSpanM="3"
+						labelSpanS="12" emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
 						<f:content>
 							<!-- LENUM -->
-							<Label text="{i18n>lableTextFormGoodsIssueStorageUnit}"/>
+							<Label text="{i18n>lableTextFormGoodsIssueStorageUnit}" labelFor="storageUnitInput"/>
 							<Input id="storageUnitInput" value="{data>/storageUnit}" change="onStorageUnitInputChange" valueState="{view>/storageUnitNumberValueState}"
-								visible="{=${view>/type}!=='nonLE'}" maxLength="20" class="noScannerInput"/>
+								visible="{=${view>/type}!=='nonLE'}" maxLength="20" class="noScannerInput suwIncreadedInputFontSize"/>
 							<!-- AUFNR -->
-							<Label text="{i18n>lableTextFormGoodsIssueOrder}"/>
+							<Label text="{i18n>lableTextFormGoodsIssueOrder}" labelFor="orderNumberInput"/>
 							<Input id="orderNumberInput" change="onOrderNumberInputChange" value="{path: 'data>/orderNumber', type:'.sapType.AUFNR'}"
-								valueState="{view>/orderNumberValueState}" maxLength="7" class="noScannerInput"></Input>
+								valueState="{view>/orderNumberValueState}" maxLength="7" class="noScannerInput suwIncreadedInputFontSize"></Input>
 							<!-- MATNR -->
-							<Label text="{i18n>lableTextFormGoodsIssueMaterial}"/>
+							<Label text="{i18n>lableTextFormGoodsIssueMaterial}" labelFor="materialNumberInput"/>
 							<Input id="materialNumberInput" value="{path: 'data>/materialNumber', type:'.sapType.MATNR'}" change="onMaterialNumberInputChange"
-								valueState="{view>/materialNumberValueState}" visible="{=${view>/type}==='nonLE'}" maxLength="11" class="noScannerInput"></Input>
+								valueState="{view>/materialNumberValueState}" visible="{=${view>/type}==='nonLE'}" maxLength="11"
+								class="noScannerInput suwIncreadedInputFontSize"></Input>
 							<!-- QUAN, UOM -->
-							<Label text="{i18n>lableTextFormGoodsIssueQuantity}, {i18n>lableTextFormGoodsIssueUnitOfMeasureShort}"/>
+							<Label text="{i18n>lableTextFormGoodsIssueQuantity}, {i18n>lableTextFormGoodsIssueUnitOfMeasureShort}" labelFor="quantityInput"/>
 							<HBox alignItems="Center">
-								<Input id="quantityInput" textAlign="End" change="onQuantityInputChange" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}"></Input>
-								<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress" size="{=${device>/system/desktop}===true ? '1.25rem' : '1.75rem'}" class="sapUiSmallMarginEnd"></c:Icon>
+								<Input id="quantityInput" textAlign="End" change="onQuantityInputChange" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}"
+									class="suwIncreadedInputFontSize"></Input>
+								<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress"
+									size="{=${device>/system/desktop}===true ? '1.25rem' : '1.75rem'}" class="sapUiSmallMarginEnd"></c:Icon>
 								<layoutData>
-									<l:GridData span="XL2 L3 M4 S8"/>
+									<l:GridData span="XL2 L3 M5 S8"/>
 								</layoutData>
 							</HBox>
 							<Input id="unitOfMeasureInput" value="{path: 'data>/unitOfMeasure', type:'.sapType.MEINS'}" change="onUnitOfMeasureInputChange"
-								editable="{=${view>/type}==='nonLE'}" maxLength="4">
+								editable="{=${view>/type}==='nonLE'}" maxLength="4" class="suwIncreadedInputFontSize">
 								<layoutData>
 									<l:GridData span="XL1 L1 M2 S4"/>
 								</layoutData>
 							</Input>
 							<!-- LGORT -->
-							<Label text="{i18n>lableTextFormGoodsIssueStorageLocation}"/>
+							<Label text="{i18n>lableTextFormGoodsIssueStorageLocation}" labelFor="storageLocationInput"/>
 							<Input id="storageLocationInput" value="{path: 'data>/storageLocation', type:'.sapType.LGORT'}" change="onStorageLocationInputChange"
-								visible="{=${view>/type}==='nonLE'}" maxLength="4" class="noScannerInput"></Input>
-							<!-- BULK -->
-							<Label text="{i18n>lableTextFormGoodsIssueBulkMaterial}"/>
+								visible="{=${view>/type}==='nonLE'}" maxLength="4" class="noScannerInput suwIncreadedInputFontSize">
+								<layoutData>
+									<l:GridData span="XL1 L2 M2 S5"/>
+								</layoutData>
+							</Input>
+							<Text id="bulkMaterialText" text="{i18n>lableTextFormGoodsIssueBulkMaterial}:" visible="{=${view>/type}==='nonLE'}" wrapping="true"
+								textAlign="End">
+								<layoutData>
+									<l:GridData span="XL1 L1 M3 S4"/>
+								</layoutData>
+							</Text>
 							<Switch id="bulkMaterialSwitch" state="{data>/bulkMaterialIndicator}" customTextOn="{i18n>switchCustomOnYes}"
-								customTextOff="{i18n>switchCustomOffNo}" visible="{=${view>/type}==='nonLE'}" tooltip="{i18n>lableTextFormGoodsIssueBulkMaterialTooltip}"></Switch>
+								customTextOff="{i18n>switchCustomOffNo}" visible="{=${view>/type}==='nonLE'}" tooltip="{i18n>lableTextFormGoodsIssueBulkMaterialTooltip}">
+								<layoutData>
+									<l:GridData span="XL1 L1 M2 S3"/>
+								</layoutData>
+							</Switch>
+							<!-- BULK -->
 						</f:content>
 					</f:SimpleForm>
-					<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>
 				</items>
 			</VBox>
+			<!-- Storage Unit Info Form -->
+			<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>
 		</content>
 		<footer>
-			<Toolbar>
+			<Toolbar id="footer">
 				<ToolbarSpacer/>
 				<Button id="saveButton" type="Accept" text="{i18n>textButtonSaveGoodsIssue}" press="onSave" enabled="{view>/bValid}"/>
 				<Button id="cancelButton" type="Reject" text="{i18n>textButtonCancelGoodsIssue}" press="onCancelAction"/>

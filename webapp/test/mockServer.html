@@ -8,8 +8,8 @@
 
 		<!-- Bootstrap the UI5 core library -->
 		<script id="sap-ui-bootstrap"
-			src="../../resources/sap-ui-core-dbg.js"
-			data-sap-ui-loglevel="ALL"
+			src="../../resources/sap-ui-core.js"
+			data-sap-ui-loglevel="WARNING"
 			data-sap-ui-libs="sap.ui.core, sap.ui.layout, sap.m"
 			data-sap-ui-theme="sap_belize"
 			data-sap-ui-compatVersion="edge"
@@ -27,9 +27,16 @@
 				], function (mockserver) {
 					// set up test service for local testing
 					mockserver.init();
+
+					//check if URL is in debug mode => set locale strage accordingly
+					if(jQuery.sap.getUriParameters().get("sap-ui-debug") === "true"){
+						localStorage.setItem("sap-ui-debug", true);
+					}else{
+						localStorage.removeItem("sap-ui-debug");
+					}
 					
-					new sap.m.Shell({
-	            		app : new sap.ui.core.ComponentContainer({
+					new sap.m.Shell("shell",{
+	            		app : new sap.ui.core.ComponentContainer("container",{
 			               name : "com.mii.scanner",
 			               settings: {
 								id: "scanner"

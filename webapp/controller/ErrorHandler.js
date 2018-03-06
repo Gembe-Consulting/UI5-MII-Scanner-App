@@ -41,7 +41,7 @@ sap.ui.define([
 
 				oModel.attachParseError(showErrorMessage, this);
 
-				if (jQuery.sap.debug()) {
+				if (this._oComponent.getDebugMode()) {
 					oModel.attachRequestSent(showMessageToast, this);
 					oModel.attachRequestCompleted(showMessageToast, this);
 				}

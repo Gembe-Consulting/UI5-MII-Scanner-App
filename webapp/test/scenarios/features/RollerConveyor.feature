@@ -30,6 +30,7 @@ Feature: Roller Conveyor
 	@currentUnit
 	Scenario: Should validate empty storage unit number and check completeness
 		When I enter '00000000109330000015' into storageUnitInput in action.RollerConveyor view
+		Then on the Roller Conveyor Page: I should see storageBinSelection contains 2 enabled items
 		Then I can see storageUnitInput with valueState 'Success' in action.RollerConveyor view
 		 And I can see quantityInput with value '' in action.RollerConveyor view
 		 And I can see quantityInput with editable being 'true' in action.RollerConveyor view
@@ -47,6 +48,7 @@ Feature: Roller Conveyor
 	@currentUnit
 	Scenario: Should validate full storage unit number and check completeness
 		When I enter '00000000109330000016' into storageUnitInput in action.RollerConveyor view
+		Then on the Roller Conveyor Page: I should see storageBinSelection contains 2 enabled items
 		Then I can see storageUnitInput with valueState 'Success' in action.RollerConveyor view
 		 And I can see quantityInput with value '543,789' in action.RollerConveyor view
 		 And I can see quantityInput with editable being 'false' in action.RollerConveyor view
@@ -114,7 +116,7 @@ Feature: Roller Conveyor
 		 And I can see quantityInput with value '' in action.RollerConveyor view
 		 And I can see quantityInput with editable being 'true' in action.RollerConveyor view
 		 And I can see unitOfMeasureInput with editable being 'true' in action.RollerConveyor view
-		Then on the Roller Conveyor Page: I should see storageBinSelection contains 2 enabled items
+		Then on the Roller Conveyor Page: I should see storageBinSelection contains other 2 enabled items
 		When I press ARROW_DOWN + ALT at storageBinSelection in action.RollerConveyor view
 		 And I click on 2nd item of storageBinSelection items in action.RollerConveyor view
 		Then I can see storageBinSelection with selectedKey 'BEUM' in action.RollerConveyor view
@@ -123,24 +125,32 @@ Feature: Roller Conveyor
 		Then I can see storageBinSelection with selectedKey 'PALE' in action.RollerConveyor view
 		 And I can see storageBinSelection with valueState 'Success' in action.RollerConveyor view
 		 
-	@lastUnit @emptyLE @Beumer
+	@lastUnit @emptyLE @Beumer BEUM: "00248110"
 	Scenario: When entering last unit, and when selecting Beumer, then you should find process order, and then post 555, and then post 999
-		When I enter '90000000000000000000' into storageUnitInput in action.RollerConveyor view
-		 And I enter '100,123' into quantityInput in action.RollerConveyor view
+		When I enter '90024811000000000000' into storageUnitInput in action.RollerConveyor view
+		Then I can see storageBinSelection with selectedKey 'BEUM' in action.RollerConveyor view
+		 And I can see storageBinSelection with value 'BEUMER' in action.RollerConveyor view
+		 And I can see storageUnitInput with valueState 'Success' in action.RollerConveyor view
+		 And I can see quantityInput with value '' in action.RollerConveyor view
+		 And I can see quantityInput with editable being 'true' in action.RollerConveyor view
+		 And I can see unitOfMeasureInput with editable being 'true' in action.RollerConveyor view
+		When I enter '100,123' into quantityInput in action.RollerConveyor view
 		 And I enter 'KG' into unitOfMeasureInput in action.RollerConveyor view
-		 And I press ARROW_DOWN + ALT at storageBinSelection in action.RollerConveyor view
-		 And I click on 2nd item of storageBinSelection items in action.RollerConveyor view
 		 And I click on saveButton in action.RollerConveyor view
 		Then I can see messageStrip with text 'Letzte Palette - Spezial-Wareneingang mit pseudo BwA 555 - Spezial-Umbuchung mit pseudo BwA 999' in action.RollerConveyor view
 		 And I can see messageStrip with type 'Success' in action.RollerConveyor view
 
-	@lastUnit @emptyLE @Palettierer 
+	@lastUnit @emptyLE @Palettierer PALE: "00253110"
 	Scenario: When entering last unit, and when selecting Palettierer, then you should find process order, and then post 555, and then post 999
-		When I enter '90000000000000000000' into storageUnitInput in action.RollerConveyor view
-		 And I enter '321,456' into quantityInput in action.RollerConveyor view
+		When I enter '90025311000000000000' into storageUnitInput in action.RollerConveyor view
+		Then I can see storageBinSelection with selectedKey 'PALE' in action.RollerConveyor view
+		 And I can see storageBinSelection with value 'PALETTIERER' in action.RollerConveyor view
+		 And I can see storageUnitInput with valueState 'Success' in action.RollerConveyor view
+		 And I can see quantityInput with value '' in action.RollerConveyor view
+		 And I can see quantityInput with editable being 'true' in action.RollerConveyor view
+		 And I can see unitOfMeasureInput with editable being 'true' in action.RollerConveyor view
+		When I enter '321,456' into quantityInput in action.RollerConveyor view
 		 And I enter 'KG' into unitOfMeasureInput in action.RollerConveyor view
-		 And I press ARROW_DOWN + ALT at storageBinSelection in action.RollerConveyor view
-		 And I click on last item of storageBinSelection items in action.RollerConveyor view
 		 And I click on saveButton in action.RollerConveyor view
 		Then I can see messageStrip with text 'Letzte Palette - Spezial-Wareneingang mit pseudo BwA 555 - Spezial-Umbuchung mit pseudo BwA 999' in action.RollerConveyor view
 		 And I can see messageStrip with type 'Success' in action.RollerConveyor view

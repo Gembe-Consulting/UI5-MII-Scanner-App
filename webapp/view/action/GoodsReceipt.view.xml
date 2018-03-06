@@ -1,8 +1,8 @@
 <mvc:View controllerName="com.mii.scanner.controller.action.GoodsReceipt" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
 	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
-	<Page id="goodsReceiptPage" title="" showNavButton="false">
+	<Page id="goodsReceiptPage">
 		<customHeader>
-			<Toolbar>
+			<Toolbar id="header">
 				<ToolbarSpacer/>
 				<c:Icon id="goodsReceiptPageIcon" src="sap-icon://inbox" size="2rem" color="#1F35DE" alt="GR" class="sapUiSmallMarginEnd"/>
 				<Title id="goodsReceiptPageTitle" text="{i18n>titleGoodsReceipt}" class="suwGoodsReceiptTitle"/>
@@ -22,44 +22,43 @@
 				Beispiel:
 					labelSpanS="12" => auf kleinen devices wird die Lablezeile auf die komplette Zeile gespannt
 			-->
-			<VBox height="100%" width="100%" direction="Column" alignItems="Center" justifyContent="Start">
-				<items>
-					<f:SimpleForm editable="true" layout="ResponsiveGridLayout" breakpointM="400" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
-						emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
-						<f:content>
-							<Label text="{i18n>lableTextFormGoodsReceiptStorageUnit}"/>
-							<Input id="storageUnitInput" change="onStorageUnitNumberChange"
-								value="{path: 'data>/LENUM', type:'.sapType.LENUM'}" editable="{= ${data>/LGORT}==='1000' || ${data>/LGORT}==='' || ${data>/LGORT}===null}"
-								valueState="{view>/storageUnitNumberValueState}" maxLength="20" class="noScannerInput"></Input>
-							<Label text="{i18n>lableTextFormGoodsReceiptOrder}"/>
-							<Input id="orderNumberInput" value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}" change="onOrderNumberChange"
-								editable="{=${data>/LENUM}===null}" valueState="{view>/orderNumberValueState}" maxLength="7" class="noScannerInput"></Input>
-							<Label text="{i18n>lableTextFormGoodsReceiptQuantity}, {i18n>lableTextFormGoodsReceiptUnitOfMeasureShort}"/>
-							<HBox alignItems="Center">
-								<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}"
-									editable="{view>/bStorageUnitValid}"></Input>
-								<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress" size="{=${device>/system/desktop}===true ? '1.25rem' : '1.75rem'}" class="sapUiSmallMarginEnd"></c:Icon>
-								<layoutData>
-									<l:GridData span="XL2 L3 M4 S8"/>
-								</layoutData>
-							</HBox>
-							<Input id="unitOfMeasureInput"  value="{path: 'data>/MEINH', type:'.sapType.MEINS'}" change="onUnitOfMeasureChange"
-								editable="{=${data>/LENUM}===null}" maxLength="4">
-								<layoutData>
-									<l:GridData span="XL1 L1 M2 S4"/>
-								</layoutData>
-							</Input>
-							<Label text="{i18n>lableTextFormGoodsReceiptStorageLocation}"/>
-							<Input id="storageLocationInput" change="onStorageLocationChange"
-								value="{path: 'data>/LGORT', type: '.sapType.LGORT'}" editable="{=${data>/LENUM}===null}"  maxLength="4" class="noScannerInput"></Input>
-						</f:content>
-					</f:SimpleForm>
-					<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>
-				</items>
-			</VBox>
+			<f:SimpleForm id="dataEntry" editable="true" layout="ResponsiveGridLayout" breakpointM="500" labelSpanXL="4" labelSpanL="4" labelSpanM="3"
+				labelSpanS="12" emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
+				<f:content>
+					<Label text="{i18n>lableTextFormGoodsReceiptStorageUnit}" labelFor="storageUnitInput"/>
+					<Input id="storageUnitInput" change="onStorageUnitNumberChange" value="{path: 'data>/LENUM', type:'.sapType.LENUM'}"
+						editable="{= ${data>/LGORT}==='1000' || ${data>/LGORT}==='' || ${data>/LGORT}===null}" valueState="{view>/storageUnitNumberValueState}"
+						maxLength="20" class="noScannerInput suwIncreadedInputFontSize"></Input>
+					<Label text="{i18n>lableTextFormGoodsReceiptOrder}" labelFor="orderNumberInput"/>
+					<Input id="orderNumberInput" value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}" change="onOrderNumberChange"
+						editable="{=${data>/LENUM}===null}" valueState="{view>/orderNumberValueState}" maxLength="7"
+						class="noScannerInput suwIncreadedInputFontSize"></Input>
+					<Label text="{i18n>lableTextFormGoodsReceiptQuantity}, {i18n>lableTextFormGoodsReceiptUnitOfMeasureShort}" labelFor="quantityInput"/>
+					<HBox alignItems="Center">
+						<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}"
+							editable="{view>/bStorageUnitValid}" class="suwIncreadedInputFontSize"></Input>
+						<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress"
+							size="{=${device>/system/desktop}===true ? '1.25rem' : '1.75rem'}" class="sapUiSmallMarginEnd"></c:Icon>
+						<layoutData>
+							<l:GridData span="XL2 L3 M5 S8"/>
+						</layoutData>
+					</HBox>
+					<Input id="unitOfMeasureInput" value="{path: 'data>/MEINH', type:'.sapType.MEINS'}" change="onUnitOfMeasureChange"
+						editable="{=${data>/LENUM}===null}" maxLength="4" class="suwIncreadedInputFontSize">
+						<layoutData>
+							<l:GridData span="XL1 L1 M2 S4"/>
+						</layoutData>
+					</Input>
+					<Label text="{i18n>lableTextFormGoodsReceiptStorageLocation}" labelFor="storageLocationInput"/>
+					<Input id="storageLocationInput" change="onStorageLocationChange" value="{path: 'data>/LGORT', type: '.sapType.LGORT'}"
+						editable="{=${data>/LENUM}===null}" maxLength="4" class="noScannerInput suwIncreadedInputFontSize"></Input>
+				</f:content>
+			</f:SimpleForm>
+			<!-- Storage Unit Info Form -->
+			<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>
 		</content>
 		<footer>
-			<Toolbar>
+			<Toolbar id="footer">
 				<ToolbarSpacer/>
 				<Button id="saveButton" type="Accept" text="{i18n>textButtonSaveGoodsReceipt}" press="onSave" enabled="{view>/bValid}"/>
 				<Button id="cancelButton" type="Reject" text="{i18n>textButtonCancelGoodsReceipt}" press="onCancelAction"/>

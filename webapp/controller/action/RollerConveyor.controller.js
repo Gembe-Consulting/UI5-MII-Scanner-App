@@ -64,36 +64,35 @@ sap.ui.define([
 				bIsEmptyUnit = this.formatter.isEmptyStorageUnit(oDataModel.getProperty("/ISTME")),
 				doPosting,
 				that = this;
-				
+
 			// prepare messages array
 			oData.messages = [];
 
 			if (bIsLastUnit) { // considering bIsEmptyUnit is always true if bIsLastUnit is true
 				oData.messages.push("Letzte Palette");
 				oDataModel.setProperty("/movementType", 555);
-				
+
 				doPosting = this._findRunningProcessOrder(oData)
-								.then(this._createGoodsReceipt);	//555
+					.then(this._createGoodsReceiptRollerConveyor); //555
 
 			} else if (bIsEmptyUnit) {
 				oData.messages.push("Laufende Palette");
 				oDataModel.setProperty("/movementType", 101);
-				
-				doPosting = this._createGoodsReceipt(oData);		//101
-				
-			}else{
+
+				doPosting = this._createGoodsReceipt(oData); //101
+
+			} else {
 				oData.messages.push("Laufende Palette");
 				doPosting = Promise.resolve(oData);
 			}
-			
+
 			doPosting.then(this._createStockTransfer)
-					.then(function(oData){
-						that.addLogMessage({
-							text: oData.messages.join(" - "),
-							type: sap.ui.core.MessageType.Success
+				.then(function(oData) {
+					that.addLogMessage({
+						text: oData.messages.join(" - "),
+						type: sap.ui.core.MessageType.Success
 					});
-			});
-			
+				});
 
 		},
 
@@ -119,7 +118,7 @@ sap.ui.define([
 					type: sap.ui.core.MessageType.Information
 				});
 
-				return this.setAndRepairDataModel(oSource);
+				return this.setAndRepairDataModel(oSource, sStorageUnitNumber);
 			}
 
 			sStorageUnitNumber = this._padStorageUnitNumber(sStorageUnitNumber);
@@ -184,8 +183,9 @@ sap.ui.define([
 				}.bind(this));
 		},
 
-		setAndRepairDataModel: function(oSource) {
+		setAndRepairDataModel: function(oSource, sStorageUnitNumber) {
 			var oDataModel = this.getModel("data"),
+				oRessource,
 				oStorageBinControl,
 				oStorageBin;
 
@@ -207,7 +207,41 @@ sap.ui.define([
 				oStorageBinControl.setSelectedItemId(); //clear value
 			}
 
+			oRessource = this.getRessourceOfDummyStorageUnit(sStorageUnitNumber);
+
+			if (oRessource) {
+				oStorageBinControl.setSelectedKey(oRessource.get("storageBin"));
+			}
+
 			return true;
+		},
+
+		getRessourceOfDummyStorageUnit: function(sStorageUnitNumber) {
+			var sRessource,
+				oRessource,
+				mRessource = new Map();
+
+			// check if valid LE
+			if (!sStorageUnitNumber.startsWith("900") && sStorageUnitNumber.length === 20) {
+				return;
+			}
+
+			// find ressource id
+			sRessource = sStorageUnitNumber.substring(1, 9);
+
+			//check ressource id
+			oRessource = this.mapStorageBinToRessource.filter(function(o) {
+				return Object.values(o)[0] === sRessource;
+			})[0];
+
+			if (!oRessource) {
+				return;
+			}
+
+			mRessource.set("ressourceId", Object.values(oRessource)[0]);
+			mRessource.set("storageBin", Object.keys(oRessource)[0]);
+
+			return mRessource;
 		},
 
 		onQuantityInputChange: function(oEvent) {
@@ -255,7 +289,7 @@ sap.ui.define([
 				return !!o[sStorageBin];
 			})[0][sStorageBin];
 		},
-		
+
 		/**
 		 * creates a goods receipt by sending goods movement to ERP
 		 * 
@@ -273,19 +307,41 @@ sap.ui.define([
 			var sendGoodsReceipt;
 
 			sendGoodsReceipt = new Promise(function(resolve, reject) {
-				
-				if (oData.movementType === 101) {
-					oData.messages.push("Normal-Wareneingang mit echt BwA 101");
-				} else {
-					oData.messages.push("Spezial-Wareneingang mit pseudo BwA 555");
-				}
-				
+
+				oData.messages.push("Normal-Wareneingang mit echt BwA 101");
+
 				resolve(oData);
 			});
 
 			return sendGoodsReceipt;
 		},
-		
+
+		/**
+		 * creates a goods receipt special for roller conveyor by sending goods movement to ERP
+		 * 
+		 * sBwA controls what service is called:
+		 * - Calls on sBwA 101 => SUMISA/Production/trx_GoodsMovementToSap
+		 * - Sends in case 101: BWART, AUFNR, ARBID, MENGE, MEINS, UNAME
+		 * 
+		 * - Calls on sBwA 555 => SUMISA/Production/trx_GoodsMovementToSAP_Rollenbahn
+		 * - Sends in case 555: BWART, AUFNR, LENUM, MENGE, MEINS, UNAME
+		 * 
+		 * @param oData {object} data
+		 * @return Promise {object} resolved with message {string}
+		 */
+		_createGoodsReceiptRollerConveyor: function(oData) {
+			var sendGoodsReceiptRollerConveyor;
+
+			sendGoodsReceiptRollerConveyor = new Promise(function(resolve, reject) {
+
+				oData.messages.push("Spezial-Wareneingang mit pseudo BwA 555");
+
+				resolve(oData);
+			});
+
+			return sendGoodsReceiptRollerConveyor;
+		},
+
 		/**
 		 * Creates a new storage unit aka. palette
 		 * - Calls SUMISA/Scanner/Rollenbahn/trx_NeuePalette
@@ -300,13 +356,13 @@ sap.ui.define([
 			var sendStockTransfer;
 
 			sendStockTransfer = new Promise(function(resolve, reject) {
-				oData.messages.push("Spezial-Umbuchung mit pseudo BwA 999")
+				oData.messages.push("Spezial-Umbuchung mit pseudo BwA 999");
 				resolve(oData);
 			});
 
 			return sendStockTransfer;
 		},
-		
+
 		/**
 		 * Resolves the currently running process order by the given storage bin
 		 * - Calls SUMISA/Scanner/Rollenbahn/sql_FindCurrentPAByARBID
@@ -325,7 +381,7 @@ sap.ui.define([
 				} else {
 					oData.AUFNR = "4711";
 				}
-				
+
 				resolve(oData);
 			});
 

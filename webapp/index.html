@@ -21,8 +21,8 @@
 
 		<script>
 			sap.ui.getCore().attachInit(function() {
-				new sap.m.Shell({
-            		app : new sap.ui.core.ComponentContainer({
+				new sap.m.Shell("shell",{
+            		app : new sap.ui.core.ComponentContainer("container",{
 		               name : "com.mii.scanner",
 		               settings: {
 							id: "scanner"

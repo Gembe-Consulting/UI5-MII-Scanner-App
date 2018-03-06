@@ -210,6 +210,20 @@ sap.ui.define([
 			oData.d.results[0].Rowset.results[0].Row.results = aOrderNumberList;
 
 			return oData;
+		},
+		
+		fnGetCurrentProcessOrderQry: function(oData, oParams) {
+			var oUriParameters = jQuery.sap.getUriParameters(),
+				sRessourceId = oParams.get("Param.1"),
+				aOrderNumberList = oData.d.results[0].Rowset.results[0].Row.results;
+
+			aOrderNumberList = jQuery.grep(aOrderNumberList, function(oRow, index) {
+				return oRow.ARBID === sRessourceId;
+			});
+
+			oData.d.results[0].Rowset.results[0].Row.results = aOrderNumberList;
+				
+			return oData;
 		}
 	};
 

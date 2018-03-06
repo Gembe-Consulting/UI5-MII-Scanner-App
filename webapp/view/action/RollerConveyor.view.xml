@@ -1,8 +1,8 @@
 <mvc:View controllerName="com.mii.scanner.controller.action.RollerConveyor" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
-	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
+	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:storageBinData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 	<Page id="rollerConveyorPage">
 		<customHeader>
-			<Toolbar>
+			<Toolbar id="header">
 				<ToolbarSpacer/>
 				<c:Icon id="rollerConveyorPageIcon" src="sap-icon://instance" size="2rem" color="#05B074" alt="RC"/>
 				<c:Icon id="rollerConveyorPageIcon2" src="sap-icon://process" size="1.25rem" color="#05B074" class="sapUiSmallMarginEnd" alt="RC2"/>
@@ -13,52 +13,59 @@
 		</customHeader>
 		<content>
 			<l:VerticalLayout id="messageStripContainer" width="100%"></l:VerticalLayout>
-			<VBox height="100%" width="100%" direction="Column" alignItems="Center" justifyContent="Start">
-				<items>
-					<f:SimpleForm editable="true" layout="ResponsiveGridLayout" breakpointM="400" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
-						emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
-						<f:content>
-							<Label text="{i18n>rollerConveyor.form.label.storageUnit.text}"/>
-							<Input id="storageUnitInput" value="{path: 'data>/storageUnit', type:'.sapType.LENUM'}" change="onStorageUnitInputChange"
-								valueState="{view>/storageUnitValueState}" maxLength="20" class="noScannerInput"/>
-							<Label text="{i18n>rollerConveyor.form.label.quantity.text}, {i18n>rollerConveyor.form.label.unitOfMeasure-S.text}"/>
-							<HBox alignItems="Center">
-								<Input id="quantityInput" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}" change="onQuantityInputChange"
-									editable="{path: 'data>/ISTME', formatter:'.formatter.isEmptyStorageUnit' }" textAlign="End"></Input>
-								<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress" size="{=${device>/system/desktop}===true ? '1.25rem' : '1.75rem'}" class="sapUiSmallMarginEnd" alt="CLEAR"></c:Icon>
-								<layoutData>
-									<l:GridData span="XL2 L3 M4 S8"/>
-								</layoutData>
-							</HBox>
-							<Input id="unitOfMeasureInput" value="{path: 'data>/unitOfMeasure', type:'.sapType.MEINH'}" change="onUnitOfMeasureInputChange"
-								editable="{path: 'data>/storageUnit', formatter:'.formatter.isLastStorageUnit'}" maxLength="4">
-								<layoutData>
-									<l:GridData span="XL1 L1 M2 S4"/>
-								</layoutData>
-							</Input>
-							<Label text="{i18n>rollerConveyor.form.label.storageBin.text}"/>
-							<ComboBox id="storageBinSelection" selectedKey="{data>/storageBin}" change="onStorageBinSelectionChange"
-								selectionChange="onStorageBinSelectionChange" 
-								valueState="{= ${data>/storageBin} === null ? 'None': ${data>/storageBin} === '' ? 'Error' : 'Success' }"
-								showSecondaryValues="true" filterSecondaryValues="true" class="noScannerInput">
-								<c:ListItem key="ROLLENBAHN" text="{i18n>rollerConveyor.comboBox.listItem-ROLLENBAHN.text}" additionalText="ROLLENBAHN"
-									enabled="{path: 'data>/storageUnit', formatter:'.formatter.isNotLastStorageUnit'}"/>
-								<c:ListItem key="BEUM" text="{i18n>rollerConveyor.comboBox.listItem-BEUM.text}" additionalText="BEUM"/>
-								<c:ListItem key="STAPLER" text="{i18n>rollerConveyor.comboBox.listItem-STAPLER.text}" additionalText="STAPLER"
-									enabled="{path: 'data>/storageUnit', formatter:'.formatter.isNotLastStorageUnit'}"/>
-								<c:ListItem key="PALE" text="{i18n>rollerConveyor.comboBox.listItem-PALE.text}" additionalText="PALE"/>
-							</ComboBox>
-							<Label text="{i18n>rollerConveyor.form.label.stretcher.text}"/>
-							<Switch id="stretcherActiveSwitch" customTextOn="{i18n>switchCustomOnYes}" customTextOff="{i18n>switchCustomOffNo}"
-								state="{data>/stretcherActive}"></Switch>
-						</f:content>
-					</f:SimpleForm>
-					<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>
-				</items>
-			</VBox>
+			<f:SimpleForm id="dataEntry" editable="true" layout="ResponsiveGridLayout" breakpointM="500" labelSpanXL="4" labelSpanL="4" labelSpanM="3"
+				labelSpanS="12" emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
+				<f:content>
+					<Label text="{i18n>rollerConveyor.form.label.storageUnit.text}" labelFor="storageUnitInput"/>
+					<Input id="storageUnitInput" value="{path: 'data>/storageUnit', type:'.sapType.LENUM'}" change="onStorageUnitInputChange"
+						valueState="{view>/storageUnitValueState}" maxLength="20" class="noScannerInput suwIncreadedInputFontSize"/>
+					<Label text="{i18n>rollerConveyor.form.label.quantity.text}, {i18n>rollerConveyor.form.label.unitOfMeasure-S.text}" labelFor="quantityInput"/>
+					<HBox alignItems="Center">
+						<Input id="quantityInput" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}" change="onQuantityInputChange"
+							editable="{path: 'data>/ISTME', formatter:'.formatter.isEmptyStorageUnit' }" textAlign="End" class="suwIncreadedInputFontSize"></Input>
+						<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress"
+							size="{=${device>/system/desktop}===true ? '1.25rem' : '1.75rem'}" class="sapUiSmallMarginEnd" alt="CLEAR"></c:Icon>
+						<layoutData>
+							<l:GridData span="XL2 L3 M5 S8"/>
+						</layoutData>
+					</HBox>
+					<Input id="unitOfMeasureInput" value="{path: 'data>/unitOfMeasure', type:'.sapType.MEINH'}" change="onUnitOfMeasureInputChange"
+						editable="{path: 'data>/storageUnit', formatter:'.formatter.isLastStorageUnit'}" maxLength="4" class="suwIncreadedInputFontSize">
+						<layoutData>
+							<l:GridData span="XL1 L1 M2 S4"/>
+						</layoutData>
+					</Input>
+					<Label text="{i18n>rollerConveyor.form.label.storageBin.text}" labelFor="storageBinSelection"/>
+					<ComboBox id="storageBinSelection" selectedKey="{data>/storageBin}" change="onStorageBinSelectionChange"
+						selectionChange="onStorageBinSelectionChange"
+						valueState="{= ${data>/storageBin} === null ? 'None': ${data>/storageBin} === '' ? 'Error' : 'Success' }" showSecondaryValues="true"
+						filterSecondaryValues="true" class="noScannerInput suwIncreadedInputFontSize">
+						
+						<c:ListItem key="ROLLENBAHN" text="{i18n>rollerConveyor.comboBox.listItem-ROLLENBAHN.name}" additionalText="{i18n>rollerConveyor.comboBox.listItem-ROLLENBAHN.text}"
+							enabled="{path: 'data>/storageUnit', formatter:'.formatter.isNotLastStorageUnit'}"/>
+							
+						<c:ListItem key="BEUM" text="{i18n>rollerConveyor.comboBox.listItem-BEUM.name}" additionalText="{i18n>rollerConveyor.comboBox.listItem-BEUM.text}"
+								enabled="{path: 'data>/storageUnit', formatter:'.formatter.isLastStorageUnit'}"
+								storageBinData:ressource="00248110"/>
+						
+						<c:ListItem key="STAPLER" text="{i18n>rollerConveyor.comboBox.listItem-STAPLER.name}" additionalText="{i18n>rollerConveyor.comboBox.listItem-STAPLER.text}"
+							enabled="{path: 'data>/storageUnit', formatter:'.formatter.isNotLastStorageUnit'}"/>
+							
+						<c:ListItem key="PALE" text="{i18n>rollerConveyor.comboBox.listItem-PALE.name}" additionalText="{i18n>rollerConveyor.comboBox.listItem-PALE.text}"
+							enabled="{path: 'data>/storageUnit', formatter:'.formatter.isLastStorageUnit'}"
+							storageBinData:ressource="00253110"/>
+						
+					</ComboBox>
+					<Label text="{i18n>rollerConveyor.form.label.stretcher.text}" labelFor="stretcherActiveSwitch"/>
+					<Switch id="stretcherActiveSwitch" customTextOn="{i18n>switchCustomOnYes}" customTextOff="{i18n>switchCustomOffNo}"
+						state="{data>/stretcherActive}"></Switch>
+				</f:content>
+			</f:SimpleForm>
+			<!-- Storage Unit Info Form -->
+			<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.StorageUnitInfoForm" type="XML"/>
 		</content>
 		<footer>
-			<Toolbar>
+			<Toolbar id="footer">
 				<ToolbarSpacer/>
 				<Button id="saveButton" type="Accept" text="{i18n>rollerConveyor.saveButton.text}" press="onSave" enabled="{view>/bValid}"/>
 				<Button id="cancelButton" type="Reject" text="{i18n>rollerConveyor.canceButton.text}" press="onCancelAction"/>
