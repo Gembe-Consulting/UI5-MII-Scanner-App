@@ -117,6 +117,33 @@
 					"preventParameterlessload": true
 				}
 			},
+			"goodsMovementRollerConveyor":{
+				"dataSource": "illuminatorService",
+				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/goodsmovement/GoodsMovementRollerConveyorCreateXac",
+				"type": "mii.util.model.illum.QueryTemplateModel",
+				"settings": {
+					"preventInitialLoad": true,
+					"preventParameterlessload": true
+				}
+			},
+			"storageUnitCreate":{
+				"dataSource": "illuminatorService",
+				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/rollerconveyor/StorageUnitNumberCreateXac",
+				"type": "mii.util.model.illum.QueryTemplateModel",
+				"settings": {
+					"preventInitialLoad": true,
+					"preventParameterlessload": true
+				}
+			},
+			"currentProcessOrder":{
+				"dataSource": "illuminatorService",
+				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/rollerconveyor/GetCurrentProcessOrderQry",
+				"type": "mii.util.model.illum.QueryTemplateModel",
+				"settings": {
+					"preventInitialLoad": true,
+					"preventParameterlessload": true
+				}
+			},
 			"storageBinList": {
 				"dataSource": "illuminatorService",
 				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/stocktransfer/GetStorageBinListQry",

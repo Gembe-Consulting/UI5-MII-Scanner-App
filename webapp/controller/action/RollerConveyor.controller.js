@@ -73,7 +73,7 @@ sap.ui.define([
 				oDataModel.setProperty("/movementType", 555);
 
 				doPosting = this._findRunningProcessOrder(oData)
-					.then(this._createGoodsReceipt); //555
+					.then(this._createGoodsReceiptRollerConveyor); //555
 
 			} else if (bIsEmptyUnit) {
 				oData.messages.push("Laufende Palette");
@@ -208,39 +208,39 @@ sap.ui.define([
 			}
 
 			oRessource = this.getRessourceOfDummyStorageUnit(sStorageUnitNumber);
-			
-			if(oRessource){
+
+			if (oRessource) {
 				oStorageBinControl.setSelectedKey(oRessource.get("storageBin"));
 			}
 
 			return true;
 		},
-		
+
 		getRessourceOfDummyStorageUnit: function(sStorageUnitNumber) {
 			var sRessource,
 				oRessource,
-				mRessource = new Map();;
-			
+				mRessource = new Map();
+
 			// check if valid LE
 			if (!sStorageUnitNumber.startsWith("900") && sStorageUnitNumber.length === 20) {
 				return;
 			}
-			
+
 			// find ressource id
 			sRessource = sStorageUnitNumber.substring(1, 9);
-			
+
 			//check ressource id
-			oRessource = this.mapStorageBinToRessource.filter(function(o){
+			oRessource = this.mapStorageBinToRessource.filter(function(o) {
 				return Object.values(o)[0] === sRessource;
 			})[0];
-			
-			if(!oRessource){
+
+			if (!oRessource) {
 				return;
 			}
-			
+
 			mRessource.set("ressourceId", Object.values(oRessource)[0]);
 			mRessource.set("storageBin", Object.keys(oRessource)[0]);
-			
+
 			return mRessource;
 		},
 
@@ -289,12 +289,6 @@ sap.ui.define([
 				return !!o[sStorageBin];
 			})[0][sStorageBin];
 		},
-		
-		findStorageBinOfRessource: function(sRessource) {
-			return this.mapStorageBinToRessource.filter(function(o) {
-				return !!o[sStorageBin];
-			})[0][sStorageBin];
-		},
 
 		/**
 		 * creates a goods receipt by sending goods movement to ERP
@@ -314,16 +308,38 @@ sap.ui.define([
 
 			sendGoodsReceipt = new Promise(function(resolve, reject) {
 
-				if (oData.movementType === 101) {
-					oData.messages.push("Normal-Wareneingang mit echt BwA 101");
-				} else {
-					oData.messages.push("Spezial-Wareneingang mit pseudo BwA 555");
-				}
+				oData.messages.push("Normal-Wareneingang mit echt BwA 101");
 
 				resolve(oData);
 			});
 
 			return sendGoodsReceipt;
+		},
+
+		/**
+		 * creates a goods receipt special for roller conveyor by sending goods movement to ERP
+		 * 
+		 * sBwA controls what service is called:
+		 * - Calls on sBwA 101 => SUMISA/Production/trx_GoodsMovementToSap
+		 * - Sends in case 101: BWART, AUFNR, ARBID, MENGE, MEINS, UNAME
+		 * 
+		 * - Calls on sBwA 555 => SUMISA/Production/trx_GoodsMovementToSAP_Rollenbahn
+		 * - Sends in case 555: BWART, AUFNR, LENUM, MENGE, MEINS, UNAME
+		 * 
+		 * @param oData {object} data
+		 * @return Promise {object} resolved with message {string}
+		 */
+		_createGoodsReceiptRollerConveyor: function(oData) {
+			var sendGoodsReceiptRollerConveyor;
+
+			sendGoodsReceiptRollerConveyor = new Promise(function(resolve, reject) {
+
+				oData.messages.push("Spezial-Wareneingang mit pseudo BwA 555");
+
+				resolve(oData);
+			});
+
+			return sendGoodsReceiptRollerConveyor;
 		},
 
 		/**
@@ -340,7 +356,7 @@ sap.ui.define([
 			var sendStockTransfer;
 
 			sendStockTransfer = new Promise(function(resolve, reject) {
-				oData.messages.push("Spezial-Umbuchung mit pseudo BwA 999")
+				oData.messages.push("Spezial-Umbuchung mit pseudo BwA 999");
 				resolve(oData);
 			});
 
