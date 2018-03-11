@@ -146,15 +146,17 @@ sap.ui.define([
 						bStorageUnitValid = false;
 					}
 
-					oDataModel.setData(oStorageUnit, true /*bMerge*/ );
+					if (bStorageUnitValid) {
+						oDataModel.setData(oStorageUnit, true /*bMerge*/ );
 
-					//remap some properties
-					oDataModel.setProperty("/unitOfMeasure", oStorageUnit.MEINH);
+						//remap some properties
+						oDataModel.setProperty("/unitOfMeasure", oStorageUnit.MEINH);
 
-					if (!this.formatter.isEmptyStorageUnit(oStorageUnit.ISTME)) {
-						oDataModel.setProperty("/entryQuantity", oStorageUnit.ISTME);
-					} else {
-						oDataModel.setProperty("/entryQuantity", null);
+						if (!this.formatter.isEmptyStorageUnit(oStorageUnit.ISTME)) {
+							oDataModel.setProperty("/entryQuantity", oStorageUnit.ISTME);
+						} else {
+							oDataModel.setProperty("/entryQuantity", null);
+						}
 					}
 
 				} catch (err) {
