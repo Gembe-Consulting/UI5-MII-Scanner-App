@@ -59,9 +59,11 @@ sap.ui.define([
 		onSave: function(oEvent) {
 			var oDataModel = this.getModel("data"),
 				oData = oDataModel.getData(),
+				oBundle = this.getResourceBundle(),
 				bIsLastUnit = this.formatter.isLastStorageUnit(oDataModel.getProperty("/storageUnit")),
 				bIsEmptyUnit = this.formatter.isEmptyStorageUnit(oDataModel.getProperty("/ISTME")),
 				doPosting,
+				fnError,
 				that = this;
 
 			// prepare messages array
@@ -72,7 +74,7 @@ sap.ui.define([
 				oDataModel.setProperty("/movementType", 555);
 
 				doPosting = this._findRunningProcessOrder(oData)
-					.then(this._createGoodsReceiptRollerConveyor); //555
+					.then(this._createGoodsReceiptRollerConveyor.bind(this)); //555
 
 			} else if (bIsEmptyUnit) {
 				oData.messages.push("Laufende Palette");
@@ -85,10 +87,17 @@ sap.ui.define([
 				doPosting = Promise.resolve(oData);
 			}
 
-			doPosting.then(this._createStockTransfer)
-				.then(function(oData) {
+			fnError = function(oError) {
+				MessageBox.error(oError.message, {
+					title: oError.name + oBundle.getText("error.miiTransactionErrorText"),
+				});
+			};
+
+			doPosting.then(this._createStockTransfer.bind(this))
+				.catch(fnError)
+				.then(function() {
 					that.addLogMessage({
-						text: oData.messages.join(" - "),
+						text: oData.messages.join("\n"),
 						type: sap.ui.core.MessageType.Success
 					});
 				});
@@ -151,6 +160,7 @@ sap.ui.define([
 
 						//remap some properties
 						oDataModel.setProperty("/unitOfMeasure", oStorageUnit.MEINH);
+						oDataModel.setProperty("/orderNumber", oStorageUnit.AUFNR);
 
 						if (!this.formatter.isEmptyStorageUnit(oStorageUnit.ISTME)) {
 							oDataModel.setProperty("/entryQuantity", oStorageUnit.ISTME);
@@ -260,6 +270,13 @@ sap.ui.define([
 		},
 
 		onStorageBinSelectionChange: function(oEvent) {
+			var oSource = oEvent.getSource(),
+				oSelectedItem = oSource.getSelectedItem(),
+				sStorageBinId = oSelectedItem.data("storageBinId"),
+				oDataModel = this.getModel("data");
+
+			oDataModel.setProperty("/storageBinId", sStorageBinId);
+
 			this.updateViewControls(this.getModel("data").getData());
 		},
 
@@ -283,7 +300,7 @@ sap.ui.define([
 		},
 
 		isInputDataValid: function(oData) {
-			return !!oData.storageUnit && !!oData.storageBin && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.unitOfMeasure;
+			return !!oData.storageUnit && !!oData.storageBin && !!oData.storageBinId && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.unitOfMeasure;
 		},
 
 		findRessourceOfStorageBin: function(sStorageBin) {
@@ -329,12 +346,18 @@ sap.ui.define([
 			sendGoodsReceiptPromise = oGoodsReceiptModel.loadMiiData(oGoodsReceiptModel._sServiceUrl, oParam);
 
 			fnResolve = function(oIllumData) {
-				//fatal error?
+				var oResult = oIllumData.d.results["0"];
 
-				//messages?
+				if (oResult.FatalError) {
+					throw new Error(oResult.FatalError);
+				}
 
-				//row?
-
+				if (oResult.Messages.results) {
+					oResult.Messages.results.forEach(function(msg) {
+						oData.messages.push(msg.Message);
+					});
+				}
+				return oData;
 			}.bind(this);
 
 			fnReject = function(oError) {
@@ -376,7 +399,18 @@ sap.ui.define([
 			};
 
 			fnResolve = function(oIllumData) {
-				debugger;
+				var oResult = oIllumData.d.results["0"];
+
+				if (oResult.FatalError) {
+					throw new Error(oResult.FatalError);
+				}
+
+				if (oResult.Messages.results) {
+					oResult.Messages.results.forEach(function(msg) {
+						oData.messages.push(msg.Message);
+					});
+				}
+				return oData;
 			}.bind(this);
 
 			fnReject = function(oError) {
@@ -404,15 +438,34 @@ sap.ui.define([
 		 */
 		_createStockTransfer: function(oData) {
 			var sendStockTransferPromise,
+				sPath = "/",
+				oDataModel = this.getModel("data"),
+				oStorageUnitCreateModel = this.getModel("storageUnitCreate"),
+				oParam,
 				fnResolve, fnReject;
 
-			sendStockTransferPromise = new Promise(function(resolve, reject) {
-				oData.messages.push("Spezial-Umbuchung mit pseudo BwA 999");
-				resolve(oData);
-			});
+			oData.messages.push("Spezial-Umbuchung mit pseudo BwA 999");
+
+			oParam = {
+				"Param.1": oDataModel.getProperty(sPath + "storageBinId"), //Lagerplatz (ID),
+				"Param.2": oDataModel.getProperty(sPath + "stretcherActive") ? 1 : 0, //Stretch,
+				"Param.3": this.formatter.isLastStorageUnit(oDataModel.getProperty(sPath + "storageUnit")) ? 1 : 0, //LETZE_LE,
+				"Param.4": this._padStorageUnitNumber(oDataModel.getProperty(sPath + "storageUnit")) //LE
+			};
 
 			fnResolve = function(oIllumData) {
-				debugger;
+				var oResult = oIllumData.d.results["0"];
+
+				if (oResult.FatalError) {
+					throw new Error(oResult.FatalError);
+				}
+
+				if (oResult.Messages.results) {
+					oResult.Messages.results.forEach(function(msg) {
+						oData.messages.push(msg.Message);
+					});
+				}
+				return oData;
 			}.bind(this);
 
 			fnReject = function(oError) {
@@ -421,7 +474,9 @@ sap.ui.define([
 				});
 			}.bind(this);
 
-			return sendStockTransferPromise;
+			sendStockTransferPromise = oStorageUnitCreateModel.loadMiiData(oStorageUnitCreateModel._sServiceUrl, oParam);
+
+			return sendStockTransferPromise.then(fnResolve, fnReject);
 		},
 
 		/**
@@ -448,7 +503,7 @@ sap.ui.define([
 			});
 
 			fnResolve = function(oIllumData) {
-				debugger;
+				return oData;
 			}.bind(this);
 
 			fnReject = function(oError) {

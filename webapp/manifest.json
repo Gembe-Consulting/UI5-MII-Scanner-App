@@ -83,7 +83,7 @@
 			},
 			"storageUnit": {
 				"dataSource": "illuminatorService",
-				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SUMISA/Scanner/Umlagerung/xac_ReadPaletteInfo",
+				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/storageunit/StorageUnitReadXac",
 				"type": "mii.util.model.illum.QueryTemplateModel",
 				"settings": {
 					"preventInitialLoad": true,
@@ -128,7 +128,7 @@
 			},
 			"storageUnitCreate":{
 				"dataSource": "illuminatorService",
-				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/rollerconveyor/StorageUnitNumberCreateXac",
+				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/storageunit/StorageUnitCreateXac",
 				"type": "mii.util.model.illum.QueryTemplateModel",
 				"settings": {
 					"preventInitialLoad": true,
