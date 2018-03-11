@@ -1,38 +1,48 @@
-[FEATURE] (roller conveyor): detect last unit and repair user input if required
-[FEATURE] (roller conveyor): detect last unit and show message
-[TEST] (roller conveyor): add tests to validate last unit logic
-[FEATURE] (roller conveyor): convert entered unit into uppercase
-[TEST] (roller conveyor): prepare final test cases
-[REFACTOR] (roller conveyor): move isLastStorageUnit to formatter and add isNotLastStorageUnit formatter
-[REFACTOR] (login): make var to const
-[FEATURE] (login): rework how this app handles login and authentication
-There are two scenarios to consider: Navigation from Mobile device and form Desktop device.
-From a desktop, we always navigate to a deep page like "/Start" or "/WE" (= not login page). Users are always authenticated by SAP NetWeaver.
-However, from a mobile device, we always navigate to "/Anmeldung" (= login page) while being authenticated by SAP NetWeaver using an default dummy user. This is why we force the user to enter his username. On successful login, we set the user model. To prevent navigation to a deeper page without an user model, all pages are based on PageBaseConroller that attaches a onBeforeNavigation event. Each time this even triggers, we check if the user model is set and valid. If not, we navigate to login page.
-To prevent desktop devices to be forced to navigatio to login page, we will read the IllumLoginName and fire a validation request to MII.
-[TEST] (unit): remove empty file
-[TEST] (login): add several test to validate login and authentication behaviour
-[FIX] (roller conveyor): misspell in binding to check storage unit empty or full
-[FIX] (formatter): fix typo in storage unit empty/full formatter
-[TEST] (login): renew test cases to be better in general
-[FIX] (formatter): make isNotLastStorageUnit more atomic
-[TEST] (all): increase performance
-[INTERNAL] update version
-[INTERNAL] update version
-[TEST] (index): add option to start app with external UI5 library by using index-ext.irpt
-[FEATURE] (home): remove back navigation and hise Logout item on desktop devices
-[FIX] (roller conveyor): fix not being able to lint "=>" operator
-[INTERNAL] (grunt): fix text replace task
-[FEATURE] (formatter): add null-check to last storage unit formatter
-[INTERNAL] (component): add missing semicolon
-[INTERNAL] (component): no statement in return
-[INTERNAL] (project): update settings
-[STYLE] (component): remove newline and unused var
-[TEST] (opa): fix typo
-[INTERNAL] (mockserver): set delay to 1000ms
-remember to set &serverDelay=0 when doing opa tests
-[FEATURE] (models): add error messages to all models
-also add message toasts on request complete when debugging is active
-[TEST] (navigation): adopt latest changes to logout removal on desktop devices
 [FEATURE] (roller conveyor): prepare posting support
 [INTERNAL] update version to 1.2.0.2018-02-18
+[INTERNAL] update changelogs
+[INTERNAL] update version
+[REFACTOR] (component, rootView): improve id and manifest
+[REFACTOR] (component, rootView): improve id and manifest
+[TEST] (roller conveyor): update test cases for last unit
+[INTERNAL] test theme designer
+[FEATURE] (css): add custom font size for all input fields
+[INTERNAL] (build): update grunt build
+[FEATURE] (forms): optimize SimpleForm layout
+- set breakpointM to 500 -> all below 500px will be considered SMALL and use alle ~S properties
+- should display more devices as small form
+[REFACTOR] (action): add ids to some controls
+- header
+- footer
+- buttons
+[FIX] (action): fix title not having correct style
+[FEATURE] (action): increase font size on mobile devices
+[INTERNAL] (grunt): fix eslint error fixed URL
+[STYLE] (misc): stabilize ids and increase performance
+[INTERNAL] (init): skip username check on debug
+[FEATURE] (locale): add languages to prevent 404
+[INTERNAL] (debug): add dummy user "DEBUG"
+[INTERNAL] (init): set default logging to "WARNING"
+[FEATURE] (goods issue): move bulk mat indicator to storage location line
+[FEATURE] (roller conveyor + stock transfer): swap key and name in combobox
+[FIX] (service): correct debug mode detection
+[TEST] (goods issue). fix changed test features
+[TEST] (stock transfer): fix changed test features
+[FIX] (init): remove sap-ui-debug from localStorage to prevent cross session mess
+[FEATURE] (roller conveyor): add better storage bin detection depending on dummy storage unit number
+[FEATURE] (roller conveyor): add services for Roller Conveyor page
+[INTERNAL] remove .che folder
+[INTERNAL] (mii util): clean up miiutilities path
+[INTERNAL] (eslint): add ES6 support
+[FEATURE] (roller conveyor): add support for goods receipt of empty units
+[FIX] (roller conveyor): prevent nullpointer if lenum is not found
+[FEATURE] (service error): show MII transaction in error message
+[FEATURE] (roller conveyor): add support for stock transfer posting
+[FIX] (index): re-add correct path to mii utils
+[FEATURE] (roller conveyor): add support for finding running process order
+[FIX]: path to mii utils
+[FIX] (roller conveyor): select correct storage bin item on dummy LE
+[FEATURE] (coller conveyor): add support for posting BwA 555
+[FEATURE] (roller conveyor): add busy state during service calls & clear form after
+[TEST] (mockdata): repair mockdata files to match service names
+[INTERNAL]: version bump
