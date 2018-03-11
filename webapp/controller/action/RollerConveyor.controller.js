@@ -66,6 +66,8 @@ sap.ui.define([
 				fnError,
 				that = this;
 
+			this.getOwnerComponent().showBusyIndicator();
+
 			// prepare messages array
 			oData.messages = [];
 
@@ -94,12 +96,16 @@ sap.ui.define([
 			};
 
 			doPosting.then(this._createStockTransfer.bind(this))
-				.catch(fnError)
+				.catch(fnError) // catch all errers that might occur during postings
 				.then(function() {
 					that.addLogMessage({
 						text: oData.messages.join("\n"),
 						type: sap.ui.core.MessageType.Success
 					});
+				})
+				.then(this.getOwnerComponent().hideBusyIndicator)
+				.then(function() {
+					that.onClearFormPress({}, true /*bKeepMessageStrip*/ );
 				});
 		},
 
