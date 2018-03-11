@@ -160,7 +160,7 @@ sap.ui.define([
 			return oData;
 		},
 
-		fnxac_ReadPaletteInfo: function(oData, oParams) {
+		fnStorageUnitReadXac: function(oData, oParams) {
 			var sLENum = oParams.get("Param.1"),
 				aLEList = oData.d.results[0].Rowset.results[0].Row.results;
 
@@ -211,7 +211,7 @@ sap.ui.define([
 
 			return oData;
 		},
-		
+
 		fnGetCurrentProcessOrderQry: function(oData, oParams) {
 			var oUriParameters = jQuery.sap.getUriParameters(),
 				sRessourceId = oParams.get("Param.1"),
@@ -222,7 +222,7 @@ sap.ui.define([
 			});
 
 			oData.d.results[0].Rowset.results[0].Row.results = aOrderNumberList;
-				
+
 			return oData;
 		}
 	};
