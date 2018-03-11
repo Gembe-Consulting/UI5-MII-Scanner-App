@@ -27,7 +27,7 @@
 				], function (mockserver) {
 					// set up test service for local testing
 					mockserver.init();
-					
+
 					//check if URL is in debug mode => set locale strage accordingly
 					if(jQuery.sap.getUriParameters().get("sap-ui-debug") === "true"){
 						localStorage.setItem("sap-ui-debug", true);
