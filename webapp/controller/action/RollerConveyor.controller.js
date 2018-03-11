@@ -57,8 +57,7 @@ sap.ui.define([
 		*/
 
 		onSave: function(oEvent) {
-			var sMessageString,
-				oDataModel = this.getModel("data"),
+			var oDataModel = this.getModel("data"),
 				oData = oDataModel.getData(),
 				bIsLastUnit = this.formatter.isLastStorageUnit(oDataModel.getProperty("/storageUnit")),
 				bIsEmptyUnit = this.formatter.isEmptyStorageUnit(oDataModel.getProperty("/ISTME")),
@@ -93,7 +92,6 @@ sap.ui.define([
 						type: sap.ui.core.MessageType.Success
 					});
 				});
-
 		},
 
 		onStorageUnitInputChange: function(oEvent) {
@@ -181,6 +179,8 @@ sap.ui.define([
 				.then(function() {
 					this.hideControlBusyIndicator(oSource);
 				}.bind(this));
+
+			return true;
 		},
 
 		setAndRepairDataModel: function(oSource, sStorageUnitNumber) {
@@ -223,7 +223,7 @@ sap.ui.define([
 
 			// check if valid LE
 			if (!sStorageUnitNumber.startsWith("900") && sStorageUnitNumber.length === 20) {
-				return;
+				return mRessource;
 			}
 
 			// find ressource id
@@ -235,7 +235,7 @@ sap.ui.define([
 			})[0];
 
 			if (!oRessource) {
-				return;
+				return mRessource;
 			}
 
 			mRessource.set("ressourceId", Object.values(oRessource)[0]);
@@ -293,53 +293,99 @@ sap.ui.define([
 		/**
 		 * creates a goods receipt by sending goods movement to ERP
 		 * 
-		 * sBwA controls what service is called:
+		 * sBwA controls what service is called: 
 		 * - Calls on sBwA 101 => SUMISA/Production/trx_GoodsMovementToSap
-		 * - Sends in case 101: BWART, AUFNR, ARBID, MENGE, MEINS, UNAME
+		 * - Sends in case 101: BWART, AUFNR, LENUM, MENGE, MEINS, UNAME
 		 * 
-		 * - Calls on sBwA 555 => SUMISA/Production/trx_GoodsMovementToSAP_Rollenbahn
-		 * - Sends in case 555: BWART, AUFNR, LENUM, MENGE, MEINS, UNAME
+		 * Example: SUMISA/Production/trx_GoodsMovementToSap&BWART=101&AUFNR=1093338&LENUM=00000000109333800001&MENGE=1000&MEINS=KG&UNAME=PHIGEM
 		 * 
 		 * @param oData {object} data
 		 * @return Promise {object} resolved with message {string}
 		 */
 		_createGoodsReceipt: function(oData) {
-			var sendGoodsReceipt;
+			var sendGoodsReceiptPromise,
+				sPath = "/",
+				oDataModel = this.getModel("data"),
+				oGoodsReceiptModel = this.getModel("goodsMovement"),
+				sDefaultMoveType = "101",
+				sDefaultUnitOfMeasure = "KG",
+				oParam,
+				fnResolve,
+				fnReject;
 
-			sendGoodsReceipt = new Promise(function(resolve, reject) {
+			oData.messages.push("Normal-Wareneingang mit echt BwA 101");
 
-				oData.messages.push("Normal-Wareneingang mit echt BwA 101");
+			oParam = {
+				"Param.1": oDataModel.getProperty(sPath + "storageUnit"),
+				"Param.2": oDataModel.getProperty(sPath + "orderNumber"),
+				"Param.4": oDataModel.getProperty(sPath + "entryQuantity"),
+				"Param.5": oDataModel.getProperty(sPath + "unitOfMeasure") || sDefaultUnitOfMeasure,
+				//"Param.10": oDataModel.getProperty(sPath + "UNAME"),
+				"Param.11": oDataModel.getProperty(sPath + "movementType") || sDefaultMoveType
+			};
 
-				resolve(oData);
-			});
+			sendGoodsReceiptPromise = oGoodsReceiptModel.loadMiiData(oGoodsReceiptModel._sServiceUrl, oParam);
 
-			return sendGoodsReceipt;
+			fnResolve = function(oIllumData) {
+				//fatal error?
+
+				//messages?
+
+				//row?
+
+			}.bind(this);
+
+			fnReject = function(oError) {
+				MessageBox.error(oError.message, {
+					title: oError.name
+				});
+			}.bind(this);
+
+			return sendGoodsReceiptPromise.then(fnResolve, fnReject);
 		},
 
 		/**
 		 * creates a goods receipt special for roller conveyor by sending goods movement to ERP
 		 * 
 		 * sBwA controls what service is called:
-		 * - Calls on sBwA 101 => SUMISA/Production/trx_GoodsMovementToSap
-		 * - Sends in case 101: BWART, AUFNR, ARBID, MENGE, MEINS, UNAME
-		 * 
 		 * - Calls on sBwA 555 => SUMISA/Production/trx_GoodsMovementToSAP_Rollenbahn
-		 * - Sends in case 555: BWART, AUFNR, LENUM, MENGE, MEINS, UNAME
+		 * - Sends in case 555: AUFNR, ARBID, MENGE, MEINS, UNAME
+		 * 
+		 * Example: SUMISA/Production/trx_GoodsMovementToSAP_Rollenbahn&BWART=555&AUFNR=1093334&ARBID=00253110&MENGE=1001&UNAME=PHIGEM
 		 * 
 		 * @param oData {object} data
 		 * @return Promise {object} resolved with message {string}
 		 */
 		_createGoodsReceiptRollerConveyor: function(oData) {
-			var sendGoodsReceiptRollerConveyor;
+			var sendGoodsReceiptRollerConveyorPromise,
+				sPath = "/",
+				oDataModel = this.getModel("data"),
+				oGoodsReceiptRollerConveyorModel = this.getModel("goodsMovementRollerConveyor"),
+				oParam,
+				fnResolve, fnReject;
 
-			sendGoodsReceiptRollerConveyor = new Promise(function(resolve, reject) {
+			oData.messages.push("Spezial-Wareneingang mit pseudo BwA 555");
 
-				oData.messages.push("Spezial-Wareneingang mit pseudo BwA 555");
+			oParam = {
+				"Param.1": oDataModel.getProperty(sPath + "orderNumber"),
+				"Param.2": oDataModel.getProperty(sPath + "ressourceId"),
+				"Param.3": oDataModel.getProperty(sPath + "entryQuantity"),
+				"Param.4": oDataModel.getProperty(sPath + "UNAME")
+			};
 
-				resolve(oData);
-			});
+			fnResolve = function(oIllumData) {
+				debugger;
+			}.bind(this);
 
-			return sendGoodsReceiptRollerConveyor;
+			fnReject = function(oError) {
+				MessageBox.error(oError.message, {
+					title: oError.name
+				});
+			}.bind(this);
+
+			sendGoodsReceiptRollerConveyorPromise = oGoodsReceiptRollerConveyorModel.loadMiiData(oGoodsReceiptRollerConveyorModel._sServiceUrl, oParam);
+
+			return sendGoodsReceiptRollerConveyorPromise.then(fnResolve, fnReject);
 		},
 
 		/**
@@ -348,19 +394,32 @@ sap.ui.define([
 		 * - Sends the storage unit number, storage bin, stretch program, IllumLoginName
 		 * - Sends the LETZTE_LE flag if storage bin is "BEUM" or "PALE"
 		 * 
+		 * example for predecessing 101: SUMISA/Scanner/Rollenbahn/trx_NeuePalette&LE=00000000109333800001&Lagerplatz=01&Stretch=1&IllumLoginName=PHIGEM
+		 * 
 		 * @param {string|number} sStorageUnitNumber storage unit number to be created in MII
 		 * @param {string} sStorageBin storage bin to where storage unit will be stored
 		 * @param {string} sStretchProgram used stretch program
 		 */
 		_createStockTransfer: function(oData) {
-			var sendStockTransfer;
+			var sendStockTransferPromise,
+				fnResolve, fnReject;
 
-			sendStockTransfer = new Promise(function(resolve, reject) {
+			sendStockTransferPromise = new Promise(function(resolve, reject) {
 				oData.messages.push("Spezial-Umbuchung mit pseudo BwA 999");
 				resolve(oData);
 			});
 
-			return sendStockTransfer;
+			fnResolve = function(oIllumData) {
+				debugger;
+			}.bind(this);
+
+			fnReject = function(oError) {
+				MessageBox.error(oError.message, {
+					title: oError.name
+				});
+			}.bind(this);
+
+			return sendStockTransferPromise;
 		},
 
 		/**
@@ -372,10 +431,11 @@ sap.ui.define([
 		 * @return Promise {object} resolved with sOrderNumber {string}
 		 */
 		_findRunningProcessOrder: function(oData) {
-			var findProcessOrder,
-				sRessource = this.findRessourceOfStorageBin(oData.storageBin);
+			var findProcessOrderPromise,
+				sRessource = this.findRessourceOfStorageBin(oData.storageBin),
+				fnResolve, fnReject;
 
-			findProcessOrder = new Promise(function(resolve, reject) {
+			findProcessOrderPromise = new Promise(function(resolve, reject) {
 				if (sRessource === "00253110") {
 					oData.AUFNR = "4712";
 				} else {
@@ -385,7 +445,17 @@ sap.ui.define([
 				resolve(oData);
 			});
 
-			return findProcessOrder;
+			fnResolve = function(oIllumData) {
+				debugger;
+			}.bind(this);
+
+			fnReject = function(oError) {
+				MessageBox.error(oError.message, {
+					title: oError.name
+				});
+			}.bind(this);
+
+			return findProcessOrderPromise.then(fnResolve, fnReject);
 		}
 	});
 

@@ -631,6 +631,56 @@
 							"VFDAT": "03-05-2018",
 							"LGORT": "1000",
 							"RowId": 16
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(2)",
+								"type": "QueryTemplate.Row"
+							},
+							"LENUM": "00000000109333800010",
+							"AUFNR": "1093338",
+							"LGPLA": "PRODUKTION",
+							"LGTYP": "900",
+							"MATNR": "1901435-305",
+							"MAKTX": "RC,leer - M-Joghurt A 4,3 HAL KOS 1000kg BB",
+							"GESME": "0.0010",
+							"LETYT": "EuroPalette",
+							"MEINH": "KG",
+							"UMREZ": "1",
+							"GEWEI": "KG",
+							"MGEWI": "0.0010",
+							"CHARG": "0109333801",
+							"SOLLME": "1000.0",
+							"ISTME": "0.0010",
+							"TARGETME": "1000.0",
+							"BESTQ": "0",
+							"VFDAT": "10-30-2018",
+							"LGORT": "1000",
+							"RowId": 17
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(2)",
+								"type": "QueryTemplate.Row"
+							},
+							"LENUM": "00000000109333800001",
+							"AUFNR": "1093338",
+							"LGPLA": "ROLLENBAHN",
+							"LGTYP": "600",
+							"MATNR": "1901435-305",
+							"MAKTX": "RC,voll -M-Joghurt A 4,3 HAL KOS 1000kg BB",
+							"GESME": "1000.0",
+							"LETYT": "Industriepalette",
+							"MEINH": "KG",
+							"UMREZ": "1",
+							"GEWEI": "KG",
+							"MGEWI": "1003.0",
+							"CHARG": "0109333801",
+							"SOLLME": "0.0",
+							"ISTME": "1000.0",
+							"TARGETME": "1000.0",
+							"BESTQ": "Q",
+							"VFDAT": "10-30-2018",
+							"LGORT": "1000",
+							"RowId": 18
 						}]
 					}
 				}]
