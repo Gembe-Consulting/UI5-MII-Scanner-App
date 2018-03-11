@@ -50,11 +50,11 @@ sap.ui.define([
 		},
 
 		/*
-					if(lgplatz == "02")
-						queryString += "&ARBID=00248110";//BEUM
-					else 
-						queryString += "&ARBID=00253110";//PALE
-		*/
+		 *	if(lgplatz == "02")
+		 *		queryString += "&ARBID=00248110";	//BEUM
+		 *	if(lgplatz == "04")
+		 *		queryString += "&ARBID=00253110";	//PALE
+		 */
 
 		onSave: function(oEvent) {
 			var oDataModel = this.getModel("data"),
@@ -89,7 +89,7 @@ sap.ui.define([
 
 			fnError = function(oError) {
 				MessageBox.error(oError.message, {
-					title: oError.name + oBundle.getText("error.miiTransactionErrorText", [oError.serviceName]),
+					title: oError.name + oBundle.getText("error.miiTransactionErrorText", [oError.serviceName])
 				});
 			};
 
@@ -353,7 +353,8 @@ sap.ui.define([
 			sendGoodsReceiptPromise = oGoodsReceiptModel.loadMiiData(oGoodsReceiptModel._sServiceUrl, oParam);
 
 			fnResolve = function(oIllumData) {
-				var oResult = oIllumData.d.results["0"];
+				var oResult = oIllumData.d.results["0"],
+					oRow;
 
 				if (oResult.FatalError) {
 					throw new Error(oResult.FatalError);
@@ -364,6 +365,17 @@ sap.ui.define([
 						oData.messages.push(msg.Message);
 					});
 				}
+
+				if (oResult.Rowset.results["0"].Row.results.length === 1) {
+					oRow = oResult.Rowset.results["0"].Row.results["0"];
+					oData.storageUnit = oRow.LENUM;
+					oData.messages.push("Lagereinheit " + oRow.LENUM + " gebucht.");
+				} else {
+					throw new Error("Die Transaktion hat keine LE zurückgegeben.");
+				}
+
+				oData.messages.push("Lagereinheit " + oRow.LENUM + " gebucht.");
+
 				return oData;
 			}.bind(this);
 
@@ -422,6 +434,7 @@ sap.ui.define([
 				if (oResult.Rowset.results["0"].Row.results.length === 1) {
 					oRow = oResult.Rowset.results["0"].Row.results["0"];
 					oData.storageUnit = oRow.LENUM;
+					oData.messages.push("Lagereinheit " + oRow.LENUM + " gebucht.");
 				} else {
 					throw new Error("Die Transaktion hat keine LE zurückgegeben.");
 				}
