@@ -199,7 +199,8 @@ sap.ui.define([
 			var oDataModel = this.getModel("data"),
 				oRessource,
 				oStorageBinControl,
-				oStorageBin;
+				oStorageBin,
+				oItem;
 
 			oDataModel.setData({
 				entryQuantity: null,
@@ -222,7 +223,12 @@ sap.ui.define([
 			oRessource = this.getRessourceOfDummyStorageUnit(sStorageUnitNumber);
 
 			if (oRessource) {
-				oStorageBinControl.setSelectedKey(oRessource.get("storageBin"));
+				oItem = oStorageBinControl.getItemByKey(oRessource.get("storageBin"));
+				oStorageBinControl.setSelectedItem(oItem);
+				oStorageBinControl.fireSelectionChange({
+					selectedItem: oItem
+				});
+				//oStorageBinControl.setSelectedKey(oRessource.get("storageBin"));
 			}
 
 			return true;
@@ -251,6 +257,7 @@ sap.ui.define([
 			}
 
 			mRessource.set("ressourceId", Object.values(oRessource)[0]);
+			mRessource.set("storageBin", Object.keys(oRessource)[0]);
 			mRessource.set("storageBin", Object.keys(oRessource)[0]);
 
 			return mRessource;
@@ -499,8 +506,6 @@ sap.ui.define([
 		_findRunningProcessOrder: function(oData) {
 			var findProcessOrderPromise,
 				sRessource = this.findRessourceOfStorageBin(oData.storageBin),
-				sPath = "/",
-				oDataModel = this.getModel("data"),
 				oCurrentProcessOrderModel = this.getModel("currentProcessOrder"),
 				oParam,
 				fnResolve, fnReject;
@@ -508,7 +513,7 @@ sap.ui.define([
 			oData.messages.push("Aufgabepunkt für Ressource " + sRessource);
 
 			oParam = {
-				"Param.1": sRessource, //ARBID
+				"Param.1": sRessource //ARBID
 			};
 
 			fnResolve = function(oIllumData) {
@@ -516,7 +521,7 @@ sap.ui.define([
 					oRow;
 
 				if (oResult.FatalError) {
-					throw new Error(oResult.FatalError).serviceName = "currentProcessOrder";
+					throw new Error(oResult.FatalError);
 				}
 
 				if (oResult.Messages.results) {
