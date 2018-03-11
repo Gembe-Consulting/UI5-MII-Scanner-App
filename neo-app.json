@@ -9,7 +9,7 @@
 		},
 		"description": "openui5-generic-app-testing"
 	}, {
-		"path": "/ui5miiutilities/",
+		"path": "/ui5miiutilities/mii/util/",
 		"target": {
 			"type": "application",
 			"name": "ui5miiutilities",
