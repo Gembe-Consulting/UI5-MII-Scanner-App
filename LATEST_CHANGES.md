@@ -1,9 +1,3 @@
-[FEATURE] (roller conveyor): prepare posting support
-[INTERNAL] update version to 1.2.0.2018-02-18
-[INTERNAL] update changelogs
-[INTERNAL] update version
-[REFACTOR] (component, rootView): improve id and manifest
-[REFACTOR] (component, rootView): improve id and manifest
 [TEST] (roller conveyor): update test cases for last unit
 [INTERNAL] test theme designer
 [FEATURE] (css): add custom font size for all input fields
@@ -46,3 +40,4 @@
 [FEATURE] (roller conveyor): add busy state during service calls & clear form after
 [TEST] (mockdata): repair mockdata files to match service names
 [INTERNAL]: version bump
+[INTERNAL] update changelog
