@@ -223,8 +223,7 @@ sap.ui.define([
 				fnResolve,
 				fnReject;
 
-			this.getOwnerComponent()
-				.showBusyIndicator();
+			this.getOwnerComponent().showBusyIndicator();
 
 			fnResolve = function(oData) {
 				var aResults,
@@ -405,7 +404,7 @@ sap.ui.define([
 			// clear unit of measure if storage location is 1000
 			if (sStorageLocation !== this._sStorageLocationWarehouse && !oDataModel.getProperty("/MEINH")) {
 				oDataModel.setProperty("/MEINH", this._sDefaultUnitOfMeasure);
-			} else if(sStorageLocation === this._sStorageLocationWarehouse){
+			} else if (sStorageLocation === this._sStorageLocationWarehouse) {
 				oDataModel.setProperty("/MEINH", null);
 			}
 

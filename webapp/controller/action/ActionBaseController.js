@@ -188,7 +188,7 @@ sap.ui.define([
 		_isDataModelInitial: function(oCurrentData, oInitialData) {
 			return jQuery.sap.equal(oCurrentData, oInitialData, 2, true); //(a, b, maxDepth?, contains?) : boolean
 		},
-		
+
 		/**
 		 * checks if data model of the action page is inital (no changes by user)
 		 * shows confirm dialog if data has been entered
@@ -197,13 +197,13 @@ sap.ui.define([
 		onCancelAction: function(oEvent) {
 			var oCurrentData = this.getModel("data").getData(),
 				oInitialData = this._oInitData;
-				
+
 			if (!this._isDataModelInitial(oCurrentData, oInitialData)) {
 				this.handleConfirmationMessageBoxPress(oEvent);
-			}else{
+			} else {
 				this.onNavBack();
 			}
-			
+
 		},
 
 		addLogMessage: function(oMessage) {
