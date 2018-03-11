@@ -1,6 +1,3 @@
-[FEATURE] (roller conveyor): prepare posting support
-[REFACTOR] (component, rootView): improve id and manifest
-[REFACTOR] (component, rootView): improve id and manifest
 [FEATURE] (css): add custom font size for all input fields
 [FEATURE] (forms): optimize SimpleForm layout
 - set breakpointM to 500 -> all below 500px will be considered SMALL and use alle ~S properties
