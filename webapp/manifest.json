@@ -90,6 +90,15 @@
 					"preventParameterlessload": true
 				}
 			},
+			"storageUnitCreate":{
+				"dataSource": "illuminatorService",
+				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/storageunit/StorageUnitCreateXac",
+				"type": "mii.util.model.illum.QueryTemplateModel",
+				"settings": {
+					"preventInitialLoad": true,
+					"preventParameterlessload": true
+				}
+			},
 			"orderHeader": {
 				"dataSource": "illuminatorService",
 				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/orderdata/GetOrderHeaderQry",
@@ -120,15 +129,6 @@
 			"goodsMovementRollerConveyor":{
 				"dataSource": "illuminatorService",
 				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/goodsmovement/GoodsMovementRollerConveyorCreateXac",
-				"type": "mii.util.model.illum.QueryTemplateModel",
-				"settings": {
-					"preventInitialLoad": true,
-					"preventParameterlessload": true
-				}
-			},
-			"storageUnitCreate":{
-				"dataSource": "illuminatorService",
-				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/storageunit/StorageUnitCreateXac",
 				"type": "mii.util.model.illum.QueryTemplateModel",
 				"settings": {
 					"preventInitialLoad": true,

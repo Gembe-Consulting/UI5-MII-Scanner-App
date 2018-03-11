@@ -71,14 +71,14 @@ sap.ui.define([
 
 			if (bIsLastUnit) { // considering bIsEmptyUnit is always true if bIsLastUnit is true
 				oData.messages.push("Letzte Palette");
-				oDataModel.setProperty("/movementType", 555);
+				//oDataModel.setProperty("/movementType", 555);
 
 				doPosting = this._findRunningProcessOrder(oData)
 					.then(this._createGoodsReceiptRollerConveyor.bind(this)); //555
 
 			} else if (bIsEmptyUnit) {
 				oData.messages.push("Laufende Palette");
-				oDataModel.setProperty("/movementType", 101);
+				//oDataModel.setProperty("/movementType", 101);
 
 				doPosting = this._createGoodsReceipt(oData); //101
 
@@ -89,7 +89,7 @@ sap.ui.define([
 
 			fnError = function(oError) {
 				MessageBox.error(oError.message, {
-					title: oError.name + oBundle.getText("error.miiTransactionErrorText"),
+					title: oError.name + oBundle.getText("error.miiTransactionErrorText", [oError.serviceName]),
 				});
 			};
 
@@ -399,7 +399,8 @@ sap.ui.define([
 			};
 
 			fnResolve = function(oIllumData) {
-				var oResult = oIllumData.d.results["0"];
+				var oResult = oIllumData.d.results["0"],
+					oRow;
 
 				if (oResult.FatalError) {
 					throw new Error(oResult.FatalError);
@@ -410,6 +411,14 @@ sap.ui.define([
 						oData.messages.push(msg.Message);
 					});
 				}
+
+				if (oResult.Rowset.results["0"].Row.results.length === 1) {
+					oRow = oResult.Rowset.results["0"].Row.results["0"];
+					oData.storageUnit = oRow.LENUM;
+				} else {
+					throw new Error("Die Transaktion hat keine LE zurückgegeben.");
+				}
+
 				return oData;
 			}.bind(this);
 
@@ -490,19 +499,44 @@ sap.ui.define([
 		_findRunningProcessOrder: function(oData) {
 			var findProcessOrderPromise,
 				sRessource = this.findRessourceOfStorageBin(oData.storageBin),
+				sPath = "/",
+				oDataModel = this.getModel("data"),
+				oCurrentProcessOrderModel = this.getModel("currentProcessOrder"),
+				oParam,
 				fnResolve, fnReject;
 
-			findProcessOrderPromise = new Promise(function(resolve, reject) {
-				if (sRessource === "00253110") {
-					oData.AUFNR = "4712";
-				} else {
-					oData.AUFNR = "4711";
-				}
+			oData.messages.push("Aufgabepunkt für Ressource " + sRessource);
 
-				resolve(oData);
-			});
+			oParam = {
+				"Param.1": sRessource, //ARBID
+			};
 
 			fnResolve = function(oIllumData) {
+				var oResult = oIllumData.d.results["0"],
+					oRow;
+
+				if (oResult.FatalError) {
+					throw new Error(oResult.FatalError).serviceName = "currentProcessOrder";
+				}
+
+				if (oResult.Messages.results) {
+					oResult.Messages.results.forEach(function(msg) {
+						oData.messages.push(msg.Message);
+					});
+				}
+
+				if (oResult.Rowset.results["0"].Row.results.length === 1) {
+					oRow = oResult.Rowset.results["0"].Row.results["0"];
+					oData.orderNumber = oRow.AUFNR;
+					oData.operationNumber = oRow.VORNR;
+					oData.ressourceId = oRow.ARBID;
+
+					oData.messages.push("Auf Ressource " + sRessource + " läuft Prozessauftrag " + oRow.AUFNR);
+
+				} else {
+					throw new Error("Der aktuell laufende Prozessauftrag auf Ressource " + sRessource + " konnte nicht eindeutig bestimmt werden.");
+				}
+
 				return oData;
 			}.bind(this);
 
@@ -511,6 +545,8 @@ sap.ui.define([
 					title: oError.name
 				});
 			}.bind(this);
+
+			findProcessOrderPromise = oCurrentProcessOrderModel.loadMiiData(oCurrentProcessOrderModel._sServiceUrl, oParam);
 
 			return findProcessOrderPromise.then(fnResolve, fnReject);
 		}
