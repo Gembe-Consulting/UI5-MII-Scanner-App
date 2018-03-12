@@ -100,6 +100,15 @@ sap.ui.define([
 			sap.ui.getCore().getEventBus().unsubscribe(channel, event, handler, listener);
 		},
 
+		/**
+		 * Get the Component
+		 * @public
+		 * @returns {object} The Component
+		 */
+		getComponent: function() {
+			return this.getOwnerComponent();
+		},
+
 		onNavForward: function(oEvent) {
 			var sNavTarget = oEvent.getSource().data("target"),
 				sNavType = oEvent.getSource().data("type"),
@@ -131,6 +140,6 @@ sap.ui.define([
 
 		onNavHome: function() {
 			this.getRouter().navTo("home");
-		},
+		}
 	});
 });
