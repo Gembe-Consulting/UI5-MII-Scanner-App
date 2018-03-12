@@ -49,6 +49,41 @@ sap.ui.define([
 			return this.getResourceBundle().getText(sResourceString);
 		},
 
+		/**
+		 * Utility to send a bus event
+		 * @public
+		 * @param {string} channel Event channel
+		 * @param {string} event Event name
+		 * @param {object} data Event data
+		 */
+		sendEvent: function(channel, event, data) {
+			sap.ui.getCore().getEventBus().publish(channel, event, data);
+		},
+
+		/**
+		 * Utility to subscribe to a channel and event
+		 * @public
+		 * @param {string} channel Event channel
+		 * @param {string} event Event name
+		 * @param {object} handler Event handler
+		 * @param {object} listener Event listener
+		 */
+		subscribe: function(channel, event, handler, listener) {
+			sap.ui.getCore().getEventBus().subscribe(channel, event, handler, listener);
+		},
+
+		/**
+		 * Utility to unsubscribe to a channel and event
+		 * @public
+		 * @param {string} channel Event channel
+		 * @param {string} event Event name
+		 * @param {object} handler Event handler
+		 * @param {object} listener Event listener
+		 */
+		unsubscribe: function(channel, event, handler, listener) {
+			sap.ui.getCore().getEventBus().unsubscribe(channel, event, handler, listener);
+		},
+
 		onNavForward: function(oEvent) {
 			var sNavTarget = oEvent.getSource().data("target"),
 				sNavType = oEvent.getSource().data("type"),
