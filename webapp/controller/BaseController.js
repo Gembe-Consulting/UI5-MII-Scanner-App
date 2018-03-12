@@ -121,7 +121,7 @@ sap.ui.define([
 
 			//The history contains a previous entry
 			if (sPreviousHash !== undefined) {
-				history.go(-1);
+				window.history.go(-1);
 			} else {
 				// There is no history!
 				// Naviate to home page
