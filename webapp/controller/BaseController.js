@@ -45,8 +45,24 @@ sap.ui.define([
 			return this.getOwnerComponent().getModel("i18n").getResourceBundle();
 		},
 
+		/**
+		 * Get the translation for sKey
+		 * @public
+		 * @param {string} sKey the translation key
+		 * @param {array} aParameters translation paramets (can be null)
+		 * @returns {string} The translation of sKey
+		 */
+		getTranslation: function(sKey, aParameters) {
+			if (aParameters === undefined || aParameters === null) {
+				return this.getResourceBundle().getText(sKey);
+			} else {
+				return this.getResourceBundle().getText(sKey, aParameters);
+			}
+
+		},
+
 		getResourceText: function(sResourceString) {
-			return this.getResourceBundle().getText(sResourceString);
+			return this.getTranslation(sResourceString);
 		},
 
 		/**
