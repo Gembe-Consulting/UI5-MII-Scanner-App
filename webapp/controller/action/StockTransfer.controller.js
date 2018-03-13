@@ -163,7 +163,7 @@ sap.ui.define([
 				} finally {
 					this.onClearFormPress({}, true /*bKeepMessageStrip*/ );
 				}
-				
+
 			}.bind(this);
 
 			fnResolveGoodsReceipt = function(oData) {
@@ -214,6 +214,7 @@ sap.ui.define([
 				oDataModel = this.getModel("data"),
 				oViewModel = this.getModel("view"),
 				oStockTransferModel = this.getModel("goodsMovement"),
+				sUsername = this.getModel("user").getProperty("USERLOGIN"),
 				sDefaultPlant = "1000",
 				sDefaultMoveType = "999",
 				sDefaultUnitOfMeasure = "KG",
@@ -236,6 +237,7 @@ sap.ui.define([
 				//"Param.7": oDataModel.getProperty(sPath + "batchNumber"),
 				//"Param.8": oDataModel.getProperty(sPath + "bulkMaterialIndicator"),
 				//"Param.9": oDataModel.getProperty(sPath + "operationNumber"),
+				"Param.10": sUserName,
 				"Param.11": oDataModel.getProperty(sPath + "BWART") || sDefaultMoveType,
 				//"Param.12": oDataModel.getProperty(sPath + "WERK") || sDefaultPlant,
 				"Param.13": oDataModel.getProperty(sPath + "LGTYP"),
@@ -252,6 +254,7 @@ sap.ui.define([
 				oDataModel = this.getModel("data"),
 				oViewModel = this.getModel("view"),
 				oGoodsReceiptModel = this.getModel("goodsMovement"),
+				sUsername = this.getModel("user").getProperty("USERLOGIN"),
 				sDefaultPlant = "1000",
 				sDefaultMoveType = "101",
 				sDefaultUnitOfMeasure = "KG",
@@ -267,6 +270,7 @@ sap.ui.define([
 				//"Param.7": oDataModel.getProperty(sPath + "CHARG"),
 				//"Param.8": oDataModel.getProperty(sPath + "SCHUETT"),
 				//"Param.9": oDataModel.getProperty(sPath + "VORNR"),
+				"Param.10": sUserName,
 				"Param.11": oDataModel.getProperty(sPath + "BWART") || sDefaultMoveType,
 				//"Param.12": oDataModel.getProperty(sPath + "WERK") || sDefaultPlant,
 				//"Param.13": oDataModel.getProperty(sPath + "LGTYP"),
