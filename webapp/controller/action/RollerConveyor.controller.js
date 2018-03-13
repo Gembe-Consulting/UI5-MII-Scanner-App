@@ -339,6 +339,7 @@ sap.ui.define([
 				sPath = "/",
 				oDataModel = this.getModel("data"),
 				oGoodsReceiptModel = this.getModel("goodsMovement"),
+				sUsername = this.getModel("user").getProperty("USERLOGIN"),
 				sDefaultMoveType = "101",
 				sDefaultUnitOfMeasure = "KG",
 				oParam,
@@ -352,7 +353,7 @@ sap.ui.define([
 				"Param.2": oDataModel.getProperty(sPath + "orderNumber"),
 				"Param.4": oDataModel.getProperty(sPath + "entryQuantity"),
 				"Param.5": oDataModel.getProperty(sPath + "unitOfMeasure") || sDefaultUnitOfMeasure,
-				//"Param.10": oDataModel.getProperty(sPath + "UNAME"),
+				"Param.10": sUsername,
 				"Param.11": oDataModel.getProperty(sPath + "movementType") || sDefaultMoveType
 			};
 
@@ -411,6 +412,7 @@ sap.ui.define([
 				sPath = "/",
 				oDataModel = this.getModel("data"),
 				oGoodsReceiptRollerConveyorModel = this.getModel("goodsMovementRollerConveyor"),
+				sUsername = this.getModel("user").getProperty("USERLOGIN"),
 				oParam,
 				fnResolve, fnReject;
 
@@ -420,7 +422,7 @@ sap.ui.define([
 				"Param.1": oDataModel.getProperty(sPath + "orderNumber"),
 				"Param.2": oDataModel.getProperty(sPath + "ressourceId"),
 				"Param.3": oDataModel.getProperty(sPath + "entryQuantity"),
-				"Param.4": oDataModel.getProperty(sPath + "UNAME")
+				"Param.4": sUsername
 			};
 
 			fnResolve = function(oIllumData) {

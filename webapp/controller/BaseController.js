@@ -45,8 +45,68 @@ sap.ui.define([
 			return this.getOwnerComponent().getModel("i18n").getResourceBundle();
 		},
 
+		/**
+		 * Get the translation for sKey
+		 * @public
+		 * @param {string} sKey the translation key
+		 * @param {array} aParameters translation paramets (can be null)
+		 * @returns {string} The translation of sKey
+		 */
+		getTranslation: function(sKey, aParameters) {
+			if (aParameters === undefined || aParameters === null) {
+				return this.getResourceBundle().getText(sKey);
+			} else {
+				return this.getResourceBundle().getText(sKey, aParameters);
+			}
+
+		},
+
 		getResourceText: function(sResourceString) {
-			return this.getResourceBundle().getText(sResourceString);
+			return this.getTranslation(sResourceString);
+		},
+
+		/**
+		 * Utility to send a bus event
+		 * @public
+		 * @param {string} channel Event channel
+		 * @param {string} event Event name
+		 * @param {object} data Event data
+		 */
+		sendEvent: function(channel, event, data) {
+			sap.ui.getCore().getEventBus().publish(channel, event, data);
+		},
+
+		/**
+		 * Utility to subscribe to a channel and event
+		 * @public
+		 * @param {string} channel Event channel
+		 * @param {string} event Event name
+		 * @param {object} handler Event handler
+		 * @param {object} listener Event listener
+		 */
+		subscribe: function(channel, event, handler, listener) {
+			sap.ui.getCore().getEventBus().subscribe(channel, event, handler, listener);
+		},
+
+		/**
+		 * Utility to unsubscribe to a channel and event
+		 * @public
+		 * @param {string} channel Event channel
+		 * @param {string} event Event name
+		 * @param {object} handler Event handler
+		 * @param {object} listener Event listener
+		 */
+		unsubscribe: function(channel, event, handler, listener) {
+			sap.ui.getCore().getEventBus().unsubscribe(channel, event, handler, listener);
+		},
+
+		/**
+		 * Get the Component
+		 * @public
+		 * @returns {object} The Component
+		 */
+		getComponent: function() {
+			return this.getOwnerComponent();
 		},
 
 		onNavForward: function(oEvent) {
@@ -70,7 +130,7 @@ sap.ui.define([
 
 			//The history contains a previous entry
 			if (sPreviousHash !== undefined) {
-				history.go(-1);
+				window.history.go(-1);
 			} else {
 				// There is no history!
 				// Naviate to home page
@@ -80,6 +140,6 @@ sap.ui.define([
 
 		onNavHome: function() {
 			this.getRouter().navTo("home");
-		},
+		}
 	});
 });
