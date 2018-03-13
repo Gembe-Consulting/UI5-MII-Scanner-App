@@ -74,39 +74,39 @@ sap.ui.define([
 				if (oQuery.LENUM) {
 					oView.getModel("data").setProperty("/storageUnit", oQuery.LENUM);
 					this.byId("storageUnitInput").fireChange({
-							value: oQuery.LENUM
-						});
+						value: oQuery.LENUM
+					});
 				}
 				if (oQuery.AUFNR) {
 					oView.getModel("data").setProperty("/orderNumber", oQuery.AUFNR);
 					this.byId("orderNumberInput").fireChange({
-							value: oQuery.AUFNR
-						});
+						value: oQuery.AUFNR
+					});
 				}
 				if (oQuery.MATNR) {
 					oView.getModel("data").setProperty("/materialNumber", oQuery.MATNR);
 					this.byId("materialNumberInput").fireChange({
-							value: oQuery.MATNR
-						});
+						value: oQuery.MATNR
+					});
 				}
 				if (oQuery.MEINH) {
 					oView.getModel("data").setProperty("/unitOfMeasure", oQuery.MEINH);
 					this.byId("unitOfMeasureInput").fireChange({
-							value: oQuery.MEINH
-						});
+						value: oQuery.MEINH
+					});
 				}
 				if (oQuery.LGORT) {
 					oView.getModel("data").setProperty("/storageLocation", oQuery.LGORT);
 					this.byId("storageLocationInput").fireChange({
-							value: oQuery.LGORT
-						});
+						value: oQuery.LGORT
+					});
 				}
 				if (oQuery.SCHGT) {
 					oQuery.SCHGT = (oQuery.SCHGT == 'true');
 					oView.getModel("data").setProperty("/bulkMaterialIndicator", oQuery.SCHGT);
 					this.byId("bulkMaterialSwitch").fireChange({
-							value: oQuery.SCHGT
-						});
+						value: oQuery.SCHGT
+					});
 				}
 			}
 		},
@@ -169,7 +169,7 @@ sap.ui.define([
 				oDataModel = this.getModel("data"),
 				oViewModel = this.getModel("view"),
 				oGoodsIssueModel = this.getModel("goodsMovement"),
-
+				sUsername = this.getModel("user").getProperty("USERLOGIN"),
 				sDefaultPlant = "1000",
 				sDefaultMoveType = "261",
 				sDefaultUnitOfMeasure = "KG",
@@ -187,6 +187,7 @@ sap.ui.define([
 					//"Param.7": oDataModel.getProperty(sPath + "batchNumber"),
 					//"Param.8": oDataModel.getProperty(sPath + "bulkMaterialIndicator"),
 					//"Param.9": oDataModel.getProperty(sPath + "operationNumber"),
+					"Param.10": sUserName,
 					"Param.11": oDataModel.getProperty(sPath + "movementType") || sDefaultMoveType,
 					//"Param.12": oDataModel.getProperty(sPath + "plant") || sDefaultPlant,
 					//"Param.13": oDataModel.getProperty(sPath + "LGTYP"),
@@ -205,6 +206,7 @@ sap.ui.define([
 					//"Param.7": oDataModel.getProperty(sPath + "batchNumber"),
 					//"Param.8": oDataModel.getProperty(sPath + "bulkMaterialIndicator"),
 					//"Param.9": oDataModel.getProperty(sPath + "operationNumber"),
+					"Param.10": sUserName,
 					"Param.11": oDataModel.getProperty(sPath + "movementType") || sDefaultMoveType,
 					//"Param.12": oDataModel.getProperty(sPath + "plant") || sDefaultPlant,
 					//"Param.13": oDataModel.getProperty(sPath + "LGTYP"),
@@ -439,7 +441,7 @@ sap.ui.define([
 				if (aResultList.length === 1) {
 					oSource.setValueState(sap.ui.core.ValueState.Success);
 					this.getModel("view").setProperty("/bOrderNumberValid", true);
-					
+
 					oOrderHeader = oData.d.results[0].Rowset.results[0].Row.results[0];
 
 					this.validateComponentWithdrawal(oModel.getProperty("/orderNumber"), oModel.getProperty("/materialNumber"), oSource);
@@ -447,11 +449,11 @@ sap.ui.define([
 				} else {
 					oSource.setValueState(sap.ui.core.ValueState.Error);
 					this.getModel("view").setProperty("/bOrderNumberValid", false);
-					
+
 					this.addLogMessage({
 						text: oBundle.getText("messageTextGoodsIssueOrderNumberNotFoundError", [sOrderNumber])
 					});
-					
+
 					this.updateViewControls(this.getModel("data").getData());
 				}
 
