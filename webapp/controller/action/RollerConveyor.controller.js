@@ -204,6 +204,7 @@ sap.ui.define([
 		setAndRepairDataModel: function(oSource, sStorageUnitNumber) {
 			var oDataModel = this.getModel("data"),
 				oRessource,
+				sStorageBinKey,
 				oStorageBinControl,
 				oStorageBin,
 				oItem;
@@ -228,7 +229,9 @@ sap.ui.define([
 
 			oRessource = this.getRessourceOfDummyStorageUnit(sStorageUnitNumber);
 
-			if (oRessource) {
+			sStorageBinKey = oRessource.get("storageBin");
+
+			if (oRessource && sStorageBinKey) {
 				oItem = oStorageBinControl.getItemByKey(oRessource.get("storageBin"));
 				oStorageBinControl.setSelectedItem(oItem);
 				oStorageBinControl.fireSelectionChange({
