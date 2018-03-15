@@ -104,12 +104,14 @@ sap.ui.define([
 			return oSource.setBusyIndicatorDelay(0)
 				.setBusy(false);
 		},
+
 		/**
 		 * Check is a given storage location is allowed for posting
 		 */
 		isStorageLocationAllowed: function(sStorageLocation) {
 			return this._aDisallowedStorageLocations.indexOf(sStorageLocation) === -1;
 		},
+
 		_formatStorageUnitData: function(oStorageUnit) {
 
 			if (!oStorageUnit) {
@@ -269,6 +271,14 @@ sap.ui.define([
 
 		_padStorageUnitNumber: function(sStorageUnitNumber) {
 			return jQuery.sap.padLeft(sStorageUnitNumber, "0", 20);
+		},
+
+		_deleteLeadingZeros: function(vNumber) {
+			if (jQuery.type(vNumber) === "string") {
+				return vNumber.replace(/^0+/, "");
+			} else {
+				return vNumber;
+			}
 		}
 	});
 

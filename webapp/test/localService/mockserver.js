@@ -157,6 +157,7 @@ sap.ui.define([
 			}
 
 			oData.d.results[0].Rowset.results[0].Row.results = [];
+
 			return oData;
 		},
 
@@ -164,24 +165,47 @@ sap.ui.define([
 			var sLENum = oParams.get("Param.1"),
 				aLEList = oData.d.results[0].Rowset.results[0].Row.results;
 
-			aLEList = jQuery.grep(aLEList, function(oLE, index) {
-				return oLE.LENUM === sLENum;
+			oData.d.results[0].Rowset.results[0].Row.results = jQuery.grep(aLEList, function(oLE, index) {
+				return jQuery.sap.endsWith(oLE.LENUM, sLENum);
 			});
 
-			oData.d.results[0].Rowset.results[0].Row.results = aLEList;
 			return oData;
 		},
 
 		fnGoodsMovementCreateXac: function(oData, oParams) {
 			var oUriParameters = jQuery.sap.getUriParameters(),
+				sStorageUnitNumber = oParams.get("Param.1"),
+				aStorageUnitList = oData.d.results[0].Rowset.results[0].Row.results,
 				sErrorMessage = oUriParameters.get("applicationError");
 
 			if (sErrorMessage) {
 				oData.d.results[0].FatalError = "Forcefull application error:: \'" + sErrorMessage + "\'";
+				return oData;
 			}
 
-			return oData;
+			oData.d.results[0].Rowset.results[0].Row.results = jQuery.grep(aStorageUnitList, function(oRow, index) {
+				return jQuery.sap.endsWith(oRow.LENUM, sStorageUnitNumber);
+			});
 
+			return oData;
+		},
+
+		fnGoodsMovementRollerConveyorCreateXac: function(oData, oParams) {
+			var oUriParameters = jQuery.sap.getUriParameters(),
+				sRessourceId = oParams.get("Param.2"),
+				aStorageUnitList = oData.d.results[0].Rowset.results[0].Row.results,
+				sErrorMessage = oUriParameters.get("applicationError");
+
+			if (sErrorMessage) {
+				oData.d.results[0].FatalError = "Forcefull application error:: \'" + sErrorMessage + "\'";
+				return oData;
+			}
+
+			oData.d.results[0].Rowset.results[0].Row.results = jQuery.grep(aStorageUnitList, function(oRow, index) {
+				return oRow.LENUM.includes(sRessourceId);
+			});
+
+			return oData;
 		},
 
 		fnGetOrderComponentQry: function(oData, oParams) {
@@ -189,11 +213,9 @@ sap.ui.define([
 				sMaterialNumber = oParams.get("Param.2"),
 				aMaterialNumberList = oData.d.results[0].Rowset.results[0].Row.results;
 
-			aMaterialNumberList = jQuery.grep(aMaterialNumberList, function(oRow, index) {
+			oData.d.results[0].Rowset.results[0].Row.results = jQuery.grep(aMaterialNumberList, function(oRow, index) {
 				return oRow.MATNR === sMaterialNumber;
 			});
-
-			oData.d.results[0].Rowset.results[0].Row.results = aMaterialNumberList;
 
 			return oData;
 		},
@@ -203,11 +225,9 @@ sap.ui.define([
 				sOrderNumber = oParams.get("Param.1"),
 				aOrderNumberList = oData.d.results[0].Rowset.results[0].Row.results;
 
-			aOrderNumberList = jQuery.grep(aOrderNumberList, function(oRow, index) {
+			oData.d.results[0].Rowset.results[0].Row.results = jQuery.grep(aOrderNumberList, function(oRow, index) {
 				return oRow.AUFNR === sOrderNumber;
 			});
-
-			oData.d.results[0].Rowset.results[0].Row.results = aOrderNumberList;
 
 			return oData;
 		},
@@ -217,11 +237,21 @@ sap.ui.define([
 				sRessourceId = oParams.get("Param.1"),
 				aOrderNumberList = oData.d.results[0].Rowset.results[0].Row.results;
 
-			aOrderNumberList = jQuery.grep(aOrderNumberList, function(oRow, index) {
+			oData.d.results[0].Rowset.results[0].Row.results = jQuery.grep(aOrderNumberList, function(oRow, index) {
 				return oRow.ARBID === sRessourceId;
 			});
 
-			oData.d.results[0].Rowset.results[0].Row.results = aOrderNumberList;
+			return oData;
+		},
+
+		fnStorageUnitCreateXac: function(oData, oParams) {
+			var oUriParameters = jQuery.sap.getUriParameters(),
+				sStorageUnit = oParams.get("Param.4"),
+				aStorageUnitList = oData.d.results[0].Rowset.results[0].Row.results;
+
+			oData.d.results[0].Rowset.results[0].Row.results = jQuery.grep(aStorageUnitList, function(oRow, index) {
+				return jQuery.sap.endsWith(oRow.LENUM, sStorageUnit);
+			});
 
 			return oData;
 		}

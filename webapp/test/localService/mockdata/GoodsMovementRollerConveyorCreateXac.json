@@ -40,6 +40,20 @@
 							},
 							"LENUM": "00000000109333600003",
 							"RowId": 1
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"LENUM": "00000000000900248110",
+							"RowId": 2
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"LENUM": "00000000000900253110",
+							"RowId": 3
 						}]
 					}
 				}]

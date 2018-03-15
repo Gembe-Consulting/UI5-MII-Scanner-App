@@ -60,52 +60,63 @@ sap.ui.define([
 			var oDataModel = this.getModel("data"),
 				oData = oDataModel.getData(),
 				oBundle = this.getResourceBundle(),
-				bIsLastUnit = this.formatter.isLastStorageUnit(oDataModel.getProperty("/storageUnit")),
-				bIsEmptyUnit = this.formatter.isEmptyStorageUnit(oDataModel.getProperty("/ISTME")),
-				doPosting,
+				doPosting, //Promise
+				fnSuccess,
 				fnError,
 				that = this;
 
 			this.getOwnerComponent().showBusyIndicator();
 
-			// prepare messages array
+			// prepare messages array -> debugging only
 			oData.messages = [];
 
-			if (bIsLastUnit) { // considering bIsEmptyUnit is always true if bIsLastUnit is true
+			//prepare some control data
+			oData.bIsLastUnit = this.formatter.isLastStorageUnit(oDataModel.getProperty("/storageUnit"));
+			oData.bIsEmptyUnit = this.formatter.isEmptyStorageUnit(oDataModel.getProperty("/ISTME"));
+
+			// Entweder ist die Palette die "letzte Palette" mit Dummy-LE, dann ist sie immer leer. Der PA muss gefunden werden, und der Speziel-WE mit BwA 555 muss gebucht werden
+			// Oder es ist nicht die letzte Palette, also mit einer echten LE, dann ist sie entwerder leer oder bereits voll.
+			// Ist die LE leer, muss zunächst der Wareneingang mit BwA 101 gebucht werden, danach erfolgt die Umbuchung auf die Rollenbahn.
+			// Ist die LE voll, muss nur die Umbuchung auf die Rollenbahn erfolgen.
+			if (oData.bIsLastUnit) { // considering bIsEmptyUnit is always true if bIsLastUnit is true
 				oData.messages.push("Letzte Palette");
-				//oDataModel.setProperty("/movementType", 555);
 
-				doPosting = this._findRunningProcessOrder(oData)
-					.then(this._createGoodsReceiptRollerConveyor.bind(this)); //555
+				doPosting = this._findRunningProcessOrder(oData) // PA Findung
+					.then(this._createGoodsReceiptRollerConveyor.bind(this)); //Speziel-WE mit BwA 555
 
-			} else if (bIsEmptyUnit) {
+			} else if (oData.bIsEmptyUnit) {
 				oData.messages.push("Laufende Palette");
-				//oDataModel.setProperty("/movementType", 101);
 
-				doPosting = this._createGoodsReceipt(oData); //101
+				doPosting = this._createGoodsReceipt(oData); //Normal-WE mit BwA 101
 
 			} else {
 				oData.messages.push("Laufende Palette");
+
 				doPosting = Promise.resolve(oData);
+
 			}
 
+			// function to call on success of createStockTransfer
+			fnSuccess = function(oFinalData) {
+				that.addLogMessage({
+					text: that._buildSuccessMessage(oFinalData),
+					type: sap.ui.core.MessageType.Success
+				});
+			};
+
+			// function to call on error of createStockTransfer or on any pre-chained promise
 			fnError = function(oError) {
 				MessageBox.error(oError.message, {
 					title: oError.name + oBundle.getText("error.miiTransactionErrorText", [oError.serviceName])
 				});
 			};
 
-			doPosting.then(this._createStockTransfer.bind(this))
-				.catch(fnError) // catch all errers that might occur during postings
-				.then(function() {
-					that.addLogMessage({
-						text: oData.messages.join("\n"),
-						type: sap.ui.core.MessageType.Success
-					});
-				})
+			doPosting.then(this._createStockTransfer.bind(this)) // Umbuchung auf Rollenbahn
+				.then(fnSuccess, fnError) // log success messages OR catch all errers that might occur during postings
 				.then(this.getOwnerComponent().hideBusyIndicator)
 				.then(function() {
 					that.onClearFormPress({}, true /*bKeepMessageStrip*/ );
+					jQuery.sap.log.debug(oData.messages.join("\n"), "", that.toString());
 				});
 		},
 
@@ -266,7 +277,6 @@ sap.ui.define([
 			}
 
 			mRessource.set("ressourceId", Object.values(oRessource)[0]);
-			mRessource.set("storageBin", Object.keys(oRessource)[0]);
 			mRessource.set("storageBin", Object.keys(oRessource)[0]);
 
 			return mRessource;
@@ -451,6 +461,7 @@ sap.ui.define([
 				}
 
 				return oData;
+
 			}.bind(this);
 
 			fnReject = function(oError) {
@@ -478,8 +489,6 @@ sap.ui.define([
 		 */
 		_createStockTransfer: function(oData) {
 			var sendStockTransferPromise,
-				sPath = "/",
-				oDataModel = this.getModel("data"),
 				oStorageUnitCreateModel = this.getModel("storageUnitCreate"),
 				oParam,
 				fnResolve, fnReject;
@@ -487,10 +496,10 @@ sap.ui.define([
 			oData.messages.push("Spezial-Umbuchung mit pseudo BwA 999");
 
 			oParam = {
-				"Param.1": oDataModel.getProperty(sPath + "storageBinId"), //Lagerplatz (ID),
-				"Param.2": oDataModel.getProperty(sPath + "stretcherActive") ? 1 : 0, //Stretch,
-				"Param.3": this.formatter.isLastStorageUnit(oDataModel.getProperty(sPath + "storageUnit")) ? 1 : 0, //LETZE_LE,
-				"Param.4": this._padStorageUnitNumber(oDataModel.getProperty(sPath + "storageUnit")) //LE
+				"Param.1": oData.storageBinId, //Lagerplatz (ID),
+				"Param.2": oData.stretcherActive ? 1 : 0, //Stretch,
+				"Param.3": this.formatter.isLastStorageUnit(oData.storageUnit) ? 1 : 0, //LETZE_LE,
+				"Param.4": this._padStorageUnitNumber(oData.storageUnit) //LE
 			};
 
 			fnResolve = function(oIllumData) {
@@ -505,7 +514,9 @@ sap.ui.define([
 						oData.messages.push(msg.Message);
 					});
 				}
+
 				return oData;
+
 			}.bind(this);
 
 			fnReject = function(oError) {
@@ -567,6 +578,7 @@ sap.ui.define([
 				}
 
 				return oData;
+
 			}.bind(this);
 
 			fnReject = function(oError) {
@@ -578,6 +590,25 @@ sap.ui.define([
 			findProcessOrderPromise = oCurrentProcessOrderModel.loadMiiData(oCurrentProcessOrderModel._sServiceUrl, oParam);
 
 			return findProcessOrderPromise.then(fnResolve, fnReject);
+		},
+
+		_buildSuccessMessage: function(oData) {
+			var sSuccessMessage,
+				sStorageBinItemText = this.byId("storageBinSelection").getSelectedItem().getText(),
+				sStorageUnitNumber = this._deleteLeadingZeros(oData.storageUnit);
+
+			if (oData.bIsLastUnit) {
+				//Letzte Palette '900248110' erfolgreich von BEUMER an Rollenbahn gemeldet
+				sSuccessMessage = this.getTranslation("rollerConveyor.messageText.lastUnitPostingSuccess", [sStorageUnitNumber, sStorageBinItemText]); //"Letzte Palette '" + oData.storageUnit + "' erfolgreich von " + oData.storageBin + " an Rollenbahn gemeldet";
+			} else if (oData.bIsEmptyUnit) {
+				//Palette '109330000015' erfolgreich eingebucht und von ROLLTOR an Rollenbahn gemeldet
+				sSuccessMessage = this.getTranslation("rollerConveyor.messageText.currentUnitWithGoodsReceiptPostingSuccess", [sStorageUnitNumber, sStorageBinItemText]); //"Palette '" + oData.storageUnit + "' erfolgreich eingebucht und von " + oData.storageBin + " an Rollenbahn gemeldet";
+			} else {
+				//Palette '109330000015' erfolgreich von STAPLER an Rollenbahn gemeldet
+				sSuccessMessage = this.getTranslation("rollerConveyor.messageText.currentUnitPostingSuccess", [sStorageUnitNumber, sStorageBinItemText]); //"Palette '" + oData.storageUnit + "' erfolgreich von " + oData.storageBin + " an Rollenbahn gemeldet";
+			}
+
+			return sSuccessMessage;
 		}
 	});
 
