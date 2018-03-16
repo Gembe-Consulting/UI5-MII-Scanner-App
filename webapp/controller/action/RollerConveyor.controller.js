@@ -24,7 +24,7 @@ sap.ui.define([
 			entryQuantity: null,
 			unitOfMeasure: null,
 			storageBin: null,
-			stretcherActive: false,
+			stretcherActive: true,
 			// external data from storage unit
 			LENUM: null,
 			MEINH: null,
