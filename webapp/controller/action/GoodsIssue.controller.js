@@ -251,7 +251,6 @@ sap.ui.define([
 
 			this.showControlBusyIndicator(oSource);
 			oSource.setValueState(sap.ui.core.ValueState.None);
-
 			this.clearLogMessages();
 
 			fnResolve = function(oData) {
@@ -337,8 +336,6 @@ sap.ui.define([
 				fnReject;
 
 			sStorageUnit = this._padStorageUnitNumber(sStorageUnit);
-
-			jQuery.sap.log.info("Start gathering data for palette " + sStorageUnit);
 
 			oSource.setValueState(sap.ui.core.ValueState.None);
 			this.showControlBusyIndicator(oSource);
@@ -426,10 +423,11 @@ sap.ui.define([
 				fnReject;
 
 			oSource.setValueState(sap.ui.core.ValueState.None);
-
 			this.clearLogMessages();
-
 			this.showControlBusyIndicator(oSource);
+
+			// Order number could come like 1234567/0012 or 000001234567/001 -> need to clean it
+			sOrderNumber = this._cleanScannedOrderNumberString(sOrderNumber);
 
 			fnResolve = function(oData) {
 				var aResultList,
@@ -443,6 +441,8 @@ sap.ui.define([
 					this.getModel("view").setProperty("/bOrderNumberValid", true);
 
 					oOrderHeader = oData.d.results[0].Rowset.results[0].Row.results[0];
+
+					oModel.setProperty("/orderNumber", oOrderHeader.AUFNR);
 
 					this.validateComponentWithdrawal(oModel.getProperty("/orderNumber"), oModel.getProperty("/materialNumber"), oSource);
 

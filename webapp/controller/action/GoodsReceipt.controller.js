@@ -41,8 +41,6 @@ sap.ui.define([
 			var oModel = new JSONModel(),
 				oData;
 
-			jQuery(document).on("scannerDetectionComplete", this.handleBarcodeScanned.bind(this));
-
 			oData = jQuery.extend({}, this._oInitData);
 			oModel.setData(oData);
 			this.setModel(oModel, "data");
@@ -52,29 +50,6 @@ sap.ui.define([
 			this.getRouter()
 				.getRoute("goodsReceipt")
 				.attachMatched(this._onRouteMatched, this);
-		},
-
-		handleBarcodeScanned: function(oEvent, oData) {
-			var sScannedString = oData.string,
-				oScannerInputType,
-				oControl;
-
-			oScannerInputType = this.getScannerInputType(sScannedString);
-
-			if (oScannerInputType) {
-				jQuery.sap.log.info("Barcode enthält folgende Information: \'" + sScannedString + "\' Sie haben \'" + oScannerInputType.name + "\' gescannt.");
-				// TODO: remove message box
-				MessageBox.information("Barcode enthält folgende Information: \'" + sScannedString + "\' Sie haben \'" + oScannerInputType.name + "\' gescannt.");
-				oControl = this.getControlByScannerInputType(oScannerInputType);
-				if (oControl) {
-					oControl.fireChangeEvent(sScannedString);
-				}
-			} else {
-				jQuery.sap.log.warning("Ihr Barcode konnte zwar gelesen, aber nicht zugeordnet werden.\nInhalt: \'" + sScannedString + "\'");
-				// TODO: remove message box
-				MessageBox.warning("Ihr Barcode konnte zwar gelesen, aber nicht zugeordnet werden.\nInhalt war: \'" + sScannedString + "\'");
-			}
-
 		},
 
 		_onRouteMatched: function(oEvent) {
@@ -115,11 +90,7 @@ sap.ui.define([
 			}
 		},
 
-		getControlByScannerInputType: function(oInputType) {
-			return this.getIdByInputType(oInputType);
-		},
-
-		getIdByInputType: function(oInputType) {
+		_getIdByInputType: function(oInputType) {
 			switch (oInputType.key) {
 				case "LENUM":
 					return this.byId("storageUnitInput");
@@ -338,11 +309,12 @@ sap.ui.define([
 				fnResolve,
 				fnReject;
 
+			this.showControlBusyIndicator(oSource);
 			oSource.setValueState(sap.ui.core.ValueState.None);
-
 			this.clearLogMessages();
 
-			this.showControlBusyIndicator(oSource);
+			// Order number could come like 1234567/0012 or 000001234567/001 -> need to clean it
+			sOrderNumber = this._cleanScannedOrderNumberString(sOrderNumber);
 
 			fnResolve = function(oData) {
 				var aResultList,
@@ -355,6 +327,8 @@ sap.ui.define([
 
 				if (aResultList && aResultList.length === 1) {
 					oSource.setValueState(sap.ui.core.ValueState.Success);
+
+					oModel.setProperty("/AUFNR", sOrderNumber);
 				} else {
 					oSource.setValueState(sap.ui.core.ValueState.Error);
 					this.addLogMessage({

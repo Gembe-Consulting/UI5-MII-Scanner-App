@@ -226,7 +226,7 @@ sap.ui.define([
 				aOrderNumberList = oData.d.results[0].Rowset.results[0].Row.results;
 
 			oData.d.results[0].Rowset.results[0].Row.results = jQuery.grep(aOrderNumberList, function(oRow, index) {
-				return oRow.AUFNR === sOrderNumber;
+				return jQuery.sap.endsWith(oRow.AUFNR, sOrderNumber);
 			});
 
 			return oData;

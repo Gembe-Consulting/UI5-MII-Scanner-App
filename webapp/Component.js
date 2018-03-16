@@ -27,8 +27,6 @@ sap.ui.define([
 
 			// initialize the error handler with the component
 			this._oErrorHandler = new ErrorHandler(this);
-			
-
 
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
@@ -56,8 +54,8 @@ sap.ui.define([
 		 */
 		testUserLoginName: function(sUserInput) {
 			var sUserInputUpper = sUserInput ? sUserInput.toUpperCase() : "",
-				validateUserLoginName, 
-				updateUserModel, 
+				validateUserLoginName,
+				updateUserModel,
 				onLoginError;
 
 			this.showBusyIndicator();
@@ -114,9 +112,9 @@ sap.ui.define([
 		 */
 		isUserLoggedIn: function() {
 			var oModel = this.getModel("user");
-			
+
 			//always return true if we are in debug mode
-			if(this._bDebugMode){
+			if (this._bDebugMode) {
 				oModel.setProperty("/USERLOGIN", "DEBUG-USER");
 				return true;
 			}
@@ -147,7 +145,7 @@ sap.ui.define([
 				}
 				reject(new Error("This is a mobile device, we are not allowed to read #IllumLoginName"));
 			});
-			
+
 			return oDiscoverdIllumLoginName;
 		},
 
@@ -181,7 +179,7 @@ sap.ui.define([
 		 * Only if current system is not a desktop device!
 		 */
 		setupScannerDetection: function() {
-			var bMobile= this.getModel("device").getProperty("/browser/mobile");
+			var bMobile = this.getModel("device").getProperty("/browser/mobile");
 			if (bMobile) {
 
 				jQuery(document).scannerDetection({
@@ -195,7 +193,7 @@ sap.ui.define([
 						jQuery.sap.log.error("Scan war nicht erfolgreich: " + sString, "Event: onError", "ScannerDetection");
 					},
 					onReceive: function(event, a, b, c) { // Callback after receiving and processing a char (scanned char in parameter)
-						jQuery.sap.log.info("Key stroke detected from Scanner: " + event.key + " (" + event.keyCode + ")", "Event: onReceive", "ScannerDetection");
+						jQuery.sap.log.debug("Key stroke detected from Scanner: " + event.key + " (" + event.keyCode + ")", "Event: onReceive", "ScannerDetection");
 					},
 					onKeyDetect: function(event) { // Callback after detecting a keyDown (key char in parameter) - in contrast to onReceive, this fires for non-character keys like tab, arrows, etc. too!
 						jQuery.sap.log.debug("Key stroke detected: " + event.key + " (" + event.keyCode + ")", "Event: onKeyDetect", "ScannerDetection");
@@ -255,8 +253,8 @@ sap.ui.define([
 			}
 			return this._sContentDensityClass;
 		},
-		
-		getDebugMode:function(){
+
+		getDebugMode: function() {
 			return this._bDebugMode === "true";
 		},
 

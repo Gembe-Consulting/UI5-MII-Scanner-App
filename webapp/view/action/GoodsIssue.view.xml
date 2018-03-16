@@ -37,7 +37,7 @@
 							<!-- AUFNR -->
 							<Label text="{i18n>lableTextFormGoodsIssueOrder}" labelFor="orderNumberInput"/>
 							<Input id="orderNumberInput" change="onOrderNumberInputChange" value="{path: 'data>/orderNumber', type:'.sapType.AUFNR'}"
-								valueState="{view>/orderNumberValueState}" maxLength="7" class="noScannerInput suwIncreadedInputFontSize"></Input>
+								valueState="{view>/orderNumberValueState}" maxLength="12" class="noScannerInput suwIncreadedInputFontSize"></Input>
 							<!-- MATNR -->
 							<Label text="{i18n>lableTextFormGoodsIssueMaterial}" labelFor="materialNumberInput"/>
 							<Input id="materialNumberInput" value="{path: 'data>/materialNumber', type:'.sapType.MATNR'}" change="onMaterialNumberInputChange"

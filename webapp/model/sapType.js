@@ -29,9 +29,9 @@ sap.ui.define([
 
 		AUFNR: new StringType(null, {
 			minLength: 7,
-			maxLength: 7,
-			startsWith: "1",
-			search: "^[0-9]*$"
+			maxLength: 12
+				//startsWith: "1",
+				//search: "^[0-9]*$"
 		}),
 
 		MEINS: new StringType(null, {

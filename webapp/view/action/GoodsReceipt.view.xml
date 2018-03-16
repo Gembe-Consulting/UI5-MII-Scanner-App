@@ -28,10 +28,10 @@
 					<Label text="{i18n>lableTextFormGoodsReceiptStorageUnit}" labelFor="storageUnitInput"/>
 					<Input id="storageUnitInput" change="onStorageUnitNumberChange" value="{path: 'data>/LENUM', type:'.sapType.LENUM'}"
 						editable="{= ${data>/LGORT}==='1000' || ${data>/LGORT}==='' || ${data>/LGORT}===null}" valueState="{view>/storageUnitNumberValueState}"
-						maxLength="20" class="noScannerInput suwIncreadedInputFontSize"></Input>
+						maxLength="20" class="suwIncreadedInputFontSize"></Input>
 					<Label text="{i18n>lableTextFormGoodsReceiptOrder}" labelFor="orderNumberInput"/>
 					<Input id="orderNumberInput" value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}" change="onOrderNumberChange"
-						editable="{=${data>/LENUM}===null}" valueState="{view>/orderNumberValueState}" maxLength="7"
+						editable="{=${data>/LENUM}===null}" valueState="{view>/orderNumberValueState}" maxLength="12"
 						class="noScannerInput suwIncreadedInputFontSize"></Input>
 					<Label text="{i18n>lableTextFormGoodsReceiptQuantity}, {i18n>lableTextFormGoodsReceiptUnitOfMeasureShort}" labelFor="quantityInput"/>
 					<HBox alignItems="Center">
