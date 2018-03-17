@@ -72,9 +72,9 @@ sap.ui.define([
 
 				if (oUser && oUser.USERLOGIN === sUserInputUpper) {
 					return oUser;
-				} else {
-					return Promise.reject("Der zurückgegeben Username entspricht nicht der Benutzereingabe!", [], ["Component.testUserLoginName"]);
 				}
+				return Promise.reject("Der zurückgegeben Username entspricht nicht der Benutzereingabe!", [], ["Component.testUserLoginName"]);
+
 			}.bind(this);
 
 			updateUserModel = function(oUser) {
@@ -127,7 +127,7 @@ sap.ui.define([
 			return true;
 		},
 
-		discoverIllumLoginName: function() {
+		discoverIllumLoginName: function discoverIllumLoginName() {
 			var oDiscoverdIllumLoginName,
 				bMobile = this.getModel("device").getProperty("/browser/mobile"),
 				sIllumLoginName;
@@ -135,13 +135,11 @@ sap.ui.define([
 			oDiscoverdIllumLoginName = new Promise(function(resolve, reject) {
 				if (!bMobile) {
 					sIllumLoginName = $("#IllumLoginName").val();
-					if (!!sIllumLoginName) {
+					if (sIllumLoginName) {
 						resolve(sIllumLoginName);
 						return;
-					} else {
-						reject(new Error("Could not read #IllumLoginName"));
-						return;
 					}
+					reject(new Error("Could not read #IllumLoginName"));
 				}
 				reject(new Error("This is a mobile device, we are not allowed to read #IllumLoginName"));
 			});
@@ -238,7 +236,7 @@ sap.ui.define([
 		 * @return {string} css class, either 'sapUiSizeCompact' or 'sapUiSizeCozy' - or an empty string if no css class should be set
 		 */
 		getContentDensityClass: function() {
-			if (this._sContentDensityClass === undefined) {
+			if (typeof this._sContentDensityClass === "undefined") {
 				// check whether FLP has already set the content density class; do nothing in this case
 				if (jQuery(document.body)
 					.hasClass("sapUiSizeCozy") || jQuery(document.body)

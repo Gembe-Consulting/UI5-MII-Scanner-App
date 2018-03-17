@@ -102,7 +102,7 @@ sap.ui.define([
 					});
 				}
 				if (oQuery.SCHGT) {
-					oQuery.SCHGT = (oQuery.SCHGT == 'true');
+					oQuery.SCHGT = (oQuery.SCHGT === "true");
 					oView.getModel("data").setProperty("/bulkMaterialIndicator", oQuery.SCHGT);
 					this.byId("bulkMaterialSwitch").fireChange({
 						value: oQuery.SCHGT
@@ -119,16 +119,10 @@ sap.ui.define([
 			this.getOwnerComponent().showBusyIndicator();
 
 			fnResolve = function(oData) {
-				var aResults,
-					aMessages,
-					sFatalError,
-					oReturn,
+				var sFatalError,
 					oDataModel = this.getModel("data");
 
 				try {
-
-					aResults = oData.d.results[0].Rowset.results;
-					aMessages = oData.d.results[0].Messages.results;
 					sFatalError = oData.d.results[0].FatalError;
 
 					if (!sFatalError) {
@@ -170,7 +164,6 @@ sap.ui.define([
 				oViewModel = this.getModel("view"),
 				oGoodsIssueModel = this.getModel("goodsMovement"),
 				sUsername = this.getModel("user").getProperty("USERLOGIN"),
-				sDefaultPlant = "1000",
 				sDefaultMoveType = "261",
 				sDefaultUnitOfMeasure = "KG",
 
@@ -180,39 +173,21 @@ sap.ui.define([
 				oParam = {
 					"Param.1": oDataModel.getProperty(sPath + "storageUnit"),
 					"Param.2": oDataModel.getProperty(sPath + "orderNumber"),
-					//"Param.3": oDataModel.getProperty(sPath + "storageLocation"),
 					"Param.4": oDataModel.getProperty(sPath + "entryQuantity"),
 					"Param.5": oDataModel.getProperty(sPath + "unitOfMeasure") || sDefaultUnitOfMeasure,
 					"Param.6": oDataModel.getProperty(sPath + "materialNumber"),
-					//"Param.7": oDataModel.getProperty(sPath + "batchNumber"),
-					//"Param.8": oDataModel.getProperty(sPath + "bulkMaterialIndicator"),
-					//"Param.9": oDataModel.getProperty(sPath + "operationNumber"),
 					"Param.10": sUsername,
-					"Param.11": oDataModel.getProperty(sPath + "movementType") || sDefaultMoveType,
-					//"Param.12": oDataModel.getProperty(sPath + "plant") || sDefaultPlant,
-					//"Param.13": oDataModel.getProperty(sPath + "LGTYP"),
-					//"Param.14": oDataModel.getProperty(sPath + "LGPLA"),
-					//"Param.15": oDataModel.getProperty(sPath + "NLTYP"),
-					//"Param.16": oDataModel.getProperty(sPath + "NLPLA")
+					"Param.11": oDataModel.getProperty(sPath + "movementType") || sDefaultMoveType
 				};
 			} else {
 				oParam = {
-					//"Param.1": oDataModel.getProperty(sPath + "storageUnit"),
 					"Param.2": oDataModel.getProperty(sPath + "orderNumber"),
 					"Param.3": oDataModel.getProperty(sPath + "storageLocation"),
 					"Param.4": oDataModel.getProperty(sPath + "entryQuantity"),
 					"Param.5": oDataModel.getProperty(sPath + "unitOfMeasure") || sDefaultUnitOfMeasure,
 					"Param.6": oDataModel.getProperty(sPath + "materialNumber"),
-					//"Param.7": oDataModel.getProperty(sPath + "batchNumber"),
-					//"Param.8": oDataModel.getProperty(sPath + "bulkMaterialIndicator"),
-					//"Param.9": oDataModel.getProperty(sPath + "operationNumber"),
 					"Param.10": sUsername,
-					"Param.11": oDataModel.getProperty(sPath + "movementType") || sDefaultMoveType,
-					//"Param.12": oDataModel.getProperty(sPath + "plant") || sDefaultPlant,
-					//"Param.13": oDataModel.getProperty(sPath + "LGTYP"),
-					//"Param.14": oDataModel.getProperty(sPath + "LGPLA"),
-					//"Param.15": oDataModel.getProperty(sPath + "NLTYP"),
-					//"Param.16": oDataModel.getProperty(sPath + "NLPLA")
+					"Param.11": oDataModel.getProperty(sPath + "movementType") || sDefaultMoveType
 				};
 			}
 

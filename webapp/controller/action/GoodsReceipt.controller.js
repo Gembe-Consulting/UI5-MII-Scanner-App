@@ -197,15 +197,9 @@ sap.ui.define([
 			this.getOwnerComponent().showBusyIndicator();
 
 			fnResolve = function(oData) {
-				var aResults,
-					aMessages,
-					sFatalError,
-					oReturn;
+				var sFatalError;
 
 				try {
-
-					aResults = oData.d.results[0].Rowset.results;
-					aMessages = oData.d.results[0].Messages.results;
 					sFatalError = oData.d.results[0].FatalError;
 
 					if (!sFatalError) {

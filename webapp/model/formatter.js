@@ -2,10 +2,10 @@ sap.ui.define([
 	"com/mii/scanner/libs/momentjs/moment"
 ], function() {
 	"use strict";
-	
-	const LAST_STORAGE_UNIT_NUMBERS = [90025311000000000000, 90024811000000000000, 90000000000000000000 /* keep lagacy support */];
+
+	const LAST_STORAGE_UNIT_NUMBERS = [90025311000000000000, 90024811000000000000, 90000000000000000000 /* keep lagacy support */ ];
 	const ZERO_STOCK_STORAGE_UNIT_QUANTITIES = [0.0, 0.001];
-	
+
 	return {
 
 		/**
@@ -32,12 +32,7 @@ sap.ui.define([
 		 * @returns {boolean} true if storage unit is considered empty, false if full
 		 */
 		isEmptyStorageUnit: function(sQuantity) {
-			var fQuantity = parseFloat(sQuantity),
-				fZero = 0.0,
-				fNearToZero = 0.001;
-				//ZERO_STOCK_STORAGE_UNIT_QUANTITIES
-
-			return !sQuantity || ZERO_STOCK_STORAGE_UNIT_QUANTITIES.includes(parseFloat(sQuantity));//!sQuantity || (fQuantity === fZero) || (fQuantity === fNearToZero);
+			return !sQuantity || ZERO_STOCK_STORAGE_UNIT_QUANTITIES.includes(parseFloat(sQuantity)); //!sQuantity || (fQuantity === fZero) || (fQuantity === fNearToZero);
 		},
 		/**
 		 * Checks if a storage unit quantity is considered full / non-empty:
@@ -49,12 +44,7 @@ sap.ui.define([
 		 * @returns {boolean} true if storage unit is considered full, false if empty
 		 */
 		isFullStorageUnit: function(sQuantity) {
-			var fQuantity = parseFloat(sQuantity),
-				fZero = 0.0,
-				fNearToZero = 0.001;
-				//ZERO_STOCK_STORAGE_UNIT_QUANTITIES
-			
-			return !!sQuantity && !ZERO_STOCK_STORAGE_UNIT_QUANTITIES.includes(parseFloat(sQuantity));//!!sQuantity && (fQuantity !== fZero) && (fQuantity !== fNearToZero);
+			return !!sQuantity && !ZERO_STOCK_STORAGE_UNIT_QUANTITIES.includes(parseFloat(sQuantity)); //!!sQuantity && (fQuantity !== fZero) && (fQuantity !== fNearToZero);
 		},
 
 		/**
@@ -66,8 +56,7 @@ sap.ui.define([
 		 * @return {boolean} true if is last, false if not last unit
 		 */
 		isLastStorageUnit: function(vStorageUnitNumber) {
-			return LAST_STORAGE_UNIT_NUMBERS.includes(parseInt(vStorageUnitNumber, 10));
-			//return !!vStorageUnitNumber && 90000000000000000000 === parseInt(vStorageUnitNumber, 10);
+			return LAST_STORAGE_UNIT_NUMBERS.includes(parseInt(vStorageUnitNumber, 10)); //return !!vStorageUnitNumber && 90000000000000000000 === parseInt(vStorageUnitNumber, 10);
 		},
 
 		/**
@@ -79,8 +68,7 @@ sap.ui.define([
 		 * @return {boolean} true if is not last, false if last unit
 		 */
 		isNotLastStorageUnit: function(vStorageUnitNumber) {
-			return !LAST_STORAGE_UNIT_NUMBERS.includes(parseInt(vStorageUnitNumber, 10));
-			//return !vStorageUnitNumber || 90000000000000000000 !== parseInt(vStorageUnitNumber, 10);
+			return !LAST_STORAGE_UNIT_NUMBERS.includes(parseInt(vStorageUnitNumber, 10)); //return !vStorageUnitNumber || 90000000000000000000 !== parseInt(vStorageUnitNumber, 10);
 		}
 	};
 });

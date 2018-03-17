@@ -324,9 +324,8 @@ sap.ui.define([
 
 			if (aMessages && aMessages.length > 0) {
 				return false;
-			} else {
-				return true;
 			}
+			return true;
 		},
 
 		handleConfirmationMessageBoxPress: function(oEvent) {
@@ -361,9 +360,8 @@ sap.ui.define([
 		_deleteLeadingZeros: function(vNumber) {
 			if (jQuery.type(vNumber) === "string") {
 				return vNumber.replace(/^0+/, "");
-			} else {
-				return vNumber;
 			}
+			return vNumber;
 		}
 	});
 
