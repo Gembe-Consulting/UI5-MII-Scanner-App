@@ -34,8 +34,6 @@ sap.ui.define([
 			var oModel = new JSONModel(),
 				oData;
 
-			//jQuery(document).on("scannerDetectionComplete", this.handleBarcodeScanned.bind(this));
-
 			oData = jQuery.extend({}, this._oInitData);
 			oModel.setData(oData);
 			this.setModel(oModel, "data");
@@ -172,20 +170,16 @@ sap.ui.define([
 					sFatalError,
 					oReturn;
 
-				oRow = oData.d.results["0"].Rowset.results["0"].Row;
 				aMessages = oData.d.results["0"].Messages.results;
 				sFatalError = oData.d.results["0"].FatalError;
 
 				messages = messages.concat(aMessages);
 
 				if (sFatalError) {
-
-					this.addLogMessage({
-						text: sFatalError,
-						type: sap.ui.core.MessageType.Error
-					});
 					throw new Error(sFatalError);
 				}
+
+				oRow = oData.d.results["0"].Rowset.results["0"].Row;
 
 				if (oRow && oRow.results.length === 1) {
 					oReturn = oRow.results["0"];
@@ -198,8 +192,9 @@ sap.ui.define([
 			}.bind(this);
 
 			fnReject = function(oError) {
-				MessageBox.error(oError.message, {
-					title: oError.name + oBundle.getText("messageTextStockTransferError")
+				this.addLogMessage({
+					text: oError.message,
+					type: sap.ui.core.MessageType.Error
 				});
 				throw oError;
 			}.bind(this);
