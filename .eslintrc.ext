@@ -506,8 +506,8 @@
 			"helpUrl": "http://eslint.org/docs/rules/use-isnan"
 		},
 		"quote-props": {
-			"severity": "info",
-			"category": "Stylistic Issue",
+			"severity": "warning",
+			"category": "Possible Error",
 			"helpUrl": "http://eslint.org/docs/rules/quote-props"
 		},
 		"sap-no-location-usage": {
@@ -721,7 +721,7 @@
 			"helpUrl": "http://eslint.org/docs/rules/no-new-require"
 		},
 		"sap-no-hardcoded-url": {
-			"severity": "warning",
+			"severity": "info",
 			"category": "Fiori Architectural Guidelines",
 			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?fa158d772a2a48bc9b1530713ac03bbd.html"
 		},

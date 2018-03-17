@@ -1,3 +1,6 @@
+# exclude libs folder
+*/webapp/libs/*
 # exclude test folder
-webapp/test/*
-dist/*
+*/webapp/test/*
+# exclude dist folder
+*/dist/*

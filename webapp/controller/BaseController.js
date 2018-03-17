@@ -53,12 +53,10 @@ sap.ui.define([
 		 * @returns {string} The translation of sKey
 		 */
 		getTranslation: function(sKey, aParameters) {
-			if (aParameters === undefined || aParameters === null) {
+			if (typeof aParameters === "undefined" || aParameters === null) {
 				return this.getResourceBundle().getText(sKey);
-			} else {
-				return this.getResourceBundle().getText(sKey, aParameters);
 			}
-
+			return this.getResourceBundle().getText(sKey, aParameters);
 		},
 
 		getResourceText: function(sResourceString) {
@@ -129,7 +127,7 @@ sap.ui.define([
 			var sPreviousHash = History.getInstance().getPreviousHash();
 
 			//The history contains a previous entry
-			if (sPreviousHash !== undefined) {
+			if (typeof sPreviousHash !== "undefined") {
 				window.history.go(-1);
 			} else {
 				// There is no history!

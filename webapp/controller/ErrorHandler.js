@@ -33,7 +33,6 @@ sap.ui.define([
 				};
 
 				var showMessageToast = function(oEvent) {
-					var oParams = oEvent.getParameters();
 					this._showServiceRequestToast(oEvent.getId() + " to " + sModelName + "\nreturning success=" + oEvent.getParameter("success"));
 				};
 
