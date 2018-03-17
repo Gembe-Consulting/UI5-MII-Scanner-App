@@ -41,8 +41,6 @@ sap.ui.define([
 			var oModel = new JSONModel(),
 				oData;
 
-			jQuery(document).on("scannerDetectionComplete", this.handleBarcodeScanned.bind(this));
-
 			oData = jQuery.extend({}, this._oInitData);
 			oModel.setData(oData);
 			this.setModel(oModel, "data");
@@ -52,29 +50,6 @@ sap.ui.define([
 			this.getRouter()
 				.getRoute("goodsReceipt")
 				.attachMatched(this._onRouteMatched, this);
-		},
-
-		handleBarcodeScanned: function(oEvent, oData) {
-			var sScannedString = oData.string,
-				oScannerInputType,
-				oControl;
-
-			oScannerInputType = this.getScannerInputType(sScannedString);
-
-			if (oScannerInputType) {
-				jQuery.sap.log.info("Barcode enthält folgende Information: \'" + sScannedString + "\' Sie haben \'" + oScannerInputType.name + "\' gescannt.");
-				// TODO: remove message box
-				MessageBox.information("Barcode enthält folgende Information: \'" + sScannedString + "\' Sie haben \'" + oScannerInputType.name + "\' gescannt.");
-				oControl = this.getControlByScannerInputType(oScannerInputType);
-				if (oControl) {
-					oControl.fireChangeEvent(sScannedString);
-				}
-			} else {
-				jQuery.sap.log.warning("Ihr Barcode konnte zwar gelesen, aber nicht zugeordnet werden.\nInhalt: \'" + sScannedString + "\'");
-				// TODO: remove message box
-				MessageBox.warning("Ihr Barcode konnte zwar gelesen, aber nicht zugeordnet werden.\nInhalt war: \'" + sScannedString + "\'");
-			}
-
 		},
 
 		_onRouteMatched: function(oEvent) {
@@ -115,11 +90,7 @@ sap.ui.define([
 			}
 		},
 
-		getControlByScannerInputType: function(oInputType) {
-			return this.getIdByInputType(oInputType);
-		},
-
-		getIdByInputType: function(oInputType) {
+		_getIdByInputType: function(oInputType) {
 			switch (oInputType.key) {
 				case "LENUM":
 					return this.byId("storageUnitInput");
@@ -276,8 +247,7 @@ sap.ui.define([
 			var sPath = "/",
 				oDataModel = this.getModel("data"),
 				oGoodsReceiptModel = this.getModel("goodsMovement"),
-				sUsername = this.getModel("user").getProperty("USERLOGIN"),
-				sDefaultPlant = this._sStorageLocationWarehouse,
+				sUsername = this.getModel("user").getProperty("/USERLOGIN"),
 				sDefaultMoveType = "101",
 				sDefaultUnitOfMeasure = "KG",
 
@@ -287,39 +257,21 @@ sap.ui.define([
 				oParam = {
 					"Param.1": oDataModel.getProperty(sPath + "LENUM"),
 					"Param.2": oDataModel.getProperty(sPath + "AUFNR"),
-					//"Param.3": oDataModel.getProperty(sPath + "LGORT"),
 					"Param.4": oDataModel.getProperty(sPath + "SOLLME"),
 					"Param.5": oDataModel.getProperty(sPath + "MEINH") || sDefaultUnitOfMeasure,
 					"Param.6": oDataModel.getProperty(sPath + "MATNR"),
-					//"Param.7": oDataModel.getProperty(sPath + "CHARG"),
-					//"Param.8": oDataModel.getProperty(sPath + "SCHUETT"),
-					//"Param.9": oDataModel.getProperty(sPath + "VORNR"),
 					"Param.10": sUsername,
-					"Param.11": oDataModel.getProperty(sPath + "BWART") || sDefaultMoveType,
-					//"Param.12": oDataModel.getProperty(sPath + "WERK") || sDefaultPlant,
-					//"Param.13": oDataModel.getProperty(sPath + "LGTYP"),
-					//"Param.14": oDataModel.getProperty(sPath + "LGPLA"),
-					//"Param.15": oDataModel.getProperty(sPath + "NLTYP"),
-					//"Param.16": oDataModel.getProperty(sPath + "NLPLA")
+					"Param.11": oDataModel.getProperty(sPath + "BWART") || sDefaultMoveType
 				};
 			} else {
 				oParam = {
-					//"Param.1": oDataModel.getProperty(sPath + "LENUM"),
 					"Param.2": oDataModel.getProperty(sPath + "AUFNR"),
 					"Param.3": oDataModel.getProperty(sPath + "LGORT"),
 					"Param.4": oDataModel.getProperty(sPath + "SOLLME"),
 					"Param.5": oDataModel.getProperty(sPath + "MEINH") || sDefaultUnitOfMeasure,
 					"Param.6": oDataModel.getProperty(sPath + "MATNR"),
-					//"Param.7": oDataModel.getProperty(sPath + "CHARG"),
-					//"Param.8": oDataModel.getProperty(sPath + "SCHUETT"),
-					//"Param.9": oDataModel.getProperty(sPath + "VORNR"),
 					"Param.10": sUsername,
-					"Param.11": oDataModel.getProperty(sPath + "BWART") || sDefaultMoveType,
-					//"Param.12": oDataModel.getProperty(sPath + "WERK") || sDefaultPlant,
-					//"Param.13": oDataModel.getProperty(sPath + "LGTYP"),
-					//"Param.14": oDataModel.getProperty(sPath + "LGPLA"),
-					//"Param.15": oDataModel.getProperty(sPath + "NLTYP"),
-					//"Param.16": oDataModel.getProperty(sPath + "NLPLA")
+					"Param.11": oDataModel.getProperty(sPath + "BWART") || sDefaultMoveType
 				};
 			}
 
@@ -338,11 +290,12 @@ sap.ui.define([
 				fnResolve,
 				fnReject;
 
+			this.showControlBusyIndicator(oSource);
 			oSource.setValueState(sap.ui.core.ValueState.None);
-
 			this.clearLogMessages();
 
-			this.showControlBusyIndicator(oSource);
+			// Order number could come like 1234567/0012 or 000001234567/001 -> need to clean it
+			sOrderNumber = this._cleanScannedOrderNumberString(sOrderNumber);
 
 			fnResolve = function(oData) {
 				var aResultList,
@@ -355,6 +308,8 @@ sap.ui.define([
 
 				if (aResultList && aResultList.length === 1) {
 					oSource.setValueState(sap.ui.core.ValueState.Success);
+
+					oModel.setProperty("/AUFNR", sOrderNumber);
 				} else {
 					oSource.setValueState(sap.ui.core.ValueState.Error);
 					this.addLogMessage({

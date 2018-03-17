@@ -60,10 +60,19 @@
 								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
 								"type": "QueryTemplate.Row"
 							},
-							"AUFNR": "1093334",
+							"AUFNR": "1025311",
 							"VORNR": "0010",
 							"ARBID": "00253110",
 							"RowId": 1
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"AUFNR": "1024811",
+							"VORNR": "0010",
+							"ARBID": "00248110",
+							"RowId": 2
 						}]
 					}
 				}]

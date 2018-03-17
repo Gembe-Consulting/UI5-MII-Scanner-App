@@ -9,14 +9,14 @@ sap.ui.define([
 			this._bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
 
 			this.getView().addEventDelegate({
-				"onBeforeShow": function(oEvent) {
+				onBeforeShow: function(oEvent) {
 
 					var oComponent = this.getOwnerComponent(),
 						onResolvedUser, onRejectedUser;
-					
+
 					onRejectedUser = jQuery.proxy(oComponent.forceRedirectToLoginPage, oComponent);
 					onResolvedUser = jQuery.proxy(oComponent.testUserLoginName, oComponent);
-					
+
 					// First try to read user model. If no uer model is present
 					// Try to discover/fetch IllumLoginName vom html body
 					// Test discovered IllumLoginName against MII backend

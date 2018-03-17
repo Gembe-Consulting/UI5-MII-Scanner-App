@@ -302,6 +302,7 @@
 					"viewPath": "com.mii.scanner.view.action",
 					"viewId": "goodsReceipt",
 					"viewLevel": 3,
+					
 					"title": "{{manifest.routing.target.title.goodsMovement.goodsReceipt}}"
 				},
 				"goodsIssue": {

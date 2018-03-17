@@ -34,8 +34,6 @@ sap.ui.define([
 			var oModel = new JSONModel(),
 				oData;
 
-			//jQuery(document).on("scannerDetectionComplete", this.handleBarcodeScanned.bind(this));
-
 			oData = jQuery.extend({}, this._oInitData);
 			oModel.setData(oData);
 			this.setModel(oModel, "data");
@@ -118,25 +116,25 @@ sap.ui.define([
 		onSave: function(oEvent) {
 			var oBundle = this.getResourceBundle(),
 				bPerformGoodsReceipt = this._isGoodsReceiptRequired(),
+				doPosting, //Promise
 				fnResolveStockTransfer,
 				fnResolveGoodsReceipt,
-				fnReject;
+				fnReject,
+				messages = [];
 
 			this.getOwnerComponent().showBusyIndicator();
 
 			fnResolveStockTransfer = function(oData) {
-				var aResults,
-					aMessages,
+				var aMessages,
 					sFatalError,
-					oReturn,
 					oDataModel = this.getModel("data"),
 					sSuccessMessage;
 
 				try {
-
-					aResults = oData.d.results[0].Rowset.results;
 					aMessages = oData.d.results[0].Messages.results;
 					sFatalError = oData.d.results[0].FatalError;
+
+					messages = messages.concat(aMessages);
 
 					if (!sFatalError) {
 						if (bPerformGoodsReceipt) {
@@ -167,55 +165,61 @@ sap.ui.define([
 			}.bind(this);
 
 			fnResolveGoodsReceipt = function(oData) {
-				var aResults,
+				var oRow,
 					aMessages,
 					sFatalError,
-					oReturn,
-					oDataModel = this.getModel("data");
+					oReturn;
 
-				aResults = oData.d.results[0].Rowset.results;
-				aMessages = oData.d.results[0].Messages.results;
-				sFatalError = oData.d.results[0].FatalError;
+				aMessages = oData.d.results["0"].Messages.results;
+				sFatalError = oData.d.results["0"].FatalError;
 
-				if (!sFatalError) {
+				messages = messages.concat(aMessages);
 
-				} else {
-					this.addLogMessage({
-						text: sFatalError,
-						type: sap.ui.core.MessageType.Error
-					});
-					throw "sFatalError";
+				if (sFatalError) {
+					throw new Error(sFatalError);
+				}
+
+				oRow = oData.d.results["0"].Rowset.results["0"].Row;
+
+				if (oRow && oRow.results.length === 1) {
+					oReturn = oRow.results["0"];
+				}
+
+				if (!oReturn.LENUM) {
+					throw new Error("No LENUM returned!");
 				}
 
 			}.bind(this);
 
 			fnReject = function(oError) {
-				MessageBox.error(oBundle.getText("messageTextStockTransferError"));
+				this.addLogMessage({
+					text: oError.message,
+					type: sap.ui.core.MessageType.Error
+				});
+				throw oError;
 			}.bind(this);
 
 			if (bPerformGoodsReceipt) {
-				this._postGoodsReceipt()
-					.then(fnResolveGoodsReceipt, fnReject)
-					.then(this._postStockTransfer.bind(this))
-					.then(fnResolveStockTransfer, fnReject)
-					.then(this.getOwnerComponent()
-						.hideBusyIndicator);
+				doPosting = this._postGoodsReceipt()
+					.then(fnResolveGoodsReceipt, fnReject);
 			} else {
-				this._postStockTransfer()
-					.then(fnResolveStockTransfer, fnReject)
-					.then(this.getOwnerComponent()
-						.hideBusyIndicator);
+				doPosting = Promise.resolve();
 			}
+
+			doPosting.then(this._postStockTransfer.bind(this))
+				.then(fnResolveStockTransfer, fnReject)
+				.then(this.getOwnerComponent().hideBusyIndicator, this.getOwnerComponent().hideBusyIndicator)
+				.then(function() {
+					jQuery.sap.log.debug(messages.join("\n"), "", this.toString());
+				}.bind(this));
 
 		},
 
 		_postStockTransfer: function() {
 			var sPath = "/",
 				oDataModel = this.getModel("data"),
-				oViewModel = this.getModel("view"),
 				oStockTransferModel = this.getModel("goodsMovement"),
-				sUsername = this.getModel("user").getProperty("USERLOGIN"),
-				sDefaultPlant = "1000",
+				sUsername = this.getModel("user").getProperty("/USERLOGIN"),
 				sDefaultMoveType = "999",
 				sDefaultUnitOfMeasure = "KG",
 				oParam,
@@ -252,10 +256,8 @@ sap.ui.define([
 		_postGoodsReceipt: function() {
 			var sPath = "/",
 				oDataModel = this.getModel("data"),
-				oViewModel = this.getModel("view"),
 				oGoodsReceiptModel = this.getModel("goodsMovement"),
-				sUsername = this.getModel("user").getProperty("USERLOGIN"),
-				sDefaultPlant = "1000",
+				sUsername = this.getModel("user").getProperty("/USERLOGIN"),
 				sDefaultMoveType = "101",
 				sDefaultUnitOfMeasure = "KG",
 				oParam;
@@ -271,12 +273,12 @@ sap.ui.define([
 				//"Param.8": oDataModel.getProperty(sPath + "SCHUETT"),
 				//"Param.9": oDataModel.getProperty(sPath + "VORNR"),
 				"Param.10": sUsername,
-				"Param.11": oDataModel.getProperty(sPath + "BWART") || sDefaultMoveType,
-				//"Param.12": oDataModel.getProperty(sPath + "WERK") || sDefaultPlant,
-				//"Param.13": oDataModel.getProperty(sPath + "LGTYP"),
-				//"Param.14": oDataModel.getProperty(sPath + "LGPLA"),
-				//"Param.15": oDataModel.getProperty(sPath + "NLTYP"),
-				//"Param.16": oDataModel.getProperty(sPath + "NLPLA")
+				"Param.11": oDataModel.getProperty(sPath + "BWART") || sDefaultMoveType
+					//"Param.12": oDataModel.getProperty(sPath + "WERK") || sDefaultPlant,
+					//"Param.13": oDataModel.getProperty(sPath + "LGTYP"),
+					//"Param.14": oDataModel.getProperty(sPath + "LGPLA"),
+					//"Param.15": oDataModel.getProperty(sPath + "NLTYP"),
+					//"Param.16": oDataModel.getProperty(sPath + "NLPLA")
 			};
 
 			return oGoodsReceiptModel.loadMiiData(oGoodsReceiptModel._sServiceUrl, oParam);

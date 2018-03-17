@@ -9,34 +9,104 @@ sap.ui.define([
 
 	return PageBaseController.extend("com.mii.scanner.controller.action.ActionBaseController", {
 		formatter: formatter,
-		constructor: function(sId, mProperties) {
 
-			this.mScannerInputTypes = {
-				storageUnit: {
-					key: "LENUM",
-					name: "Storage Unit",
-					validationExpression: /^(0{8}|.{0})10\d{10}/gm
-				},
-				storageLocation: {
-					key: "LGORT",
-					name: "Storage Location",
-					validationExpression: /^[a-zA-z0-9]{4}$/gm
-				},
-				userName: {
-					key: "USER",
-					name: "Username",
-					validationExpression: /^[a-zA-z0-9]{6,8}$/gm
-				},
-				orderNumberOperation: {
-					key: "AUFNR_VORNR",
-					name: "Order Number and Operation",
-					validationExpression: /^1\d{6}\/\d{4}$/gm
-				}
-			};
-		},
+		aScannerInputTypes: [{
+			defaultControlId: "storageUnitInput",
+			key: "LENUM",
+			name: "Storage Unit",
+			validationExpressions: [
+				/^10\d{10}/gm,
+				/^0{8}10\d{10}/gm,
+				/^90025311000000000000/gm,
+				/^90024811000000000000/gm
+			]
+		}, {
+			defaultControlId: "storageLocationInput",
+			key: "LGORT",
+			name: "Storage Location",
+			validationExpressions: [/^[a-zA-z0-9]{4}$/gm]
+
+		}, {
+			defaultControlId: "storageBinSelection",
+			key: "LGPLA",
+			name: "Storage Bin",
+			validationExpressions: [/^[a-zA-z0-9-]{5,10}$/gm]
+
+		}, {
+			defaultControlId: "orderNumberInput",
+			key: "AUFNR_VORNR",
+			name: "Order Number and Operation",
+			validationExpressions: [
+				/^0{5}1\d{6}\/\d{4}$/gm,
+				/^1\d{6}\/\d{4}$/gm
+			]
+		}, {
+			defaultControlId: "materialNumberInput",
+			key: "MATNR",
+			name: "Material number",
+			validationExpressions: [
+				/^\d{7}-\d{3}$/gm
+			]
+		}, {
+			defaultControlId: "usernameInput",
+			key: "USERLOGIN",
+			name: "Username",
+			validationExpressions: [/^[a-zA-z0-9]{6,8}$/gm]
+
+		}],
 
 		onInit: function() {
 			PageBaseController.prototype.onInit.call(this);
+
+			this.getView().addEventDelegate({
+				"onBeforeShow": function(oEvent) {
+					jQuery(document).on("scannerDetectionComplete", this.handleBarcodeScanned.bind(this));
+					jQuery.sap.log.info("Event scannerDetectionComplete attached to view: " + this.getView().getViewName(), this.toString(), "ScannerDetection");
+				}
+			}, this);
+
+			this.getView().addEventDelegate({
+				"onBeforeHide": function(oEvent) {
+					jQuery(document).off("scannerDetectionComplete");
+					jQuery.sap.log.info("Event scannerDetectionComplete detached from view: " + this.getView().getViewName(), this.toString(), "ScannerDetection");
+				}
+			}, this);
+		},
+
+		handleBarcodeScanned: function(oEvent, oData) {
+			var sScannedString = oData.string,
+				oScannerInputType,
+				oControl;
+
+			oScannerInputType = this.getScannerInputType(sScannedString);
+
+			if (oScannerInputType) {
+				jQuery.sap.log.info("Barcode enthält folgende Information: \'" + sScannedString + "\' Sie haben \'" + oScannerInputType.name + "\' gescannt.");
+				// TODO: remove message box
+				MessageBox.success("Barcode enthält folgende Information: \'" + sScannedString + "\' Sie haben \'" + oScannerInputType.name + "\' gescannt.");
+
+				oControl = this.getControlByScannerInputType(oScannerInputType);
+
+				if (oControl) {
+					// Maybe protect using jQuery.isFunction() ?
+
+					if (oControl.getMetadata()._sClassName === "sap.m.Input") {
+						oControl.setValue(sScannedString);
+					}
+
+					if (oControl.getMetadata()._sClassName === "sap.m.ComboBox") {
+						oControl.setSelectedKey(sScannedString);
+					}
+
+					oControl.fireChangeEvent(sScannedString);
+				}
+
+			} else {
+				jQuery.sap.log.warning("Ihr Barcode konnte zwar gelesen, aber nicht zugeordnet werden.\nInhalt: \'" + sScannedString + "\'");
+				// TODO: remove message box
+				MessageBox.warning("Ihr Barcode konnte zwar gelesen, aber nicht zugeordnet werden.\nInhalt war: \'" + sScannedString + "\'");
+			}
+
 		},
 
 		requestOrderHeaderInfoService: function(sOrderNumber) {
@@ -96,20 +166,20 @@ sap.ui.define([
 		},
 
 		showControlBusyIndicator: function(oSource) {
-			return oSource.setBusyIndicatorDelay(0)
-				.setBusy(true);
+			return oSource.setBusyIndicatorDelay(0).setBusy(true);
 		},
 
 		hideControlBusyIndicator: function(oSource) {
-			return oSource.setBusyIndicatorDelay(0)
-				.setBusy(false);
+			return oSource.setBusyIndicatorDelay(0).setBusy(false);
 		},
+
 		/**
 		 * Check is a given storage location is allowed for posting
 		 */
 		isStorageLocationAllowed: function(sStorageLocation) {
 			return this._aDisallowedStorageLocations.indexOf(sStorageLocation) === -1;
 		},
+
 		_formatStorageUnitData: function(oStorageUnit) {
 
 			if (!oStorageUnit) {
@@ -127,17 +197,30 @@ sap.ui.define([
 		},
 
 		getScannerInputType: function(sScannedString) {
-			var oType;
 
-			jQuery.each(this.mScannerInputTypes, function(sName, oValue) {
-				var regxCheck = new RegExp(oValue.validationExpression);
-				if (regxCheck.test(sScannedString)) {
-					oType = oValue;
-					return false;
-				}
+			return this.aScannerInputTypes.find(function(type) {
+
+				return type.validationExpressions.find(function(regEx) {
+
+					var regxCheck = new RegExp(regEx);
+					if (regxCheck.test(sScannedString)) {
+						return type;
+					}
+
+				});
+
 			});
+		},
 
-			return oType;
+		getControlByScannerInputType: function(oInputType) {
+			return this._getIdByInputType(oInputType);
+		},
+
+		_getIdByInputType: function(oInputType) {
+			jQuery.sap.log.warning("Scanner-Input wurde als " + oInputType.name + " erkannt, der action Dialog stellt aber keine passende Methode '_getIdByInputType(oInputType)' zur Verfügung.");
+
+			return this.byId(oInputType.defaultControlId);
+
 		},
 
 		onSave: function() {
@@ -267,8 +350,20 @@ sap.ui.define([
 			}
 		},
 
+		_cleanScannedOrderNumberString: function(sOrderNumberString) {
+			return this._deleteLeadingZeros(sOrderNumberString).split("/")[0];
+		},
+
 		_padStorageUnitNumber: function(sStorageUnitNumber) {
 			return jQuery.sap.padLeft(sStorageUnitNumber, "0", 20);
+		},
+
+		_deleteLeadingZeros: function(vNumber) {
+			if (jQuery.type(vNumber) === "string") {
+				return vNumber.replace(/^0+/, "");
+			} else {
+				return vNumber;
+			}
 		}
 	});
 

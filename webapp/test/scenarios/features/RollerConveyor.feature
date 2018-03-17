@@ -137,7 +137,7 @@ Feature: Roller Conveyor
 		When I enter '100,123' into quantityInput in action.RollerConveyor view
 		 And I enter 'KG' into unitOfMeasureInput in action.RollerConveyor view
 		 And I click on saveButton in action.RollerConveyor view
-		Then I can see messageStrip with text 'Letzte Palette - Spezial-Wareneingang mit pseudo BwA 555 - Spezial-Umbuchung mit pseudo BwA 999' in action.RollerConveyor view
+		Then I can see messageStrip with text 'Letzte Palette '900248110' erfolgreich von BEUMER an Rollenbahn gemeldet' in action.RollerConveyor view
 		 And I can see messageStrip with type 'Success' in action.RollerConveyor view
 
 	@lastUnit @emptyLE @Palettierer PALE: "00253110"
@@ -152,7 +152,7 @@ Feature: Roller Conveyor
 		When I enter '321,456' into quantityInput in action.RollerConveyor view
 		 And I enter 'KG' into unitOfMeasureInput in action.RollerConveyor view
 		 And I click on saveButton in action.RollerConveyor view
-		Then I can see messageStrip with text 'Letzte Palette - Spezial-Wareneingang mit pseudo BwA 555 - Spezial-Umbuchung mit pseudo BwA 999' in action.RollerConveyor view
+		Then I can see messageStrip with text 'Letzte Palette '900253110' erfolgreich von PALETTIERER an Rollenbahn gemeldet' in action.RollerConveyor view
 		 And I can see messageStrip with type 'Success' in action.RollerConveyor view
 		 
 	@currentUnit @emptyLE
@@ -163,7 +163,7 @@ Feature: Roller Conveyor
 		 And I press ARROW_DOWN + ALT at storageBinSelection in action.RollerConveyor view
 		 And I click on first item of storageBinSelection items in action.RollerConveyor view
 		 And I click on saveButton in action.RollerConveyor view
-		Then I can see messageStrip with text 'Laufende Palette - Normal-Wareneingang mit echt BwA 101 - Spezial-Umbuchung mit pseudo BwA 999' in action.RollerConveyor view
+		Then I can see messageStrip with text 'Palette '109330000015' erfolgreich eingebucht und von ROLLTOR an Rollenbahn gemeldet' in action.RollerConveyor view
 		 And I can see messageStrip with type 'Success' in action.RollerConveyor view
 		 
 	@currentUnit @fullLE
@@ -172,5 +172,5 @@ Feature: Roller Conveyor
 		 And I press ARROW_DOWN + ALT at storageBinSelection in action.RollerConveyor view
 		 And I click on 3rd item of storageBinSelection items in action.RollerConveyor view
 		 And I click on saveButton in action.RollerConveyor view
-		Then I can see messageStrip with text 'Laufende Palette - Spezial-Umbuchung mit pseudo BwA 999' in action.RollerConveyor view
+		Then I can see messageStrip with text 'Palette '109330000016' erfolgreich von STAPLER an Rollenbahn gemeldet' in action.RollerConveyor view
 		 And I can see messageStrip with type 'Success' in action.RollerConveyor view
