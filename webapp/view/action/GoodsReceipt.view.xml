@@ -22,36 +22,54 @@
 				Beispiel:
 					labelSpanS="12" => auf kleinen devices wird die Lablezeile auf die komplette Zeile gespannt
 			-->
-			<f:SimpleForm id="dataEntry" editable="true" layout="ResponsiveGridLayout" breakpointM="500" labelSpanXL="4" labelSpanL="4" labelSpanM="3"
-				labelSpanS="12" emptySpanXL="5" emptySpanL="4" emptySpanM="2" emptySpanS="0">
+			<f:SimpleForm id="dataEntry" editable="true" adjustLabelSpan="false" layout="ResponsiveGridLayout" breakpointM="500" labelSpanXL="4"
+				labelSpanL="4" labelSpanM="3" labelSpanS="12" emptySpanXL="4" emptySpanL="3" emptySpanM="2" emptySpanS="0">
 				<f:content>
 					<Label text="{i18n>lableTextFormGoodsReceiptStorageUnit}" labelFor="storageUnitInput"/>
 					<Input id="storageUnitInput" change="onStorageUnitNumberChange" value="{path: 'data>/LENUM', type:'.sapType.LENUM'}"
 						editable="{= ${data>/LGORT}==='1000' || ${data>/LGORT}==='' || ${data>/LGORT}===null}" valueState="{view>/storageUnitNumberValueState}"
-						maxLength="20" class="suwIncreadedInputFontSize"></Input>
+						maxLength="20" class="suwIncreadedInputFontSize">
+						<layoutData>
+							<l:GridData span="XL4 L4 M6 S12"/>
+						</layoutData>
+					</Input>
 					<Label text="{i18n>lableTextFormGoodsReceiptOrder}" labelFor="orderNumberInput"/>
 					<Input id="orderNumberInput" value="{path: 'data>/AUFNR', type:'.sapType.AUFNR'}" change="onOrderNumberChange"
 						editable="{=${data>/LENUM}===null}" valueState="{view>/orderNumberValueState}" maxLength="12"
-						class="noScannerInput suwIncreadedInputFontSize"></Input>
-					<Label text="{i18n>lableTextFormGoodsReceiptQuantity}, {i18n>lableTextFormGoodsReceiptUnitOfMeasureShort}" labelFor="quantityInput"/>
-					<HBox alignItems="Center">
-						<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}"
-							editable="{view>/bStorageUnitValid}" class="suwIncreadedInputFontSize"></Input>
-						<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress"
-							size="{=${device>/system/desktop}===true ? '1.25rem' : '1.75rem'}" class="sapUiSmallMarginEnd"></c:Icon>
+						class="noScannerInput suwIncreadedInputFontSize">
 						<layoutData>
-							<l:GridData span="XL2 L3 M5 S8"/>
+							<l:GridData span="XL4 L4 M6 S12"/>
 						</layoutData>
-					</HBox>
+					</Input>
+					<Label text="{i18n>lableTextFormGoodsReceiptQuantity}, {i18n>lableTextFormGoodsReceiptUnitOfMeasureShort}" labelFor="quantityInput"/>
+					<!--<HBox alignItems="Center">-->
+					<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}"
+						editable="{view>/bStorageUnitValid}" class="suwIncreadedInputFontSize">
+						<layoutData>
+							<l:GridData span="XL2 L2 M4 S7"/>
+						</layoutData>
+					</Input>
+					<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress"
+						size="{=${device>/system/desktop}===true ? '1.25rem' : '1.75rem'}" width="{=${device>/system/desktop}===true ? '1.25rem' : '1.75rem'}"
+						height="{=${device>/system/desktop}===true ? '2.00rem' : '2.75rem'}" class="sapUiSmallMarginEnd">
+						<c:layoutData>
+							<l:GridData span="XL1 L1 M1 S2"/>
+						</c:layoutData>
+					</c:Icon>
+					<!--</HBox>-->
 					<Input id="unitOfMeasureInput" value="{path: 'data>/MEINH', type:'.sapType.MEINS'}" change="onUnitOfMeasureChange"
 						editable="{=${data>/LENUM}===null}" maxLength="4" class="suwIncreadedInputFontSize">
 						<layoutData>
-							<l:GridData span="XL1 L1 M2 S4"/>
+							<l:GridData span="XL1 L1 M1 S3"/>
 						</layoutData>
 					</Input>
 					<Label text="{i18n>lableTextFormGoodsReceiptStorageLocation}" labelFor="storageLocationInput"/>
 					<Input id="storageLocationInput" change="onStorageLocationChange" value="{path: 'data>/LGORT', type: '.sapType.LGORT'}"
-						editable="{=${data>/LENUM}===null}" maxLength="4" class="noScannerInput suwIncreadedInputFontSize"></Input>
+						editable="{=${data>/LENUM}===null}" maxLength="4" class="noScannerInput suwIncreadedInputFontSize">
+						<layoutData>
+							<l:GridData span="XL2 L4 M6 S12"/>
+						</layoutData>
+					</Input>
 				</f:content>
 			</f:SimpleForm>
 			<!-- Storage Unit Info Form -->
