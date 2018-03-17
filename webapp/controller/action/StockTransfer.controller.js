@@ -224,7 +224,7 @@ sap.ui.define([
 			var sPath = "/",
 				oDataModel = this.getModel("data"),
 				oStockTransferModel = this.getModel("goodsMovement"),
-				sUsername = this.getModel("user").getProperty("USERLOGIN"),
+				sUsername = this.getModel("user").getProperty("/USERLOGIN"),
 				sDefaultMoveType = "999",
 				sDefaultUnitOfMeasure = "KG",
 				oParam,
@@ -262,7 +262,7 @@ sap.ui.define([
 			var sPath = "/",
 				oDataModel = this.getModel("data"),
 				oGoodsReceiptModel = this.getModel("goodsMovement"),
-				sUsername = this.getModel("user").getProperty("USERLOGIN"),
+				sUsername = this.getModel("user").getProperty("/USERLOGIN"),
 				sDefaultMoveType = "101",
 				sDefaultUnitOfMeasure = "KG",
 				oParam;

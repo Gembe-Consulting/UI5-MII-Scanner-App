@@ -247,8 +247,7 @@ sap.ui.define([
 			var sPath = "/",
 				oDataModel = this.getModel("data"),
 				oGoodsReceiptModel = this.getModel("goodsMovement"),
-				sUsername = this.getModel("user").getProperty("USERLOGIN"),
-				sDefaultPlant = this._sStorageLocationWarehouse,
+				sUsername = this.getModel("user").getProperty("/USERLOGIN"),
 				sDefaultMoveType = "101",
 				sDefaultUnitOfMeasure = "KG",
 
@@ -258,39 +257,21 @@ sap.ui.define([
 				oParam = {
 					"Param.1": oDataModel.getProperty(sPath + "LENUM"),
 					"Param.2": oDataModel.getProperty(sPath + "AUFNR"),
-					//"Param.3": oDataModel.getProperty(sPath + "LGORT"),
 					"Param.4": oDataModel.getProperty(sPath + "SOLLME"),
 					"Param.5": oDataModel.getProperty(sPath + "MEINH") || sDefaultUnitOfMeasure,
 					"Param.6": oDataModel.getProperty(sPath + "MATNR"),
-					//"Param.7": oDataModel.getProperty(sPath + "CHARG"),
-					//"Param.8": oDataModel.getProperty(sPath + "SCHUETT"),
-					//"Param.9": oDataModel.getProperty(sPath + "VORNR"),
 					"Param.10": sUsername,
-					"Param.11": oDataModel.getProperty(sPath + "BWART") || sDefaultMoveType,
-					//"Param.12": oDataModel.getProperty(sPath + "WERK") || sDefaultPlant,
-					//"Param.13": oDataModel.getProperty(sPath + "LGTYP"),
-					//"Param.14": oDataModel.getProperty(sPath + "LGPLA"),
-					//"Param.15": oDataModel.getProperty(sPath + "NLTYP"),
-					//"Param.16": oDataModel.getProperty(sPath + "NLPLA")
+					"Param.11": oDataModel.getProperty(sPath + "BWART") || sDefaultMoveType
 				};
 			} else {
 				oParam = {
-					//"Param.1": oDataModel.getProperty(sPath + "LENUM"),
 					"Param.2": oDataModel.getProperty(sPath + "AUFNR"),
 					"Param.3": oDataModel.getProperty(sPath + "LGORT"),
 					"Param.4": oDataModel.getProperty(sPath + "SOLLME"),
 					"Param.5": oDataModel.getProperty(sPath + "MEINH") || sDefaultUnitOfMeasure,
 					"Param.6": oDataModel.getProperty(sPath + "MATNR"),
-					//"Param.7": oDataModel.getProperty(sPath + "CHARG"),
-					//"Param.8": oDataModel.getProperty(sPath + "SCHUETT"),
-					//"Param.9": oDataModel.getProperty(sPath + "VORNR"),
 					"Param.10": sUsername,
-					"Param.11": oDataModel.getProperty(sPath + "BWART") || sDefaultMoveType,
-					//"Param.12": oDataModel.getProperty(sPath + "WERK") || sDefaultPlant,
-					//"Param.13": oDataModel.getProperty(sPath + "LGTYP"),
-					//"Param.14": oDataModel.getProperty(sPath + "LGPLA"),
-					//"Param.15": oDataModel.getProperty(sPath + "NLTYP"),
-					//"Param.16": oDataModel.getProperty(sPath + "NLPLA")
+					"Param.11": oDataModel.getProperty(sPath + "BWART") || sDefaultMoveType
 				};
 			}
 

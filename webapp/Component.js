@@ -115,7 +115,7 @@ sap.ui.define([
 
 			//always return true if we are in debug mode
 			if (this._bDebugMode) {
-				oModel.setProperty("/USERLOGIN", "DEBUG-USER");
+				oModel.setProperty("/USERLOGIN", "SUW_MII_DEBUG");
 				return true;
 			}
 

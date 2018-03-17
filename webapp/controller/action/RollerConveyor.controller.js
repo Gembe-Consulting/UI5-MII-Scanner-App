@@ -352,7 +352,7 @@ sap.ui.define([
 				sPath = "/",
 				oDataModel = this.getModel("data"),
 				oGoodsReceiptModel = this.getModel("goodsMovement"),
-				sUsername = this.getModel("user").getProperty("USERLOGIN"),
+				sUsername = this.getModel("user").getProperty("/USERLOGIN"),
 				sDefaultMoveType = "101",
 				sDefaultUnitOfMeasure = "KG",
 				oParam,
@@ -425,7 +425,7 @@ sap.ui.define([
 				sPath = "/",
 				oDataModel = this.getModel("data"),
 				oGoodsReceiptRollerConveyorModel = this.getModel("goodsMovementRollerConveyor"),
-				sUsername = this.getModel("user").getProperty("USERLOGIN"),
+				sUsername = this.getModel("user").getProperty("/USERLOGIN"),
 				oParam,
 				fnResolve, fnReject;
 
