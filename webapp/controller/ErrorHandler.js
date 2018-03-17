@@ -29,12 +29,12 @@ sap.ui.define([
 
 				var showErrorMessage = function(oEvent) {
 					var oParams = oEvent.getParameters();
-					this._showServiceError(JSON.stringify(oParams), "Fehler: " + oEvent.sId + " in " + sModelName + "-Service", oEvent.getSource()._sServiceUrl);
+					this._showServiceError(JSON.stringify(oParams), "Fehler: " + oEvent.getId() + " in " + sModelName + "-Service", oEvent.getSource()._sServiceUrl);
 				};
 
 				var showMessageToast = function(oEvent) {
 					var oParams = oEvent.getParameters();
-					this._showServiceRequestToast(oEvent.sId + " to " + sModelName + "\nreturning success=" + oEvent.getParameter("success"));
+					this._showServiceRequestToast(oEvent.getId() + " to " + sModelName + "\nreturning success=" + oEvent.getParameter("success"));
 				};
 
 				oModel.attachRequestFailed(showErrorMessage, this);
