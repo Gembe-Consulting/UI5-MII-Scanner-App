@@ -67,7 +67,7 @@
 					<Input id="storageLocationInput" change="onStorageLocationChange" value="{path: 'data>/LGORT', type: '.sapType.LGORT'}"
 						editable="{=${data>/LENUM}===null}" maxLength="4" class="noScannerInput suwIncreadedInputFontSize">
 						<layoutData>
-							<l:GridData span="XL2 L4 M6 S12"/>
+							<l:GridData span="XL4 L4 M6 S12"/>
 						</layoutData>
 					</Input>
 				</f:content>
