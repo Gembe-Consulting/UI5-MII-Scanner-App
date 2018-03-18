@@ -299,7 +299,9 @@ sap.ui.define([
 			sStorageUnitNumber = this.padStorageUnitNumber(sStorageUnitNumber);
 
 			fnResolve = function(oData) {
-				var oStorageUnit,
+				var oStorageUnit = {
+						LENUM: null
+					},
 					aRows = oData.d.results[0].Rowset.results[0].Row.results,
 					bStorageUnitValid = true,
 					bMergeData = true,
