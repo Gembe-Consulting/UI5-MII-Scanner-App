@@ -339,7 +339,7 @@ sap.ui.define([
 		},
 
 		padStorageUnitNumber: function(sStorageUnitNumber) {
-			return jQuery.sap.padLeft(sStorageUnitNumber, "0", 20);
+			return jQuery.sap.padLeft(sStorageUnitNumber.toString(), "0", 20);
 		},
 
 		deleteLeadingZeros: function(vNumber) {
