@@ -1,43 +1,39 @@
-[TEST] (roller conveyor): update test cases for last unit
-[INTERNAL] test theme designer
-[FEATURE] (css): add custom font size for all input fields
-[INTERNAL] (build): update grunt build
-[FEATURE] (forms): optimize SimpleForm layout
-- set breakpointM to 500 -> all below 500px will be considered SMALL and use alle ~S properties
-- should display more devices as small form
-[REFACTOR] (action): add ids to some controls
-- header
-- footer
-- buttons
-[FIX] (action): fix title not having correct style
-[FEATURE] (action): increase font size on mobile devices
-[INTERNAL] (grunt): fix eslint error fixed URL
-[STYLE] (misc): stabilize ids and increase performance
-[INTERNAL] (init): skip username check on debug
-[FEATURE] (locale): add languages to prevent 404
-[INTERNAL] (debug): add dummy user "DEBUG"
-[INTERNAL] (init): set default logging to "WARNING"
-[FEATURE] (goods issue): move bulk mat indicator to storage location line
-[FEATURE] (roller conveyor + stock transfer): swap key and name in combobox
-[FIX] (service): correct debug mode detection
-[TEST] (goods issue). fix changed test features
-[TEST] (stock transfer): fix changed test features
-[FIX] (init): remove sap-ui-debug from localStorage to prevent cross session mess
-[FEATURE] (roller conveyor): add better storage bin detection depending on dummy storage unit number
-[FEATURE] (roller conveyor): add services for Roller Conveyor page
-[INTERNAL] remove .che folder
-[INTERNAL] (mii util): clean up miiutilities path
-[INTERNAL] (eslint): add ES6 support
-[FEATURE] (roller conveyor): add support for goods receipt of empty units
-[FIX] (roller conveyor): prevent nullpointer if lenum is not found
-[FEATURE] (service error): show MII transaction in error message
-[FEATURE] (roller conveyor): add support for stock transfer posting
-[FIX] (index): re-add correct path to mii utils
-[FEATURE] (roller conveyor): add support for finding running process order
-[FIX]: path to mii utils
-[FIX] (roller conveyor): select correct storage bin item on dummy LE
-[FEATURE] (coller conveyor): add support for posting BwA 555
-[FEATURE] (roller conveyor): add busy state during service calls & clear form after
-[TEST] (mockdata): repair mockdata files to match service names
-[INTERNAL]: version bump
-[INTERNAL] update changelog
+[FEATURE] (action): add username as external user
+[INTERNAL] version 1.2.30
+[FIX] (roller conveyor): set storage bin item only if ressource id has been found
+[FEATURE] (roller conveyor): cleanup success messages
+[FEATURE] (action pages): add support for barcode scanner integration
+Main logic is located on ActionPageController. Here we attach and detach the scanner event listener everytime a page is shown and hidden.
+The attached event delegate evaluates the scanned string to discover the control.
+[FEATURE] (roller conveyor): set stretcher default to true
+[INTERNAL] version 1.2.35.2018-03-16
+[FEATURE] (stock transfer); propagate ERP errors to user
+[FEATURE] (action pages): re-align UI elements on large and medium screens
+[FIX] (action pages): fix typo preventing providing username to MII transaction
+[INTERNAL] (i18n): remove default language properties
+[INTERNAL] snapshot version
+[INTERNAL] (build): try fix build problems
+[FIX] (stock transfer): show error message
+[INTERNAL] replace ....sId by ....getId()
+[INTERNAL] version 1.2.36.2018-03-17
+[FIX] (goods receipt): fix too small storage location input on very large screens
+[INTERNAL] (misc): refactor some eslint warnings
+[INTERNAL] (misc): refactor some eslint warnings
+[REFACTOR] (goods receipt): steamline and add polish to coding
+also refactor 
+adjust test features accordingly
+[REFACTOR] (goods issue): steamline and add polish to coding
+also refactor 
+adjust test features accordingly
+[FEATURE] (goods receipt): purge LE data if LENUM gets invalid
+[FEATURE] (goods issue): purge LE data if LENUM gets invalid
+[REFACTOR] (stock transfer): steamline and add polish to coding
+also refactor 
+adjust test features accordingly
+[TEST] [FIX] (goods receipt): fix wording
+[REFACTOR] (roller conveyor): steamline and add polish to coding
+also refactor 
+adjust test features accordingly
+[INTERNAL] (build): revert build process
+[INTERNAL] version 1.2.35.2018-03-18
+[INTERNAL] version 1.2.35.2018-03-18
