@@ -38,18 +38,98 @@ sap.ui.define([
 			//call super class onInit to apply user login protection. DO NOT DELETE!
 			ActionBaseController.prototype.onInit.call(this);
 
-			var oModel = new JSONModel(),
-				oData;
-
-			oData = jQuery.extend({}, this._oInitData);
-			oModel.setData(oData);
-			this.setModel(oModel, "data");
+			this.setModel(new JSONModel(jQuery.extend({}, this._oInitData)), "data");
 
 			this.setModel(new JSONModel(jQuery.extend({}, this._oInitView)), "view");
 
 			this.getRouter()
 				.getRoute("goodsReceipt")
 				.attachMatched(this._onRouteMatched, this);
+		},
+
+		onSave: function() {
+			var fnResolve,
+				fnReject;
+
+			/* Prepare UI: busy, value states, log messages */
+			this.getOwnerComponent().showBusyIndicator();
+
+			/* Prepare Data */
+
+			/* Prepare success callback */
+			fnResolve = function(oData) {
+				var oStorageUnitNumber,
+					aRows = oData.d.results[0].Rowset.results[0].Row.results;
+
+				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
+				if (aRows.length === 1) {
+					oStorageUnitNumber = aRows[0];
+					this.addLogMessage({
+						text: this.getTranslation("goodsReceipt.messageText.goodsReceiptPostingSuccessfull", [this.deleteLeadingZeros(oStorageUnitNumber.LENUM)]),
+						type: sap.ui.core.MessageType.Success
+					});
+				} else {
+					this.addLogMessage({
+						text: this.getTranslation("goodsReceipt.messageText.resultIncomplete"),
+						type: sap.ui.core.MessageType.Error
+					});
+				}
+			}.bind(this);
+
+			/* Prepare error callback */
+			fnReject = function(oError) {
+				MessageBox.error(oError.message, {
+					title: this.getTranslation("error.miiTransactionErrorText", ["GoodsMovementCreate: 101"])
+				});
+			}.bind(this);
+
+			/* Perform service call, Hide Busy Indicator, Update View Controls */
+			this._postGoodsReceipt()
+				.then(fnResolve, fnReject)
+				.then(this.getOwnerComponent().hideBusyIndicator)
+				.then(function() {
+					this.onClearFormPress({}, true /*bKeepMessageStrip*/ );
+				}.bind(this));
+
+		},
+
+		//SUMISA/Production/trx_GoodsMovementToSap 
+		//http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/goodsmovement/GoodsMovementCreateXac&$format=json&Param.1=00000000109330000003&Param.2=1093300&Param.4=600&Param.5=KG&Param.10=phigem&Param.11=101
+		_postGoodsReceipt: function() {
+
+			var sPath = "/",
+				oDataModel = this.getModel("data"),
+				oGoodsReceiptModel = this.getModel("goodsMovement"),
+				sUsername = this.getModel("user").getProperty("/USERLOGIN"),
+				sDefaultMoveType = "101",
+				sDefaultUnitOfMeasure = "KG",
+
+				oParam;
+
+			if (oDataModel.getProperty(sPath + "LENUM")) {
+				oParam = {
+					"Param.1": oDataModel.getProperty(sPath + "LENUM"),
+					"Param.2": oDataModel.getProperty(sPath + "AUFNR"),
+					"Param.4": oDataModel.getProperty(sPath + "SOLLME"),
+					"Param.5": oDataModel.getProperty(sPath + "MEINH") || sDefaultUnitOfMeasure,
+					"Param.6": oDataModel.getProperty(sPath + "MATNR"),
+					"Param.10": sUsername,
+					"Param.11": oDataModel.getProperty(sPath + "BWART") || sDefaultMoveType
+				};
+			} else {
+				oParam = {
+					"Param.2": oDataModel.getProperty(sPath + "AUFNR"),
+					"Param.3": oDataModel.getProperty(sPath + "LGORT"),
+					"Param.4": oDataModel.getProperty(sPath + "SOLLME"),
+					"Param.5": oDataModel.getProperty(sPath + "MEINH") || sDefaultUnitOfMeasure,
+					"Param.6": oDataModel.getProperty(sPath + "MATNR"),
+					"Param.10": sUsername,
+					"Param.11": oDataModel.getProperty(sPath + "BWART") || sDefaultMoveType
+				};
+			}
+
+			return oGoodsReceiptModel.loadMiiData(oGoodsReceiptModel._sServiceUrl, oParam);
+
 		},
 
 		_onRouteMatched: function(oEvent) {
@@ -123,215 +203,138 @@ sap.ui.define([
 			oViewModel.setProperty("/bValid", bReadyForPosting);
 		},
 
+		isInputDataValid: function(oData) {
+			return !!oData.AUFNR && !!oData.SOLLME && oData.SOLLME > 0 && oData.SOLLME !== "" && !!oData.MEINH && !!oData.LGORT && ((!!oData.LENUM && oData.LGORT === this._sStorageLocationWarehouse) || (!oData.LENUM && oData.LGORT !== this._sStorageLocationWarehouse));
+		},
+
 		onStorageUnitNumberChange: function(oEvent) {
 			var oSource = oEvent.getSource(),
 				sStorageUnitNumber = oEvent.getParameter("value"),
-				oBundle = this.getResourceBundle(),
 				fnResolve,
 				fnReject;
 
-			sStorageUnitNumber = this._padStorageUnitNumber(sStorageUnitNumber);
-
-			jQuery.sap.log.info("Start gathering data for palette " + sStorageUnitNumber);
-
-			oSource.setValueState(sap.ui.core.ValueState.None);
+			/* Prepare UI: busy, value states, log messages */
 			this.showControlBusyIndicator(oSource);
-
+			oSource.setValueState(sap.ui.core.ValueState.None);
 			this.clearLogMessages();
 
+			/* Prepare Data */
+			sStorageUnitNumber = this.padStorageUnitNumber(sStorageUnitNumber);
+
+			/* Prepare success callback */
 			fnResolve = function(oData) {
 				var oStorageUnit,
+					aRows = oData.d.results[0].Rowset.results[0].Row.results,
 					bStorageUnitValid = true,
-					aResultList;
+					oDataModel = this.getModel("data");
 
-				try {
+				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
+				if (aRows.length === 1) {
+					oStorageUnit = this._formatStorageUnitData(aRows[0]);
 
-					aResultList = oData.d.results[0].Rowset.results[0].Row.results;
+					oSource.setValueState(sap.ui.core.ValueState.Success);
 
-					if (aResultList.length === 1) {
-						oStorageUnit = this._formatStorageUnitData(oData.d.results[0].Rowset.results[0].Row.results[0]);
-						oSource.setValueState(sap.ui.core.ValueState.Success);
-					} else {
-						bStorageUnitValid = false;
-						throw oBundle.getText("messageTitleStorageUnitNotFound");
-					}
+					oDataModel.setData(oStorageUnit);
 
 					if (oStorageUnit.SOLLME <= 0) {
 						this.addLogMessage({
-							text: oBundle.getText("messageTextStorageUnitAlreadyPosted", [sStorageUnitNumber])
+							text: this.getTranslation("goodsReceipt.messageText.storageUnitAlreadyPosted", [sStorageUnitNumber])
 						});
 						oSource.setValueState(sap.ui.core.ValueState.Error);
 						bStorageUnitValid = false;
 					}
-
-					this.getModel("data").setData(oStorageUnit);
-
-				} catch (err) {
-					MessageBox.error(oBundle.getText("messageTextStorageUnitNotFound", [sStorageUnitNumber]), {
-						title: err
+				} else {
+					this.addLogMessage({
+						text: this.getTranslation("goodsReceipt.messageText.storageUnitNotFound", [sStorageUnitNumber])
 					});
 					oSource.setValueState(sap.ui.core.ValueState.Error);
-				} finally {
-					this.getModel("view").setProperty("/bStorageUnitValid", bStorageUnitValid);
-					this.updateViewControls(this.getModel("data").getData());
+					bStorageUnitValid = false;
 				}
 
+				this.getModel("view").setProperty("/bStorageUnitValid", bStorageUnitValid);
+
 			}.bind(this);
 
+			/* Prepare error callback */
 			fnReject = function(oError) {
-				MessageBox.error(oBundle.getText("messageTextGoodsReceiptError"));
+				MessageBox.error(oError.message, {
+					title: this.getTranslation("error.miiTransactionErrorText", ["StorageUnitNumberRead"])
+				});
 			}.bind(this);
 
+			/* Perform service call, Hide Busy Indicator, Update View Controls */
 			this.requestStorageUnitInfoService(sStorageUnitNumber)
 				.then(fnResolve, fnReject)
 				.then(function() {
 					this.hideControlBusyIndicator(oSource);
+				}.bind(this))
+				.then(function() {
+					this.updateViewControls(this.getModel("data").getData());
 				}.bind(this));
-		},
-
-		onSave: function() {
-			var oBundle = this.getResourceBundle(),
-				fnResolve,
-				fnReject;
-
-			this.getOwnerComponent().showBusyIndicator();
-
-			fnResolve = function(oData) {
-				var sFatalError;
-
-				try {
-					sFatalError = oData.d.results[0].FatalError;
-
-					if (!sFatalError) {
-						this.addLogMessage({
-							text: oBundle.getText("messageTextGoodsReceiptPostingSuccessfull"),
-							type: sap.ui.core.MessageType.Success
-						});
-					} else {
-						this.addLogMessage({
-							text: sFatalError,
-							type: sap.ui.core.MessageType.Error
-						});
-					}
-
-				} catch (err) {
-					MessageBox.error(oBundle.getText("messageTextGoodsReceiptPostingFailed"), {
-						title: err
-					});
-				} finally {
-					this.onClearFormPress({}, true /*bKeepMessageStrip*/ );
-				}
-			}.bind(this);
-
-			fnReject = function(oError) {
-				MessageBox.error(oBundle.getText("messageTextGoodsReceiptError"));
-			}.bind(this);
-
-			this._postGoodsReceipt()
-				.then(fnResolve, fnReject)
-				.then(this.getOwnerComponent()
-					.hideBusyIndicator);
-
-		},
-
-		//SUMISA/Production/trx_GoodsMovementToSap 
-		//http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/goodsmovement/GoodsMovementCreateXac&$format=json&Param.1=00000000109330000003&Param.2=1093300&Param.4=600&Param.5=KG&Param.10=phigem&Param.11=101
-		_postGoodsReceipt: function() {
-
-			var sPath = "/",
-				oDataModel = this.getModel("data"),
-				oGoodsReceiptModel = this.getModel("goodsMovement"),
-				sUsername = this.getModel("user").getProperty("/USERLOGIN"),
-				sDefaultMoveType = "101",
-				sDefaultUnitOfMeasure = "KG",
-
-				oParam;
-
-			if (oDataModel.getProperty(sPath + "LENUM")) {
-				oParam = {
-					"Param.1": oDataModel.getProperty(sPath + "LENUM"),
-					"Param.2": oDataModel.getProperty(sPath + "AUFNR"),
-					"Param.4": oDataModel.getProperty(sPath + "SOLLME"),
-					"Param.5": oDataModel.getProperty(sPath + "MEINH") || sDefaultUnitOfMeasure,
-					"Param.6": oDataModel.getProperty(sPath + "MATNR"),
-					"Param.10": sUsername,
-					"Param.11": oDataModel.getProperty(sPath + "BWART") || sDefaultMoveType
-				};
-			} else {
-				oParam = {
-					"Param.2": oDataModel.getProperty(sPath + "AUFNR"),
-					"Param.3": oDataModel.getProperty(sPath + "LGORT"),
-					"Param.4": oDataModel.getProperty(sPath + "SOLLME"),
-					"Param.5": oDataModel.getProperty(sPath + "MEINH") || sDefaultUnitOfMeasure,
-					"Param.6": oDataModel.getProperty(sPath + "MATNR"),
-					"Param.10": sUsername,
-					"Param.11": oDataModel.getProperty(sPath + "BWART") || sDefaultMoveType
-				};
-			}
-
-			return oGoodsReceiptModel.loadMiiData(oGoodsReceiptModel._sServiceUrl, oParam);
-
-		},
-
-		isInputDataValid: function(oData) {
-			return !!oData.AUFNR && !!oData.SOLLME && oData.SOLLME > 0 && oData.SOLLME !== "" && !!oData.MEINH && !!oData.LGORT && ((!!oData.LENUM && oData.LGORT === this._sStorageLocationWarehouse) || (!oData.LENUM && oData.LGORT !== this._sStorageLocationWarehouse));
 		},
 
 		onOrderNumberChange: function(oEvent) {
 			var oSource = oEvent.getSource(),
 				sOrderNumber = oEvent.getParameter("value"),
-				oBundle = this.getResourceBundle(),
 				fnResolve,
 				fnReject;
 
+			/* Prepare UI */
 			this.showControlBusyIndicator(oSource);
 			oSource.setValueState(sap.ui.core.ValueState.None);
 			this.clearLogMessages();
 
+			/* Prepare Data */
 			// Order number could come like 1234567/0012 or 000001234567/001 -> need to clean it
-			sOrderNumber = this._cleanScannedOrderNumberString(sOrderNumber);
+			sOrderNumber = this.cleanScannedOrderNumberString(sOrderNumber);
 
+			/* Prepare success callback */
 			fnResolve = function(oData) {
-				var aResultList,
+				var oOrder,
+					aRows = oData.d.results[0].Rowset.results[0].Row.results,
 					bOrderNumberValid = true,
-					oModel = this.getModel("data");
+					oDataModel = this.getModel("data");
 
-				if (oData.d.results[0].Rowset.results.length > 0) {
-					aResultList = oData.d.results[0].Rowset.results[0].Row.results;
-				}
-
-				if (aResultList && aResultList.length === 1) {
+				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
+				if (aRows.length === 1) {
+					oOrder = aRows[0];
 					oSource.setValueState(sap.ui.core.ValueState.Success);
-
-					oModel.setProperty("/AUFNR", sOrderNumber);
+					oDataModel.setProperty("/AUFNR", oOrder.AUFNR);
 				} else {
-					oSource.setValueState(sap.ui.core.ValueState.Error);
 					this.addLogMessage({
-						text: oBundle.getText("messageTextGoodsReceiptOrderNumberNotFoundError", [sOrderNumber])
+						text: this.getTranslation("goodsReceipt.messageText.orderNumberNotFound", [sOrderNumber])
 					});
+					oSource.setValueState(sap.ui.core.ValueState.Error);
 					bOrderNumberValid = false;
 				}
 
 				this.getModel("view").setProperty("/bOrderNumberValid", bOrderNumberValid);
-				this.updateViewControls(oModel.getData());
 
 			}.bind(this);
 
+			/* Prepare error callback */
 			fnReject = function(oError) {
-				MessageBox.error(oBundle.getText("messageTextGoodsReceiptError"));
+				MessageBox.error(oError.message, {
+					title: this.getTranslation("error.miiTransactionErrorText", ["OrderHeaderNumberRead"])
+				});
 			}.bind(this);
 
+			/* Perform service call, Hide Busy Indicator, Update View Controls */
 			this.requestOrderHeaderInfoService(sOrderNumber)
 				.then(fnResolve, fnReject)
 				.then(function() {
 					this.hideControlBusyIndicator(oSource);
+				}.bind(this))
+				.then(function() {
+					this.updateViewControls(this.getModel("data").getData());
 				}.bind(this));
-
 		},
+
 		onQuantityChange: function(oEvent) {
 			this.updateViewControls(this.getModel("data")
 				.getData());
 		},
+
 		onUnitOfMeasureChange: function(oEvent) {
 			var sUnitOfMeasure = oEvent.getParameter("value").toUpperCase(),
 				oDataModel = this.getModel("data");
@@ -340,15 +343,15 @@ sap.ui.define([
 
 			this.updateViewControls(this.getModel("data").getData());
 		},
+
 		onStorageLocationChange: function(oEvent) {
 			var sStorageLocation = oEvent.getParameter("value").toUpperCase(),
-				oBundle = this.getResourceBundle(),
 				oDataModel = this.getModel("data");
 
 			// check if storage location is allowed
 			if (!this.isStorageLocationAllowed(sStorageLocation)) {
 				//oEvent.getSource().setValue("");
-				MessageBox.error(oBundle.getText("messageTextWrongStorageLocation", [sStorageLocation]));
+				MessageBox.error(this.getTranslation("goodsReceipt.messageText.wrongStorageLocation", [sStorageLocation]));
 			}
 
 			// propose default unit of measure if storage location is not 1000 and uom was not entered before 

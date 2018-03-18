@@ -38,7 +38,7 @@
 								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
 								"type": "QueryTemplate.Row"
 							},
-							"LENUM": "00000000109333600003",
+							"LENUM": "00000000109330000003",
 							"RowId": 1
 						}, {
 							"__metadata": {

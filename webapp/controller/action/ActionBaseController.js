@@ -111,12 +111,7 @@ sap.ui.define([
 
 		requestOrderHeaderInfoService: function(sOrderNumber) {
 			if (!sOrderNumber) {
-				return Promise.reject({
-					message: "Input parameters not complete: Order number missing",
-					statusCode: 0,
-					statusText: "sOrderNumber=" + sOrderNumber,
-					responseText: "Please provide all input parameters to perform the call!"
-				});
+				return Promise.reject(new Error("Parameter 'sOrderNumber' is missing!"));
 			}
 
 			var oOrderHeaderModel = this.getModel("orderHeader"),
@@ -129,12 +124,7 @@ sap.ui.define([
 
 		requestOrderComponentInfoService: function(sOrderNumber, sMaterialNumber) {
 			if (!sOrderNumber || !sMaterialNumber) {
-				return Promise.reject({
-					message: "Input parameters not complete",
-					statusCode: 0,
-					statusText: "sOrderNumber=" + sOrderNumber + " - sMaterialNumber=" + sMaterialNumber,
-					responseText: "Please provide all input parameters to perform the call!"
-				});
+				return Promise.reject(new Error("Parameter 'sOrderNumber' or 'sMaterialNumber' is missing!"));
 			}
 
 			var oOrderComponentModel = this.getModel("orderComponent"),
@@ -149,12 +139,7 @@ sap.ui.define([
 		requestStorageUnitInfoService: function(sStorageUnitNumber) {
 
 			if (!sStorageUnitNumber) {
-				return Promise.reject({
-					message: "Input parameters not complete",
-					statusCode: 0,
-					statusText: "sStorageUnitNumber=" + sStorageUnitNumber,
-					responseText: "Please provide all input parameters to perform the call!"
-				});
+				return Promise.reject(new Error("Parameter 'sStorageUnitNumber' is missing!"));
 			}
 
 			var oStorageUnitModel = this.getModel("storageUnit"),
@@ -350,14 +335,14 @@ sap.ui.define([
 		},
 
 		_cleanScannedOrderNumberString: function(sOrderNumberString) {
-			return this._deleteLeadingZeros(sOrderNumberString).split("/")[0];
+			return this.deleteLeadingZeros(sOrderNumberString).split("/")[0];
 		},
 
 		_padStorageUnitNumber: function(sStorageUnitNumber) {
 			return jQuery.sap.padLeft(sStorageUnitNumber, "0", 20);
 		},
 
-		_deleteLeadingZeros: function(vNumber) {
+		deleteLeadingZeros: function(vNumber) {
 			if (jQuery.type(vNumber) === "string") {
 				return vNumber.replace(/^0+/, "");
 			}
