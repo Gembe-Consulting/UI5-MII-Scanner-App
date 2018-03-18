@@ -3,8 +3,8 @@
 All notable changes to this project will be documented in this file.
 
 ============================================================================================================
-git log --after 12/03/2018 --pretty=format:"%s%n%b" --reverse --no-merges | grep -v '^$' | grep -v -i '\[INTERNAL\]' | grep -v -i '\[CHORE\]' | grep -v -i '\[TEST\]' | grep -v -i '\[STYLE\]'> LATEST_FEATURES_FIXES.md
-git log --after 12/03/2018 --pretty=format:"%s%n%b" --reverse --no-merges | grep -v '^$' > LATEST_CHANGES.md
+git log --after="2018-03-18T16:35:00+01:00" --pretty=format:"%s%n%b" --reverse --no-merges | grep -v '^$' | grep -v -i '\[INTERNAL\]' | grep -v -i '\[CHORE\]' | grep -v -i '\[TEST\]' | grep -v -i '\[STYLE\]'> LATEST_FEATURES_FIXES.md
+git log --after="2018-03-18T16:35:00+01:00" --pretty=format:"%s%n%b" --reverse --no-merges | grep -v '^$' > LATEST_CHANGES.md
 ============================================================================================================
 
 [<TYPE>] (<scope>): <subject>
@@ -27,6 +27,52 @@ Examples:
 [FIX] (roller conveyor page): fix, repair, stop
 
 ============================================================================================================
+
+##[1.2.35.2018-03-18]
+[INTERNAL] (base controller): add utility function for event bus
+[INTERNAL] (base controller): add utility function for getting translations using parameters
+[INTERNAL] (base controller): change nav back
+[INTERNAL] (base controller): add utility function for getting component
+[FEATURE] (action): add username as external user
+[INTERNAL] version 1.2.30
+[FIX] (roller conveyor): set storage bin item only if ressource id has been found
+[FEATURE] (roller conveyor): cleanup success messages
+[FEATURE] (action pages): add support for barcode scanner integration
+Main logic is located on ActionPageController. Here we attach and detach the scanner event listener everytime a page is shown and hidden.
+The attached event delegate evaluates the scanned string to discover the control.
+[FEATURE] (roller conveyor): set stretcher default to true
+[INTERNAL] version 1.2.35.2018-03-16
+[FEATURE] (stock transfer); propagate ERP errors to user
+[FEATURE] (action pages): re-align UI elements on large and medium screens
+[FIX] (action pages): fix typo preventing providing username to MII transaction
+[INTERNAL] (i18n): remove default language properties
+[INTERNAL] snapshot version
+[INTERNAL] (build): try fix build problems
+[FIX] (stock transfer): show error message
+[INTERNAL] replace ....sId by ....getId()
+[INTERNAL] version 1.2.36.2018-03-17
+[FIX] (goods receipt): fix too small storage location input on very large screens
+[INTERNAL] (misc): refactor some eslint warnings
+[INTERNAL] (misc): refactor some eslint warnings
+[REFACTOR] (goods receipt): steamline and add polish to coding
+also refactor 
+adjust test features accordingly
+[REFACTOR] (goods issue): steamline and add polish to coding
+also refactor 
+adjust test features accordingly
+[FEATURE] (goods receipt): purge LE data if LENUM gets invalid
+[FEATURE] (goods issue): purge LE data if LENUM gets invalid
+[REFACTOR] (stock transfer): steamline and add polish to coding
+also refactor 
+adjust test features accordingly
+[TEST] [FIX] (goods receipt): fix wording
+[REFACTOR] (roller conveyor): steamline and add polish to coding
+also refactor 
+adjust test features accordingly
+[INTERNAL] (build): revert build process
+[INTERNAL] version 1.2.35.2018-03-18
+[INTERNAL] version 1.2.35.2018-03-18
+
 
 ##[1.2.25.2018-03-11]
 [REFACTOR] (component, rootView): improve id and manifest

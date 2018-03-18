@@ -1,27 +1,26 @@
-[FEATURE] (css): add custom font size for all input fields
-[FEATURE] (forms): optimize SimpleForm layout
-- set breakpointM to 500 -> all below 500px will be considered SMALL and use alle ~S properties
-- should display more devices as small form
-[REFACTOR] (action): add ids to some controls
-- header
-- footer
-- buttons
-[FIX] (action): fix title not having correct style
-[FEATURE] (action): increase font size on mobile devices
-[FEATURE] (locale): add languages to prevent 404
-[FEATURE] (goods issue): move bulk mat indicator to storage location line
-[FEATURE] (roller conveyor + stock transfer): swap key and name in combobox
-[FIX] (service): correct debug mode detection
-[FIX] (init): remove sap-ui-debug from localStorage to prevent cross session mess
-[FEATURE] (roller conveyor): add better storage bin detection depending on dummy storage unit number
-[FEATURE] (roller conveyor): add services for Roller Conveyor page
-[FEATURE] (roller conveyor): add support for goods receipt of empty units
-[FIX] (roller conveyor): prevent nullpointer if lenum is not found
-[FEATURE] (service error): show MII transaction in error message
-[FEATURE] (roller conveyor): add support for stock transfer posting
-[FIX] (index): re-add correct path to mii utils
-[FEATURE] (roller conveyor): add support for finding running process order
-[FIX]: path to mii utils
-[FIX] (roller conveyor): select correct storage bin item on dummy LE
-[FEATURE] (coller conveyor): add support for posting BwA 555
-[FEATURE] (roller conveyor): add busy state during service calls & clear form after
+[FEATURE] (action): add username as external user
+[FIX] (roller conveyor): set storage bin item only if ressource id has been found
+[FEATURE] (roller conveyor): cleanup success messages
+[FEATURE] (action pages): add support for barcode scanner integration
+Main logic is located on ActionPageController. Here we attach and detach the scanner event listener everytime a page is shown and hidden.
+The attached event delegate evaluates the scanned string to discover the control.
+[FEATURE] (roller conveyor): set stretcher default to true
+[FEATURE] (stock transfer); propagate ERP errors to user
+[FEATURE] (action pages): re-align UI elements on large and medium screens
+[FIX] (action pages): fix typo preventing providing username to MII transaction
+[FIX] (stock transfer): show error message
+[FIX] (goods receipt): fix too small storage location input on very large screens
+[REFACTOR] (goods receipt): steamline and add polish to coding
+also refactor 
+adjust test features accordingly
+[REFACTOR] (goods issue): steamline and add polish to coding
+also refactor 
+adjust test features accordingly
+[FEATURE] (goods receipt): purge LE data if LENUM gets invalid
+[FEATURE] (goods issue): purge LE data if LENUM gets invalid
+[REFACTOR] (stock transfer): steamline and add polish to coding
+also refactor 
+adjust test features accordingly
+[REFACTOR] (roller conveyor): steamline and add polish to coding
+also refactor 
+adjust test features accordingly
