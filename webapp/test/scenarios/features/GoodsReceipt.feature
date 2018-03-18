@@ -109,7 +109,7 @@ Feature: Goods Receipt
 	Scenario: User is successfully posting full storage unit quantity
 		When I enter '00000000109330000001' into storageUnitInput in action.GoodsReceipt view
 		 And I click on saveButton in action.GoodsReceipt view 
-		Then I can see messageStrip with text 'Warenbewegung mit LE '109330000001' wurde erfolgreich gebucht!' in action.GoodsReceipt view 
+		Then I can see messageStrip with text 'Warenbewegung wurde mit LE '109330000001' erfolgreich gebucht!' in action.GoodsReceipt view 
 		Then on the Goods Receipt Page: I should see the save button is disabled
 		Then on the Goods Receipt Page: I should see all input fields are initial
 		
