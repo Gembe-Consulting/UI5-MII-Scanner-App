@@ -13,7 +13,7 @@ Feature: Roller Conveyor
 		Then I can see unitOfMeasureInput with editable being 'false' in action.RollerConveyor view
 		Then I can see storageBinSelection with editable being 'true' in action.RollerConveyor view
 		Then storageBinSelection in action.RollerConveyor view contains 4 items
-		Then I can see stretcherActiveSwitch with state being 'false' in action.RollerConveyor view
+		Then I can see stretcherActiveSwitch with state being 'true' in action.RollerConveyor view
 		Then I can see clearFormButton in action.RollerConveyor view
 		Then I can see cancelButton with text 'Abbrechen' in action.RollerConveyor view
 		Then I can see rollerConveyorPageIcon with src 'sap-icon://instance' in action.RollerConveyor view

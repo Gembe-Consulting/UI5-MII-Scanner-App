@@ -43,8 +43,8 @@ sap.ui.require([
 							viewName: sViewName,
 							success: function(oControl) {
 								var activeItems = oControl.getItems().filter(item => item.getEnabled());
-								
-								Opa5.assert.strictEqual(activeItems.length, iNumberOfItems, sControlId + " has "+iNumberOfItems+" active items");
+
+								Opa5.assert.strictEqual(activeItems.length, iNumberOfItems, sControlId + " has " + iNumberOfItems + " active items");
 								Opa5.assert.strictEqual(activeItems[0].getKey(), "ROLLENBAHN", "First active item is ROLLENBAHN");
 								Opa5.assert.strictEqual(activeItems[1].getKey(), "STAPLER", "Second active item is STAPLER");
 							}
@@ -60,8 +60,8 @@ sap.ui.require([
 							viewName: sViewName,
 							success: function(oControl) {
 								var activeItems = oControl.getItems().filter(item => item.getEnabled());
-								
-								Opa5.assert.strictEqual(activeItems.length, iNumberOfItems, sControlId + " has "+iNumberOfItems+" active items");
+
+								Opa5.assert.strictEqual(activeItems.length, iNumberOfItems, sControlId + " has " + iNumberOfItems + " active items");
 								Opa5.assert.strictEqual(activeItems[0].getKey(), "BEUM", "First active item is BEUM");
 								Opa5.assert.strictEqual(activeItems[1].getKey(), "PALE", "Second active item is PALE");
 							}
@@ -74,7 +74,7 @@ sap.ui.require([
 							"unitOfMeasureInput": "",
 							"quantityInput": "",
 							"storageBinSelection": "",
-							"stretcherActiveSwitch": false
+							"stretcherActiveSwitch": true
 						};
 
 						jQuery.each(oInitialControlData, function(sControlId, sEmptyValue) {
@@ -109,7 +109,7 @@ sap.ui.require([
 								entryQuantity: null,
 								unitOfMeasure: null,
 								storageBin: null,
-								stretcherActive: false,
+								stretcherActive: true,
 								// external data from storage unit
 								LENUM: null,
 								MEINH: null,

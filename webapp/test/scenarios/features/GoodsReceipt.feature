@@ -38,7 +38,7 @@ Feature: Goods Receipt
 		 And I can see orderNumberInput with editable being 'false' in action.GoodsReceipt view
 		 And I can see saveButton with enabled being 'true' in action.GoodsReceipt view
 		When I enter '00000000000000000001' into storageUnitInput in action.GoodsReceipt view
-		When on the Goods Receipt Page: I close the error message
+		Then I can see messageStrip with text starting with 'Palette '00000000000000000001' nicht gefunden.' in action.GoodsReceipt view
 		Then on the Goods Receipt Page: I should see the save button is disabled
 		
 	Scenario: User enters a order number
@@ -109,7 +109,7 @@ Feature: Goods Receipt
 	Scenario: User is successfully posting full storage unit quantity
 		When I enter '00000000109330000001' into storageUnitInput in action.GoodsReceipt view
 		 And I click on saveButton in action.GoodsReceipt view 
-		Then I can see messageStrip with text 'Warenbewegung wurde erfolgreich gebucht!' in action.GoodsReceipt view 
+		Then I can see messageStrip with text 'Warenbewegung wurde mit LE '109330000001' erfolgreich gebucht!' in action.GoodsReceipt view 
 		Then on the Goods Receipt Page: I should see the save button is disabled
 		Then on the Goods Receipt Page: I should see all input fields are initial
 		
@@ -117,11 +117,6 @@ Feature: Goods Receipt
 		When I enter '00000000109330000003' into storageUnitInput in action.GoodsReceipt view
 		 And I enter '300,000' into quantityInput in action.GoodsReceipt view
 		 And I click on saveButton in action.GoodsReceipt view 
-		Then I can see messageStrip with text 'Warenbewegung wurde erfolgreich gebucht!' in action.GoodsReceipt view 
+		Then I can see messageStrip with text 'Warenbewegung wurde mit LE '109330000003' erfolgreich gebucht!' in action.GoodsReceipt view 
 		Then on the Goods Receipt Page: I should see the save button is disabled
 		Then on the Goods Receipt Page: I should see all input fields are initial
-		
-	Scenario: User receives error when posting an already full storage unit
-		When I enter '00000000109330000002' into storageUnitInput in action.GoodsReceipt view
-		Then I can see messageStrip with text 'Palette '00000000109330000002' wurde bereits gebucht!' in action.GoodsReceipt view
-		Then on the Goods Receipt Page: I should see the save button is disabled

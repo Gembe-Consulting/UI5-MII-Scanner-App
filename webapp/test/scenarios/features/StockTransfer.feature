@@ -61,7 +61,7 @@ Feature: Stock Transfer
 		 And I cannot see clearQuantityInputIcon in action.StockTransfer view
 		When I enter '00000000000000000001' into storageUnitInput in action.StockTransfer view
 		Then I can see storageUnitInput with valueState 'Error' in action.StockTransfer view
-		 And I can see messageStrip with text 'Achtung: Palette '00000000000000000001' existiert nicht!' in action.StockTransfer view
+		 And I can see messageStrip with text starting with 'Palette '00000000000000000001' nicht gefunden.' in action.StockTransfer view
 		 And I can see messageStrip with type 'Error' in action.StockTransfer view
 
 	Scenario: User clears the input form

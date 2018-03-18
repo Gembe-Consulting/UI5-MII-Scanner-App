@@ -27,8 +27,8 @@
 				<f:content>
 					<Label text="{i18n>lableTextFormGoodsReceiptStorageUnit}" labelFor="storageUnitInput"/>
 					<Input id="storageUnitInput" change="onStorageUnitNumberChange" value="{path: 'data>/LENUM', type:'.sapType.LENUM'}"
-						editable="{= ${data>/LGORT}==='1000' || ${data>/LGORT}==='' || ${data>/LGORT}===null}" valueState="{view>/storageUnitNumberValueState}"
-						maxLength="20" class="suwIncreadedInputFontSize">
+						editable="{= ${data>/LGORT}==='1000' || ${data>/LGORT}==='' || ${data>/LGORT}===null || ${data>/LGORT}===undefined}"
+						valueState="{view>/storageUnitNumberValueState}" maxLength="20" class="suwIncreadedInputFontSize">
 						<layoutData>
 							<l:GridData span="XL4 L4 M6 S12"/>
 						</layoutData>

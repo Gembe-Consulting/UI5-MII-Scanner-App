@@ -42,8 +42,6 @@ sap.ui.define([
 			//call super class onInit to apply user login protection. DO NOT DELETE!
 			ActionBaseController.prototype.onInit.call(this);
 
-			//jQuery(document).on("scannerDetectionComplete", this.handleBarcodeScanned.bind(this));
-
 			this.setModel(new JSONModel(jQuery.extend({}, this._oInitData)), "data");
 
 			this.setModel(new JSONModel(jQuery.extend({}, this._oInitView)), "view");
@@ -55,7 +53,6 @@ sap.ui.define([
 		 *	if(lgplatz == "04")
 		 *		queryString += "&ARBID=00253110";	//PALE
 		 */
-
 		onSave: function(oEvent) {
 			var oDataModel = this.getModel("data"),
 				oData = oDataModel.getData(),
@@ -118,221 +115,6 @@ sap.ui.define([
 					that.onClearFormPress({}, true /*bKeepMessageStrip*/ );
 					jQuery.sap.log.debug(oData.messages.join("\n"), "", that.toString());
 				});
-		},
-
-		onStorageUnitInputChange: function(oEvent) {
-			var oSource = oEvent.getSource(),
-				sStorageUnitNumber = oEvent.getParameter("value"),
-				oDataModel = this.getModel("data"),
-				oBundle = this.getResourceBundle(),
-				fnResolve,
-				fnReject;
-
-			oSource.setValueState(sap.ui.core.ValueState.None);
-
-			if (!sStorageUnitNumber) {
-				return false;
-			}
-
-			// on last unit, set dummy storageUnit to hide info fragment and repair storage bin selection
-			if (this.formatter.isLastStorageUnit(sStorageUnitNumber)) {
-
-				this.addLogMessage({
-					text: oBundle.getText("rollerConveyor.messageText.lastStorageUnit"),
-					type: sap.ui.core.MessageType.Information
-				});
-
-				return this.setAndRepairDataModel(oSource, sStorageUnitNumber);
-			}
-
-			sStorageUnitNumber = this._padStorageUnitNumber(sStorageUnitNumber);
-
-			this.showControlBusyIndicator(oSource);
-
-			this.clearLogMessages();
-
-			fnResolve = function(oData) {
-				var oStorageUnit,
-					aResultList,
-					bStorageUnitValid;
-
-				try {
-
-					aResultList = oData.d.results[0].Rowset.results[0].Row.results;
-
-					if (aResultList.length === 1) {
-						oStorageUnit = this._formatStorageUnitData(oData.d.results[0].Rowset.results[0].Row.results[0]);
-						oSource.setValueState(sap.ui.core.ValueState.Success);
-						bStorageUnitValid = true;
-					} else {
-						this.addLogMessage({
-							text: oBundle.getText("rollerConveyor.messageText.storageUnitNotFound", [sStorageUnitNumber])
-						});
-						oSource.setValueState(sap.ui.core.ValueState.Error);
-						bStorageUnitValid = false;
-					}
-
-					if (bStorageUnitValid) {
-						oDataModel.setData(oStorageUnit, true /*bMerge*/ );
-
-						//remap some properties
-						oDataModel.setProperty("/unitOfMeasure", oStorageUnit.MEINH);
-						oDataModel.setProperty("/orderNumber", oStorageUnit.AUFNR);
-
-						if (!this.formatter.isEmptyStorageUnit(oStorageUnit.ISTME)) {
-							oDataModel.setProperty("/entryQuantity", oStorageUnit.ISTME);
-						} else {
-							oDataModel.setProperty("/entryQuantity", null);
-						}
-					}
-
-				} catch (err) {
-					MessageBox.error(oBundle.getText("rollerConveyor.errorMessageText.storageUnit"), {
-						title: err
-					});
-					oSource.setValueState(sap.ui.core.ValueState.Error);
-					bStorageUnitValid = false;
-				} finally {
-					this.getModel("view").setProperty("/bStorageUnitValid", bStorageUnitValid);
-					this.updateViewControls(oDataModel.getData());
-				}
-
-			}.bind(this);
-
-			fnReject = function(oError) {
-				MessageBox.error(oBundle.getText("rollerConveyor.storageUnit.errorMessageText"));
-			}.bind(this);
-
-			this.requestStorageUnitInfoService(sStorageUnitNumber)
-				.then(fnResolve, fnReject)
-				.then(function() {
-					this.hideControlBusyIndicator(oSource);
-				}.bind(this));
-
-			return true;
-		},
-
-		setAndRepairDataModel: function(oSource, sStorageUnitNumber) {
-			var oDataModel = this.getModel("data"),
-				oRessource,
-				sStorageBinKey,
-				oStorageBinControl,
-				oStorageBin,
-				oItem;
-
-			oDataModel.setData({
-				entryQuantity: null,
-				unitOfMeasure: null,
-				LENUM: null,
-				MEINH: null,
-				ISTME: null
-			}, true);
-
-			oSource.setValueState(sap.ui.core.ValueState.Success);
-
-			//reset storage bin, if wrong was selected before
-			oStorageBinControl = this.byId("storageBinSelection");
-			oStorageBin = oStorageBinControl.getSelectedItem();
-
-			if (oStorageBin && !oStorageBin.getEnabled()) {
-				oStorageBinControl.setSelectedItemId(); //clear value
-			}
-
-			oRessource = this.getRessourceOfDummyStorageUnit(sStorageUnitNumber);
-
-			sStorageBinKey = oRessource.get("storageBin");
-
-			if (oRessource && sStorageBinKey) {
-				oItem = oStorageBinControl.getItemByKey(oRessource.get("storageBin"));
-				oStorageBinControl.setSelectedItem(oItem);
-				oStorageBinControl.fireSelectionChange({
-					selectedItem: oItem
-				});
-				//oStorageBinControl.setSelectedKey(oRessource.get("storageBin"));
-			}
-
-			return true;
-		},
-
-		getRessourceOfDummyStorageUnit: function(sStorageUnitNumber) {
-			var sRessource,
-				oRessource,
-				mRessource = new Map();
-
-			// check if valid LE
-			if (!sStorageUnitNumber.startsWith("900") && sStorageUnitNumber.length === 20) {
-				return mRessource;
-			}
-
-			// find ressource id
-			sRessource = sStorageUnitNumber.substring(1, 9);
-
-			//check ressource id
-			oRessource = this.mapStorageBinToRessource.filter(function(o) {
-				return Object.values(o)[0] === sRessource;
-			})[0];
-
-			if (!oRessource) {
-				return mRessource;
-			}
-
-			mRessource.set("ressourceId", Object.values(oRessource)[0]);
-			mRessource.set("storageBin", Object.keys(oRessource)[0]);
-
-			return mRessource;
-		},
-
-		onQuantityInputChange: function(oEvent) {
-			this.updateViewControls(this.getModel("data").getData());
-		},
-
-		onUnitOfMeasureInputChange: function(oEvent) {
-			var sUoM = oEvent.getParameter("value"),
-				oDataModel = this.getModel("data");
-
-			oDataModel.setProperty("/unitOfMeasure", sUoM.toUpperCase());
-
-			this.updateViewControls(oDataModel.getData());
-		},
-
-		onStorageBinSelectionChange: function(oEvent) {
-			var oSource = oEvent.getSource(),
-				oSelectedItem = oSource.getSelectedItem(),
-				sStorageBinId = oSelectedItem.data("storageBinId"),
-				oDataModel = this.getModel("data");
-
-			oDataModel.setProperty("/storageBinId", sStorageBinId);
-
-			this.updateViewControls(this.getModel("data").getData());
-		},
-
-		updateViewControls: function(oData) {
-			var oViewModel = this.getModel("view"),
-				bStorageUnitValid = oViewModel.getProperty("/bStorageUnitValid"),
-				bInputValuesComplete,
-				bNoErrorMessagesActive,
-				bReadyForPosting;
-
-			// check if all required input data is present
-			bInputValuesComplete = this.isInputDataValid(oData);
-
-			// check if all input data has proper format
-			bNoErrorMessagesActive = this.isMessageModelClean();
-
-			// we are ready for posting once we have complete and proper formatted input
-			bReadyForPosting = bNoErrorMessagesActive && bInputValuesComplete && bStorageUnitValid;
-
-			oViewModel.setProperty("/bValid", bReadyForPosting);
-		},
-
-		isInputDataValid: function(oData) {
-			return !!oData.storageUnit && !!oData.storageBin && !!oData.storageBinId && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.unitOfMeasure;
-		},
-
-		findRessourceOfStorageBin: function(sStorageBin) {
-			return this.mapStorageBinToRessource.filter(function(o) {
-				return !!o[sStorageBin];
-			})[0][sStorageBin];
 		},
 
 		/**
@@ -499,7 +281,7 @@ sap.ui.define([
 				"Param.1": oData.storageBinId, //Lagerplatz (ID),
 				"Param.2": oData.stretcherActive ? 1 : 0, //Stretch,
 				"Param.3": this.formatter.isLastStorageUnit(oData.storageUnit) ? 1 : 0, //LETZE_LE,
-				"Param.4": this._padStorageUnitNumber(oData.storageUnit) //LE
+				"Param.4": this.padStorageUnitNumber(oData.storageUnit) //LE
 			};
 
 			fnResolve = function(oIllumData) {
@@ -592,10 +374,224 @@ sap.ui.define([
 			return findProcessOrderPromise.then(fnResolve, fnReject);
 		},
 
+		setAndRepairDataModel: function(oSource, sStorageUnitNumber) {
+			var oDataModel = this.getModel("data"),
+				oRessource,
+				sStorageBinKey,
+				oStorageBinControl,
+				oStorageBin,
+				oItem;
+
+			oDataModel.setData({
+				entryQuantity: null,
+				unitOfMeasure: null,
+				LENUM: null,
+				MEINH: null,
+				ISTME: null
+			}, true);
+
+			oSource.setValueState(sap.ui.core.ValueState.Success);
+
+			//reset storage bin, if wrong was selected before
+			oStorageBinControl = this.byId("storageBinSelection");
+			oStorageBin = oStorageBinControl.getSelectedItem();
+
+			if (oStorageBin && !oStorageBin.getEnabled()) {
+				oStorageBinControl.setSelectedItemId(); //clear value
+			}
+
+			oRessource = this.getRessourceOfDummyStorageUnit(sStorageUnitNumber);
+
+			sStorageBinKey = oRessource.get("storageBin");
+
+			if (oRessource && sStorageBinKey) {
+				oItem = oStorageBinControl.getItemByKey(oRessource.get("storageBin"));
+				oStorageBinControl.setSelectedItem(oItem);
+				oStorageBinControl.fireSelectionChange({
+					selectedItem: oItem
+				});
+				//oStorageBinControl.setSelectedKey(oRessource.get("storageBin"));
+			}
+
+			return true;
+		},
+
+		getRessourceOfDummyStorageUnit: function(sStorageUnitNumber) {
+			var sRessource,
+				oRessource,
+				mRessource = new Map();
+
+			// check if valid LE
+			if (!sStorageUnitNumber.startsWith("900") && sStorageUnitNumber.length === 20) {
+				return mRessource;
+			}
+
+			// find ressource id
+			sRessource = sStorageUnitNumber.substring(1, 9);
+
+			//check ressource id
+			oRessource = this.mapStorageBinToRessource.filter(function(o) {
+				return Object.values(o)[0] === sRessource;
+			})[0];
+
+			if (!oRessource) {
+				return mRessource;
+			}
+
+			mRessource.set("ressourceId", Object.values(oRessource)[0]);
+			mRessource.set("storageBin", Object.keys(oRessource)[0]);
+
+			return mRessource;
+		},
+
+		updateViewControls: function(oData) {
+			var oViewModel = this.getModel("view"),
+				bStorageUnitValid = oViewModel.getProperty("/bStorageUnitValid"),
+				bInputValuesComplete,
+				bNoErrorMessagesActive,
+				bReadyForPosting;
+
+			// check if all required input data is present
+			bInputValuesComplete = this.isInputDataValid(oData);
+
+			// check if all input data has proper format
+			bNoErrorMessagesActive = this.isMessageModelClean();
+
+			// we are ready for posting once we have complete and proper formatted input
+			bReadyForPosting = bNoErrorMessagesActive && bInputValuesComplete && bStorageUnitValid;
+
+			oViewModel.setProperty("/bValid", bReadyForPosting);
+		},
+
+		isInputDataValid: function(oData) {
+			return !!oData.storageUnit && !!oData.storageBin && !!oData.storageBinId && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.unitOfMeasure;
+		},
+
+		findRessourceOfStorageBin: function(sStorageBin) {
+			return this.mapStorageBinToRessource.filter(function(o) {
+				return !!o[sStorageBin];
+			})[0][sStorageBin];
+		},
+
+		onStorageUnitInputChange: function(oEvent) {
+			var oSource = oEvent.getSource(),
+				sStorageUnitNumber = oEvent.getParameter("value"),
+				oDataModel = this.getModel("data"),
+				oBundle = this.getResourceBundle(),
+				fnResolve,
+				fnReject;
+
+			oSource.setValueState(sap.ui.core.ValueState.None);
+
+			if (!sStorageUnitNumber) {
+				return false;
+			}
+
+			// on last unit, set dummy storageUnit to hide info fragment and repair storage bin selection
+			if (this.formatter.isLastStorageUnit(sStorageUnitNumber)) {
+
+				this.addLogMessage({
+					text: oBundle.getText("rollerConveyor.messageText.lastStorageUnit"),
+					type: sap.ui.core.MessageType.Information
+				});
+
+				return this.setAndRepairDataModel(oSource, sStorageUnitNumber);
+			}
+
+			sStorageUnitNumber = this.padStorageUnitNumber(sStorageUnitNumber);
+
+			this.showControlBusyIndicator(oSource);
+
+			this.clearLogMessages();
+
+			fnResolve = function(oData) {
+				var oStorageUnit,
+					aResultList,
+					bStorageUnitValid;
+
+				try {
+
+					aResultList = oData.d.results[0].Rowset.results[0].Row.results;
+
+					if (aResultList.length === 1) {
+						oStorageUnit = this._formatStorageUnitData(oData.d.results[0].Rowset.results[0].Row.results[0]);
+						oSource.setValueState(sap.ui.core.ValueState.Success);
+						bStorageUnitValid = true;
+					} else {
+						this.addLogMessage({
+							text: oBundle.getText("rollerConveyor.messageText.storageUnitNotFound", [sStorageUnitNumber])
+						});
+						oSource.setValueState(sap.ui.core.ValueState.Error);
+						bStorageUnitValid = false;
+					}
+
+					if (bStorageUnitValid) {
+						oDataModel.setData(oStorageUnit, true /*bMerge*/ );
+
+						//remap some properties
+						oDataModel.setProperty("/unitOfMeasure", oStorageUnit.MEINH);
+						oDataModel.setProperty("/orderNumber", oStorageUnit.AUFNR);
+
+						if (!this.formatter.isEmptyStorageUnit(oStorageUnit.ISTME)) {
+							oDataModel.setProperty("/entryQuantity", oStorageUnit.ISTME);
+						} else {
+							oDataModel.setProperty("/entryQuantity", null);
+						}
+					}
+
+				} catch (err) {
+					MessageBox.error(oBundle.getText("rollerConveyor.errorMessageText.storageUnit"), {
+						title: err
+					});
+					oSource.setValueState(sap.ui.core.ValueState.Error);
+					bStorageUnitValid = false;
+				} finally {
+					this.getModel("view").setProperty("/bStorageUnitValid", bStorageUnitValid);
+					this.updateViewControls(oDataModel.getData());
+				}
+
+			}.bind(this);
+
+			fnReject = function(oError) {
+				MessageBox.error(oBundle.getText("rollerConveyor.storageUnit.errorMessageText"));
+			}.bind(this);
+
+			this.requestStorageUnitInfoService(sStorageUnitNumber)
+				.then(fnResolve, fnReject)
+				.then(function() {
+					this.hideControlBusyIndicator(oSource);
+				}.bind(this));
+
+			return true;
+		},
+		onQuantityInputChange: function(oEvent) {
+			this.updateViewControls(this.getModel("data").getData());
+		},
+
+		onUnitOfMeasureInputChange: function(oEvent) {
+			var sUoM = oEvent.getParameter("value"),
+				oDataModel = this.getModel("data");
+
+			oDataModel.setProperty("/unitOfMeasure", sUoM.toUpperCase());
+
+			this.updateViewControls(oDataModel.getData());
+		},
+
+		onStorageBinSelectionChange: function(oEvent) {
+			var oSource = oEvent.getSource(),
+				oSelectedItem = oSource.getSelectedItem(),
+				sStorageBinId = oSelectedItem.data("storageBinId"),
+				oDataModel = this.getModel("data");
+
+			oDataModel.setProperty("/storageBinId", sStorageBinId);
+
+			this.updateViewControls(this.getModel("data").getData());
+		},
+
 		_buildSuccessMessage: function(oData) {
 			var sSuccessMessage,
 				sStorageBinItemText = this.byId("storageBinSelection").getSelectedItem().getText(),
-				sStorageUnitNumber = this._deleteLeadingZeros(oData.storageUnit);
+				sStorageUnitNumber = this.deleteLeadingZeros(oData.storageUnit);
 
 			if (oData.bIsLastUnit) {
 				//Letzte Palette '900248110' erfolgreich von BEUMER an Rollenbahn gemeldet
