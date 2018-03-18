@@ -223,7 +223,9 @@ sap.ui.define([
 
 			/* Prepare success callback */
 			fnResolve = function(oData) {
-				var oStorageUnit,
+				var oStorageUnit = {
+						LENUM: null
+					},
 					aRows = oData.d.results[0].Rowset.results[0].Row.results,
 					bStorageUnitValid = true,
 					oDataModel = this.getModel("data");
@@ -233,8 +235,6 @@ sap.ui.define([
 					oStorageUnit = this._formatStorageUnitData(aRows[0]);
 
 					oSource.setValueState(sap.ui.core.ValueState.Success);
-
-					oDataModel.setData(oStorageUnit);
 
 					if (oStorageUnit.SOLLME <= 0) {
 						this.addLogMessage({
@@ -252,6 +252,8 @@ sap.ui.define([
 				}
 
 				this.getModel("view").setProperty("/bStorageUnitValid", bStorageUnitValid);
+
+				oDataModel.setData(oStorageUnit);
 
 			}.bind(this);
 
