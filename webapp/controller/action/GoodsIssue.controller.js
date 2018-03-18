@@ -43,20 +43,80 @@ sap.ui.define([
 			//call super class onInit to apply user login protection. DO NOT DELETE!
 			ActionBaseController.prototype.onInit.call(this);
 
-			var oModel = new JSONModel(),
-				oData;
-
-			//jQuery(document).on("scannerDetectionComplete", this.handleBarcodeScanned.bind(this));
-
-			oData = jQuery.extend({}, this._oInitData);
-			oModel.setData(oData);
-			this.setModel(oModel, "data");
+			this.setModel(new JSONModel(jQuery.extend({}, this._oInitData)), "data");
 
 			this.setModel(new JSONModel(jQuery.extend({}, this._oInitView)), "view");
 
 			this.getRouter()
 				.getRoute("goodsIssue")
 				.attachMatched(this._onRouteMatched, this);
+		},
+
+		onSave: function() {
+			var fnResolve,
+				fnReject;
+
+			this.getOwnerComponent().showBusyIndicator();
+
+			fnResolve = function(oData) {
+				var oDataModel = this.getModel("data");
+
+				this.addLogMessage({
+					text: this.getTranslation("goodsIssue.messageText.goodsIssuePostingSuccessfull", [oDataModel.getProperty("/orderNumber")]),
+					type: sap.ui.core.MessageType.Success
+				});
+			}.bind(this);
+
+			fnReject = function(oError) {
+				MessageBox.error(oError.message, {
+					title: this.getTranslation("error.miiTransactionErrorText", ["GoodsMovementCreate: 261"])
+				});
+			}.bind(this);
+
+			/* Perform service call, Hide Busy Indicator, Update View Controls */
+			this._postGoodsIssue()
+				.then(fnResolve, fnReject)
+				.then(this.getOwnerComponent().hideBusyIndicator)
+				.then(function() {
+					this.onClearFormPress({}, true /*bKeepMessageStrip*/ );
+				}.bind(this));
+		},
+
+		_postGoodsIssue: function() {
+			var sPath = "/",
+				oDataModel = this.getModel("data"),
+				oViewModel = this.getModel("view"),
+				oGoodsIssueModel = this.getModel("goodsMovement"),
+				sUsername = this.getModel("user").getProperty("USERLOGIN"),
+				sDefaultMoveType = "261",
+				sDefaultUnitOfMeasure = "KG",
+
+				oParam;
+
+			if (oDataModel.getProperty(sPath + "storageUnit") && oViewModel.getProperty("/type") === "withLE") {
+				oParam = {
+					"Param.1": oDataModel.getProperty(sPath + "storageUnit"),
+					"Param.2": oDataModel.getProperty(sPath + "orderNumber"),
+					"Param.4": oDataModel.getProperty(sPath + "entryQuantity"),
+					"Param.5": oDataModel.getProperty(sPath + "unitOfMeasure") || sDefaultUnitOfMeasure,
+					"Param.6": oDataModel.getProperty(sPath + "materialNumber"),
+					"Param.10": sUsername,
+					"Param.11": oDataModel.getProperty(sPath + "movementType") || sDefaultMoveType
+				};
+			} else {
+				oParam = {
+					"Param.2": oDataModel.getProperty(sPath + "orderNumber"),
+					"Param.3": oDataModel.getProperty(sPath + "storageLocation"),
+					"Param.4": oDataModel.getProperty(sPath + "entryQuantity"),
+					"Param.5": oDataModel.getProperty(sPath + "unitOfMeasure") || sDefaultUnitOfMeasure,
+					"Param.6": oDataModel.getProperty(sPath + "materialNumber"),
+					"Param.10": sUsername,
+					"Param.11": oDataModel.getProperty(sPath + "movementType") || sDefaultMoveType
+				};
+			}
+
+			return oGoodsIssueModel.loadMiiData(oGoodsIssueModel._sServiceUrl, oParam);
+
 		},
 
 		_onRouteMatched: function(oEvent) {
@@ -111,90 +171,6 @@ sap.ui.define([
 			}
 		},
 
-		onSave: function() {
-			var oBundle = this.getResourceBundle(),
-				fnResolve,
-				fnReject;
-
-			this.getOwnerComponent().showBusyIndicator();
-
-			fnResolve = function(oData) {
-				var sFatalError,
-					oDataModel = this.getModel("data");
-
-				try {
-					sFatalError = oData.d.results[0].FatalError;
-
-					if (!sFatalError) {
-						this.addLogMessage({
-							text: oBundle.getText("messageTextGoodsIssuePostingSuccessfull", [oDataModel.getProperty("/orderNumber")]),
-							type: sap.ui.core.MessageType.Success
-						});
-					} else {
-						this.addLogMessage({
-							text: sFatalError,
-							type: sap.ui.core.MessageType.Error
-						});
-					}
-
-				} catch (err) {
-					MessageBox.error(oBundle.getText("messageTextGoodsIssuePostingFailed"), {
-						title: err
-					});
-				} finally {
-					this.onClearFormPress({}, true /*bKeepMessageStrip*/ );
-				}
-			}.bind(this);
-
-			fnReject = function(oError) {
-				MessageBox.error(oBundle.getText("messageTextGoodsIssueError"));
-			}.bind(this);
-
-			this._postGoodsIssue()
-				.then(fnResolve, fnReject)
-				.then(this.getOwnerComponent()
-					.hideBusyIndicator);
-
-		},
-
-		_postGoodsIssue: function() {
-
-			var sPath = "/",
-				oDataModel = this.getModel("data"),
-				oViewModel = this.getModel("view"),
-				oGoodsIssueModel = this.getModel("goodsMovement"),
-				sUsername = this.getModel("user").getProperty("USERLOGIN"),
-				sDefaultMoveType = "261",
-				sDefaultUnitOfMeasure = "KG",
-
-				oParam;
-
-			if (oDataModel.getProperty(sPath + "storageUnit") && oViewModel.getProperty("/type") === "withLE") {
-				oParam = {
-					"Param.1": oDataModel.getProperty(sPath + "storageUnit"),
-					"Param.2": oDataModel.getProperty(sPath + "orderNumber"),
-					"Param.4": oDataModel.getProperty(sPath + "entryQuantity"),
-					"Param.5": oDataModel.getProperty(sPath + "unitOfMeasure") || sDefaultUnitOfMeasure,
-					"Param.6": oDataModel.getProperty(sPath + "materialNumber"),
-					"Param.10": sUsername,
-					"Param.11": oDataModel.getProperty(sPath + "movementType") || sDefaultMoveType
-				};
-			} else {
-				oParam = {
-					"Param.2": oDataModel.getProperty(sPath + "orderNumber"),
-					"Param.3": oDataModel.getProperty(sPath + "storageLocation"),
-					"Param.4": oDataModel.getProperty(sPath + "entryQuantity"),
-					"Param.5": oDataModel.getProperty(sPath + "unitOfMeasure") || sDefaultUnitOfMeasure,
-					"Param.6": oDataModel.getProperty(sPath + "materialNumber"),
-					"Param.10": sUsername,
-					"Param.11": oDataModel.getProperty(sPath + "movementType") || sDefaultMoveType
-				};
-			}
-
-			return oGoodsIssueModel.loadMiiData(oGoodsIssueModel._sServiceUrl, oParam);
-
-		},
-
 		updateViewControls: function(oData) {
 			var oViewModel = this.getModel("view"),
 				bStorageUnitValid = oViewModel.getProperty("/bStorageUnitValid"),
@@ -215,79 +191,81 @@ sap.ui.define([
 			oViewModel.setProperty("/bValid", bReadyForPosting);
 		},
 
+		isInputDataValid: function(oData) {
+			switch (this.getModel("view").getProperty("/type")) {
+				case "withLE":
+					return !!oData.entryQuantity && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageUnit;
+				case "nonLE":
+					return !!oData.entryQuantity && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageLocation && !!oData.materialNumber;
+				default:
+					return false;
+			}
+		},
+
 		validateComponentWithdrawal: function(sOrderNumber, sMaterialNumber, oSource) {
-			var oBundle = this.getResourceBundle(),
-				fnReject,
+			var fnReject,
 				fnResolve;
 
 			if (!sOrderNumber || !sMaterialNumber) {
 				return false;
 			}
 
+			/* Prepare UI: busy, value states, log messages */
 			this.showControlBusyIndicator(oSource);
 			oSource.setValueState(sap.ui.core.ValueState.None);
 			this.clearLogMessages();
 
 			fnResolve = function(oData) {
 				var oOrderComponent,
-					aResultList,
+					aRows = oData.d.results[0].Rowset.results[0].Row.results,
 					oDataModel = this.getModel("data"),
 					sComponentUnitOfMeasure;
 
-				try {
-					aResultList = oData.d.results[0].Rowset.results[0].Row.results;
+				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
+				if (aRows.length === 1) {
+					oOrderComponent = aRows[0];
+					oSource.setValueState(sap.ui.core.ValueState.Success);
 
-					if (aResultList.length === 1) {
-						oOrderComponent = oData.d.results[0].Rowset.results[0].Row.results[0];
-						oSource.setValueState(sap.ui.core.ValueState.Success);
-					} else {
+					if (oOrderComponent.RGEKZ === "X") {
 						this.addLogMessage({
-							text: oBundle.getText("messageTextMaterialNotContaintedInOrderComponentList", [sMaterialNumber, sOrderNumber]),
+							text: this.getTranslation("goodsIssue.messageText.materialBackflushedInOrderComponentList", [sMaterialNumber]),
 							type: sap.ui.core.MessageType.Warning
 						});
 						oSource.setValueState(sap.ui.core.ValueState.Warning);
 					}
 
-					if (oOrderComponent) {
-						if (oOrderComponent.RGEKZ === "X") {
-							oSource.setValueState(sap.ui.core.ValueState.Warning);
-							this.addLogMessage({
-								text: oBundle.getText("messageTextMaterialBackflushedInOrderComponentList", [sMaterialNumber]),
-								type: sap.ui.core.MessageType.Warning
-							});
-						}
-
-						if (oDataModel.getProperty("/unitOfMeasure") && oDataModel.getProperty("/unitOfMeasure") !== oOrderComponent.EINHEIT) {
-							this.addLogMessage({
-								text: oBundle.getText("messageTextOrderComponentHasDeviatingUnitOfMeasure", [oOrderComponent.EINHEIT, oDataModel.getProperty("/unitOfMeasure")])
-							});
-							oSource.setValueState(sap.ui.core.ValueState.Error);
-						} else {
-							sComponentUnitOfMeasure = oOrderComponent.EINHEIT;
-						}
-
-						oDataModel.setProperty("/unitOfMeasure", sComponentUnitOfMeasure);
-
-						// update entry quantity by remaining open quantity, but only if users did not enter a quantity beforhand
-						if (this.getModel("view").getProperty("/type") === "nonLE" && (!oDataModel.getProperty("/entryQuantity") || oDataModel.getProperty("/entryQuantity") === "")) {
-							oDataModel.setProperty("/entryQuantity", oOrderComponent.BDMNG - oOrderComponent.ENMNG);
-							oSource.setTooltip("Restmenge \'" + (oOrderComponent.BDMNG - oOrderComponent.ENMNG) + "\' = Bedarfsmenge \'" + oOrderComponent.BDMNG + "\' - Entnommene Menge \'" + oOrderComponent.ENMNG + "\'");
-						}
-
+					if (oDataModel.getProperty("/unitOfMeasure") && oDataModel.getProperty("/unitOfMeasure") !== oOrderComponent.EINHEIT) {
+						this.addLogMessage({
+							text: this.getTranslation("goodsIssue.messageText.orderComponentHasDeviatingUnitOfMeasure", [oOrderComponent.EINHEIT, oDataModel.getProperty("/unitOfMeasure")])
+						});
+						oSource.setValueState(sap.ui.core.ValueState.Error);
+					} else {
+						sComponentUnitOfMeasure = oOrderComponent.EINHEIT;
 					}
 
-				} catch (err) {
-					MessageBox.error(oBundle.getText("messageTextGoodsIssueError"), {
-						title: err
+					oDataModel.setProperty("/unitOfMeasure", sComponentUnitOfMeasure);
+
+					// update entry quantity by remaining open quantity, but only if users did not enter a quantity beforhand
+					if (this.getModel("view").getProperty("/type") === "nonLE" && (!oDataModel.getProperty("/entryQuantity") || oDataModel.getProperty("/entryQuantity") === "")) {
+						oDataModel.setProperty("/entryQuantity", oOrderComponent.BDMNG - oOrderComponent.ENMNG);
+						this.byId("quantityInput").setTooltip(this.getTranslation("goodsIssue.tooltip.remainingQuantity", [oOrderComponent.BDMNG - oOrderComponent.ENMNG, oOrderComponent.BDMNG, oOrderComponent.ENMNG]));
+					} else {
+						this.byId("quantityInput").setTooltip("");
+					}
+
+				} else {
+					this.addLogMessage({
+						text: this.getTranslation("goodsIssue.messageText.materialNotContaintedInOrderComponentList", [sMaterialNumber, sOrderNumber]),
+						type: sap.ui.core.MessageType.Warning
 					});
-				} finally {
-					this.updateViewControls(this.getModel("data").getData());
+					oSource.setValueState(sap.ui.core.ValueState.Warning);
 				}
+
 			}.bind(this);
 
 			fnReject = function(oError) {
 				MessageBox.error(oError.message, {
-					title: oError.statusText
+					title: this.getTranslation("error.miiTransactionErrorText", ["OrderComponentGet"])
 				});
 			}.bind(this);
 
@@ -295,6 +273,9 @@ sap.ui.define([
 				.then(fnResolve, fnReject)
 				.then(function() {
 					this.hideControlBusyIndicator(oSource);
+				}.bind(this))
+				.then(function() {
+					this.updateViewControls(this.getModel("data").getData());
 				}.bind(this));
 
 			return true;
@@ -305,57 +286,53 @@ sap.ui.define([
 		 */
 		onStorageUnitInputChange: function(oEvent) {
 			var oSource = oEvent.getSource(),
-				sStorageUnit = oEvent.getParameter("value"),
-				oBundle = this.getResourceBundle(),
+				sStorageUnitNumber = oEvent.getParameter("value"),
 				fnResolve,
 				fnReject;
 
-			sStorageUnit = this._padStorageUnitNumber(sStorageUnit);
-
-			oSource.setValueState(sap.ui.core.ValueState.None);
+			/* Prepare UI: busy, value states, log messages */
 			this.showControlBusyIndicator(oSource);
-
+			oSource.setValueState(sap.ui.core.ValueState.None);
 			this.clearLogMessages();
+
+			/* Prepare Data */
+			sStorageUnitNumber = this.padStorageUnitNumber(sStorageUnitNumber);
 
 			fnResolve = function(oData) {
 				var oStorageUnit,
-					aResultList,
-					bStorageUnitDataValid = true,
+					aRows = oData.d.results[0].Rowset.results[0].Row.results,
+					bStorageUnitValid = true,
 					bMergeData = true,
 					oExpirationDateFormatted,
 					oDataModel = this.getModel("data");
 
-				try {
+				aRows = oData.d.results[0].Rowset.results[0].Row.results;
 
-					aResultList = oData.d.results[0].Rowset.results[0].Row.results;
+				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
+				if (aRows.length === 1) {
+					oStorageUnit = this._formatStorageUnitData(aRows[0]);
 
-					if (aResultList.length === 1) {
-						oStorageUnit = this._formatStorageUnitData(oData.d.results[0].Rowset.results[0].Row.results[0]);
-						oSource.setValueState(sap.ui.core.ValueState.Success);
-					} else {
-						throw oBundle.getText("messageTitleStorageUnitNotFound");
+					oSource.setValueState(sap.ui.core.ValueState.Success);
+
+					if (this.formatter.isPastDate(oStorageUnit.VFDAT)) {
+						oExpirationDateFormatted = moment(oStorageUnit.VFDAT, "MM-DD-YYYY");
+						this.addLogMessage({
+							text: this.getTranslation("goodsIssue.messageText.storageUnitHasPastExpirationDate", [oStorageUnit.CHARG, oExpirationDateFormatted.format("L")]),
+							type: sap.ui.core.MessageType.Warning
+						});
+						oSource.setValueState(sap.ui.core.ValueState.Warning);
 					}
 
 					if (oStorageUnit.ISTME <= 0) {
+						this.addLogMessage({
+							text: this.getTranslation("goodsIssue.messageText.storageUnitIsEmpty", [sStorageUnitNumber])
+						});
 						oSource.setValueState(sap.ui.core.ValueState.Error);
-						this.addLogMessage({
-							text: oBundle.getText("messageTextStorageUnitIsEmpty", [sStorageUnit])
-						});
-						bStorageUnitDataValid = false;
-					}
-
-					if (this.formatter.isPastDate(oStorageUnit.VFDAT)) {
-						oSource.setValueState(sap.ui.core.ValueState.Warning);
-						oExpirationDateFormatted = moment(oStorageUnit.VFDAT, "MM-DD-YYYY");
-						this.addLogMessage({
-							text: oBundle.getText("messageTextStorageUnitHasPastExpirationDate", [oStorageUnit.CHARG, oExpirationDateFormatted.format("L")]),
-							type: sap.ui.core.MessageType.Warning
-						});
+						bStorageUnitValid = false;
 					}
 
 					// merge data from storage unit with main model
 					oDataModel.setData(oStorageUnit, bMergeData);
-
 					// map data from storage unit to main model if neccessary
 					oDataModel.setProperty("/storageUnit", oStorageUnit.LENUM);
 					oDataModel.setProperty("/storageLocation", oStorageUnit.LGORT);
@@ -367,81 +344,91 @@ sap.ui.define([
 						oDataModel.setProperty("/entryQuantity", oStorageUnit.ISTME);
 					}
 
-				} catch (err) {
-					MessageBox.error(oBundle.getText("messageTextStorageUnitNotFound", [sStorageUnit]), {
-						title: err
+				} else {
+					this.addLogMessage({
+						text: this.getTranslation("goodsIssue.messageText.storageUnitNotFound", [sStorageUnitNumber])
 					});
-					bStorageUnitDataValid = false;
-				} finally {
-					this.getModel("view").setProperty("/bStorageUnitValid", bStorageUnitDataValid);
-					this.updateViewControls(oDataModel.getData());
+					oSource.setValueState(sap.ui.core.ValueState.Error);
+					bStorageUnitValid = false;
 				}
+
+				this.getModel("view").setProperty("/bStorageUnitValid", bStorageUnitValid);
 
 			}.bind(this);
 
 			fnReject = function(oError) {
-				MessageBox.error(oBundle.getText("messageTextGoodsIssueError"));
+				MessageBox.error(oError.message, {
+					title: this.getTranslation("error.miiTransactionErrorText", ["StorageUnitNumberRead"])
+				});
 			}.bind(this);
 
-			this.requestStorageUnitInfoService(sStorageUnit)
+			/* Perform service call, Hide Busy Indicator, Update View Controls */
+			this.requestStorageUnitInfoService(sStorageUnitNumber)
 				.then(fnResolve, fnReject)
 				.then(function() {
 					this.hideControlBusyIndicator(oSource);
+				}.bind(this))
+				.then(function() {
+					this.updateViewControls(this.getModel("data").getData());
 				}.bind(this));
 		},
 
 		onOrderNumberInputChange: function(oEvent) {
 			var oSource = oEvent.getSource(),
 				sOrderNumber = oEvent.getParameter("value"),
-				oBundle = this.getResourceBundle(),
 				fnResolve,
 				fnReject;
 
+			/* Prepare UI: busy, value states, log messages */
+			this.showControlBusyIndicator(oSource);
 			oSource.setValueState(sap.ui.core.ValueState.None);
 			this.clearLogMessages();
-			this.showControlBusyIndicator(oSource);
 
+			/* Prepare Data */
 			// Order number could come like 1234567/0012 or 000001234567/001 -> need to clean it
-			sOrderNumber = this._cleanScannedOrderNumberString(sOrderNumber);
+			sOrderNumber = this.cleanScannedOrderNumberString(sOrderNumber);
 
 			fnResolve = function(oData) {
-				var aResultList,
-					oOrderHeader,
+				var oOrder,
+					aRows = oData.d.results[0].Rowset.results[0].Row.results,
+					bOrderNumberValid = true,
 					oModel = this.getModel("data");
 
-				aResultList = oData.d.results[0].Rowset.results[0].Row.results;
-
-				if (aResultList.length === 1) {
+				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
+				if (aRows.length === 1) {
+					oOrder = aRows[0];
 					oSource.setValueState(sap.ui.core.ValueState.Success);
-					this.getModel("view").setProperty("/bOrderNumberValid", true);
 
-					oOrderHeader = oData.d.results[0].Rowset.results[0].Row.results[0];
-
-					oModel.setProperty("/orderNumber", oOrderHeader.AUFNR);
+					oModel.setProperty("/orderNumber", oOrder.AUFNR);
 
 					this.validateComponentWithdrawal(oModel.getProperty("/orderNumber"), oModel.getProperty("/materialNumber"), oSource);
 
 				} else {
-					oSource.setValueState(sap.ui.core.ValueState.Error);
-					this.getModel("view").setProperty("/bOrderNumberValid", false);
-
 					this.addLogMessage({
-						text: oBundle.getText("messageTextGoodsIssueOrderNumberNotFoundError", [sOrderNumber])
+						text: this.getTranslation("goodsIssue.messageText.orderNumberNotFound", [sOrderNumber])
 					});
-
-					this.updateViewControls(this.getModel("data").getData());
+					oSource.setValueState(sap.ui.core.ValueState.Error);
+					bOrderNumberValid = false;
 				}
+
+				this.getModel("view").setProperty("/bOrderNumberValid", bOrderNumberValid);
 
 			}.bind(this);
 
 			fnReject = function(oError) {
-				MessageBox.error(oBundle.getText("messageTextGoodsIssueError"));
+				MessageBox.error(oError.message, {
+					title: this.getTranslation("error.miiTransactionErrorText", ["OrderHeaderNumberRead"])
+				});
 			}.bind(this);
 
+			/* Perform service call, Hide Busy Indicator, Update View Controls */
 			this.requestOrderHeaderInfoService(sOrderNumber)
 				.then(fnResolve, fnReject)
 				.then(function() {
 					this.hideControlBusyIndicator(oSource);
+				}.bind(this))
+				.then(function() {
+					this.updateViewControls(this.getModel("data").getData());
 				}.bind(this));
 
 		},
@@ -463,20 +450,18 @@ sap.ui.define([
 		},
 
 		onMaterialNumberInputChange: function(oEvent) {
-			var oModel = this.getModel("data"),
-				oSource = oEvent.getSource();
+			var oSource = oEvent.getSource(),
+				oModel = this.getModel("data");
 
 			this.validateComponentWithdrawal(oModel.getProperty("/orderNumber"), oModel.getProperty("/materialNumber"), oSource);
 		},
 
 		onStorageLocationInputChange: function(oEvent) {
-			var sStorageLocation = oEvent.getParameter("value")
-				.toUpperCase(),
-				oBundle = this.getResourceBundle(),
+			var sStorageLocation = oEvent.getParameter("value").toUpperCase(),
 				oDataModel = this.getModel("data");
 
 			if (!this.isStorageLocationAllowed(sStorageLocation)) {
-				MessageBox.error(oBundle.getText("messageTextWrongStorageLocation", [sStorageLocation]));
+				MessageBox.error(this.getTranslation("messageTextWrongStorageLocation", [sStorageLocation]));
 			} else {
 				oDataModel.setProperty("/storageLocation", sStorageLocation);
 			}
@@ -484,22 +469,9 @@ sap.ui.define([
 			this.updateViewControls(this.getModel("data").getData());
 		},
 
-		isInputDataValid: function(oData) {
-			switch (this.getModel("view").getProperty("/type")) {
-				case "withLE":
-					return !!oData.entryQuantity && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageUnit;
-				case "nonLE":
-					return !!oData.entryQuantity && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageLocation && !!oData.materialNumber;
-				default:
-					return false;
-			}
-		},
-
 		setPageTitle: function(sType) {
-			var oBundle = this.getResourceBundle(),
-				sTitleText = "titleGoodsIssue";
-
-			return oBundle.getText(sTitleText + (sType || ""));
+			var sTitleText = "titleGoodsIssue";
+			return this.getTranslation(sTitleText + (sType || ""));
 		}
 
 	});

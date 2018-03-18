@@ -57,7 +57,7 @@ Feature: Goods Issue without LE
 		Then I can see saveButton in action.GoodsIssue view
 		When I enter '1000001' into orderNumberInput in action.GoodsIssue view
 		Then I can see orderNumberInput with valueState 'Error' in action.GoodsIssue view
-	 	 And I can see messageStrip with text 'Achtung: Auftrag '1000001' existiert nicht!' in action.GoodsIssue view
+	 	Then I can see messageStrip with text starting with 'Prozessauftrag '1000001' nicht gefunden.' in action.GoodsIssue view
 	 	Then on the Goods Issue Page: I should see the save button is disabled
 	 	
 	Scenario: Should init data model and input fields if users clear form
@@ -96,3 +96,10 @@ Feature: Goods Issue without LE
 		 And I enter '1200666-006' into materialNumberInput in action.GoodsIssue view
 		Then I can see quantityInput with value '999,999' in action.GoodsIssue view
 		
+	Scenario: Should show success message if users post goods issue successfully
+		When I enter '1234567' into orderNumberInput in action.GoodsIssue view
+		 And I enter '1200666-006' into materialNumberInput in action.GoodsIssue view
+		 And I enter '10' into quantityInput in action.GoodsIssue view
+		 And I enter 'rb01' into storageLocationInput in action.GoodsIssue view
+		 And I click on saveButton in action.GoodsIssue view
+		Then I can see messageStrip with text 'Warenausgang zu Auftrag '1234567' wurde erfolgreich gebucht!' in action.GoodsIssue view

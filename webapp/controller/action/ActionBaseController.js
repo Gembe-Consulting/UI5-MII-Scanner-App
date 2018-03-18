@@ -334,11 +334,11 @@ sap.ui.define([
 			}
 		},
 
-		_cleanScannedOrderNumberString: function(sOrderNumberString) {
+		cleanScannedOrderNumberString: function(sOrderNumberString) {
 			return this.deleteLeadingZeros(sOrderNumberString).split("/")[0];
 		},
 
-		_padStorageUnitNumber: function(sStorageUnitNumber) {
+		padStorageUnitNumber: function(sStorageUnitNumber) {
 			return jQuery.sap.padLeft(sStorageUnitNumber, "0", 20);
 		},
 
