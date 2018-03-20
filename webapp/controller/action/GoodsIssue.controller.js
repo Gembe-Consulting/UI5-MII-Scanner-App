@@ -463,7 +463,7 @@ sap.ui.define([
 				oDataModel = this.getModel("data");
 
 			if (!this.isStorageLocationAllowed(sStorageLocation)) {
-				MessageBox.error(this.getTranslation("messageTextWrongStorageLocation", [sStorageLocation]));
+				MessageBox.error(this.getTranslation("goodsIssue.messageText.wrongStorageLocation", [sStorageLocation]));
 			} else {
 				oDataModel.setProperty("/storageLocation", sStorageLocation);
 			}

@@ -80,7 +80,7 @@
 					</Input>
 					<!-- LGORT -->
 					<Label text="{i18n>lableTextFormGoodsIssueStorageLocation}" labelFor="storageLocationInput"/>
-					<Input id="storageLocationInput" value="{path: 'data>/storageLocation', type:'.sapType.LGORT'}" change="onStorageLocationInputChange"
+					<Input id="storageLocationInput" value="{path: 'data>/storageLocation', type:'com.mii.scanner.model.type.StorageLocation', constraints:{'exludedStorageLocations':['VG01', '1000']}}" change="onStorageLocationInputChange"
 						visible="{=${view>/type}==='nonLE'}" maxLength="4" class="noScannerInput suwIncreadedInputFontSize">
 						<layoutData>
 							<l:GridData span="XL2 L2 M3 S5"/>

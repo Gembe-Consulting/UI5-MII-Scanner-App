@@ -1,8 +1,9 @@
 sap.ui.define([
 	"sap/ui/model/type/Float",
 	"sap/ui/model/type/Integer",
-	"sap/ui/model/type/String"
-], function(FloatType, IntegerType, StringType) {
+	"sap/ui/model/type/String",
+	"com/mii/scanner/model/type/StorageLocation"
+], function(FloatType, IntegerType, StringType, StorageLocationType) {
 	"use strict";
 
 	return {
@@ -21,10 +22,11 @@ sap.ui.define([
 			emptyString: null // defines what empty string is parsed as and what is formatted as empty string
 		}),
 
-		LGORT: new StringType(null, {
+		LGORT: new StorageLocationType(null, {
 			minLength: 4,
 			maxLength: 4,
-			search: "^((?!VG01|vg01).)*$"
+			exludedStorageLocations: ["VG01"]
+			//search: "^((?!VG01|vg01).)*$"
 		}),
 
 		AUFNR: new StringType(null, {
