@@ -29,6 +29,7 @@ Examples:
 ============================================================================================================
 
 ##[1.2.35.2018-03-18]
+
 [INTERNAL] (base controller): add utility function for event bus
 [INTERNAL] (base controller): add utility function for getting translations using parameters
 [INTERNAL] (base controller): change nav back
