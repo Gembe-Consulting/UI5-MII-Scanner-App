@@ -78,7 +78,7 @@
 				"type": "mii.util.model.illum.QueryTemplateModel",
 				"settings": {
 					"preventInitialLoad": true,
-					"preventParameterlessload": true
+					"preventParameterlessLoad": true
 				}
 			},
 			"storageUnit": {
@@ -87,7 +87,7 @@
 				"type": "mii.util.model.illum.QueryTemplateModel",
 				"settings": {
 					"preventInitialLoad": true,
-					"preventParameterlessload": true
+					"preventParameterlessLoad": true
 				}
 			},
 			"storageUnitCreate": {
@@ -96,7 +96,7 @@
 				"type": "mii.util.model.illum.QueryTemplateModel",
 				"settings": {
 					"preventInitialLoad": true,
-					"preventParameterlessload": true
+					"preventParameterlessLoad": true
 				}
 			},
 			"orderHeader": {
@@ -105,7 +105,7 @@
 				"type": "mii.util.model.illum.QueryTemplateModel",
 				"settings": {
 					"preventInitialLoad": true,
-					"preventParameterlessload": true
+					"preventParameterlessLoad": true
 				}
 			},
 			"orderComponent": {
@@ -114,7 +114,7 @@
 				"type": "mii.util.model.illum.QueryTemplateModel",
 				"settings": {
 					"preventInitialLoad": true,
-					"preventParameterlessload": true
+					"preventParameterlessLoad": true
 				}
 			},
 			"goodsMovement": {
@@ -123,7 +123,7 @@
 				"type": "mii.util.model.illum.QueryTemplateModel",
 				"settings": {
 					"preventInitialLoad": true,
-					"preventParameterlessload": true
+					"preventParameterlessLoad": true
 				}
 			},
 			"goodsMovementRollerConveyor": {
@@ -132,7 +132,7 @@
 				"type": "mii.util.model.illum.QueryTemplateModel",
 				"settings": {
 					"preventInitialLoad": true,
-					"preventParameterlessload": true
+					"preventParameterlessLoad": true
 				}
 			},
 			"currentProcessOrder": {
@@ -141,7 +141,7 @@
 				"type": "mii.util.model.illum.QueryTemplateModel",
 				"settings": {
 					"preventInitialLoad": true,
-					"preventParameterlessload": true
+					"preventParameterlessLoad": true
 				}
 			},
 			"storageBinList": {
@@ -150,7 +150,7 @@
 				"type": "mii.util.model.illum.QueryTemplateModel",
 				"settings": {
 					"preventInitialLoad": false,
-					"preventParameterlessload": false
+					"preventParameterlessLoad": false
 				}
 			}
 		},
