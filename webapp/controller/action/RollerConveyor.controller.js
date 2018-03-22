@@ -95,7 +95,7 @@ sap.ui.define([
 
 			// function to call on success of createStockTransfer
 			fnSuccess = function(oFinalData) {
-				that.addLogMessage({
+				that.addUserMessage({
 					text: that._buildSuccessMessage(oFinalData),
 					type: sap.ui.core.MessageType.Success
 				});
@@ -495,7 +495,7 @@ sap.ui.define([
 			// on last unit, set dummy storageUnit to hide info fragment and repair storage bin selection
 			if (this.formatter.isLastStorageUnit(sStorageUnitNumber)) {
 
-				this.addLogMessage({
+				this.addUserMessage({
 					text: oBundle.getText("rollerConveyor.messageText.lastStorageUnit"),
 					type: sap.ui.core.MessageType.Information
 				});
@@ -504,10 +504,7 @@ sap.ui.define([
 			}
 
 			sStorageUnitNumber = this.padStorageUnitNumber(sStorageUnitNumber);
-
 			this.showControlBusyIndicator(oSource);
-
-			this.clearLogMessages();
 
 			fnResolve = function(oData) {
 				var oStorageUnit,
@@ -523,7 +520,7 @@ sap.ui.define([
 						oSource.setValueState(sap.ui.core.ValueState.Success);
 						bStorageUnitValid = true;
 					} else {
-						this.addLogMessage({
+						this.addUserMessage({
 							text: oBundle.getText("rollerConveyor.messageText.storageUnitNotFound", [sStorageUnitNumber])
 						});
 						oSource.setValueState(sap.ui.core.ValueState.Error);

@@ -45,6 +45,7 @@
 						</layoutData>
 					</Input>
 					<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress"
+						visible="{path:'data>/ISTME', formatter:'.formatter.isEmptyStorageUnit'}"
 						size="{=${device>/system/desktop}===true ? ${device>/defaults/clearQuantityInputIcon/desktop/size} : ${device>/defaults/clearQuantityInputIcon/mobile/size}}"
 						width="{=${device>/system/desktop}===true ? ${device>/defaults/clearQuantityInputIcon/desktop/width} : ${device>/defaults/clearQuantityInputIcon/mobile/width}}"
 						height="{=${device>/system/desktop}===true ? ${device>/defaults/clearQuantityInputIcon/desktop/height} : ${device>/defaults/clearQuantityInputIcon/mobile/height}}"
