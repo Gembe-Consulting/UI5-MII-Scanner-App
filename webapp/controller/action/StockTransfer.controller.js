@@ -79,7 +79,7 @@ sap.ui.define([
 						sSuccessMessage = this.getTranslation("stockTransfer.messageText.postingSuccessfull", [oDataModel.getProperty("/storageUnit"), oDataModel.getProperty("/storageBin")]);
 					}
 
-					this.addLogMessage({
+					this.addUserMessage({
 						text: sSuccessMessage,
 						type: sap.ui.core.MessageType.Success
 					});
@@ -210,10 +210,14 @@ sap.ui.define([
 				fnResolve,
 				fnReject;
 
+			/* check if current input is valid */
+			if (this.controlHasValidationError(oSource)) {
+				return;
+			}
+
 			/* Prepare UI: busy, value states, log messages */
 			this.showControlBusyIndicator(oSource);
 			oSource.setValueState(sap.ui.core.ValueState.None);
-			this.clearLogMessages();
 
 			/* Prepare Data */
 			sStorageUnitNumber = this.padStorageUnitNumber(sStorageUnitNumber);
@@ -238,7 +242,7 @@ sap.ui.define([
 					}
 
 				} else {
-					this.addLogMessage({
+					this.addUserMessage({
 						text: this.getTranslation("stockTransfer.messageText.storageUnitNotFound", [sStorageUnitNumber]),
 						type: sap.ui.core.MessageType.Error
 					});

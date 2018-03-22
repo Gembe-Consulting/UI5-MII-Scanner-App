@@ -61,7 +61,7 @@ sap.ui.define([
 			fnResolve = function(oData) {
 				var oDataModel = this.getModel("data");
 
-				this.addLogMessage({
+				this.addUserMessage({
 					text: this.getTranslation("goodsIssue.messageText.goodsIssuePostingSuccessfull", [oDataModel.getProperty("/orderNumber")]),
 					type: sap.ui.core.MessageType.Success
 				});
@@ -213,7 +213,6 @@ sap.ui.define([
 			/* Prepare UI: busy, value states, log messages */
 			this.showControlBusyIndicator(oSource);
 			oSource.setValueState(sap.ui.core.ValueState.None);
-			this.clearLogMessages();
 
 			fnResolve = function(oData) {
 				var oOrderComponent,
@@ -227,7 +226,7 @@ sap.ui.define([
 					oSource.setValueState(sap.ui.core.ValueState.Success);
 
 					if (oOrderComponent.RGEKZ === "X") {
-						this.addLogMessage({
+						this.addUserMessage({
 							text: this.getTranslation("goodsIssue.messageText.materialBackflushedInOrderComponentList", [sMaterialNumber]),
 							type: sap.ui.core.MessageType.Warning
 						});
@@ -235,7 +234,7 @@ sap.ui.define([
 					}
 
 					if (oDataModel.getProperty("/unitOfMeasure") && oDataModel.getProperty("/unitOfMeasure") !== oOrderComponent.EINHEIT) {
-						this.addLogMessage({
+						this.addUserMessage({
 							text: this.getTranslation("goodsIssue.messageText.orderComponentHasDeviatingUnitOfMeasure", [oOrderComponent.EINHEIT, oDataModel.getProperty("/unitOfMeasure")])
 						});
 						oSource.setValueState(sap.ui.core.ValueState.Error);
@@ -254,7 +253,7 @@ sap.ui.define([
 					}
 
 				} else {
-					this.addLogMessage({
+					this.addUserMessage({
 						text: this.getTranslation("goodsIssue.messageText.materialNotContaintedInOrderComponentList", [sMaterialNumber, sOrderNumber]),
 						type: sap.ui.core.MessageType.Warning
 					});
@@ -290,10 +289,14 @@ sap.ui.define([
 				fnResolve,
 				fnReject;
 
+			/* check if current input is valid */
+			if (this.controlHasValidationError(oSource)) {
+				return;
+			}
+
 			/* Prepare UI: busy, value states, log messages */
 			this.showControlBusyIndicator(oSource);
 			oSource.setValueState(sap.ui.core.ValueState.None);
-			this.clearLogMessages();
 
 			/* Prepare Data */
 			sStorageUnitNumber = this.padStorageUnitNumber(sStorageUnitNumber);
@@ -318,7 +321,7 @@ sap.ui.define([
 
 					if (this.formatter.isPastDate(oStorageUnit.VFDAT)) {
 						oExpirationDateFormatted = moment(oStorageUnit.VFDAT, "MM-DD-YYYY");
-						this.addLogMessage({
+						this.addUserMessage({
 							text: this.getTranslation("goodsIssue.messageText.storageUnitHasPastExpirationDate", [oStorageUnit.CHARG, oExpirationDateFormatted.format("L")]),
 							type: sap.ui.core.MessageType.Warning
 						});
@@ -326,7 +329,7 @@ sap.ui.define([
 					}
 
 					if (oStorageUnit.ISTME <= 0) {
-						this.addLogMessage({
+						this.addUserMessage({
 							text: this.getTranslation("goodsIssue.messageText.storageUnitIsEmpty", [sStorageUnitNumber])
 						});
 						oSource.setValueState(sap.ui.core.ValueState.Error);
@@ -347,7 +350,7 @@ sap.ui.define([
 					}
 
 				} else {
-					this.addLogMessage({
+					this.addUserMessage({
 						text: this.getTranslation("goodsIssue.messageText.storageUnitNotFound", [sStorageUnitNumber])
 					});
 					oSource.setValueState(sap.ui.core.ValueState.Error);
@@ -381,10 +384,14 @@ sap.ui.define([
 				fnResolve,
 				fnReject;
 
+			/* check if current input is valid */
+			if (this.controlHasValidationError(oSource)) {
+				return;
+			}
+
 			/* Prepare UI: busy, value states, log messages */
 			this.showControlBusyIndicator(oSource);
 			oSource.setValueState(sap.ui.core.ValueState.None);
-			this.clearLogMessages();
 
 			/* Prepare Data */
 			// Order number could come like 1234567/0012 or 000001234567/001 -> need to clean it
@@ -406,7 +413,7 @@ sap.ui.define([
 					this.validateComponentWithdrawal(oModel.getProperty("/orderNumber"), oModel.getProperty("/materialNumber"), oSource);
 
 				} else {
-					this.addLogMessage({
+					this.addUserMessage({
 						text: this.getTranslation("goodsIssue.messageText.orderNumberNotFound", [sOrderNumber])
 					});
 					oSource.setValueState(sap.ui.core.ValueState.Error);
@@ -440,12 +447,13 @@ sap.ui.define([
 		},
 
 		onUnitOfMeasureInputChange: function(oEvent) {
-			var sUnitOfMeasure = oEvent.getParameter("value")
-				.toUpperCase(),
-				oSource = oEvent.getSource(),
+			var oSource = oEvent.getSource(),
 				oDataModel = this.getModel("data");
 
-			oDataModel.setProperty("/unitOfMeasure", sUnitOfMeasure);
+			/* check if current input is valid */
+			if (this.controlHasValidationError(oSource)) {
+				return;
+			}
 
 			this.validateComponentWithdrawal(oDataModel.getProperty("/orderNumber"), oDataModel.getProperty("/materialNumber"), oSource);
 
@@ -455,17 +463,19 @@ sap.ui.define([
 			var oSource = oEvent.getSource(),
 				oModel = this.getModel("data");
 
+			/* check if current input is valid */
+			if (this.controlHasValidationError(oSource)) {
+				return;
+			}
+
 			this.validateComponentWithdrawal(oModel.getProperty("/orderNumber"), oModel.getProperty("/materialNumber"), oSource);
 		},
 
 		onStorageLocationInputChange: function(oEvent) {
-			var sStorageLocation = oEvent.getParameter("value").toUpperCase(),
-				oDataModel = this.getModel("data");
+			var sStorageLocation = oEvent.getParameter("value");
 
 			if (!this.isStorageLocationAllowed(sStorageLocation)) {
 				MessageBox.error(this.getTranslation("goodsIssue.messageText.wrongStorageLocation", [sStorageLocation]));
-			} else {
-				oDataModel.setProperty("/storageLocation", sStorageLocation);
 			}
 
 			this.updateViewControls(this.getModel("data").getData());

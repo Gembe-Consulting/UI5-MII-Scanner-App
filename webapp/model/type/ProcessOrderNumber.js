@@ -2,23 +2,23 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/type/String', 'sap/ui/model/Fo
 	function(jQuery, StringType, FormatException, ParseException, ValidateException) {
 		"use strict";
 		/**
-		 * Constructor for a Storage Location type.
+		 * Constructor for a Unit of Measure.
 		 *
 		 * @class
 		 * This class represents SAP Storage Location types.
 		 *
 		 */
-		var StorageLocationType = StringType.extend("com.mii.scanner.model.type.StorageLocation", {
+		var ProcessOrderNumberType = StringType.extend("com.mii.scanner.model.type.ProcessOrderNumber", {
 
 			//constructor : function(oFormatOptions, oConstraints)
 			constructor: function() {
 				StringType.apply(this, arguments);
-				this.sName = "StorageLocation";
+				this.sName = "ProcessOrderNumber";
 			}
 
 		});
 
-		StorageLocationType.prototype.formatValue = function(sValue, sInternalType) {
+		ProcessOrderNumberType.prototype.formatValue = function(sValue, sInternalType) {
 			var oValue = StringType.prototype.formatValue.apply(this, arguments);
 
 			if (oValue && oValue.length === 0) {
@@ -28,32 +28,27 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/type/String', 'sap/ui/model/Fo
 			return sValue;
 		};
 
-		StorageLocationType.prototype.parseValue = function(oValue, sInternalType) {
+		ProcessOrderNumberType.prototype.parseValue = function(oValue, sInternalType) {
 			var sValue = StringType.prototype.parseValue.apply(this, arguments);
 
-			if (this.oFormatOptions && this.oFormatOptions.toUpperCase) {
-				sValue = sValue.toUpperCase();
+			sValue = sValue.replace(/^0+/, "");
+
+			if (sValue.length === 0) {
+				return this.oFormatOptions.emptyString;
 			}
 
 			return sValue;
 		};
 
-		StorageLocationType.prototype.validateValue = function(sValue) {
+		ProcessOrderNumberType.prototype.validateValue = function(sValue) {
 			StringType.prototype.validateValue.apply(this, arguments);
 
 			var aViolatedConstraints = [],
 				aMessages = [];
 
-			if (this.oConstraints && this.oConstraints.exludedStorageLocations) {
-				if (typeof this.oConstraints.exludedStorageLocations === "string") {
-					this.oConstraints.exludedStorageLocations = [this.oConstraints.exludedStorageLocations];
-				}
-
-				if (this.oConstraints.exludedStorageLocations.includes(sValue)) {
-					aViolatedConstraints.push("exludedStorageLocations");
-					aMessages.push("Lagerort '" + sValue + "' ist nicht erlaubt");
-				}
-
+			if (!jQuery.isNumeric(sValue)) {
+				aViolatedConstraints.push("isNumeric");
+				aMessages.push("Auftragsnummer '" + sValue + "' ist nicht gültig");
 			}
 
 			if (aViolatedConstraints.length > 0) {
@@ -61,5 +56,5 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/type/String', 'sap/ui/model/Fo
 			}
 		};
 
-		return StorageLocationType;
+		return ProcessOrderNumberType;
 	});

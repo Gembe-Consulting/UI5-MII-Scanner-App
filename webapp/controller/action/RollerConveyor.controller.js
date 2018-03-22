@@ -481,6 +481,11 @@ sap.ui.define([
 				fnResolve,
 				fnReject;
 
+			/* check if current input is valid */
+			if (this.controlHasValidationError(oSource)) {
+				return false;
+			}
+
 			oSource.setValueState(sap.ui.core.ValueState.None);
 
 			if (!sStorageUnitNumber) {

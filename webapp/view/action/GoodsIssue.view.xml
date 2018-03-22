@@ -33,9 +33,10 @@
 				labelSpanL="4" labelSpanM="3" labelSpanS="12" emptySpanXL="4" emptySpanL="3" emptySpanM="2" emptySpanS="0">
 				<f:content>
 					<!-- LENUM -->
-					<Label text="{i18n>lableTextFormGoodsIssueStorageUnit}" labelFor="storageUnitInput"/>
-					<Input id="storageUnitInput" value="{data>/storageUnit}" change="onStorageUnitInputChange" valueState="{view>/storageUnitNumberValueState}"
-						visible="{=${view>/type}!=='nonLE'}" maxLength="20" class="noScannerInput suwIncreadedInputFontSize">
+					<Label text="{i18n>lableTextFormGoodsIssueStorageUnit}" labelFor="storageUnitInput" required="true"/>
+					<Input id="storageUnitInput" value="{path: 'data>/storageUnit', type:'.sapType.LENUM'}" change="onStorageUnitInputChange"
+						valueState="{view>/storageUnitNumberValueState}" visible="{=${view>/type}!=='nonLE'}" maxLength="20"
+						class="noScannerInput suwIncreadedInputFontSize">
 						<layoutData>
 							<l:GridData span="XL4 L4 M6 S12"/>
 						</layoutData>
@@ -58,30 +59,34 @@
 						</layoutData>
 					</Input>
 					<!-- QUAN, UOM -->
-					<Label text="{i18n>lableTextFormGoodsIssueQuantity}, {i18n>lableTextFormGoodsIssueUnitOfMeasureShort}" labelFor="quantityInput"/>
+					<Label text="{i18n>lableTextFormGoodsIssueQuantity}, {i18n>lableTextFormGoodsIssueUnitOfMeasureShort}" labelFor="quantityInput"
+						required="true"/>
 					<Input id="quantityInput" textAlign="End" change="onQuantityInputChange" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}"
-						class="suwIncreadedInputFontSize">
+						class="suwIncreadedInputFontSize" required="true">
 						<layoutData>
 							<l:GridData span="XL2 L2 M4 S7"/>
 						</layoutData>
 					</Input>
 					<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress"
-						size="{=${device>/system/desktop}===true ? '1.25rem' : '1.75rem'}" width="{=${device>/system/desktop}===true ? '1.25rem' : '1.75rem'}"
-						height="{=${device>/system/desktop}===true ? '2.00rem' : '2.75rem'}" class="sapUiSmallMarginEnd">
+						size="{=${device>/system/desktop}===true ? ${device>/defaults/clearQuantityInputIcon/desktop/size} : ${device>/defaults/clearQuantityInputIcon/mobile/size}}"
+						width="{=${device>/system/desktop}===true ? ${device>/defaults/clearQuantityInputIcon/desktop/width} : ${device>/defaults/clearQuantityInputIcon/mobile/width}}"
+						height="{=${device>/system/desktop}===true ? ${device>/defaults/clearQuantityInputIcon/desktop/height} : ${device>/defaults/clearQuantityInputIcon/mobile/height}}"
+						alt="CLEAR" class="sapUiSmallMarginEnd">
 						<c:layoutData>
 							<l:GridData span="XL1 L1 M1 S2"/>
 						</c:layoutData>
 					</c:Icon>
 					<Input id="unitOfMeasureInput" value="{path: 'data>/unitOfMeasure', type:'.sapType.MEINS'}" change="onUnitOfMeasureInputChange"
-						editable="{=${view>/type}==='nonLE'}" maxLength="4" class="suwIncreadedInputFontSize">
+						editable="{=${view>/type}==='nonLE'}" maxLength="4" class="suwIncreadedInputFontSize" required="true">
 						<layoutData>
 							<l:GridData span="XL1 L1 M1 S3"/>
 						</layoutData>
 					</Input>
 					<!-- LGORT -->
 					<Label text="{i18n>lableTextFormGoodsIssueStorageLocation}" labelFor="storageLocationInput"/>
-					<Input id="storageLocationInput" value="{path: 'data>/storageLocation', type:'com.mii.scanner.model.type.StorageLocation', constraints:{'exludedStorageLocations':['VG01', '1000']}}" change="onStorageLocationInputChange"
-						visible="{=${view>/type}==='nonLE'}" maxLength="4" class="noScannerInput suwIncreadedInputFontSize">
+					<Input id="storageLocationInput"
+						value="{path: 'data>/storageLocation', type:'.sapType.LGORT', constraints:{'exludedStorageLocations':['VG01', '1000']}}"
+						change="onStorageLocationInputChange" visible="{=${view>/type}==='nonLE'}" maxLength="4" class="noScannerInput suwIncreadedInputFontSize">
 						<layoutData>
 							<l:GridData span="XL2 L2 M3 S5"/>
 						</layoutData>
