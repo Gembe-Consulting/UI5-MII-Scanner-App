@@ -69,8 +69,8 @@ Feature: Roller Conveyor
 		 And I click on 4th item of storageBinSelection items in action.RollerConveyor view
 		Then I can see storageUnitInput with valueState 'Success' in action.RollerConveyor view
 		 And I can see storageBinSelection with valueState 'Success' in action.RollerConveyor view
-		 And I can see messageStrip with text 'Letzte Palette!' in action.RollerConveyor view
-		 And I can see messageStrip with type 'Information' in action.RollerConveyor view
+		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Letzte Palette!' in action.RollerConveyor view
+		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Information' in action.RollerConveyor view
 		 And I can see unitOfMeasureInput with value 'ST' in action.RollerConveyor view
 		Then I can see saveButton in action.RollerConveyor view
 	
@@ -137,8 +137,8 @@ Feature: Roller Conveyor
 		When I enter '100,123' into quantityInput in action.RollerConveyor view
 		 And I enter 'KG' into unitOfMeasureInput in action.RollerConveyor view
 		 And I click on saveButton in action.RollerConveyor view
-		Then I can see messageStrip with text 'Letzte Palette '900248110' erfolgreich von BEUMER an Rollenbahn gemeldet' in action.RollerConveyor view
-		 And I can see messageStrip with type 'Success' in action.RollerConveyor view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Letzte Palette '900248110' erfolgreich von BEUMER an Rollenbahn gemeldet' in action.RollerConveyor view
+		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Success' in action.RollerConveyor view
 
 	@lastUnit @emptyLE @Palettierer PALE: "00253110"
 	Scenario: When entering last unit, and when selecting Palettierer, then you should find process order, and then post 555, and then post 999
@@ -152,8 +152,8 @@ Feature: Roller Conveyor
 		When I enter '321,456' into quantityInput in action.RollerConveyor view
 		 And I enter 'KG' into unitOfMeasureInput in action.RollerConveyor view
 		 And I click on saveButton in action.RollerConveyor view
-		Then I can see messageStrip with text 'Letzte Palette '900253110' erfolgreich von PALETTIERER an Rollenbahn gemeldet' in action.RollerConveyor view
-		 And I can see messageStrip with type 'Success' in action.RollerConveyor view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Letzte Palette '900253110' erfolgreich von PALETTIERER an Rollenbahn gemeldet' in action.RollerConveyor view
+		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Success' in action.RollerConveyor view
 		 
 	@currentUnit @emptyLE
 	Scenario: When entering current unit with stock quantity = 0 (empty), then you should post 101, then you should post 999
@@ -163,8 +163,8 @@ Feature: Roller Conveyor
 		 And I press ARROW_DOWN + ALT at storageBinSelection in action.RollerConveyor view
 		 And I click on first item of storageBinSelection items in action.RollerConveyor view
 		 And I click on saveButton in action.RollerConveyor view
-		Then I can see messageStrip with text 'Palette '109330000015' erfolgreich eingebucht und von ROLLTOR an Rollenbahn gemeldet' in action.RollerConveyor view
-		 And I can see messageStrip with type 'Success' in action.RollerConveyor view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Palette '109330000015' erfolgreich eingebucht und von ROLLTOR an Rollenbahn gemeldet' in action.RollerConveyor view
+		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Success' in action.RollerConveyor view
 		 
 	@currentUnit @fullLE
 	Scenario: When entering current unit with stock quantity > 0 (full), then you should post 999
@@ -172,5 +172,26 @@ Feature: Roller Conveyor
 		 And I press ARROW_DOWN + ALT at storageBinSelection in action.RollerConveyor view
 		 And I click on 3rd item of storageBinSelection items in action.RollerConveyor view
 		 And I click on saveButton in action.RollerConveyor view
-		Then I can see messageStrip with text 'Palette '109330000016' erfolgreich von STAPLER an Rollenbahn gemeldet' in action.RollerConveyor view
-		 And I can see messageStrip with type 'Success' in action.RollerConveyor view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Palette '109330000016' erfolgreich von STAPLER an Rollenbahn gemeldet' in action.RollerConveyor view
+		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Success' in action.RollerConveyor view
+	
+	@currentUnit @emptyLE
+	Scenario: Should successfully post stock transfer, despite goods receipt posting returning error ZMII_MESSAGES 030-034
+		When I enter '00000000109330000013' into storageUnitInput in action.RollerConveyor view
+		 And I press ARROW_DOWN + ALT at storageBinSelection in action.RollerConveyor view
+		 And I click on first item of storageBinSelection items in action.RollerConveyor view
+		 And I enter '100,000' into quantityInput in action.RollerConveyor view
+		 And I enter 'KG' into unitOfMeasureInput in action.RollerConveyor view
+		 And I click on saveButton in action.RollerConveyor view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Wareneingang von Palette '109330000013' und Umlagerung nach Lagerplatz 'PRODUKTION' wurde erfolgreich gebucht!' in action.RollerConveyor view
+		 And I can see the last sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Retr.Buchung: BWART 261 mit Material 123456-789 und Auftrag 1093300 fehlgeschlagen.' in action.RollerConveyor view
+		 
+	@lastUnit @emptyLE @Palettierer PALE: "00253110"
+	Scenario: Should successfully post stock transfer, despite goods receipt posting returning error ZMII_MESSAGES 030-034
+		When I enter '90025311000000000000' into storageUnitInput in action.RollerConveyor view
+		 And I enter '75,000' into quantityInput in action.RollerConveyor view
+		 And I enter 'KG' into unitOfMeasureInput in action.RollerConveyor view
+		 And I click on saveButton in action.RollerConveyor view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Wareneingang von Palette '109330000013' und Umlagerung nach Lagerplatz 'PRODUKTION' wurde erfolgreich gebucht!' in action.RollerConveyor view
+		 And I can see the last sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Retr.Buchung: BWART 261 mit Material 123456-789 und Auftrag 1093300 fehlgeschlagen.' in action.RollerConveyor view
+		 
