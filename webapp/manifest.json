@@ -48,18 +48,21 @@
 			"id": "rootView"
 		},
 		"dependencies": {
-			"minUI5Version": "1.42.0",
+			"minUI5Version": "1.52.0",
 			"libs": {
 				"sap.m": {
-					"minVersion": "1.42.0"
+					"minVersion": "1.52.0"
 				},
 				"sap.ui.core": {
-					"minVersion": "1.42.0"
+					"minVersion": "1.52.0"
 				},
 				"sap.ui.layout": {
-					"minVersion": "1.42.0"
+					"minVersion": "1.52.0"
 				}
 			}
+		},
+		"resourceRoots": {
+			"mii.util": "../ui5miiutilities/mii/util/"
 		},
 		"contentDensities": {
 			"compact": true,
