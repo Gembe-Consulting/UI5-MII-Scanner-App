@@ -18,6 +18,7 @@
 		}
 	},
 	"sap.ui": {
+		"embeddedBy": "../",
 		"_version": "1.4.0",
 		"technology": "UI5",
 		"fullWidth": true,
@@ -60,9 +61,6 @@
 					"minVersion": "1.52.0"
 				}
 			}
-		},
-		"resourceRoots": {
-			"mii.util": "../ui5miiutilities/mii/util/"
 		},
 		"contentDensities": {
 			"compact": true,

@@ -1,3 +1,5 @@
+jQuery.sap.registerModulePath("mii.util", "../../ui5miiutilities/mii/util/");
+
 sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
@@ -37,6 +39,7 @@ sap.ui.define([
 
 			this.setupRouting();
 
+			this.evaluateExternalCallingComponent();
 		},
 
 		/**
@@ -170,6 +173,31 @@ sap.ui.define([
 			this.getRouter().attachTitleChanged(function(oEvent) {
 				document.title = oEvent.getParameter("title");
 			});
+		},
+
+		evaluateExternalCallingComponent: function() {
+			var sExternalHash = this._setHashFromLocalStorage();
+
+			if (sExternalHash) {
+				this._setModelFromLocalStorage();
+			}
+
+		},
+
+		_setModelFromLocalStorage: function() {
+			this._externalCaller = true;
+		},
+
+		_setHashFromLocalStorage: function() {
+			jQuery.sap.require("jquery.sap.storage");
+			var oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local),
+				sHash = oStorage.get("HASH");
+
+			if (sHash) {
+				this.getRouter().parse(sHash);
+			}
+
+			return sHash;
 		},
 
 		/**
