@@ -5,8 +5,9 @@ sap.ui.define([
 	"sap/m/MessageStrip",
 	"sap/m/MessagePopover",
 	"sap/m/MessageItem",
+	"sap/ui/core/message/Message",
 	"com/mii/scanner/model/formatter"
-], function(PageBaseController, MessageBox, MessageToast, MessageStrip, MessagePopover, MessageItem, formatter) {
+], function(PageBaseController, MessageBox, MessageToast, MessageStrip, MessagePopover, MessageItem, Message, formatter) {
 	"use strict";
 
 	return PageBaseController.extend("com.mii.scanner.controller.action.ActionBaseController", {
@@ -430,7 +431,19 @@ sap.ui.define([
 		 * Removes validation error messages from the previous step
 		 */
 		removeAllMessageManagerMessages: function() {
-			sap.ui.getCore().getMessageManager().removeAllMessages();
+			this._oMessageManager.removeAllMessages();
+		},
+		/**
+		 * Adds a message to the message manager
+		 */
+		addMessageManagerMessage: function(oMessage) {
+			var oNewMessage = new Message({
+				message: oMessage.message || oMessage,
+				description: oMessage.description,
+				type: oMessage.type || sap.ui.core.MessageType.Information
+			});
+
+			this._oMessageManager.addMessages(oNewMessage);
 		}
 	});
 

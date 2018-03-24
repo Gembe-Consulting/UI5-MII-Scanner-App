@@ -29,6 +29,7 @@ sap.ui.define([
 						sQueryTemplateName = sQueryTemplatePath.substr(sQueryTemplatePath.lastIndexOf("/") + 1),
 						oUriParameters = jQuery.sap.getUriParameters(),
 						sErrorServiceName = oUriParameters.get("errorServiceName"),
+						sErrorServiceMessage = oUriParameters.get("errorServiceMessage"),
 						sErrorServiceType = oUriParameters.get("errorServiceType"),
 						bErrorState = sErrorServiceName === sQueryTemplateName,
 						oResponse,
@@ -46,11 +47,11 @@ sap.ui.define([
 					if (bErrorState && sErrorServiceType === "emptyRequest") {
 						oResponse = jQuery.sap.syncGetJSON(sJsonFilesUrl + "/" + "_EmptyRowsetResultError.json");
 					} else if (bErrorState && sErrorServiceType === "fatalError") {
-						oResponse = jQuery.sap.syncGetJSON(sJsonFilesUrl + "/" + "_FatalError.json");
+						oResponse = jQuery.sap.syncGetJSON(sJsonFilesUrl + "/" + sErrorServiceName + "_FatalError.json");
+						oResponse.data.d.results["0"].FatalError = sErrorServiceMessage;
 					} else {
 						oResponse = jQuery.sap.syncGetJSON(sJsonFilesUrl + "/" + sQueryTemplateName + ".json", {
-							"_": new Date()
-								.getTime()
+							"_": new Date().getTime()
 						});
 					}
 

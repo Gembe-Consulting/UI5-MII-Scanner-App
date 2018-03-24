@@ -174,24 +174,4 @@ Feature: Roller Conveyor
 		 And I click on saveButton in action.RollerConveyor view
 		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Palette '109330000016' erfolgreich von STAPLER an Rollenbahn gemeldet' in action.RollerConveyor view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Success' in action.RollerConveyor view
-	
-	@currentUnit @emptyLE
-	Scenario: Should successfully post stock transfer, despite goods receipt posting returning error ZMII_MESSAGES 030-034
-		When I enter '00000000109330000013' into storageUnitInput in action.RollerConveyor view
-		 And I press ARROW_DOWN + ALT at storageBinSelection in action.RollerConveyor view
-		 And I click on first item of storageBinSelection items in action.RollerConveyor view
-		 And I enter '100,000' into quantityInput in action.RollerConveyor view
-		 And I enter 'KG' into unitOfMeasureInput in action.RollerConveyor view
-		 And I click on saveButton in action.RollerConveyor view
-		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Wareneingang von Palette '109330000013' und Umlagerung nach Lagerplatz 'PRODUKTION' wurde erfolgreich gebucht!' in action.RollerConveyor view
-		 And I can see the last sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Retr.Buchung: BWART 261 mit Material 123456-789 und Auftrag 1093300 fehlgeschlagen.' in action.RollerConveyor view
-		 
-	@lastUnit @emptyLE @Palettierer PALE: "00253110"
-	Scenario: Should successfully post stock transfer, despite goods receipt posting returning error ZMII_MESSAGES 030-034
-		When I enter '90025311000000000000' into storageUnitInput in action.RollerConveyor view
-		 And I enter '75,000' into quantityInput in action.RollerConveyor view
-		 And I enter 'KG' into unitOfMeasureInput in action.RollerConveyor view
-		 And I click on saveButton in action.RollerConveyor view
-		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Wareneingang von Palette '109330000013' und Umlagerung nach Lagerplatz 'PRODUKTION' wurde erfolgreich gebucht!' in action.RollerConveyor view
-		 And I can see the last sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Retr.Buchung: BWART 261 mit Material 123456-789 und Auftrag 1093300 fehlgeschlagen.' in action.RollerConveyor view
 		 

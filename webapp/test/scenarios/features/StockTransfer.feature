@@ -125,12 +125,3 @@ Feature: Stock Transfer
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Success' in action.StockTransfer view
 		 And I can see storageUnitInput with value '' in action.StockTransfer view
 		 And I can see storageBinSelection with value '' in action.StockTransfer view
-		 
-	Scenario: Should successfully post stock transfer, despite goods receipt posting returning error ZMII_MESSAGES 030-034
-		When I enter '00000000109330000013' into storageUnitInput in action.StockTransfer view
-		 And I press ARROW_DOWN + ALT at storageBinSelection in action.StockTransfer view
-		 And I click on 4th item of storageBinSelection items in action.StockTransfer view
-		 And I enter '300,000' into quantityInput in action.StockTransfer view
-		 And I click on saveButton in action.StockTransfer view
-		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Wareneingang von Palette '109330000013' und Umlagerung nach Lagerplatz 'PRODUKTION' wurde erfolgreich gebucht!' in action.StockTransfer view
-		 And I can see the last sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Retr.Buchung: BWART 261 mit Material 123456-789 und Auftrag 1093300 fehlgeschlagen.' in action.StockTransfer view

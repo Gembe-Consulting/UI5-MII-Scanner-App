@@ -2,15 +2,18 @@ sap.ui.define([
 	"./ActionBaseController",
 	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox",
+	"sap/ui/core/message/Message",
 	"com/mii/scanner/model/sapType",
 	"com/mii/scanner/model/formatter"
-], function(ActionBaseController, JSONModel, MessageBox, sapType, formatter) {
+], function(ActionBaseController, JSONModel, MessageBox, Message, sapType, formatter) {
 	"use strict";
 
 	return ActionBaseController.extend("com.mii.scanner.controller.action.RollerConveyor", {
 
 		sapType: sapType,
 		formatter: formatter,
+
+		_aWarningLikeFatalError: ["EZMII_MESSAGES030:", "EZMII_MESSAGES031:", "EZMII_MESSAGES032:", "EZMII_MESSAGES033:", "EZMII_MESSAGES034:"],
 
 		mapStorageBinToRessource: [{
 			BEUM: "00248110"
@@ -64,9 +67,6 @@ sap.ui.define([
 
 			this.getOwnerComponent().showBusyIndicator();
 
-			// prepare messages array -> debugging only
-			oData.messages = [];
-
 			//prepare some control data
 			oData.bIsLastUnit = this.formatter.isLastStorageUnit(oDataModel.getProperty("/storageUnit"));
 			oData.bIsEmptyUnit = this.formatter.isEmptyStorageUnit(oDataModel.getProperty("/ISTME"));
@@ -76,18 +76,18 @@ sap.ui.define([
 			// Ist die LE leer, muss zunächst der Wareneingang mit BwA 101 gebucht werden, danach erfolgt die Umbuchung auf die Rollenbahn.
 			// Ist die LE voll, muss nur die Umbuchung auf die Rollenbahn erfolgen.
 			if (oData.bIsLastUnit) { // considering bIsEmptyUnit is always true if bIsLastUnit is true
-				oData.messages.push("Letzte Palette");
+				this.addMessageManagerMessage("Letzte Palette");
 
 				doPosting = this._findRunningProcessOrder(oData) // PA Findung
 					.then(this._createGoodsReceiptRollerConveyor.bind(this)); //Speziel-WE mit BwA 555
 
 			} else if (oData.bIsEmptyUnit) {
-				oData.messages.push("Laufende Palette");
+				this.addMessageManagerMessage("Laufende Palette mit WE");
 
 				doPosting = this._createGoodsReceipt(oData); //Normal-WE mit BwA 101
 
 			} else {
-				oData.messages.push("Laufende Palette");
+				this.addMessageManagerMessage("Laufende Palette ohne WE");
 
 				doPosting = Promise.resolve(oData);
 
@@ -98,13 +98,16 @@ sap.ui.define([
 				that.addUserMessage({
 					text: that._buildSuccessMessage(oFinalData),
 					type: sap.ui.core.MessageType.Success
-				});
+				}, true /* keep existing */ );
 			};
 
 			// function to call on error of createStockTransfer or on any pre-chained promise
 			fnError = function(oError) {
 				MessageBox.error(oError.message, {
 					title: oError.name + oBundle.getText("error.miiTransactionErrorText", [oError.serviceName])
+				});
+				that.addUserMessage({
+					text: oError.message
 				});
 			};
 
@@ -113,7 +116,6 @@ sap.ui.define([
 				.then(this.getOwnerComponent().hideBusyIndicator)
 				.then(function() {
 					that.onClearFormPress({}, true /*bKeepMessageStrip*/ );
-					jQuery.sap.log.debug(oData.messages.join("\n"), "", that.toString());
 				});
 		},
 
@@ -141,7 +143,7 @@ sap.ui.define([
 				fnResolve,
 				fnReject;
 
-			oData.messages.push("Normal-Wareneingang mit echt BwA 101");
+			this.addMessageManagerMessage("Starte Normal-Wareneingang mit echt BwA 101...");
 
 			oParam = {
 				"Param.1": oDataModel.getProperty(sPath + "storageUnit"),
@@ -155,36 +157,46 @@ sap.ui.define([
 			sendGoodsReceiptPromise = oGoodsReceiptModel.loadMiiData(oGoodsReceiptModel._sServiceUrl, oParam);
 
 			fnResolve = function(oIllumData) {
-				var oResult = oIllumData.d.results["0"],
-					oRow;
+				var oRow,
+					aRows,
+					bHasWarningLikeError;
 
-				if (oResult.FatalError) {
-					throw new Error(oResult.FatalError);
-				}
-
-				if (oResult.Messages.results) {
-					oResult.Messages.results.forEach(function(msg) {
-						oData.messages.push(msg.Message);
+				if (!oIllumData.success) {
+					bHasWarningLikeError = this._aWarningLikeFatalError.some(function(sMessage) {
+						return oIllumData.lastErrorMessage.includes(sMessage);
 					});
+
+					if (bHasWarningLikeError) {
+						this.addUserMessage({
+							text: oIllumData.lastErrorMessage.substring(19, oIllumData.lastErrorMessage.length),
+							type: sap.ui.core.MessageType.Warning
+						});
+					} else {
+						throw new Error(oIllumData.lastErrorMessage + " @BwA 101");
+					}
 				}
 
-				if (oResult.Rowset.results["0"].Row.results.length === 1) {
-					oRow = oResult.Rowset.results["0"].Row.results["0"];
+				aRows = oIllumData.d.results[0].Rowset.results[0].Row.results;
+
+				/* Check if oIllumData contains required results: extract value, evaluate value, set UI, set model data */
+				if (aRows.length === 1) {
+					oRow = aRows[0];
 					oData.storageUnit = oRow.LENUM;
-					oData.messages.push("Lagereinheit " + oRow.LENUM + " gebucht.");
 				} else {
 					throw new Error("Die Transaktion hat keine LE zurückgegeben.");
 				}
 
-				oData.messages.push("Lagereinheit " + oRow.LENUM + " gebucht.");
+				this.addMessageManagerMessage("Wareneingang für Palette " + oRow.LENUM + " erfolgreich.");
 
 				return oData;
+
 			}.bind(this);
 
 			fnReject = function(oError) {
 				MessageBox.error(oError.message, {
 					title: oError.name
 				});
+				throw oError; //re-throw
 			}.bind(this);
 
 			return sendGoodsReceiptPromise.then(fnResolve, fnReject);
@@ -211,7 +223,7 @@ sap.ui.define([
 				oParam,
 				fnResolve, fnReject;
 
-			oData.messages.push("Spezial-Wareneingang mit pseudo BwA 555");
+			this.addMessageManagerMessage("Starte Spezial-Wareneingang mit pseudo BwA 555...");
 
 			oParam = {
 				"Param.1": oDataModel.getProperty(sPath + "orderNumber"),
@@ -221,26 +233,37 @@ sap.ui.define([
 			};
 
 			fnResolve = function(oIllumData) {
-				var oResult = oIllumData.d.results["0"],
-					oRow;
+				var oRow,
+					aRows,
+					bHasWarningLikeError;
 
-				if (oResult.FatalError) {
-					throw new Error(oResult.FatalError);
-				}
+				if (!oIllumData.success) {
 
-				if (oResult.Messages.results) {
-					oResult.Messages.results.forEach(function(msg) {
-						oData.messages.push(msg.Message);
+					bHasWarningLikeError = this._aWarningLikeFatalError.some(function(sMessage) {
+						return oIllumData.lastErrorMessage.includes(sMessage);
 					});
+
+					if (bHasWarningLikeError) {
+						this.addUserMessage({
+							text: oIllumData.lastErrorMessage.substring(19, oIllumData.lastErrorMessage.length),
+							type: sap.ui.core.MessageType.Warning
+						});
+					} else {
+						throw new Error(oIllumData.lastErrorMessage + " @BwA 555");
+					}
 				}
 
-				if (oResult.Rowset.results["0"].Row.results.length === 1) {
-					oRow = oResult.Rowset.results["0"].Row.results["0"];
+				aRows = oIllumData.d.results[0].Rowset.results[0].Row.results;
+
+				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
+				if (aRows.length === 1) {
+					oRow = aRows[0];
 					oData.storageUnit = oRow.LENUM;
-					oData.messages.push("Lagereinheit " + oRow.LENUM + " gebucht.");
 				} else {
 					throw new Error("Die Transaktion hat keine LE zurückgegeben.");
 				}
+
+				this.addMessageManagerMessage("Wareneingang für Palette " + oRow.LENUM + " erfolgreich.");
 
 				return oData;
 
@@ -250,6 +273,7 @@ sap.ui.define([
 				MessageBox.error(oError.message, {
 					title: oError.name
 				});
+				throw oError; //re-throw
 			}.bind(this);
 
 			sendGoodsReceiptRollerConveyorPromise = oGoodsReceiptRollerConveyorModel.loadMiiData(oGoodsReceiptRollerConveyorModel._sServiceUrl, oParam);
@@ -275,7 +299,7 @@ sap.ui.define([
 				oParam,
 				fnResolve, fnReject;
 
-			oData.messages.push("Spezial-Umbuchung mit pseudo BwA 999");
+			this.addMessageManagerMessage("Starte Umbuchung auf Rollenbahn...");
 
 			oParam = {
 				"Param.1": oData.storageBinId, //Lagerplatz (ID),
@@ -285,17 +309,8 @@ sap.ui.define([
 			};
 
 			fnResolve = function(oIllumData) {
-				var oResult = oIllumData.d.results["0"];
 
-				if (oResult.FatalError) {
-					throw new Error(oResult.FatalError);
-				}
-
-				if (oResult.Messages.results) {
-					oResult.Messages.results.forEach(function(msg) {
-						oData.messages.push(msg.Message);
-					});
-				}
+				this.addMessageManagerMessage("Umbuchung von Palette " + oData.storageUnit + " auf Lagerplatz " + oData.storageBinId + " erfolgreich.");
 
 				return oData;
 
@@ -327,7 +342,7 @@ sap.ui.define([
 				oParam,
 				fnResolve, fnReject;
 
-			oData.messages.push("Aufgabepunkt für Ressource " + sRessource);
+			this.addMessageManagerMessage("Starte Prozessauftragsfindung für Aufgabepunkt " + oData.storageBin + " an Ressource " + sRessource + "...");
 
 			oParam = {
 				"Param.1": sRessource //ARBID
@@ -337,27 +352,17 @@ sap.ui.define([
 				var oResult = oIllumData.d.results["0"],
 					oRow;
 
-				if (oResult.FatalError) {
-					throw new Error(oResult.FatalError);
-				}
-
-				if (oResult.Messages.results) {
-					oResult.Messages.results.forEach(function(msg) {
-						oData.messages.push(msg.Message);
-					});
-				}
-
 				if (oResult.Rowset.results["0"].Row.results.length === 1) {
 					oRow = oResult.Rowset.results["0"].Row.results["0"];
 					oData.orderNumber = oRow.AUFNR;
 					oData.operationNumber = oRow.VORNR;
 					oData.ressourceId = oRow.ARBID;
 
-					oData.messages.push("Auf Ressource " + sRessource + " läuft Prozessauftrag " + oRow.AUFNR);
-
 				} else {
 					throw new Error("Der aktuell laufende Prozessauftrag auf Ressource " + sRessource + " konnte nicht eindeutig bestimmt werden.");
 				}
+
+				this.addMessageManagerMessage("Auf Ressource " + sRessource + " läuft Prozessauftrag " + oRow.AUFNR);
 
 				return oData;
 
@@ -367,6 +372,7 @@ sap.ui.define([
 				MessageBox.error(oError.message, {
 					title: oError.name
 				});
+				throw oError; //re-throw
 			}.bind(this);
 
 			findProcessOrderPromise = oCurrentProcessOrderModel.loadMiiData(oCurrentProcessOrderModel._sServiceUrl, oParam);

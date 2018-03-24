@@ -124,7 +124,8 @@
 				"type": "mii.util.model.illum.QueryTemplateModel",
 				"settings": {
 					"preventInitialLoad": true,
-					"preventParameterlessLoad": true
+					"preventParameterlessLoad": true,
+					"ignoreFatalError": true
 				}
 			},
 			"goodsMovementRollerConveyor": {
@@ -133,7 +134,8 @@
 				"type": "mii.util.model.illum.QueryTemplateModel",
 				"settings": {
 					"preventInitialLoad": true,
-					"preventParameterlessLoad": true
+					"preventParameterlessLoad": true,
+					"ignoreFatalError": true
 				}
 			},
 			"currentProcessOrder": {
@@ -169,106 +171,91 @@
 				},
 				"async": true
 			},
-			"routes": [
-				{
-					"pattern": "",
-					"name": "empty",
-					"target": [
-						"login"
-					]
-				},
-				{
-					"pattern": "{{manifest.routing.route.pattern.login}}",
-					"name": "login",
-					"target": [
-						"login"
-					]
-				},
-				{
-					"pattern": "{{manifest.routing.route.pattern.forbidden}}",
-					"name": "forbidden",
-					"target": [
-						"forbidden"
-					]
-				},
-				{
-					"pattern": "{{manifest.routing.route.pattern.home}}",
-					"name": "home",
-					"target": [
-						"home"
-					]
-				},
-				{
-					"pattern": "{{manifest.routing.route.pattern.statusChange}}",
-					"name": "statusChange",
-					"target": [
-						"statusChange"
-					]
-				},
-				{
-					"pattern": "{{manifest.routing.route.pattern.goodsMovement}}",
-					"name": "goodsMovement",
-					"target": [
-						"goodsMovement"
-					]
-				},
-				{
-					"pattern": "{{manifest.routing.route.pattern.goodsMovement.goodsReceipt}}:?query:",
-					"name": "goodsReceipt",
-					"target": [
-						"goodsReceipt"
-					]
-				},
-				{
-					"pattern": "{{manifest.routing.route.pattern.goodsMovement.goodsIssue}}:?query:",
-					"name": "goodsIssue",
-					"target": [
-						"goodsIssue"
-					]
-				},
-				{
-					"pattern": "{{manifest.routing.route.pattern.goodsMovement.stockTransfer}}",
-					"name": "stockTransfer",
-					"target": [
-						"stockTransfer"
-					]
-				},
-				{
-					"pattern": "{{manifest.routing.route.pattern.goodsMovement.rollerConveyor}}",
-					"name": "rollerConveyor",
-					"target": [
-						"rollerConveyor"
-					]
-				},
-				{
-					"pattern": "{{manifest.routing.route.pattern.statusChange.startOperation}}:?query:",
-					"name": "startOperation",
-					"target": [
-						"startOperation"
-					]
-				},
-				{
-					"pattern": "{{manifest.routing.route.pattern.statusChange.interruptOperation}}:?query:",
-					"name": "interruptOperation",
-					"target": [
-						"interruptOperation"
-					]
-				},
-				{
-					"pattern": "{{manifest.routing.route.pattern.statusChange.resumeOperation}}:?query:",
-					"name": "resumeOperation",
-					"target": [
-						"resumeOperation"
-					]
-				},
-				{
-					"pattern": "{{manifest.routing.route.pattern.statusChange.finishOperation}}:?query:",
-					"name": "finishOperation",
-					"target": [
-						"finishOperation"
-					]
-				}
-			],
+			"routes": [{
+				"pattern": "",
+				"name": "empty",
+				"target": [
+					"login"
+				]
+			}, {
+				"pattern": "{{manifest.routing.route.pattern.login}}",
+				"name": "login",
+				"target": [
+					"login"
+				]
+			}, {
+				"pattern": "{{manifest.routing.route.pattern.forbidden}}",
+				"name": "forbidden",
+				"target": [
+					"forbidden"
+				]
+			}, {
+				"pattern": "{{manifest.routing.route.pattern.home}}",
+				"name": "home",
+				"target": [
+					"home"
+				]
+			}, {
+				"pattern": "{{manifest.routing.route.pattern.statusChange}}",
+				"name": "statusChange",
+				"target": [
+					"statusChange"
+				]
+			}, {
+				"pattern": "{{manifest.routing.route.pattern.goodsMovement}}",
+				"name": "goodsMovement",
+				"target": [
+					"goodsMovement"
+				]
+			}, {
+				"pattern": "{{manifest.routing.route.pattern.goodsMovement.goodsReceipt}}:?query:",
+				"name": "goodsReceipt",
+				"target": [
+					"goodsReceipt"
+				]
+			}, {
+				"pattern": "{{manifest.routing.route.pattern.goodsMovement.goodsIssue}}:?query:",
+				"name": "goodsIssue",
+				"target": [
+					"goodsIssue"
+				]
+			}, {
+				"pattern": "{{manifest.routing.route.pattern.goodsMovement.stockTransfer}}",
+				"name": "stockTransfer",
+				"target": [
+					"stockTransfer"
+				]
+			}, {
+				"pattern": "{{manifest.routing.route.pattern.goodsMovement.rollerConveyor}}",
+				"name": "rollerConveyor",
+				"target": [
+					"rollerConveyor"
+				]
+			}, {
+				"pattern": "{{manifest.routing.route.pattern.statusChange.startOperation}}:?query:",
+				"name": "startOperation",
+				"target": [
+					"startOperation"
+				]
+			}, {
+				"pattern": "{{manifest.routing.route.pattern.statusChange.interruptOperation}}:?query:",
+				"name": "interruptOperation",
+				"target": [
+					"interruptOperation"
+				]
+			}, {
+				"pattern": "{{manifest.routing.route.pattern.statusChange.resumeOperation}}:?query:",
+				"name": "resumeOperation",
+				"target": [
+					"resumeOperation"
+				]
+			}, {
+				"pattern": "{{manifest.routing.route.pattern.statusChange.finishOperation}}:?query:",
+				"name": "finishOperation",
+				"target": [
+					"finishOperation"
+				]
+			}],
 			"targets": {
 				"login": {
 					"viewName": "Login",
@@ -370,27 +357,21 @@
 			}
 		},
 		"resources": {
-			"js": [
-				{
-					"uri": "libs/momentjs/moment.js",
-					"name": "moment.js",
-					"version": "2.19.1"
-				},
-				{
-					"uri": "libs/momentjs/locale/de.js",
-					"name": "locale/de.js",
-					"version": "2.19.1"
-				},
-				{
-					"uri": "libs/scannerdetection/scannerdetection.js",
-					"name": "scannerdetection.js"
-				}
-			],
-			"css": [
-				{
-					"uri": "css/style.css"
-				}
-			]
+			"js": [{
+				"uri": "libs/momentjs/moment.js",
+				"name": "moment.js",
+				"version": "2.19.1"
+			}, {
+				"uri": "libs/momentjs/locale/de.js",
+				"name": "locale/de.js",
+				"version": "2.19.1"
+			}, {
+				"uri": "libs/scannerdetection/scannerdetection.js",
+				"name": "scannerdetection.js"
+			}],
+			"css": [{
+				"uri": "css/style.css"
+			}]
 		}
 	},
 	"sap.platform.hcp": {

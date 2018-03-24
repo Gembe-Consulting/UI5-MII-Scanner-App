@@ -40,12 +40,14 @@ sap.ui.define([
 
 				sUrlParameters = "serverDelay=" + oOptions.delay;
 
-				if (oOptions.errorType) {
-					sUrlParameters = sUrlParameters + "&" + "errorType=" + oOptions.errorType;
+				if (oOptions.errorServiceName) {
+					sUrlParameters = sUrlParameters + "&" + "errorServiceName=" + oOptions.errorServiceName;
 				}
-
-				if (oOptions.errorService) {
-					sUrlParameters = sUrlParameters + "&" + "errorService=" + oOptions.errorService;
+				if (oOptions.errorServiceMessage) {
+					sUrlParameters = sUrlParameters + "&" + "errorServiceMessage=" + oOptions.errorServiceMessage;
+				}
+				if (oOptions.errorServiceType) {
+					sUrlParameters = sUrlParameters + "&" + "errorServiceType=" + oOptions.errorServiceType;
 				}
 
 				if (oOptions.illumLoginName !== "") {

@@ -50,16 +50,28 @@ sap.ui.define([
 					});
 				}
 			);
-			
+
+			this.register(/^I start the app on '(.*?)' with '(.*?)' error '(.*?)'$/i,
+				function(sHash, sService, sErrorMessage, Given, When, Then) {
+
+					Given.iStartTheApp({
+						hash: sHash,
+						errorServiceName: sService,
+						errorServiceMessage: sErrorMessage,
+						errorServiceType: "fatalError"
+					});
+				}
+			);
+
 			//Then I should see goodsReceiptPageTitle in action.GoodsReceipt view has color '#1F35DE'
 			//this.register(/^I start the app on '(.*?)' using parameter '(.*?)'"$/i,
 			this.register(/^I can see (.+?) in (.+?) view has css (.+?) '(.+?)'$/i,
 				function(sControlId, sViewName, sCssProperty, sValue, Given, When, Then) {
 					Then.iCanSeeControlHasCSSProperty({
 						sControlId: sControlId,
-						sViewName:sViewName,
-						sCssProperty:sCssProperty,
-						sValue:sValue
+						sViewName: sViewName,
+						sCssProperty: sCssProperty,
+						sValue: sValue
 					});
 				}
 			);
