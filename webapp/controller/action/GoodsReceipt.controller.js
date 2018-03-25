@@ -78,8 +78,9 @@ sap.ui.define([
 
 			/* Prepare error callback */
 			fnReject = function(oError) {
-				MessageBox.error(oError.message, {
-					title: this.getTranslation("error.miiTransactionErrorText", ["GoodsMovementCreate: 101"])
+				MessageBox.error(oError.responseText || oError.message, {
+					title: this.getTranslation("error.miiTransactionErrorText", ["GoodsMovementCreate: 101"]),
+					contentWidth: "500px"
 				});
 			}.bind(this);
 
@@ -263,8 +264,9 @@ sap.ui.define([
 
 			/* Prepare error callback */
 			fnReject = function(oError) {
-				MessageBox.error(oError.message, {
-					title: this.getTranslation("error.miiTransactionErrorText", ["StorageUnitNumberRead"])
+				MessageBox.error(oError.responseText || oError.message, {
+					title: this.getTranslation("error.miiTransactionErrorText", ["StorageUnitNumberRead"]),
+					contentWidth: "500px"
 				});
 			}.bind(this);
 
@@ -324,8 +326,9 @@ sap.ui.define([
 
 			/* Prepare error callback */
 			fnReject = function(oError) {
-				MessageBox.error(oError.message, {
-					title: this.getTranslation("error.miiTransactionErrorText", ["OrderHeaderNumberRead"])
+				MessageBox.error(oError.responseText || oError.message, {
+					title: this.getTranslation("error.miiTransactionErrorText", ["OrderHeaderNumberRead"]),
+					contentWidth: "500px"
 				});
 			}.bind(this);
 

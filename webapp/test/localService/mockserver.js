@@ -48,6 +48,9 @@ sap.ui.define([
 						oResponse = jQuery.sap.syncGetJSON(sJsonFilesUrl + "/" + "_EmptyRowsetResultError.json");
 					} else if (bErrorState && sErrorServiceType === "fatalError") {
 						oResponse = jQuery.sap.syncGetJSON(sJsonFilesUrl + "/" + sErrorServiceName + "_FatalError.json");
+						if (!oResponse.success) {
+							oResponse = jQuery.sap.syncGetJSON(sJsonFilesUrl + "/" + "_FatalError.json");
+						}
 						oResponse.data.d.results["0"].FatalError = sErrorServiceMessage;
 					} else {
 						oResponse = jQuery.sap.syncGetJSON(sJsonFilesUrl + "/" + sQueryTemplateName + ".json", {

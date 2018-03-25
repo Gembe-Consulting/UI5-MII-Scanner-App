@@ -86,6 +86,30 @@ sap.ui.define([
 				});
 			},
 
+			iShouldSeeThServiceErrorMessageBox: function(sErrorTitle, sErrorMessage) {
+				return this.waitFor({
+					searchOpenDialogs: true,
+					controlType: "sap.m.Dialog",
+					matchers: new PropertyStrictEquals({
+						name: "title",
+						value: sErrorTitle
+					}),
+					success: function(oMessageBox) {
+						var oMsg;
+
+						Opa5.assert.strictEqual(oMessageBox.length, 1, "One Error Message Box is found matching title");
+
+						oMsg = oMessageBox[0];
+
+						Opa5.assert.strictEqual(oMsg.getTitle(), sErrorTitle, "Error Message Box has title: " + sErrorTitle);
+						Opa5.assert.strictEqual(oMsg._$content.text(), sErrorMessage, "Error Message Box has text: " + sErrorMessage);
+					},
+					actions: new Press(),
+					errorMessage: "Did not find the Error Message Box"
+
+				});
+			},
+
 			iShouldSeeTheErrorMessageBox: function(sErrorMessage) {
 				return this.waitFor({
 					searchOpenDialogs: true,

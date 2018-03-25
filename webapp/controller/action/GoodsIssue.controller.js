@@ -68,7 +68,7 @@ sap.ui.define([
 			}.bind(this);
 
 			fnReject = function(oError) {
-				MessageBox.error(oError.message, {
+				MessageBox.error(oError.responseText || oError.message, {
 					title: this.getTranslation("error.miiTransactionErrorText", ["GoodsMovementCreate: 261"])
 				});
 			}.bind(this);
@@ -263,8 +263,8 @@ sap.ui.define([
 			}.bind(this);
 
 			fnReject = function(oError) {
-				MessageBox.error(oError.message, {
-					title: this.getTranslation("error.miiTransactionErrorText", ["OrderComponentGet"])
+				MessageBox.error(oError.responseText || oError.message, {
+					title: this.getTranslation("error.miiTransactionErrorText", ["OrderComponentRead"])
 				});
 			}.bind(this);
 
@@ -362,7 +362,7 @@ sap.ui.define([
 			}.bind(this);
 
 			fnReject = function(oError) {
-				MessageBox.error(oError.message, {
+				MessageBox.error(oError.responseText || oError.message, {
 					title: this.getTranslation("error.miiTransactionErrorText", ["StorageUnitNumberRead"])
 				});
 			}.bind(this);
@@ -425,7 +425,7 @@ sap.ui.define([
 			}.bind(this);
 
 			fnReject = function(oError) {
-				MessageBox.error(oError.message, {
+				MessageBox.error(oError.responseText || oError.message, {
 					title: this.getTranslation("error.miiTransactionErrorText", ["OrderHeaderNumberRead"])
 				});
 			}.bind(this);

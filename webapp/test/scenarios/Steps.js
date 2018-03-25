@@ -51,15 +51,29 @@ sap.ui.define([
 				}
 			);
 
-			this.register(/^I start the app on '(.*?)' with '(.*?)' error '(.*?)'$/i,
-				function(sHash, sService, sErrorMessage, Given, When, Then) {
+			this.register(/^I start the app on '(.*?)' with '(.*?)' (error|type) '(.*?)'$/i,
+				function(sHash, sService, sTextOrType, sError, Given, When, Then) {
+
+					var bFatalError = !sTextOrType.includes("type");
 
 					Given.iStartTheApp({
 						hash: sHash,
 						errorServiceName: sService,
-						errorServiceMessage: sErrorMessage,
-						errorServiceType: "fatalError"
+						errorServiceMessage: bFatalError ? sError : "",
+						errorServiceType: bFatalError ? "fatalError" : sError
 					});
+				}
+			);
+
+			this.register(/^I can see the service error with title '(.*?)' and message '(.*?)'$/i,
+				function(sErrorTitle, sErrorMessage, Given, When, Then) {
+					Given.iShouldSeeThServiceErrorMessageBox(sErrorTitle, sErrorMessage);
+				}
+			);
+
+			this.register(/^I close all service error message boxes$/i,
+				function(Given, When, Then) {
+					Given.iCloseTheMessageBox();
 				}
 			);
 
