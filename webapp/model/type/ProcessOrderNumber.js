@@ -41,8 +41,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/type/String', 'sap/ui/model/Fo
 		};
 
 		ProcessOrderNumberType.prototype.validateValue = function(sValue) {
-			StringType.prototype.validateValue.apply(this, arguments);
-
 			var aViolatedConstraints = [],
 				aMessages = [];
 
@@ -54,6 +52,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/type/String', 'sap/ui/model/Fo
 			if (aViolatedConstraints.length > 0) {
 				throw new ValidateException(aMessages.join(". "), aViolatedConstraints);
 			}
+
+			StringType.prototype.validateValue.apply(this, arguments);
+
 		};
 
 		return ProcessOrderNumberType;
