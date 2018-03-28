@@ -216,9 +216,15 @@ sap.ui.define([
 
 			fnResolve = function(oData) {
 				var oOrderComponent,
-					aRows = oData.d.results[0].Rowset.results[0].Row.results,
+					aRows,
 					oDataModel = this.getModel("data"),
 					sComponentUnitOfMeasure;
+
+				try {
+					aRows = oData.d.results[0].Rowset.results[0].Row.results;
+				} catch (oError) {
+					aRows = [];
+				}
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
 				if (aRows.length === 1) {
@@ -264,8 +270,11 @@ sap.ui.define([
 
 			fnReject = function(oError) {
 				MessageBox.error(oError.responseText || oError.message, {
-					title: this.getTranslation("error.miiTransactionErrorText", ["OrderComponentRead"])
+					title: this.getTranslation("error.miiTransactionErrorText", ["OrderComponentRead"]),
+					contentWidth: "500px"
 				});
+				oSource.setValueState(sap.ui.core.ValueState.Error).setValue("");
+
 			}.bind(this);
 
 			this.requestOrderComponentInfoService(sOrderNumber, sMaterialNumber)
@@ -305,13 +314,17 @@ sap.ui.define([
 				var oStorageUnit = {
 						LENUM: null
 					},
-					aRows = oData.d.results[0].Rowset.results[0].Row.results,
+					aRows,
 					bStorageUnitValid = true,
 					bMergeData = true,
 					oExpirationDateFormatted,
 					oDataModel = this.getModel("data");
 
-				aRows = oData.d.results[0].Rowset.results[0].Row.results;
+				try {
+					aRows = oData.d.results[0].Rowset.results[0].Row.results;
+				} catch (oError) {
+					aRows = [];
+				}
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
 				if (aRows.length === 1) {
@@ -363,8 +376,11 @@ sap.ui.define([
 
 			fnReject = function(oError) {
 				MessageBox.error(oError.responseText || oError.message, {
-					title: this.getTranslation("error.miiTransactionErrorText", ["StorageUnitNumberRead"])
+					title: this.getTranslation("error.miiTransactionErrorText", ["StorageUnitNumberRead"]),
+					contentWidth: "500px"
 				});
+				oSource.setValueState(sap.ui.core.ValueState.Error).setValue("");
+				this.getModel("view").setProperty("/bStorageUnitValid", false);
 			}.bind(this);
 
 			/* Perform service call, Hide Busy Indicator, Update View Controls */
@@ -399,9 +415,15 @@ sap.ui.define([
 
 			fnResolve = function(oData) {
 				var oOrder,
-					aRows = oData.d.results[0].Rowset.results[0].Row.results,
+					aRows,
 					bOrderNumberValid = true,
 					oModel = this.getModel("data");
+
+				try {
+					aRows = oData.d.results[0].Rowset.results[0].Row.results;
+				} catch (oError) {
+					aRows = [];
+				}
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
 				if (aRows.length === 1) {
@@ -426,8 +448,11 @@ sap.ui.define([
 
 			fnReject = function(oError) {
 				MessageBox.error(oError.responseText || oError.message, {
-					title: this.getTranslation("error.miiTransactionErrorText", ["OrderHeaderNumberRead"])
+					title: this.getTranslation("error.miiTransactionErrorText", ["OrderHeaderNumberRead"]),
+					contentWidth: "500px"
 				});
+				oSource.setValueState(sap.ui.core.ValueState.Error).setValue("");
+				this.getModel("view").setProperty("/bOrderNumberValid", false);
 			}.bind(this);
 
 			/* Perform service call, Hide Busy Indicator, Update View Controls */
@@ -455,7 +480,7 @@ sap.ui.define([
 				return;
 			}
 
-			this.validateComponentWithdrawal(oDataModel.getProperty("/orderNumber"), oDataModel.getProperty("/materialNumber"), oSource);
+			//this.validateComponentWithdrawal(oDataModel.getProperty("/orderNumber"), oDataModel.getProperty("/materialNumber"), oSource);
 
 		},
 

@@ -7,14 +7,14 @@ Feature: Detect and show error messages during service calls
 		 And I enter '00000000109330000001' into storageUnitInput in action.GoodsReceipt view
 		 And I can see the service error with title 'Fehler in MII Transaktion 'StorageUnitNumberRead'' and message 'Fatal Transaction Error'
 		 And I close all service error message boxes
-		Then I can see storageUnitInput in action.GoodsReceipt view
+		Then I can see storageUnitInput with valueState 'Error' in action.GoodsReceipt view
 
+	@wip
 	Scenario: [WE] Should show error message on empty request at StorageUnitReadXac
 	   Given I start the app on '/WE' with 'StorageUnitReadXac' type 'emptyRequest'
 		 And I enter '00000000109330000001' into storageUnitInput in action.GoodsReceipt view
-		 And I can see the service error with title 'Fehler in MII Transaktion 'StorageUnitNumberRead'' and message 'TypeError: Cannot read property 'results' of undefined'
-		 And I close all service error message boxes
-		Then I can see storageUnitInput in action.GoodsReceipt view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Palette '00000000109330000001' nicht gefunden.' in action.GoodsReceipt view
+		Then I can see storageUnitInput with valueState 'Error' in action.GoodsReceipt view
 		 
 	Scenario: [WE] Should show error message on bad request at StorageUnitReadXac
 	   Given I start the app on '/WE' with 'StorageUnitReadXac' type 'badRequest'
@@ -22,7 +22,7 @@ Feature: Detect and show error messages during service calls
 		 And I can see the service error with title 'Fehler in MII Transaktion 'StorageUnitNumberRead'' and message 'Mockserver response: errorService 'StorageUnitReadXac' not available!'
 		 And I can see the service error with title 'Fehler: requestFailed in storageUnit-Service' and message 'Entschuldigung, ein technischer Fehler ist aufgetreten. Bitte versuchen sie es noch einmal.Details anzeigen'
 		 And I close all service error message boxes
-	    Then I can see storageUnitInput in action.GoodsReceipt view
+	    Then I can see storageUnitInput with valueState 'Error' in action.GoodsReceipt view
 	
 	@Goods Receipt 
 	@orderHeader-Service
@@ -31,14 +31,15 @@ Feature: Detect and show error messages during service calls
 		 And I enter '1234567' into orderNumberInput in action.GoodsReceipt view
 		 And I can see the service error with title 'Fehler in MII Transaktion 'OrderHeaderNumberRead'' and message 'Fatal Transaction Error'
 		 And I close all service error message boxes
-		Then I can see orderNumberInput in action.GoodsReceipt view
-
+		Then I can see orderNumberInput with valueState 'Error' in action.GoodsReceipt view
+	
+	@wip
 	Scenario: [WE] Should show error message on empty request at GetOrderHeaderQry
 	   Given I start the app on '/WE' with 'GetOrderHeaderQry' type 'emptyRequest'
 		 And I enter '1234567' into orderNumberInput in action.GoodsReceipt view
-		 And I can see the service error with title 'Fehler in MII Transaktion 'OrderHeaderNumberRead'' and message 'TypeError: Cannot read property 'results' of undefined'
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Prozessauftrag '1234567' nicht gefunden. Bitte korrigieren sie ihre Eingabe!' in action.GoodsReceipt view
 		 And I close all service error message boxes
-		Then I can see orderNumberInput in action.GoodsReceipt view
+		Then I can see orderNumberInput with valueState 'Error' in action.GoodsReceipt view
 		
 	Scenario: [WE] Should show error message on bad request at GetOrderHeaderQry
 	   Given I start the app on '/WE' with 'GetOrderHeaderQry' type 'badRequest'
@@ -46,7 +47,7 @@ Feature: Detect and show error messages during service calls
 		 And I can see the service error with title 'Fehler in MII Transaktion 'OrderHeaderNumberRead'' and message 'Mockserver response: errorService 'GetOrderHeaderQry' not available!'
 		 And I can see the service error with title 'Fehler: requestFailed in orderHeader-Service' and message 'Entschuldigung, ein technischer Fehler ist aufgetreten. Bitte versuchen sie es noch einmal.Details anzeigen'
 		 And I close all service error message boxes
-	    Then I can see orderNumberInput in action.GoodsReceipt view
+	    Then I can see orderNumberInput with valueState 'Error' in action.GoodsReceipt view
 	
 	@Goods Receipt 
 	@Posting GR
@@ -59,14 +60,15 @@ Feature: Detect and show error messages during service calls
 		 And I enter '00000000109330000001' into storageUnitInput in action.GoodsIssue view
 		 And I can see the service error with title 'Fehler in MII Transaktion 'StorageUnitNumberRead'' and message 'Fatal Transaction Error'
 		 And I close all service error message boxes
-		Then I can see storageUnitInput in action.GoodsIssue view
+		Then I can see storageUnitInput with valueState 'Error' in action.GoodsIssue view
 
+	@wip
 	Scenario: [WA] Should show error message on empty request at StorageUnitReadXac
 	   Given I start the app on '/WA?type=withLE' with 'StorageUnitReadXac' type 'emptyRequest'
 		 And I enter '00000000109330000001' into storageUnitInput in action.GoodsIssue view
-		 And I can see the service error with title 'Fehler in MII Transaktion 'StorageUnitNumberRead'' and message 'TypeError: Cannot read property 'results' of undefined'
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Palette '00000000109330000001' nicht gefunden.' in action.GoodsIssue view
 		 And I close all service error message boxes
-		Then I can see storageUnitInput in action.GoodsIssue view
+		Then I can see storageUnitInput with valueState 'Error' in action.GoodsIssue view
 		 
 	Scenario: [WA] Should show error message on bad request at StorageUnitReadXac
 	   Given I start the app on '/WA?type=withLE' with 'StorageUnitReadXac' type 'badRequest'
@@ -74,8 +76,7 @@ Feature: Detect and show error messages during service calls
 		 And I can see the service error with title 'Fehler in MII Transaktion 'StorageUnitNumberRead'' and message 'Mockserver response: errorService 'StorageUnitReadXac' not available!'
 		 And I can see the service error with title 'Fehler: requestFailed in storageUnit-Service' and message 'Entschuldigung, ein technischer Fehler ist aufgetreten. Bitte versuchen sie es noch einmal.Details anzeigen'
 		 And I close all service error message boxes
-	    Then I can see storageUnitInput in action.GoodsIssue view
-
+	    Then I can see storageUnitInput with valueState 'Error' in action.GoodsIssue view
 
 	@Goods Issue 
 	@orderHeader-Service
@@ -84,22 +85,23 @@ Feature: Detect and show error messages during service calls
 		 And I enter '1234567' into orderNumberInput in action.GoodsIssue view
 		 And I can see the service error with title 'Fehler in MII Transaktion 'OrderHeaderNumberRead'' and message 'Fatal Transaction Error'
 		 And I close all service error message boxes
-		Then I can see orderNumberInput in action.GoodsIssue view
-
+		Then I can see orderNumberInput with valueState 'Error' in action.GoodsIssue view
+	
+	@wip
 	Scenario: [WA] Should show error message on empty request at GetOrderHeaderQry
 	   Given I start the app on '//WA?type=withLE' with 'GetOrderHeaderQry' type 'emptyRequest'
 		 And I enter '1234567' into orderNumberInput in action.GoodsIssue view
-		 And I can see the service error with title 'Fehler in MII Transaktion 'OrderHeaderNumberRead'' and message 'TypeError: Cannot read property 'results' of undefined'
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Prozessauftrag '1234567' nicht gefunden. Bitte korrigieren sie ihre Eingabe!' in action.GoodsIssue view
 		 And I close all service error message boxes
-		Then I can see orderNumberInput in action.GoodsIssue view
-		
+		Then I can see orderNumberInput with valueState 'Error' in action.GoodsIssue view
+	
 	Scenario: [WA] Should show error message on bad request at GetOrderHeaderQry
 	   Given I start the app on '//WA?type=withLE' with 'GetOrderHeaderQry' type 'badRequest'
 		 And I enter '1234567' into orderNumberInput in action.GoodsIssue view
 		 And I can see the service error with title 'Fehler in MII Transaktion 'OrderHeaderNumberRead'' and message 'Mockserver response: errorService 'GetOrderHeaderQry' not available!'
 		 And I can see the service error with title 'Fehler: requestFailed in orderHeader-Service' and message 'Entschuldigung, ein technischer Fehler ist aufgetreten. Bitte versuchen sie es noch einmal.Details anzeigen'
 		 And I close all service error message boxes
-	    Then I can see orderNumberInput in action.GoodsIssue view
+	    Then I can see orderNumberInput with valueState 'Error' in action.GoodsIssue view
 		    
 	@Goods Issue
 	@orderComponent-Service
@@ -109,16 +111,17 @@ Feature: Detect and show error messages during service calls
 		 And I enter '1200666-004' into materialNumberInput in action.GoodsIssue view
 		 And I can see the service error with title 'Fehler in MII Transaktion 'OrderComponentRead'' and message 'Fatal Transaction Error'
 		 And I close all service error message boxes
-		Then I can see orderNumberInput in action.GoodsIssue view
+		Then I can see materialNumberInput with valueState 'Error' in action.GoodsIssue view
 
+	@wip
 	Scenario: [WA] Should show error message on empty request at GetOrderComponentQry
 	   Given I start the app on '/WA?type=nonLE' with 'GetOrderComponentQry' type 'emptyRequest'
 		 And I enter '1234567' into orderNumberInput in action.GoodsIssue view
 		 And I enter '1200666-004' into materialNumberInput in action.GoodsIssue view
-		 And I can see the service error with title 'Fehler in MII Transaktion 'OrderComponentRead'' and message 'TypeError: Cannot read property 'results' of undefined'
+		 Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Retrogerade Entnahme' in action.GoodsIssue view
 		 And I close all service error message boxes
-		Then I can see orderNumberInput in action.GoodsIssue view
-		
+		Then I can see materialNumberInput with valueState 'Error' in action.GoodsIssue view
+	
 	Scenario: [WA] Should show error message on bad request at GetOrderComponentQry
 	   Given I start the app on '/WA?type=nonLE' with 'GetOrderComponentQry' type 'badRequest'
 		 And I enter '1234567' into orderNumberInput in action.GoodsIssue view
@@ -126,17 +129,12 @@ Feature: Detect and show error messages during service calls
 		 And I can see the service error with title 'Fehler in MII Transaktion 'OrderComponentRead'' and message 'Mockserver response: errorService 'GetOrderComponentQry' not available!'
 		 And I can see the service error with title 'Fehler: requestFailed in orderComponent-Service' and message 'Entschuldigung, ein technischer Fehler ist aufgetreten. Bitte versuchen sie es noch einmal.Details anzeigen'
 		 And I close all service error message boxes
-	    Then I can see orderNumberInput in action.GoodsIssue view
+	    Then I can see materialNumberInput with valueState 'Error' in action.GoodsIssue view
 	    
 	@Goods Issue 
 	@Posting GI
 #	Scenario: [WA] Should show error message on posting error
 	
-	@Goods Issue
-#	Scenario: [WA] Should show error message, if users enter unknown order component or service is not available
-	
-	@Goods Issue
-#	Scenario: [WA] Should show error message, if users posting returns a fatal error or service is not available
 	
 	@Stock Transfer
 #	Scenario: [UML] Should show error message, if users enter unknown storage unit number or service is not available

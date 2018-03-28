@@ -59,7 +59,13 @@ sap.ui.define([
 			/* Prepare success callback */
 			fnResolve = function(oData) {
 				var oStorageUnitNumber,
+					aRows;
+
+				try {
 					aRows = oData.d.results[0].Rowset.results[0].Row.results;
+				} catch (oError) {
+					aRows = [];
+				}
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
 				if (aRows.length === 1) {
@@ -231,9 +237,15 @@ sap.ui.define([
 				var oStorageUnit = {
 						LENUM: null
 					},
-					aRows = oData.d.results[0].Rowset.results[0].Row.results,
+					aRows,
 					bStorageUnitValid = true,
 					oDataModel = this.getModel("data");
+
+				try {
+					aRows = oData.d.results[0].Rowset.results[0].Row.results;
+				} catch (oError) {
+					aRows = [];
+				}
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
 				if (aRows.length === 1) {
@@ -268,6 +280,8 @@ sap.ui.define([
 					title: this.getTranslation("error.miiTransactionErrorText", ["StorageUnitNumberRead"]),
 					contentWidth: "500px"
 				});
+				oSource.setValueState(sap.ui.core.ValueState.Error).setValue("");
+				this.getModel("view").setProperty("/bStorageUnitValid", false);
 			}.bind(this);
 
 			/* Perform service call, Hide Busy Indicator, Update View Controls */
@@ -303,9 +317,15 @@ sap.ui.define([
 			/* Prepare success callback */
 			fnResolve = function(oData) {
 				var oOrder,
-					aRows = oData.d.results[0].Rowset.results[0].Row.results,
+					aRows,
 					bOrderNumberValid = true,
 					oDataModel = this.getModel("data");
+
+				try {
+					aRows = oData.d.results[0].Rowset.results[0].Row.results;
+				} catch (oError) {
+					aRows = [];
+				}
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
 				if (aRows.length === 1) {
@@ -330,6 +350,8 @@ sap.ui.define([
 					title: this.getTranslation("error.miiTransactionErrorText", ["OrderHeaderNumberRead"]),
 					contentWidth: "500px"
 				});
+				oSource.setValueState(sap.ui.core.ValueState.Error).setValue("");
+				this.getModel("view").setProperty("/bStorageUnitValid", false);
 			}.bind(this);
 
 			/* Perform service call, Hide Busy Indicator, Update View Controls */
