@@ -38,6 +38,31 @@ sap.ui.define([
 
 		},
 
+		updateViewControls: function(oData) {
+			var oViewModel = this.getModel("view"),
+				oDataModel = this.getModel("data"),
+				bOrderOperationValid = oDataModel.getProperty("/bOrderOperationValid"),
+				bDateTimeEntryValid = oDataModel.getProperty("/bDateTimeEntryValid"),
+				bInputValuesComplete,
+				bNoErrorMessagesActive,
+				bReadyForPosting;
+
+			// check if all required input data is present
+			bInputValuesComplete = this.isInputDataValid(oData);
+
+			// check if all input data has proper format
+			bNoErrorMessagesActive = this.isMessageModelClean();
+
+			// we are ready for posting once we have complete and proper formatted input
+			bReadyForPosting = bOrderOperationValid && bDateTimeEntryValid && bNoErrorMessagesActive && bInputValuesComplete;
+
+			oViewModel.setProperty("/bValid", bReadyForPosting);
+		},
+
+		isInputDataValid: function(oData) {
+			return !!oData.dateTimeEntry && !!oData.orderNumber && !!oData.OperationNumber;
+		},
+
 		onOrderChange: function(oEvent) {
 			var oSource = oEvent.getSource(),
 				oOrderNumberInput = this.byId("orderNumberInput"),
@@ -79,7 +104,13 @@ sap.ui.define([
 				if (aRows.length === 1) {
 					oOrderOperation = aRows[0];
 
-					//validate status
+					if (!oOrderOperation.STATUS === this.oProcessOrderStatus.released.STATUS && !oOrderOperation.STATUS === this.oProcessOrderStatus.paused.STATUS) {
+						this.addUserMessage({
+							text: this.getTranslation("startOperation.messageText.wrongCurrentStatus", [sOrderNumber, sOperationNumber, oOrderOperation.STATUS_TXT])
+						});
+
+						bOrderOperationValid = false;
+					}
 
 				} else {
 					this.addUserMessage({
