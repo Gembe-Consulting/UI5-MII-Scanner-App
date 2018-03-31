@@ -26,7 +26,11 @@
 		], function (testHarness, Steps) {
 			"use strict";
 
-
+			testHarness.test({
+				featurePath: "com/mii/scanner/test/features/statusChange/StartOperation", 
+				steps: Steps,
+				generateMissingSteps : true
+			});
 			
 			testHarness.test({
 				featurePath: "com/mii/scanner/test/features/Navigation", 
