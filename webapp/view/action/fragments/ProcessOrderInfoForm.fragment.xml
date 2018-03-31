@@ -4,10 +4,22 @@
 	editable="false">
 	<f:content>
 		<Label text="{i18n>processOrderInfoActionFragment.label.text.operationInfo}"/>
-		<Text id="processOrderFragmentOperationInfo" text="{data>/VORNR}"/>
+		<Text id="processOrderFragmentOperationInfo" text="{data>/VORNR} - {data>/VORTEXT}"/>
+		<Label text="{i18n>processOrderInfoActionFragment.label.text.ressourceInfo}"/>
+		<Text id="processOrderFragmentRessourceInfo" text="{data>/ARBID} - {data>/ARBTXT}"/>
 		<Label text="{i18n>processOrderInfoActionFragment.label.text.statusInfo}"/>
-		<Text id="processOrderFragmentStatusInfo" text="{data>/STATUS}"/>
+		<Text id="processOrderFragmentStatusInfo" text="{data>/STATUS} - {data>/STATUS_TXT}"/>
+		<Label text="{i18n>processOrderInfoActionFragment.label.text.actualDates}"/>
+		<Text id="processOrderFragmentActualDateInfo" text="Start: {data>/ISTSTART} - Ende: {data>/ISTEND}"/>
+		<Label text="{i18n>processOrderInfoActionFragment.label.text.scheduledDates}"/>
+		<Text id="processOrderFragmentScheduledDateInfo" text="Start: {data>/STARTTRM} - Ende: {data>/ENDTRM}"/>
+		<Label text="{i18n>processOrderInfoActionFragment.label.text.confirmationDates}"/>
+		<Text id="processOrderFragmentConfiramtionDateInfo" text="Start: {data>/TRUECK_START} - Ende: {data>/TRUECK_ENDE}"/>
 		<Label text="{i18n>processOrderInfoActionFragment.label.text.materialInfo}"/>
-		<Text id="processOrderFragmentMaterialInfo" text="{data>/MATNR}\n{data>/MAKTX}"/>
+		<Text id="processOrderFragmentMaterialInfo" text="{data>/MATNR}\n{data>/MAT_TXT}"/>
+		<Label text="{i18n>processOrderInfoActionFragment.label.text.quantityInfo}"/>
+		<ProgressIndicator id="processOrderFragmentQuantityInfo" percentValue="{path: 'data>/QUANTITY_DONE', type:'sap.ui.model.type.String'}"
+			displayValue="{path: 'data>/IST_MENGE', type:'sap.ui.model.type.Float', formatOptions: {minFractionDigits: 1, maxFractionDigits:1}}{data>/EINHEIT} von {path: 'data>/SOLL_MENGE', type:'sap.ui.model.type.Float', formatOptions: {minFractionDigits: 1, maxFractionDigits:1}}{data>/EINHEIT}"
+			showValue="true" state="Success" displayOnly="true"/>
 	</f:content>
 </f:SimpleForm>

@@ -11,6 +11,7 @@
 			</Toolbar>
 		</customHeader>
 		<content>
+			<l:VerticalLayout id="messageStripContainer" width="100%"></l:VerticalLayout>
 			<f:SimpleForm id="dataEntry" editable="true" adjustLabelSpan="false" layout="ResponsiveGridLayout" breakpointM="500" labelSpanXL="4"
 				labelSpanL="4" labelSpanM="3" labelSpanS="12" emptySpanXL="4" emptySpanL="3" emptySpanM="2" emptySpanS="0">
 				<f:content>
@@ -32,7 +33,8 @@
 					</Input>
 					<!-- date and Time Entry -->
 					<Label text="{i18n>startOperation.form.label.startDateTime}" labelFor="dateTimeEntry"/>
-					<DateTimePicker id="dateTimeEntry" change="onDateTimeEntryChange" class="noScannerInput suwIncreadedInputFontSize">
+					<DateTimePicker id="dateTimeEntry" change="onDateTimeEntryChange" dateValue="{data>/dateTimeValue}" displayFormat="medium"
+						class="noScannerInput suwIncreadedInputFontSize">
 						<layoutData>
 							<l:GridData span="XL4 L4 M6 S12"/>
 						</layoutData>

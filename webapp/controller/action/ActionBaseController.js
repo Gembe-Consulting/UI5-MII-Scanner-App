@@ -158,6 +158,21 @@ sap.ui.define([
 			return oStorageUnitModel.loadMiiData(oStorageUnitModel._sServiceUrl, oParam);
 		},
 
+		requestOrderOperationInfoService: function(sOrderNumber, sOperationNumber) {
+
+			if (!sOrderNumber || !sOperationNumber) {
+				return Promise.reject(new Error("Parameter 'sOrderNumber' or 'sOperationNumber' is missing!"));
+			}
+
+			var oOrderOperationModel = this.getModel("orderOperation"),
+				oParam = {
+					"Param.1": sOrderNumber,
+					"Param.2": sOperationNumber
+				};
+
+			return oOrderOperationModel.loadMiiData(oOrderOperationModel._sServiceUrl, oParam);
+		},
+
 		showControlBusyIndicator: function(oSource) {
 			return oSource.setBusyIndicatorDelay(0).setBusy(true);
 		},
