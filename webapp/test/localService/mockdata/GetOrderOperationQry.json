@@ -1,0 +1,355 @@
+{
+	"d": {
+		"results": [{
+			"__metadata": {
+				"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Rowsets('SAPUI5/services/orderdata/GetOrderOperationQry')",
+				"type": "QueryTemplate.Rowsets"
+			},
+			"DateCreated": "\/Date(1522498526000)\/",
+			"EndDate": "\/Date(1522498526000)\/",
+			"StartDate": "\/Date(1522494926000)\/",
+			"Version": "14.0 SP7 Patch 15 (Jan 13, 2016)",
+			"QueryTemplate": "SAPUI5/services/orderdata/GetOrderOperationQry",
+			"Rowset": {
+				"results": [{
+					"__metadata": {
+						"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Rowset(QueryTemplate='SAPUI5/services/orderdata/GetOrderOperationQry',RowsetId=1)",
+						"type": "QueryTemplate.Rowset"
+					},
+					"RowsetId": 1,
+					"QueryTemplate": "SAPUI5/services/orderdata/GetOrderOperationQry",
+					"Column": {
+						"results": [{
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('AUFNR')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "AUFNR",
+							"Description": "AUFNR",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "AUFNR"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('VORNR')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "VORNR",
+							"Description": "VORNR",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "VORNR"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('VORTEXT')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "VORTEXT",
+							"Description": "VORTEXT",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "VORTEXT"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('ARBID')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "ARBID",
+							"Description": "ARBID",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "ARBID"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('ARBTXT')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "ARBTXT",
+							"Description": "ARBTXT",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "ARBTXT"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('VORNR_PARENT')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "VORNR_PARENT",
+							"Description": "VORNR_PARENT",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "VORNR_PARENT"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('STATUS')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "STATUS",
+							"Description": "STATUS",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "STATUS"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('STATUS_TXT')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "STATUS_TXT",
+							"Description": "STATUS_TXT",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "STATUS_TXT"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('WERK')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "WERK",
+							"Description": "WERK",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "WERK"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('STARTTRM')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "STARTTRM",
+							"Description": "STARTTRM",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 93,
+							"SourceColumn": "STARTTRM"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('ISTSTART')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "ISTSTART",
+							"Description": "ISTSTART",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 93,
+							"SourceColumn": "ISTSTART"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('ISTEND')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "ISTEND",
+							"Description": "ISTEND",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 93,
+							"SourceColumn": "ISTEND"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('ENDTRM')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "ENDTRM",
+							"Description": "ENDTRM",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 93,
+							"SourceColumn": "ENDTRM"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('TRUECK_START')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "TRUECK_START",
+							"Description": "TRUECK_START",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 93,
+							"SourceColumn": "TRUECK_START"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('TRUECK_ENDE')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "TRUECK_ENDE",
+							"Description": "TRUECK_ENDE",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 93,
+							"SourceColumn": "TRUECK_ENDE"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('CNW_HIST_STARTTRM')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "CNW_HIST_STARTTRM",
+							"Description": "CNW_HIST_STARTTRM",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 93,
+							"SourceColumn": "CNW_HIST_STARTTRM"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('GESPEICHERT_VON')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "GESPEICHERT_VON",
+							"Description": "GESPEICHERT_VON",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "GESPEICHERT_VON"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('GESPEICHERT_AM')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "GESPEICHERT_AM",
+							"Description": "GESPEICHERT_AM",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 93,
+							"SourceColumn": "GESPEICHERT_AM"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('MATNR')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "MATNR",
+							"Description": "MATNR",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "MATNR"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('MAT_TXT')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "MAT_TXT",
+							"Description": "MAT_TXT",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "MAT_TXT"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('LGORT')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "LGORT",
+							"Description": "LGORT",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "LGORT"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('SOLL_MENGE')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "SOLL_MENGE",
+							"Description": "SOLL_MENGE",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 7,
+							"SourceColumn": "SOLL_MENGE"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('IST_MENGE')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "IST_MENGE",
+							"Description": "IST_MENGE",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 8,
+							"SourceColumn": "IST_MENGE"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('EINHEIT')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "EINHEIT",
+							"Description": "EINHEIT",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "EINHEIT"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('KOPF_STATUS')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "KOPF_STATUS",
+							"Description": "KOPF_STATUS",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "KOPF_STATUS"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('KOPF_STATUS_TEXT')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "KOPF_STATUS_TEXT",
+							"Description": "KOPF_STATUS_TEXT",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "KOPF_STATUS_TEXT"
+						}]
+					},
+					"Row": {
+						"results": [{
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"AUFNR": "1092694",
+							"VORNR": "0010",
+							"VORTEXT": "Verpackung aus Silo",
+							"ARBID": "00253110",
+							"ARBTXT": "Absackanlage Milchprodukte",
+							"VORNR_PARENT": null,
+							"STATUS": "0046",
+							"STATUS_TXT": "Abgeschlossen",
+							"WERK": "1000",
+							"STARTTRM": "\/Date(1506332280000)\/",
+							"ISTSTART": "\/Date(1505984400000)\/",
+							"ISTEND": "\/Date(1505993400000)\/",
+							"ENDTRM": "\/Date(1506365640000)\/",
+							"TRUECK_START": "\/Date(1522498526975)\/",
+							"TRUECK_ENDE": "\/Date(1522498526975)\/",
+							"CNW_HIST_STARTTRM": "\/Date(1506332280000)\/",
+							"GESPEICHERT_VON": "ROLAHL01",
+							"GESPEICHERT_AM": "\/Date(1505994915000)\/",
+							"MATNR": "1901435-001",
+							"MAT_TXT": "M-Joghurt A 4,3 HAL KOS 25kg Sack",
+							"LGORT": "1000",
+							"SOLL_MENGE": "21000",
+							"IST_MENGE": "6750.0",
+							"EINHEIT": "KG",
+							"KOPF_STATUS": "0046",
+							"KOPF_STATUS_TEXT": "Abgeschlossen",
+							"QUANTITY_DONE": "32.15",
+							"RowId": 1
+						}]
+					}
+				}]
+			},
+			"Messages": {
+				"results": [
+
+				]
+			}
+		}]
+	}
+}
