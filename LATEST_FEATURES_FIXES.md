@@ -5,5 +5,3 @@
 [FEATURE] (stock transfer + roller conveyor): ignore fatal error on initial goods receipt
 [FIX] (goods receipt/goods issue): fix nullpointer on empty save success
 [FIX] (gr/gi) remove required flag
-Release 1.2.40
-Release 1.2.40

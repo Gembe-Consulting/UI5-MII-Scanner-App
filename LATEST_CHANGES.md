@@ -15,5 +15,3 @@
 [FIX] (goods receipt/goods issue): fix nullpointer on empty save success
 [INTERNAL] version bump
 [FIX] (gr/gi) remove required flag
-Release 1.2.40
-Release 1.2.40

@@ -3,8 +3,8 @@
 All notable changes to this project will be documented in this file.
 
 ============================================================================================================
-git log --after="2018-03-18T16:35:00+01:00" --pretty=format:"%s%n%b" --reverse --no-merges | grep -v '^$' | grep -v -i '\[INTERNAL\]' | grep -v -i '\[CHORE\]' | grep -v -i '\[TEST\]' | grep -v -i '\[STYLE\]'> LATEST_FEATURES_FIXES.md
-git log --after="2018-03-18T16:35:00+01:00" --pretty=format:"%s%n%b" --reverse --no-merges | grep -v '^$' > LATEST_CHANGES.md
+git log --after="2018-03-31T09:00:00+02:00" --pretty=format:"%s%n%b" --reverse --no-merges | grep -v '^$' | grep -v -i '\[INTERNAL\]' | grep -v -i '\[CHORE\]' | grep -v -i '\[TEST\]' | grep -v -i '\[STYLE\]'> LATEST_FEATURES_FIXES.md
+git log --after="2018-03-31T09:00:00+02:00" --pretty=format:"%s%n%b" --reverse --no-merges | grep -v '^$' > LATEST_CHANGES.md
 ============================================================================================================
 
 [<TYPE>] (<scope>): <subject>
@@ -27,6 +27,25 @@ Examples:
 [FIX] (roller conveyor page): fix, repair, stop
 
 ============================================================================================================
+
+##[1.2.40.2018-03-31]
+
+[FEATURE] (GR+GI) improved readability of storage location constraint
+[FIX] fix model property to prevent parameterless load
+[FEATURE] (action pages): improve form validation and message handling
+[INTERNAL] (device): add defaults to device model to provide device-specific values
+[TEST] add test cases for messages
+[FIX] some issues after latest changes
+[TEST] add test cases for service error handling
+[TEST] add test case file for input validation
+[INTERNAL] remove ressourceRoots mii.util from index file and replace by resourceRoots in manifest file
+[INTERNAL] (component): prepare support for external application call
+[FEATURE] (stock transfer + roller conveyor): ignore fatal error on initial goods receipt
+[INTERNAL] provide test cases for bad service calls
+[INTERNAL] (types): improve validation of null values
+[FIX] (goods receipt/goods issue): fix nullpointer on empty save success
+[FIX] (gr/gi) remove required flag
+[INTERNAL] version bump
 
 ##[1.2.35.2018-03-18]
 
