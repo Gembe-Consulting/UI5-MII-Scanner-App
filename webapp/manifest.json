@@ -59,6 +59,9 @@
 				},
 				"sap.ui.layout": {
 					"minVersion": "1.52.0"
+				},
+				"sap.ui.unified": {
+					"minVersion": "1.52.0"
 				}
 			}
 		},

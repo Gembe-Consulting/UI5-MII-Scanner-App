@@ -14,14 +14,17 @@ sap.ui.define([
 
 		},
 
+		_oInitView: {
+
+		},
+
 		onInit: function() {
 			//call super class onInit to apply user login protection. DO NOT DELETE!
 			ActionBaseController.prototype.onInit.call(this);
 
-			var oModel = new JSONModel(),
-				oData = jQuery.extend({}, this._oInitData);
-			oModel.setData(oData);
-			this.setModel(oModel);
+			this.setModel(new JSONModel(jQuery.extend({}, this._oInitData)), "data");
+
+			this.setModel(new JSONModel(jQuery.extend({}, this._oInitView)), "view");
 		}
 	});
 

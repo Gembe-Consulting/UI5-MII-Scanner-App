@@ -9,7 +9,7 @@ Feature: Start Operation
 		Then I can see startOperationPage in action.StartOperation view
 		 And I can see orderNumberInput in action.StartOperation view
 		 And I can see operationNumberInput in action.StartOperation view
-		 And I can see dateAndTimeSelection in action.StartOperation view
+		 And I can see dateTimeEntry in action.StartOperation view
 		 And I can see clearFormButton in action.StartOperation view
 		 And I can see cancelButton with text 'Abbrechen' in action.StartOperation view
 		 And I can see startOperationPageTitle with text 'Vorgang starten' in action.StartOperation view

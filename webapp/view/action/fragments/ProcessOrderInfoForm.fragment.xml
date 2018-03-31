@@ -1,0 +1,13 @@
+<f:SimpleForm id="processOrderInfo" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout" xmlns="sap.m" xmlns:c="sap.ui.core"
+	layout="ResponsiveGridLayout" singleContainerFullSize="true" breakpointM="500" adjustLabelSpan="false" labelSpanXL="4" labelSpanL="4"
+	labelSpanM="4" labelSpanS="4" emptySpanXL="4" emptySpanL="4" emptySpanM="1" emptySpanS="0" visible="{=${data>/AUFNR}!==null}"
+	editable="false">
+	<f:content>
+		<Label text="{i18n>processOrderInfoActionFragment.label.text.operationInfo}"/>
+		<Text id="processOrderFragmentOperationInfo" text="{data>/VORNR}"/>
+		<Label text="{i18n>processOrderInfoActionFragment.label.text.statusInfo}"/>
+		<Text id="processOrderFragmentStatusInfo" text="{data>/STATUS}"/>
+		<Label text="{i18n>processOrderInfoActionFragment.label.text.materialInfo}"/>
+		<Text id="processOrderFragmentMaterialInfo" text="{data>/MATNR}\n{data>/MAKTX}"/>
+	</f:content>
+</f:SimpleForm>
