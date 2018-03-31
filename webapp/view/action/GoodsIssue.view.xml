@@ -33,7 +33,7 @@
 				labelSpanL="4" labelSpanM="3" labelSpanS="12" emptySpanXL="4" emptySpanL="3" emptySpanM="2" emptySpanS="0">
 				<f:content>
 					<!-- LENUM -->
-					<Label text="{i18n>lableTextFormGoodsIssueStorageUnit}" labelFor="storageUnitInput" required="true"/>
+					<Label text="{i18n>lableTextFormGoodsIssueStorageUnit}" labelFor="storageUnitInput"/>
 					<Input id="storageUnitInput" value="{path: 'data>/storageUnit', type:'.sapType.LENUM'}" change="onStorageUnitInputChange"
 						valueState="{view>/storageUnitNumberValueState}" visible="{=${view>/type}!=='nonLE'}" maxLength="20"
 						class="noScannerInput suwIncreadedInputFontSize">
@@ -59,10 +59,9 @@
 						</layoutData>
 					</Input>
 					<!-- QUAN, UOM -->
-					<Label text="{i18n>lableTextFormGoodsIssueQuantity}, {i18n>lableTextFormGoodsIssueUnitOfMeasureShort}" labelFor="quantityInput"
-						required="true"/>
+					<Label text="{i18n>lableTextFormGoodsIssueQuantity}, {i18n>lableTextFormGoodsIssueUnitOfMeasureShort}" labelFor="quantityInput"/>
 					<Input id="quantityInput" textAlign="End" change="onQuantityInputChange" value="{path: 'data>/entryQuantity', type:'.sapType.QUAN'}"
-						class="suwIncreadedInputFontSize" required="true">
+						class="suwIncreadedInputFontSize">
 						<layoutData>
 							<l:GridData span="XL2 L2 M4 S7"/>
 						</layoutData>
@@ -77,7 +76,7 @@
 						</c:layoutData>
 					</c:Icon>
 					<Input id="unitOfMeasureInput" value="{path: 'data>/unitOfMeasure', type:'.sapType.MEINS'}" change="onUnitOfMeasureInputChange"
-						editable="{=${view>/type}==='nonLE'}" maxLength="4" class="suwIncreadedInputFontSize" required="true">
+						editable="{=${view>/type}==='nonLE'}" maxLength="4" class="suwIncreadedInputFontSize">
 						<layoutData>
 							<l:GridData span="XL1 L1 M1 S3"/>
 						</layoutData>

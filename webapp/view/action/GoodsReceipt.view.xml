@@ -41,8 +41,7 @@
 							<l:GridData span="XL4 L4 M6 S12"/>
 						</layoutData>
 					</Input>
-					<Label text="{i18n>lableTextFormGoodsReceiptQuantity}, {i18n>lableTextFormGoodsReceiptUnitOfMeasureShort}" labelFor="quantityInput"
-						required="true"/>
+					<Label text="{i18n>lableTextFormGoodsReceiptQuantity}, {i18n>lableTextFormGoodsReceiptUnitOfMeasureShort}" labelFor="quantityInput"/>
 					<Input id="quantityInput" textAlign="End" change="onQuantityChange" value="{path: 'data>/SOLLME', type:'.sapType.QUAN'}"
 						editable="{view>/bStorageUnitValid}" class="suwIncreadedInputFontSize">
 						<layoutData>
