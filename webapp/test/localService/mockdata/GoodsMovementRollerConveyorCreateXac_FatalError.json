@@ -1,0 +1,42 @@
+{
+	"d": {
+		"results": [{
+			"__metadata": {
+				"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData",
+				"type": "QueryTemplate.Rowsets"
+			},
+			"FatalError": "Buchung ist nicht möglich: Fehler im SAP ERP",
+			"DateCreated": "\/Date(1512214279000)\/",
+			"EndDate": "\/Date(1512214273000)\/",
+			"StartDate": "\/Date(1512210673000)\/",
+			"Version": "14.0 SP7 Patch 15 (Jan 13, 2016)",
+			"QueryTemplate": "SAPUI5/services",
+			"Rowset": {
+				"results": [{
+					"Row": {
+						"results": [{
+							"LENUM": "00000000109330000113",
+							"RowId": 1
+						}]
+
+					}
+				}]
+			},
+			"Messages": {
+				"results": [{
+					"__metadata": {
+						"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Messages('Message')",
+						"type": "QueryTemplate.Messages"
+					},
+					"Message": "Warenbewegung 5000583969 angelegt (SZMII_MESSAGES001)"
+				}, {
+					"__metadata": {
+						"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Messages('Message')",
+						"type": "QueryTemplate.Messages"
+					},
+					"Message": "Rückmeldung Wareneingang zu Auftrag 1093300 erfolgreich! (SZMII_MESSAGES101)"
+				}]
+			}
+		}]
+	}
+}

@@ -43,8 +43,8 @@ Feature: Goods Issue with LE
 		Then I can see quantityInput with value '' in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
 		When I enter '1,000' into quantityInput in action.GoodsIssue view
-		When I enter '00000000000000000001' into storageUnitInput in action.GoodsIssue view
-		Then I can see messageStrip with text starting with 'Palette '00000000000000000001' nicht gefunden.' in action.GoodsIssue view
+		When I enter '123456789000' into storageUnitInput in action.GoodsIssue view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Palette '00000000123456789000' nicht gefunden.' in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
 		When I enter '00000000109330000004' into storageUnitInput in action.GoodsIssue view
 		Then I can see saveButton in action.GoodsIssue view
@@ -110,8 +110,8 @@ Feature: Goods Issue with LE
 		 
 	Scenario: Should show warning icon and message if users enter LE with past expiration date
 		When I enter '00000000109330000006' into storageUnitInput in action.GoodsIssue view
-		Then I can see messageStrip with text 'Achtung: MHD der Charge '0109331231' ist am '20.12.2010' abgelaufen!' in action.GoodsIssue view 
-		 And I can see messageStrip with type 'Warning' in action.GoodsIssue view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Achtung: MHD der Charge '0109331231' ist am '20.12.2010' abgelaufen!' in action.GoodsIssue view 
+		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Warning' in action.GoodsIssue view
 		 And I can see expirationDateIndicatorIcon with color '#f9a429' in action.GoodsIssue view
 		 And I can see expirationDateIndicatorIcon with src 'sap-icon://quality-issue' in action.GoodsIssue view
 		 And I can see expirationDateOutOfDateIcon with color '#f9a429' in action.GoodsIssue view
@@ -127,34 +127,34 @@ Feature: Goods Issue with LE
 		When I enter '00000000109330000008' into storageUnitInput in action.GoodsIssue view
 		 And I enter '1234567' into orderNumberInput in action.GoodsIssue view
 		Then I can see storageUnitFragmentMaterialInfoText with text '0000000-000\nUNPLANNED WITHDRAWAL of Zucker-Fett-VBT' in action.GoodsIssue view
-		 And I can see messageStrip with text 'Ungeplante Entnahme: Komponente '0000000-000' für Auftrag '1234567' nicht vorgesehen!' in action.GoodsIssue view
-		 And I can see messageStrip with type 'Warning' in action.GoodsIssue view
+		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Ungeplante Entnahme: Komponente '0000000-000' für Auftrag '1234567' nicht vorgesehen!' in action.GoodsIssue view
+		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Warning' in action.GoodsIssue view
 		 And I can see orderNumberInput with valueState 'Warning' in action.GoodsIssue view
 		 And I can see saveButton in action.GoodsIssue view
 	
 	Scenario: Should show warning message if users enter a storage unit with material number that is backflushed in order
 		When I enter '00000000109330000009' into storageUnitInput in action.GoodsIssue view
 		 And I enter '1234567' into orderNumberInput in action.GoodsIssue view
-		Then I can see messageStrip with text 'Achtung: Komponente '1200666-002' wird retrograd entnommen!' in action.GoodsIssue view
-		 And I can see messageStrip with type 'Warning' in action.GoodsIssue view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Achtung: Komponente '1200666-002' wird retrograd entnommen!' in action.GoodsIssue view
+		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Warning' in action.GoodsIssue view
 		Then I can see saveButton in action.GoodsIssue view
 	
 	Scenario: Should show error message if unit of measure from LE does not match unit of measure from order component list
 		When I enter '00000000109330000010' into storageUnitInput in action.GoodsIssue view
 		 And I enter '1234567' into orderNumberInput in action.GoodsIssue view
-		Then I can see messageStrip with text 'Achtung: Inkonsistente Mengeneinheiten in Auftragskomponente (ST) und Lagereinheit (KGM)!' in action.GoodsIssue view
-		 And I can see messageStrip with type 'Error' in action.GoodsIssue view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Achtung: Inkonsistente Mengeneinheiten in Auftragskomponente (ST) und Lagereinheit (KGM)!' in action.GoodsIssue view
+		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Error' in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
 	
 	Scenario: Should show error message if entered order number does not exist
 		When I enter '00000000100000100011' into storageUnitInput in action.GoodsIssue view
 		When I enter '1000001' into orderNumberInput in action.GoodsIssue view
-		Then I can see messageStrip with text starting with 'Prozessauftrag '1000001' nicht gefunden.' in action.GoodsIssue view
-		 And I can see messageStrip with type 'Error' in action.GoodsIssue view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Prozessauftrag '1000001' nicht gefunden.' in action.GoodsIssue view
+		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Error' in action.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
 		
 	Scenario: Should show success message if users post goods issue successfully
 		When I enter '00000000109330000012' into storageUnitInput in action.GoodsIssue view
 		 And I enter '1234567' into orderNumberInput in action.GoodsIssue view
 		 And I click on saveButton in action.GoodsIssue view
-		Then I can see messageStrip with text 'Warenausgang zu Auftrag '1234567' wurde erfolgreich gebucht!' in action.GoodsIssue view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Warenausgang zu Auftrag '1234567' wurde erfolgreich gebucht!' in action.GoodsIssue view

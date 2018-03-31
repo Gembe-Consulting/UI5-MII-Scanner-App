@@ -40,12 +40,14 @@ sap.ui.define([
 
 				sUrlParameters = "serverDelay=" + oOptions.delay;
 
-				if (oOptions.errorType) {
-					sUrlParameters = sUrlParameters + "&" + "errorType=" + oOptions.errorType;
+				if (oOptions.errorServiceName) {
+					sUrlParameters = sUrlParameters + "&" + "errorServiceName=" + oOptions.errorServiceName;
 				}
-
-				if (oOptions.errorService) {
-					sUrlParameters = sUrlParameters + "&" + "errorService=" + oOptions.errorService;
+				if (oOptions.errorServiceMessage) {
+					sUrlParameters = sUrlParameters + "&" + "errorServiceMessage=" + oOptions.errorServiceMessage;
+				}
+				if (oOptions.errorServiceType) {
+					sUrlParameters = sUrlParameters + "&" + "errorServiceType=" + oOptions.errorServiceType;
 				}
 
 				if (oOptions.illumLoginName !== "") {
@@ -81,6 +83,30 @@ sap.ui.define([
 						Opa5.assert.strictEqual(oButton.getEnabled(), bEnabledState, "The save button property enabled is " + bEnabledState);
 					},
 					errorMessage: "Did not find the saveButton"
+				});
+			},
+
+			iShouldSeeThServiceErrorMessageBox: function(sErrorTitle, sErrorMessage) {
+				return this.waitFor({
+					searchOpenDialogs: true,
+					controlType: "sap.m.Dialog",
+					matchers: new PropertyStrictEquals({
+						name: "title",
+						value: sErrorTitle
+					}),
+					success: function(oMessageBox) {
+						var oMsg;
+
+						Opa5.assert.strictEqual(oMessageBox.length, 1, "One Error Message Box is found matching title");
+
+						oMsg = oMessageBox[0];
+
+						Opa5.assert.strictEqual(oMsg.getTitle(), sErrorTitle, "Error Message Box has title: " + sErrorTitle);
+						Opa5.assert.strictEqual(oMsg._$content.text(), sErrorMessage, "Error Message Box has text: " + sErrorMessage);
+					},
+					actions: new Press(),
+					errorMessage: "Did not find the Error Message Box"
+
 				});
 			},
 

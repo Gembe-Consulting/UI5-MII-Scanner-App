@@ -45,9 +45,11 @@
 						</layoutData>
 					</Input>
 					<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress"
-						visible="{path:'data>/ISTME', formatter:'.formatter.isEmptyStorageUnit'}" size="{=${device>/system/desktop}===true ? '1.25rem' : '1.75rem'}"
-						width="{=${device>/system/desktop}===true ? '1.25rem' : '1.75rem'}" height="{=${device>/system/desktop}===true ? '2.00rem' : '2.75rem'}"
-						class="sapUiSmallMarginEnd">
+						visible="{path:'data>/ISTME', formatter:'.formatter.isEmptyStorageUnit'}"
+						size="{=${device>/system/desktop}===true ? ${device>/defaults/clearQuantityInputIcon/desktop/size} : ${device>/defaults/clearQuantityInputIcon/mobile/size}}"
+						width="{=${device>/system/desktop}===true ? ${device>/defaults/clearQuantityInputIcon/desktop/width} : ${device>/defaults/clearQuantityInputIcon/mobile/width}}"
+						height="{=${device>/system/desktop}===true ? ${device>/defaults/clearQuantityInputIcon/desktop/height} : ${device>/defaults/clearQuantityInputIcon/mobile/height}}"
+						alt="CLEAR" class="sapUiSmallMarginEnd">
 						<c:layoutData>
 							<l:GridData span="XL1 L1 M1 S2"/>
 						</c:layoutData>
@@ -65,6 +67,8 @@
 		</content>
 		<footer>
 			<Toolbar id="footer">
+				<Button visible="{= ${message>/}.length === 0 ? false : true}" icon="sap-icon://message-popup" text="{= ${message>/}.length }"
+					type="Emphasized" press="onShowMessagePopoverPress"/>
 				<ToolbarSpacer/>
 				<Button id="saveButton" type="Accept" text="{i18n>textButtonSaveStockTransfer}" press="onSave" enabled="{view>/bValid}"/>
 				<Button id="cancelButton" type="Reject" text="{i18n>textButtonCancelStockTransfer}" press="onCancelAction"/>

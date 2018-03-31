@@ -48,7 +48,7 @@ Feature: Stock Transfer
 		 And I can see storageUnitInput with valueState 'Success' in action.StockTransfer view
 		 And I can see quantityInput with editable being 'true' in action.StockTransfer view
 		 And I can see quantityInput with value '' in action.StockTransfer view
-		 And I can see quantityInput has focus in action.StockTransfer view
+#		 And I can see quantityInput has focus in action.StockTransfer view
 		 And I can see clearQuantityInputIcon in action.StockTransfer view
 		When I click on clearFormButton in action.StockTransfer view
 		Then I can see storageUnitInput with valueState 'None' in action.StockTransfer view
@@ -59,10 +59,10 @@ Feature: Stock Transfer
 		 And I can see quantityInput with editable being 'false' in action.StockTransfer view
 		 And I can see quantityInput with value '300,000' in action.StockTransfer view
 		 And I cannot see clearQuantityInputIcon in action.StockTransfer view
-		When I enter '00000000000000000001' into storageUnitInput in action.StockTransfer view
+		When I enter '123456789000' into storageUnitInput in action.StockTransfer view
 		Then I can see storageUnitInput with valueState 'Error' in action.StockTransfer view
-		 And I can see messageStrip with text starting with 'Palette '00000000000000000001' nicht gefunden.' in action.StockTransfer view
-		 And I can see messageStrip with type 'Error' in action.StockTransfer view
+		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Palette '00000000123456789000' nicht gefunden.' in action.StockTransfer view
+		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Error' in action.StockTransfer view
 
 	Scenario: User clears the input form
 		When I enter '00000000109330000013' into storageUnitInput in action.StockTransfer view
@@ -93,7 +93,7 @@ Feature: Stock Transfer
 		 And I cannot see saveButton in action.StockTransfer view
 		When I enter '300,123' into quantityInput in action.StockTransfer view
 		Then I can see saveButton in action.StockTransfer view
-		When I enter '00000000000000000001' into storageUnitInput in action.StockTransfer view
+		When I enter '123456789000' into storageUnitInput in action.StockTransfer view
 		Then I cannot see saveButton in action.StockTransfer view
 		When I enter '00000000109330000014' into storageUnitInput in action.StockTransfer view
 		Then I can see saveButton in action.StockTransfer view
@@ -110,8 +110,8 @@ Feature: Stock Transfer
 		 And I click on last item of storageBinSelection items in action.StockTransfer view
 		 And I enter '00000000109330000014' into storageUnitInput in action.StockTransfer view
 		 And I click on saveButton in action.StockTransfer view
-		Then I can see messageStrip with text 'Umlagerung von Palette '109330000014' nach Lagerplatz 'PRODUKTION' wurde erfolgreich gebucht!' in action.StockTransfer view
-		 And I can see messageStrip with type 'Success' in action.StockTransfer view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Umlagerung von Palette '109330000014' nach Lagerplatz 'PRODUKTION' wurde erfolgreich gebucht!' in action.StockTransfer view
+		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Success' in action.StockTransfer view
 		 And I can see storageUnitInput with value '' in action.StockTransfer view
 		 And I can see storageBinSelection with value '' in action.StockTransfer view
 
@@ -121,7 +121,7 @@ Feature: Stock Transfer
 		 And I enter '00000000109330000013' into storageUnitInput in action.StockTransfer view
 		 And I enter '321,123' into quantityInput in action.StockTransfer view
 		 And I click on saveButton in action.StockTransfer view
-		Then I can see messageStrip with text 'Wareneingang von Palette '109330000013' und Umlagerung nach Lagerplatz 'PRODUKTION' wurde erfolgreich gebucht!' in action.StockTransfer view
-		 And I can see messageStrip with type 'Success' in action.StockTransfer view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Wareneingang von Palette '109330000013' und Umlagerung nach Lagerplatz 'PRODUKTION' wurde erfolgreich gebucht!' in action.StockTransfer view
+		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Success' in action.StockTransfer view
 		 And I can see storageUnitInput with value '' in action.StockTransfer view
 		 And I can see storageBinSelection with value '' in action.StockTransfer view

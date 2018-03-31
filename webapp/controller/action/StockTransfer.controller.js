@@ -13,6 +13,8 @@ sap.ui.define([
 
 		formatter: formatter,
 
+		_aWarningLikeFatalError: ["EZMII_MESSAGES030:", "EZMII_MESSAGES031:", "EZMII_MESSAGES032:", "EZMII_MESSAGES033:", "EZMII_MESSAGES034:"],
+
 		_oInitData: {
 			//user input data
 			storageUnit: null,
@@ -40,25 +42,45 @@ sap.ui.define([
 			var bPerformGoodsReceipt = this._isGoodsReceiptRequired(),
 				doPosting, //Promise
 				fnResolveStockTransfer,
+				fnRejectStockTransfer,
 				fnResolveGoodsReceipt,
-				fnReject,
-				messages = [];
+				fnRejectGoodsReceipt,
+				fnReject;
 
 			this.getOwnerComponent().showBusyIndicator();
 
 			fnResolveGoodsReceipt = function(oData) {
 				var oStorageUnitNumber,
-					aRows = oData.d.results[0].Rowset.results[0].Row.results;
+					aRows,
+					bHasWarningLikeError;
 
-				messages = messages.concat(oData.messages);
+				if (!oData.success) {
+
+					bHasWarningLikeError = this._aWarningLikeFatalError.some(function(sMessage) {
+						return oData.lastErrorMessage.includes(sMessage);
+					});
+
+					if (bHasWarningLikeError) {
+						this.addUserMessage({
+							text: oData.lastErrorMessage.substring(19, oData.lastErrorMessage.length),
+							type: sap.ui.core.MessageType.Warning
+						});
+					} else {
+						throw new Error(oData.lastErrorMessage + " @BwA 101");
+					}
+				}
+
+				aRows = oData.d.results[0].Rowset.results[0].Row.results;
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
 				if (aRows.length === 1) {
 					oStorageUnitNumber = aRows[0];
-					messages.push("Lagereinheit " + oStorageUnitNumber.LENUM + " Wareneingang gebucht");
 				} else {
 					throw new Error(this.getTranslation("stockTransfer.messageText.resultIncomplete") + " @BwA 101");
 				}
+
+				this.addMessageManagerMessage("Wareneingang von Palette  " + oStorageUnitNumber.LENUM + "  erfolgreich.");
+
 			}.bind(this);
 
 			fnResolveStockTransfer = function(oData) {
@@ -66,8 +88,6 @@ sap.ui.define([
 					aRows = oData.d.results[0].Rowset.results[0].Row.results,
 					oDataModel = this.getModel("data"),
 					sSuccessMessage;
-
-				messages = messages.concat(oData.messages);
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
 				if (aRows.length === 1) {
@@ -79,40 +99,52 @@ sap.ui.define([
 						sSuccessMessage = this.getTranslation("stockTransfer.messageText.postingSuccessfull", [oDataModel.getProperty("/storageUnit"), oDataModel.getProperty("/storageBin")]);
 					}
 
-					this.addLogMessage({
+					this.addUserMessage({
 						text: sSuccessMessage,
 						type: sap.ui.core.MessageType.Success
-					});
+					}, true);
 
-					messages.push("Lagereinheit " + oStorageUnitNumber.LENUM + " Umlagerung gebucht");
 				} else {
 					throw new Error(this.getTranslation("stockTransfer.messageText.resultIncomplete") + " @BwA 999");
 				}
 
+				this.addMessageManagerMessage("Umbuchung von Palette " + oStorageUnitNumber.LENUM + " erfolgreich.");
+
+			}.bind(this);
+
+			fnRejectGoodsReceipt = function(oError) {
+				MessageBox.error(oError.message, {
+					title: this.getTranslation("error.miiTransactionErrorText")
+				});
+				throw oError; //re-throw
+			}.bind(this);
+
+			fnRejectStockTransfer = function(oError) {
+				MessageBox.error(oError.message, {
+					title: this.getTranslation("error.miiTransactionErrorText")
+				});
+				throw oError; //re-throw
 			}.bind(this);
 
 			fnReject = function(oError) {
-				MessageBox.error(oError.message, {
-					title: this.getTranslation("error.miiTransactionErrorText", ["GoodsMovementCreate: 101/999"])
+				this.addUserMessage({
+					text: oError.message
 				});
-				throw oError;
 			}.bind(this);
 
 			if (bPerformGoodsReceipt) {
 				doPosting = this._postGoodsReceipt()
-					.then(fnResolveGoodsReceipt, fnReject);
+					.then(fnResolveGoodsReceipt, fnRejectGoodsReceipt);
 			} else {
 				doPosting = Promise.resolve();
 			}
 
 			doPosting.then(this._postStockTransfer.bind(this))
-				.then(fnResolveStockTransfer, fnReject)
-				.then(this.getOwnerComponent().hideBusyIndicator, this.getOwnerComponent().hideBusyIndicator)
+				.then(fnResolveStockTransfer, fnRejectStockTransfer)
+				.catch(fnReject)
+				.then(this.getOwnerComponent().hideBusyIndicator)
 				.then(function() {
 					this.onClearFormPress({}, true /*bKeepMessageStrip*/ );
-				}.bind(this))
-				.then(function() {
-					jQuery.sap.log.debug(messages.join("\n"), "", this.toString());
 				}.bind(this));
 
 		},
@@ -131,6 +163,8 @@ sap.ui.define([
 			if (oDataModel.getProperty(sPath + "storageBin") === "BA01" || oDataModel.getProperty(sPath + "storageBin") === "BA02") {
 				oDataModel.setProperty(sPath + "BWART", "311");
 				oDataModel.setProperty(sPath + "NLTYP", "");
+
+				this.addMessageManagerMessage("Lagerplatz " + oDataModel.getProperty(sPath + "storageBin") + ": Bewegungsart 311 aktiv.");
 			}
 
 			oParam = {
@@ -210,10 +244,14 @@ sap.ui.define([
 				fnResolve,
 				fnReject;
 
+			/* check if current input is valid */
+			if (this.controlHasValidationError(oSource)) {
+				return;
+			}
+
 			/* Prepare UI: busy, value states, log messages */
 			this.showControlBusyIndicator(oSource);
 			oSource.setValueState(sap.ui.core.ValueState.None);
-			this.clearLogMessages();
 
 			/* Prepare Data */
 			sStorageUnitNumber = this.padStorageUnitNumber(sStorageUnitNumber);
@@ -238,7 +276,7 @@ sap.ui.define([
 					}
 
 				} else {
-					this.addLogMessage({
+					this.addUserMessage({
 						text: this.getTranslation("stockTransfer.messageText.storageUnitNotFound", [sStorageUnitNumber]),
 						type: sap.ui.core.MessageType.Error
 					});
