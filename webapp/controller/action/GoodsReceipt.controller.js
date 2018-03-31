@@ -59,17 +59,23 @@ sap.ui.define([
 			/* Prepare success callback */
 			fnResolve = function(oData) {
 				var oStorageUnitNumber,
+					aRows;
+
+				try {
 					aRows = oData.d.results[0].Rowset.results[0].Row.results;
+				} catch (oError) {
+					aRows = [];
+				}
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
 				if (aRows.length === 1) {
 					oStorageUnitNumber = aRows[0];
-					this.addLogMessage({
+					this.addUserMessage({
 						text: this.getTranslation("goodsReceipt.messageText.goodsReceiptPostingSuccessfull", [this.deleteLeadingZeros(oStorageUnitNumber.LENUM)]),
 						type: sap.ui.core.MessageType.Success
 					});
 				} else {
-					this.addLogMessage({
+					this.addUserMessage({
 						text: this.getTranslation("goodsReceipt.messageText.resultIncomplete"),
 						type: sap.ui.core.MessageType.Error
 					});
@@ -78,8 +84,9 @@ sap.ui.define([
 
 			/* Prepare error callback */
 			fnReject = function(oError) {
-				MessageBox.error(oError.message, {
-					title: this.getTranslation("error.miiTransactionErrorText", ["GoodsMovementCreate: 101"])
+				MessageBox.error(oError.responseText || oError.message, {
+					title: this.getTranslation("error.miiTransactionErrorText", ["GoodsMovementCreate: 101"]),
+					contentWidth: "500px"
 				});
 			}.bind(this);
 
@@ -213,10 +220,14 @@ sap.ui.define([
 				fnResolve,
 				fnReject;
 
+			/* check if current input is valid */
+			if (this.controlHasValidationError(oSource)) {
+				return;
+			}
+
 			/* Prepare UI: busy, value states, log messages */
 			this.showControlBusyIndicator(oSource);
 			oSource.setValueState(sap.ui.core.ValueState.None);
-			this.clearLogMessages();
 
 			/* Prepare Data */
 			sStorageUnitNumber = this.padStorageUnitNumber(sStorageUnitNumber);
@@ -226,9 +237,15 @@ sap.ui.define([
 				var oStorageUnit = {
 						LENUM: null
 					},
-					aRows = oData.d.results[0].Rowset.results[0].Row.results,
+					aRows,
 					bStorageUnitValid = true,
 					oDataModel = this.getModel("data");
+
+				try {
+					aRows = oData.d.results[0].Rowset.results[0].Row.results;
+				} catch (oError) {
+					aRows = [];
+				}
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
 				if (aRows.length === 1) {
@@ -237,14 +254,14 @@ sap.ui.define([
 					oSource.setValueState(sap.ui.core.ValueState.Success);
 
 					if (oStorageUnit.SOLLME <= 0) {
-						this.addLogMessage({
+						this.addUserMessage({
 							text: this.getTranslation("goodsReceipt.messageText.storageUnitAlreadyPosted", [sStorageUnitNumber])
 						});
 						oSource.setValueState(sap.ui.core.ValueState.Error);
 						bStorageUnitValid = false;
 					}
 				} else {
-					this.addLogMessage({
+					this.addUserMessage({
 						text: this.getTranslation("goodsReceipt.messageText.storageUnitNotFound", [sStorageUnitNumber])
 					});
 					oSource.setValueState(sap.ui.core.ValueState.Error);
@@ -259,9 +276,12 @@ sap.ui.define([
 
 			/* Prepare error callback */
 			fnReject = function(oError) {
-				MessageBox.error(oError.message, {
-					title: this.getTranslation("error.miiTransactionErrorText", ["StorageUnitNumberRead"])
+				MessageBox.error(oError.responseText || oError.message, {
+					title: this.getTranslation("error.miiTransactionErrorText", ["StorageUnitNumberRead"]),
+					contentWidth: "500px"
 				});
+				oSource.setValueState(sap.ui.core.ValueState.Error).setValue("");
+				this.getModel("view").setProperty("/bStorageUnitValid", false);
 			}.bind(this);
 
 			/* Perform service call, Hide Busy Indicator, Update View Controls */
@@ -281,10 +301,14 @@ sap.ui.define([
 				fnResolve,
 				fnReject;
 
+			/* check if current input is valid */
+			if (this.controlHasValidationError(oSource)) {
+				return;
+			}
+
 			/* Prepare UI */
 			this.showControlBusyIndicator(oSource);
 			oSource.setValueState(sap.ui.core.ValueState.None);
-			this.clearLogMessages();
 
 			/* Prepare Data */
 			// Order number could come like 1234567/0012 or 000001234567/001 -> need to clean it
@@ -293,9 +317,15 @@ sap.ui.define([
 			/* Prepare success callback */
 			fnResolve = function(oData) {
 				var oOrder,
-					aRows = oData.d.results[0].Rowset.results[0].Row.results,
+					aRows,
 					bOrderNumberValid = true,
 					oDataModel = this.getModel("data");
+
+				try {
+					aRows = oData.d.results[0].Rowset.results[0].Row.results;
+				} catch (oError) {
+					aRows = [];
+				}
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
 				if (aRows.length === 1) {
@@ -303,7 +333,7 @@ sap.ui.define([
 					oSource.setValueState(sap.ui.core.ValueState.Success);
 					oDataModel.setProperty("/AUFNR", oOrder.AUFNR);
 				} else {
-					this.addLogMessage({
+					this.addUserMessage({
 						text: this.getTranslation("goodsReceipt.messageText.orderNumberNotFound", [sOrderNumber])
 					});
 					oSource.setValueState(sap.ui.core.ValueState.Error);
@@ -316,9 +346,12 @@ sap.ui.define([
 
 			/* Prepare error callback */
 			fnReject = function(oError) {
-				MessageBox.error(oError.message, {
-					title: this.getTranslation("error.miiTransactionErrorText", ["OrderHeaderNumberRead"])
+				MessageBox.error(oError.responseText || oError.message, {
+					title: this.getTranslation("error.miiTransactionErrorText", ["OrderHeaderNumberRead"]),
+					contentWidth: "500px"
 				});
+				oSource.setValueState(sap.ui.core.ValueState.Error).setValue("");
+				this.getModel("view").setProperty("/bStorageUnitValid", false);
 			}.bind(this);
 
 			/* Perform service call, Hide Busy Indicator, Update View Controls */
@@ -333,21 +366,15 @@ sap.ui.define([
 		},
 
 		onQuantityChange: function(oEvent) {
-			this.updateViewControls(this.getModel("data")
-				.getData());
+			this.updateViewControls(this.getModel("data").getData());
 		},
 
 		onUnitOfMeasureChange: function(oEvent) {
-			var sUnitOfMeasure = oEvent.getParameter("value").toUpperCase(),
-				oDataModel = this.getModel("data");
-
-			oDataModel.setProperty("/MEINH", sUnitOfMeasure);
-
 			this.updateViewControls(this.getModel("data").getData());
 		},
 
 		onStorageLocationChange: function(oEvent) {
-			var sStorageLocation = oEvent.getParameter("value").toUpperCase(),
+			var sStorageLocation = oEvent.getParameter("value"),
 				oDataModel = this.getModel("data");
 
 			// check if storage location is allowed
@@ -357,7 +384,7 @@ sap.ui.define([
 			}
 
 			// propose default unit of measure if storage location is not 1000 and uom was not entered before 
-			// clear unit of measure if storage location is 1000
+			// clear unit of measure if storage location is 1000 -> we will get uom from storage unit
 			if (sStorageLocation !== this._sStorageLocationWarehouse && !oDataModel.getProperty("/MEINH")) {
 				oDataModel.setProperty("/MEINH", this._sDefaultUnitOfMeasure);
 			} else if (sStorageLocation === this._sStorageLocationWarehouse) {

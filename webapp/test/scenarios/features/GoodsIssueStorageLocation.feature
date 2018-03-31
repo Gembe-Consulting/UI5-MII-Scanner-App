@@ -57,7 +57,7 @@ Feature: Goods Issue without LE
 		Then I can see saveButton in action.GoodsIssue view
 		When I enter '1000001' into orderNumberInput in action.GoodsIssue view
 		Then I can see orderNumberInput with valueState 'Error' in action.GoodsIssue view
-	 	Then I can see messageStrip with text starting with 'Prozessauftrag '1000001' nicht gefunden.' in action.GoodsIssue view
+	 	Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Prozessauftrag '1000001' nicht gefunden.' in action.GoodsIssue view
 	 	Then on the Goods Issue Page: I should see the save button is disabled
 	 	
 	Scenario: Should init data model and input fields if users clear form
@@ -76,7 +76,7 @@ Feature: Goods Issue without LE
 		Then I can see orderNumberInput with valueState 'Success' in action.GoodsIssue view
 		When I enter '0000000-000' into materialNumberInput in action.GoodsIssue view
 		Then I can see materialNumberInput with valueState 'Warning' in action.GoodsIssue view
-		 And I can see messageStrip with text 'Ungeplante Entnahme: Komponente '0000000-000' für Auftrag '1234567' nicht vorgesehen!' in action.GoodsIssue view
+		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Ungeplante Entnahme: Komponente '0000000-000' für Auftrag '1234567' nicht vorgesehen!' in action.GoodsIssue view
 		When I enter '1200666-004' into materialNumberInput in action.GoodsIssue view
 		Then I can see materialNumberInput with valueState 'Success' in action.GoodsIssue view
 		Then I can see unitOfMeasureInput with value 'ST' in action.GoodsIssue view
@@ -101,5 +101,5 @@ Feature: Goods Issue without LE
 		 And I enter '1200666-006' into materialNumberInput in action.GoodsIssue view
 		 And I enter '10' into quantityInput in action.GoodsIssue view
 		 And I enter 'rb01' into storageLocationInput in action.GoodsIssue view
-		 And I click on saveButton in action.GoodsIssue view
-		Then I can see messageStrip with text 'Warenausgang zu Auftrag '1234567' wurde erfolgreich gebucht!' in action.GoodsIssue view
+		When I click on saveButton in action.GoodsIssue view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Warenausgang zu Auftrag '1234567' wurde erfolgreich gebucht!' in action.GoodsIssue view

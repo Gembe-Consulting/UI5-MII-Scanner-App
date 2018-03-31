@@ -5,7 +5,7 @@
 				"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData",
 				"type": "QueryTemplate.Rowsets"
 			},
-			"FatalError": "Buchung ist nicht möglich: Fehler im SAP ERP",
+			"FatalError": "Fatal Aplication Error within MII Transaction",
 			"DateCreated": "\/Date(1512214279000)\/",
 			"EndDate": "\/Date(1512214273000)\/",
 			"StartDate": "\/Date(1512210673000)\/",

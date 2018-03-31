@@ -34,8 +34,9 @@
 				<f:content>
 					<!-- LENUM -->
 					<Label text="{i18n>lableTextFormGoodsIssueStorageUnit}" labelFor="storageUnitInput"/>
-					<Input id="storageUnitInput" value="{data>/storageUnit}" change="onStorageUnitInputChange" valueState="{view>/storageUnitNumberValueState}"
-						visible="{=${view>/type}!=='nonLE'}" maxLength="20" class="noScannerInput suwIncreadedInputFontSize">
+					<Input id="storageUnitInput" value="{path: 'data>/storageUnit', type:'.sapType.LENUM'}" change="onStorageUnitInputChange"
+						valueState="{view>/storageUnitNumberValueState}" visible="{=${view>/type}!=='nonLE'}" maxLength="20"
+						class="noScannerInput suwIncreadedInputFontSize">
 						<layoutData>
 							<l:GridData span="XL4 L4 M6 S12"/>
 						</layoutData>
@@ -66,8 +67,10 @@
 						</layoutData>
 					</Input>
 					<c:Icon id="clearQuantityInputIcon" src="sap-icon://eraser" press="onClearQuantityInputPress"
-						size="{=${device>/system/desktop}===true ? '1.25rem' : '1.75rem'}" width="{=${device>/system/desktop}===true ? '1.25rem' : '1.75rem'}"
-						height="{=${device>/system/desktop}===true ? '2.00rem' : '2.75rem'}" class="sapUiSmallMarginEnd">
+						size="{=${device>/system/desktop}===true ? ${device>/defaults/clearQuantityInputIcon/desktop/size} : ${device>/defaults/clearQuantityInputIcon/mobile/size}}"
+						width="{=${device>/system/desktop}===true ? ${device>/defaults/clearQuantityInputIcon/desktop/width} : ${device>/defaults/clearQuantityInputIcon/mobile/width}}"
+						height="{=${device>/system/desktop}===true ? ${device>/defaults/clearQuantityInputIcon/desktop/height} : ${device>/defaults/clearQuantityInputIcon/mobile/height}}"
+						alt="CLEAR" class="sapUiSmallMarginEnd">
 						<c:layoutData>
 							<l:GridData span="XL1 L1 M1 S2"/>
 						</c:layoutData>
@@ -80,8 +83,9 @@
 					</Input>
 					<!-- LGORT -->
 					<Label text="{i18n>lableTextFormGoodsIssueStorageLocation}" labelFor="storageLocationInput"/>
-					<Input id="storageLocationInput" value="{path: 'data>/storageLocation', type:'.sapType.LGORT'}" change="onStorageLocationInputChange"
-						visible="{=${view>/type}==='nonLE'}" maxLength="4" class="noScannerInput suwIncreadedInputFontSize">
+					<Input id="storageLocationInput"
+						value="{path: 'data>/storageLocation', type:'.sapType.LGORT', constraints:{'exludedStorageLocations':['VG01', '1000']}}"
+						change="onStorageLocationInputChange" visible="{=${view>/type}==='nonLE'}" maxLength="4" class="noScannerInput suwIncreadedInputFontSize">
 						<layoutData>
 							<l:GridData span="XL2 L2 M3 S5"/>
 						</layoutData>
@@ -108,6 +112,8 @@
 		</content>
 		<footer>
 			<Toolbar id="footer">
+				<Button visible="{= ${message>/}.length === 0 ? false : true}" icon="sap-icon://message-popup" text="{= ${message>/}.length }"
+					type="Emphasized" press="onShowMessagePopoverPress"/>
 				<ToolbarSpacer/>
 				<Button id="saveButton" type="Accept" text="{i18n>textButtonSaveGoodsIssue}" press="onSave" enabled="{view>/bValid}"/>
 				<Button id="cancelButton" type="Reject" text="{i18n>textButtonCancelGoodsIssue}" press="onCancelAction"/>

@@ -50,16 +50,42 @@ sap.ui.define([
 					});
 				}
 			);
-			
+
+			this.register(/^I start the app on '(.*?)' with '(.*?)' (error|type) '(.*?)'$/i,
+				function(sHash, sService, sTextOrType, sError, Given, When, Then) {
+
+					var bFatalError = !sTextOrType.includes("type");
+
+					Given.iStartTheApp({
+						hash: sHash,
+						errorServiceName: sService,
+						errorServiceMessage: bFatalError ? sError : "",
+						errorServiceType: bFatalError ? "fatalError" : sError
+					});
+				}
+			);
+
+			this.register(/^I can see the service error with title '(.*?)' and message '(.*?)'$/i,
+				function(sErrorTitle, sErrorMessage, Given, When, Then) {
+					Given.iShouldSeeThServiceErrorMessageBox(sErrorTitle, sErrorMessage);
+				}
+			);
+
+			this.register(/^I close all service error message boxes$/i,
+				function(Given, When, Then) {
+					Given.iCloseTheMessageBox();
+				}
+			);
+
 			//Then I should see goodsReceiptPageTitle in action.GoodsReceipt view has color '#1F35DE'
 			//this.register(/^I start the app on '(.*?)' using parameter '(.*?)'"$/i,
 			this.register(/^I can see (.+?) in (.+?) view has css (.+?) '(.+?)'$/i,
 				function(sControlId, sViewName, sCssProperty, sValue, Given, When, Then) {
 					Then.iCanSeeControlHasCSSProperty({
 						sControlId: sControlId,
-						sViewName:sViewName,
-						sCssProperty:sCssProperty,
-						sValue:sValue
+						sViewName: sViewName,
+						sCssProperty: sCssProperty,
+						sValue: sValue
 					});
 				}
 			);

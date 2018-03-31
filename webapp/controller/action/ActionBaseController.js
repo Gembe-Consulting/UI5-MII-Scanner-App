@@ -3,8 +3,11 @@ sap.ui.define([
 	"sap/m/MessageBox",
 	"sap/m/MessageToast",
 	"sap/m/MessageStrip",
+	"sap/m/MessagePopover",
+	"sap/m/MessageItem",
+	"sap/ui/core/message/Message",
 	"com/mii/scanner/model/formatter"
-], function(PageBaseController, MessageBox, MessageToast, MessageStrip, formatter) {
+], function(PageBaseController, MessageBox, MessageToast, MessageStrip, MessagePopover, MessageItem, Message, formatter) {
 	"use strict";
 
 	return PageBaseController.extend("com.mii.scanner.controller.action.ActionBaseController", {
@@ -57,6 +60,11 @@ sap.ui.define([
 
 		onInit: function() {
 			PageBaseController.prototype.onInit.call(this);
+
+			this._oMessageManager = sap.ui.getCore().getMessageManager();
+			this._oMessageModel = this._oMessageManager.getMessageModel();
+
+			this.setModel(this._oMessageModel, "message");
 
 			this.getView().addEventDelegate({
 				"onBeforeShow": function(oEvent) {
@@ -162,7 +170,7 @@ sap.ui.define([
 		 * Check is a given storage location is allowed for posting
 		 */
 		isStorageLocationAllowed: function(sStorageLocation) {
-			return this._aDisallowedStorageLocations.indexOf(sStorageLocation) === -1;
+			return this._aDisallowedStorageLocations.indexOf(sStorageLocation.toUpperCase()) === -1;
 		},
 
 		_formatStorageUnitData: function(oStorageUnit) {
@@ -229,7 +237,8 @@ sap.ui.define([
 			oViewModel.updateBindings(true);
 
 			if (!bKeepMessageStrip) {
-				this.clearLogMessages();
+				this.removeAllUserMessages();
+				this.removeAllMessageManagerMessages();
 			}
 		},
 
@@ -274,33 +283,57 @@ sap.ui.define([
 
 		},
 
-		addLogMessage: function(oMessage) {
-			var oMessageStripContainer = this.byId("messageStripContainer"),
-				oMsgStrip;
+		addUserMessage: function(oMessage, bKeepExisting) {
+			var oMsgContainer = this.byId("messageStripContainer"),
+				oMsgStrip = new MessageStrip({
+					text: oMessage.text || "Ein unbekannter Fehler ist aufgetreten",
+					showCloseButton: oMessage.showCloseButton || true,
+					showIcon: oMessage.showIcon || true,
+					customIcon: oMessage.customIcon,
+					type: oMessage.type || sap.ui.core.MessageType.Error,
+					enableFormattedText: oMessage.enableFormattedText || true
+				});
 
-			this.clearLogMessages();
-
-			oMsgStrip = new MessageStrip(this.createId("messageStrip"), {
-				text: oMessage.text || "Allgemeiner Fehler",
-				showCloseButton: true,
-				showIcon: true,
-				type: oMessage.type || sap.ui.core.MessageType.Error
-			});
-
-			oMessageStripContainer.addContent(oMsgStrip);
-		},
-
-		clearLogMessages: function() {
-			var oMsgStrip = this.byId("messageStrip"),
-				oMessageStripContainer = this.byId("messageStripContainer");
-
-			if (oMsgStrip) {
-				oMsgStrip.destroy();
+			if (!bKeepExisting) {
+				this.removeAllUserMessages();
 			}
 
-			oMessageStripContainer.destroyContent();
+			oMsgContainer.addContent(oMsgStrip);
 		},
 
+		removeAllUserMessages: function() {
+			var oMsgContainer = this.byId("messageStripContainer");
+			oMsgContainer.destroyContent();
+		},
+		/*
+				addLogMessage: function(oMessage) {
+					var oMessageStripContainer = this.byId("messageStripContainer"),
+						oMsgStrip;
+
+					this.clearLogMessages();
+
+					oMsgStrip = new MessageStrip(this.createId("messageStrip"), {
+						text: oMessage.text || "Ein unbekannter Fehler ist aufgetreten",
+						showCloseButton: oMessage.showCloseButton || true,
+						showIcon: oMessage.showIcon || true,
+						customIcon: oMessage.customIcon,
+						type: oMessage.type || sap.ui.core.MessageType.Error
+					});
+
+					oMessageStripContainer.addContent(oMsgStrip);
+				},
+
+				clearLogMessages: function() {
+					var oMsgStrip = this.byId("messageStrip"),
+						oMessageStripContainer = this.byId("messageStripContainer");
+
+					if (oMsgStrip) {
+						oMsgStrip.destroy();
+					}
+
+					oMessageStripContainer.destroyContent();
+				},
+		*/
 		isMessageModelClean: function() {
 			var oMessageModel = sap.ui.getCore()
 				.getMessageManager()
@@ -311,6 +344,17 @@ sap.ui.define([
 				return false;
 			}
 			return true;
+			//oder einfach:
+			//return !!sap.ui.getCore().getMessageManager().getMessageModel().getData().length;
+		},
+
+		controlHasValidationError: function(oControl, sBindingProperty) {
+			var aMessages = sap.ui.getCore().getMessageManager().getMessageModel().getData() || [];
+			sBindingProperty = sBindingProperty || "value";
+
+			return aMessages.some(function(message) {
+				return message.target === oControl.getId() + "/" + sBindingProperty;
+			});
 		},
 
 		handleConfirmationMessageBoxPress: function(oEvent) {
@@ -347,6 +391,59 @@ sap.ui.define([
 				return vNumber.replace(/^0+/, "");
 			}
 			return vNumber;
+		},
+
+		onShowMessagePopoverPress: function(oEvent) {
+			var oButton, oMessageTemplate, oMessagePopover;
+
+			oButton = oEvent.getSource();
+
+			/**
+			 * Gather information that will be visible on the MessagePopover
+			 */
+			oMessageTemplate = new MessageItem({
+				type: "{message>type}",
+				title: "{message>message}",
+				subtitle: "{message>additionalText}",
+				description: "{message>additionalText}"
+			});
+
+			if (!this.byId("messagePopover")) {
+				oMessagePopover = new MessagePopover(this.createId("messagePopover"), {
+					items: {
+						path: "message>/",
+						template: oMessageTemplate
+					},
+					afterClose: function() {
+						oMessagePopover.destroy();
+					}
+				});
+				this._addDependent(oMessagePopover);
+			}
+
+			oMessagePopover.openBy(oButton);
+		},
+
+		_addDependent: function(oMessagePopover) {
+			this.getView().addDependent(oMessagePopover);
+		},
+		/**
+		 * Removes validation error messages from the previous step
+		 */
+		removeAllMessageManagerMessages: function() {
+			this._oMessageManager.removeAllMessages();
+		},
+		/**
+		 * Adds a message to the message manager
+		 */
+		addMessageManagerMessage: function(oMessage) {
+			var oNewMessage = new Message({
+				message: oMessage.message || oMessage,
+				description: oMessage.description,
+				type: oMessage.type || sap.ui.core.MessageType.Information
+			});
+
+			this._oMessageManager.addMessages(oNewMessage);
 		}
 	});
 

@@ -37,8 +37,8 @@ Feature: Goods Receipt
 		 And I can see orderNumberInput with value '1093300' in action.GoodsReceipt view
 		 And I can see orderNumberInput with editable being 'false' in action.GoodsReceipt view
 		 And I can see saveButton with enabled being 'true' in action.GoodsReceipt view
-		When I enter '00000000000000000001' into storageUnitInput in action.GoodsReceipt view
-		Then I can see messageStrip with text starting with 'Palette '00000000000000000001' nicht gefunden.' in action.GoodsReceipt view
+		When I enter '123456789000' into storageUnitInput in action.GoodsReceipt view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Palette '00000000123456789000' nicht gefunden.' in action.GoodsReceipt view
 		Then on the Goods Receipt Page: I should see the save button is disabled
 		
 	Scenario: User enters a order number
@@ -92,7 +92,7 @@ Feature: Goods Receipt
 	Scenario: User enters a storage unit with zero remaining quantity
 		When I enter '00000000109330000002' into storageUnitInput in action.GoodsReceipt view
 		Then I can see quantityInput with value '0,000' in action.GoodsReceipt view
-		 And I can see messageStrip with text 'Palette '00000000109330000002' wurde bereits gebucht!' in action.GoodsReceipt view
+		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Palette '00000000109330000002' wurde bereits gebucht!' in action.GoodsReceipt view
 		Then on the Goods Receipt Page: I should see the save button is disabled
 		 And I can see quantityInput with editable being 'false' in action.GoodsReceipt view
 		When I click on clearFormButton in action.GoodsReceipt view 
@@ -109,7 +109,7 @@ Feature: Goods Receipt
 	Scenario: User is successfully posting full storage unit quantity
 		When I enter '00000000109330000001' into storageUnitInput in action.GoodsReceipt view
 		 And I click on saveButton in action.GoodsReceipt view 
-		Then I can see messageStrip with text 'Warenbewegung wurde mit LE '109330000001' erfolgreich gebucht!' in action.GoodsReceipt view 
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Warenbewegung wurde mit LE '109330000001' erfolgreich gebucht!' in action.GoodsReceipt view 
 		Then on the Goods Receipt Page: I should see the save button is disabled
 		Then on the Goods Receipt Page: I should see all input fields are initial
 		
@@ -117,6 +117,6 @@ Feature: Goods Receipt
 		When I enter '00000000109330000003' into storageUnitInput in action.GoodsReceipt view
 		 And I enter '300,000' into quantityInput in action.GoodsReceipt view
 		 And I click on saveButton in action.GoodsReceipt view 
-		Then I can see messageStrip with text 'Warenbewegung wurde mit LE '109330000003' erfolgreich gebucht!' in action.GoodsReceipt view 
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text 'Warenbewegung wurde mit LE '109330000003' erfolgreich gebucht!' in action.GoodsReceipt view 
 		Then on the Goods Receipt Page: I should see the save button is disabled
 		Then on the Goods Receipt Page: I should see all input fields are initial
