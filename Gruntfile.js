@@ -3,7 +3,7 @@ module.exports = function(grunt) {
 
 	grunt.loadNpmTasks("@sap/grunt-sapui5-bestpractice-build");
 	grunt.loadNpmTasks('grunt-text-replace');
-	
+
 	var oConfig = {
 		"openui5_preload": {
 			"preloadTmp": {
@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 				"overwrite": true, // overwrite matched source files
 				"replacements": [{
 					"from": "../resources/sap-ui-core.js",
-					"to": "https://"+"sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+					"to": "https://" + "sapui5.hana.ondemand.com/resources/sap-ui-core.js"
 				}]
 			}
 		},
