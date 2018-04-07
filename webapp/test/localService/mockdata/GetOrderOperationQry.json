@@ -315,7 +315,7 @@
 							},
 							"AUFNR": "1092694",
 							"VORNR": "0010",
-							"VORTEXT": "Verpackung aus Silo",
+							"VORTEXT": "Abgeschlossen: Verpackung aus Silo",
 							"ARBID": "00253110",
 							"ARBTXT": "Absackanlage Milchprodukte",
 							"VORNR_PARENT": null,
@@ -341,6 +341,39 @@
 							"KOPF_STATUS_TEXT": "Abgeschlossen",
 							"QUANTITY_DONE": "32.15",
 							"RowId": 1
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"AUFNR": "1092695",
+							"VORNR": "0010",
+							"VORTEXT": "Freigegeben: Verpackung aus Silo",
+							"ARBID": "00253110",
+							"ARBTXT": "Absackanlage Milchprodukte",
+							"VORNR_PARENT": null,
+							"STATUS": "0002",
+							"STATUS_TXT": "Freigegeben",
+							"WERK": "1000",
+							"STARTTRM": "\/Date(1506332280000)\/",
+							"ISTSTART": "\/Date(1505984400000)\/",
+							"ISTEND": "\/Date(1505993400000)\/",
+							"ENDTRM": "\/Date(1506365640000)\/",
+							"TRUECK_START": "\/Date(1522498526975)\/",
+							"TRUECK_ENDE": "\/Date(1522498526975)\/",
+							"CNW_HIST_STARTTRM": "\/Date(1506332280000)\/",
+							"GESPEICHERT_VON": "ROLAHL01",
+							"GESPEICHERT_AM": "\/Date(1505994915000)\/",
+							"MATNR": "1901435-001",
+							"MAT_TXT": "M-Joghurt A 4,3 HAL KOS 25kg Sack",
+							"LGORT": "1000",
+							"SOLL_MENGE": "21000",
+							"IST_MENGE": "6750.0",
+							"EINHEIT": "KG",
+							"KOPF_STATUS": "0002",
+							"KOPF_STATUS_TEXT": "Freigegeben",
+							"QUANTITY_DONE": "32.15",
+							"RowId": 2
 						}]
 					}
 				}]

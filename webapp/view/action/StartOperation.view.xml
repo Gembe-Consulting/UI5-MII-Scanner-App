@@ -16,14 +16,20 @@
 				labelSpanL="4" labelSpanM="3" labelSpanS="12" emptySpanXL="4" emptySpanL="3" emptySpanM="2" emptySpanS="0">
 				<f:content>
 					<!-- Order Number -->
-					<Label text="{i18n>startOperation.form.label.orderNumber}" labelFor="orderNumberInput"/>
+					<Label text="{i18n>startOperation.form.label.orderAndOperationNumber}" labelFor="orderNumberInput"/>
 					<Input id="orderNumberInput" change="onOrderNumberInputChange" value="{path: 'data>/orderNumber', type:'.sapType.AUFNR'}" maxLength="12"
 						class="noScannerInput suwIncreadedInputFontSize">
 						<layoutData>
-							<l:GridData span="XL4 L4 M6 S12"/>
+							<l:GridData span="XL3 L3 M4 S9"/>
 						</layoutData>
 					</Input>
-					<!-- Operation/Phase Number -->
+					<Input id="operationNumberInput" change="onOperationNumberInputChange" value="{path: 'data>/operationNumber', type:'.sapType.VORNR'}"
+						maxLength="4" class="noScannerInput suwIncreadedInputFontSize">
+						<layoutData>
+							<l:GridData span="XL1 L1 M2 S3"/>
+						</layoutData>
+					</Input>
+					<!-- Operation/Phase Number 
 					<Label text="{i18n>startOperation.form.label.operationNumber}" labelFor="operationNumberInput"/>
 					<Input id="operationNumberInput" change="onOperationNumberInputChange" value="{path: 'data>/operationNumber', type:'.sapType.VORNR'}"
 						maxLength="4" class="noScannerInput suwIncreadedInputFontSize">
@@ -31,7 +37,8 @@
 							<l:GridData span="XL4 L4 M6 S12"/>
 						</layoutData>
 					</Input>
-					<!-- date and Time Entry -->
+					-->
+					<!-- Date and Time Entry -->
 					<Label text="{i18n>startOperation.form.label.startDateTime}" labelFor="dateTimeEntry"/>
 					<DateTimePicker id="dateTimeEntry" change="onDateTimeEntryChange" dateValue="{data>/dateTimeValue}" displayFormat="medium"
 						class="noScannerInput suwIncreadedInputFontSize">

@@ -61,37 +61,37 @@ sap.ui.define([
 		oProcessOrderStatus: {
 			released: {
 				"STATUS_TXT": "Freigegeben",
-				"STATUS": "0002",
+				"STATUS_ID": "0002",
 				"STATUS_ICON": "sap-icon://sys-enter",
 				"STATUS_COLOR": "#05B074"
 			},
 			started: {
 				"STATUS_TXT": "Gestartet",
-				"STATUS": "0003",
+				"STATUS_ID": "0003",
 				"STATUS_ICON": "sap-icon://initiative",
 				"STATUS_COLOR": "#BB07FF"
 			},
 			stopped: {
 				"STATUS_TXT": "Beendet",
-				"STATUS": "0045",
+				"STATUS_ID": "0045",
 				"STATUS_ICON": "ap-icon://stop",
 				"STATUS_COLOR": "#330066"
 			},
 			closed: {
 				"STATUS_TXT": "Abgeschlossen",
-				"STATUS": "0046",
+				"STATUS_ID": "0046",
 				"STATUS_ICON": "sap-icon://locked",
 				"STATUS_COLOR": "#AAAAAA"
 			},
 			disrupted: {
 				"STATUS_TXT": "Störung",
-				"STATUS": "0098",
+				"STATUS_ID": "0098",
 				"STATUS_ICON": "sap-icon://warning2",
 				"STATUS_COLOR": "#FFAC00"
 			},
 			paused: {
 				"STATUS_TXT": "Pausiert",
-				"STATUS": "0097",
+				"STATUS_ID": "0097",
 				"STATUS_ICON": "sap-icon://pause",
 				"STATUS_COLOR": "#006E9E"
 			}

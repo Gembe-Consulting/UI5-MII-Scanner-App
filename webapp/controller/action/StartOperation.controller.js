@@ -40,9 +40,8 @@ sap.ui.define([
 
 		updateViewControls: function(oData) {
 			var oViewModel = this.getModel("view"),
-				oDataModel = this.getModel("data"),
-				bOrderOperationValid = oDataModel.getProperty("/bOrderOperationValid"),
-				bDateTimeEntryValid = oDataModel.getProperty("/bDateTimeEntryValid"),
+				bOrderOperationValid = oViewModel.getProperty("/bOrderOperationValid"),
+				bDateTimeEntryValid = oViewModel.getProperty("/bDateTimeEntryValid"),
 				bInputValuesComplete,
 				bNoErrorMessagesActive,
 				bReadyForPosting;
@@ -104,7 +103,7 @@ sap.ui.define([
 				if (aRows.length === 1) {
 					oOrderOperation = aRows[0];
 
-					if (!oOrderOperation.STATUS === this.oProcessOrderStatus.released.STATUS && !oOrderOperation.STATUS === this.oProcessOrderStatus.paused.STATUS) {
+					if (oOrderOperation.STATUS !== this.oProcessOrderStatus.released.STATUS_ID && oOrderOperation.STATUS !== this.oProcessOrderStatus.paused.STATUS_ID) {
 						this.addUserMessage({
 							text: this.getTranslation("startOperation.messageText.wrongCurrentStatus", [sOrderNumber, sOperationNumber, oOrderOperation.STATUS_TXT])
 						});
@@ -144,7 +143,7 @@ sap.ui.define([
 					this.hideControlBusyIndicator(oOperationNumberInput);
 				}.bind(this))
 				.then(function() {
-					//this.updateViewControls(this.getModel("data").getData());
+					this.updateViewControls(this.getModel("data").getData());
 				}.bind(this));
 		},
 
