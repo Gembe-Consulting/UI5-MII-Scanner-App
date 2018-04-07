@@ -130,6 +130,15 @@
 					"preventParameterlessLoad": true
 				}
 			},
+			"orderIncidents": {
+				"dataSource": "illuminatorService",
+				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/orderdata/GetOrderIncidentsQry",
+				"type": "mii.util.model.illum.QueryTemplateModel",
+				"settings": {
+					"preventInitialLoad": true,
+					"preventParameterlessLoad": true
+				}
+			},
 			"goodsMovement": {
 				"dataSource": "illuminatorService",
 				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/goodsmovement/GoodsMovementCreateXac",
