@@ -14,7 +14,7 @@ sap.ui.require([
 
 		Opa5.createPageObjects({
 
-			onTheStockTransferPage: {
+			onTheStartOperationPage: {
 				baseClass: Common,
 				actions: {
 					iConfirmTheMessageBox: function() {
@@ -36,10 +36,8 @@ sap.ui.require([
 					iShouldSeeAllInputFieldsAreInitial: function() {
 
 						var oInitialControlData = {
-							"storageUnitInput": "",
-							"quantityInput": "",
-							"unitOfMeasureInput": "",
-							"storageBinSelection": ""
+							"orderNumberInput": "",
+							"orderOperationInput": ""
 						};
 
 						jQuery.each(oInitialControlData, function(sControlId, sEmptyValue) {
@@ -70,16 +68,17 @@ sap.ui.require([
 
 					iShouldSeeDataModelAndViewModelAreInitial: function() {
 						var oExpectedDataData = {
-								//uswer input data
-								storageUnit: null,
-								entryQuantity: null,
-								storageBin: null,
+								//user input data
+								orderNumber: null,
+								operationNumber: null,
+								dateTimeValue: null,
 								//external data
-								LENUM: null
+								AUFNR: null
 							},
 							oExpectedViewData = {
 								bValid: false,
-								storageUnitInputValueState: sap.ui.core.ValueState.None
+								bOrderOperationValid: false,
+								bDateTimeEntryValid: true
 							};
 
 						return this.waitFor({

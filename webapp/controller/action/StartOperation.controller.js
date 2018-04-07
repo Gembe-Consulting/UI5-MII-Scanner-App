@@ -11,13 +11,18 @@ sap.ui.define([
 		sapType: sapType,
 
 		_oInitData: {
-			AUFNR: null,
-			dateTimeValue: null
+			//user input data
+			orderNumber: null,
+			operationNumber: null,
+			dateTimeValue: null,
+			//external data
+			AUFNR: null
 		},
 
 		_oInitView: {
 			bValid: false,
-			bOrderOperationValid: false
+			bOrderOperationValid: false,
+			bDateTimeEntryValid: true
 		},
 
 		onInit: function() {
@@ -59,7 +64,7 @@ sap.ui.define([
 		},
 
 		isInputDataValid: function(oData) {
-			return !!oData.dateTimeEntry && !!oData.orderNumber && !!oData.OperationNumber;
+			return !!oData.dateTimeValue && !!oData.orderNumber && !!oData.operationNumber;
 		},
 
 		onOrderChange: function(oEvent) {
@@ -83,7 +88,9 @@ sap.ui.define([
 			/* Prepare UI: busy, value states, log messages */
 			this.showControlBusyIndicator(oOrderNumberInput);
 			this.showControlBusyIndicator(oOperationNumberInput);
-			oSource.setValueState(sap.ui.core.ValueState.None);
+			oOrderNumberInput.setValueState(sap.ui.core.ValueState.None);
+			oOperationNumberInput.setValueState(sap.ui.core.ValueState.None);
+			this.removeAllUserMessages();
 
 			/* Prepare Data */
 
@@ -123,6 +130,14 @@ sap.ui.define([
 
 				oDataModel.setData(oOrderOperation, true);
 
+				if (bOrderOperationValid) {
+					oOrderNumberInput.setValueState(sap.ui.core.ValueState.Success);
+					oOperationNumberInput.setValueState(sap.ui.core.ValueState.Success);
+				} else {
+					oOrderNumberInput.setValueState(sap.ui.core.ValueState.Error);
+					oOperationNumberInput.setValueState(sap.ui.core.ValueState.Error);
+				}
+
 			}.bind(this);
 
 			/* Prepare error callback */
@@ -153,6 +168,10 @@ sap.ui.define([
 
 		onOperationNumberInputChange: function(oEvent) {
 			this.onOrderChange(oEvent);
+		},
+
+		onDateTimeEntryChange: function(oEvent) {
+			this.updateViewControls(this.getModel("data").getData());
 		},
 
 		_refreshDateValue: function() {
