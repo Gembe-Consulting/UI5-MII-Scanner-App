@@ -25,8 +25,10 @@ Feature: Start Operation
 		When I enter '1092695' into orderNumberInput in action.StartOperation view
 		 And I enter '10' into operationNumberInput in action.StartOperation view
 		Then I can see processOrderFragmentOperationInfo with text '0010 - Freigegeben: Verpackung aus Silo' in action.StartOperation view
-		Then I can see processOrderFragmentRessourceInfo with text '00253110 - Absackanlage Milchprodukte' in action.StartOperation view
-		Then I can see processOrderFragmentStatusInfo with text '0002 - Freigegeben' in action.StartOperation view
+		 And I can see processOrderFragmentRessourceInfo with text '00253110 - Absackanlage Milchprodukte' in action.StartOperation view
+		 And I can see processOrderFragmentStatusInfo with text '0002 - Freigegeben' in action.StartOperation view
+		When I enter '1000001' into orderNumberInput in action.StartOperation view
+		Then I cannot see processOrderInfo in action.StartOperation view
 	
 	Scenario: Should show error message if users enter invalid order number
 		When I enter '1000001' into orderNumberInput in action.StartOperation view
@@ -35,19 +37,19 @@ Feature: Start Operation
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Error' in action.StartOperation view
 		 And I can see orderNumberInput with valueState 'Error' in action.StartOperation view
 		 And I cannot see saveButton in action.StartOperation view
-		When I enter '1234567' into orderNumberInput in action.StartOperation view
+		When I enter '1092695' into orderNumberInput in action.StartOperation view
 		Then I can see orderNumberInput with valueState 'Success' in action.StartOperation view
 		 And I can see saveButton in action.StartOperation view
-		 And I cannot see messageStripContainer in action.StartOperation view
+		 And messageStripContainer in action.StartOperation view contains no content
 		When I enter '1092694' into orderNumberInput in action.StartOperation view
 		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0010' zu Auftrag '1092694' kann nicht gestartet werden. Vorgang hat den Status 'Abgeschlossen'.' in action.StartOperation view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Error' in action.StartOperation view
 		 And I can see orderNumberInput with valueState 'Error' in action.StartOperation view
 		 And I cannot see saveButton in action.StartOperation view
-		When I press clearFormButton in action.StartOperation view
+		When I click on clearFormButton in action.StartOperation view
 		 Then I can see orderNumberInput with valueState 'None' in action.StartOperation view
 		  And I cannot see saveButton in action.StartOperation view
-		  And I cannot see messageStripContainer in action.StartOperation view
+		  And messageStripContainer in action.StartOperation view contains no content
 		Then on the Start Operation Page: I should see all input fields are initial
 		Then on the Start Operation Page: I should see data model and view model are initial
 		
@@ -65,6 +67,6 @@ Feature: Start Operation
 		When I enter '1092695' into orderNumberInput in action.StartOperation view
 		 And I enter '10' into operationNumberInput in action.StartOperation view
 		 And I enter '07.04.2018, 12:19:46' into dateTimeEntry in action.StartOperation view
-		 And I press saveButton in action.StartOperation view
+		When I click on saveButton in action.StartOperation view
 		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang wurde gestartet' in action.StartOperation view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Success' in action.StartOperation view

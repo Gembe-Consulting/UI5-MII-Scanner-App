@@ -37,7 +37,7 @@ sap.ui.require([
 
 						var oInitialControlData = {
 							"orderNumberInput": "",
-							"orderOperationInput": ""
+							"operationNumberInput": ""
 						};
 
 						jQuery.each(oInitialControlData, function(sControlId, sEmptyValue) {
@@ -71,14 +71,15 @@ sap.ui.require([
 								//user input data
 								orderNumber: null,
 								operationNumber: null,
-								dateTimeValue: null,
+								dateTimeValue: {},
 								//external data
 								AUFNR: null
 							},
 							oExpectedViewData = {
 								bValid: false,
 								bOrderOperationValid: false,
-								bDateTimeEntryValid: true
+								bDateTimeEntryValid: true,
+								orderInputValueState: sap.ui.core.ValueState.None
 							};
 
 						return this.waitFor({
