@@ -22,7 +22,8 @@ sap.ui.define([
 		_oInitView: {
 			bValid: false,
 			bOrderOperationValid: false,
-			bDateTimeEntryValid: true
+			bDateTimeEntryValid: true,
+			orderInputValueState: sap.ui.core.ValueState.None
 		},
 
 		onInit: function() {
@@ -177,7 +178,9 @@ sap.ui.define([
 		},
 
 		_refreshDateValue: function() {
-			this.getModel("data").setProperty("/dateTimeValue", new Date());
+			var oDate = new Date();
+			this.getModel("data").setProperty("/dateTimeValue", oDate);
+			this._oInitData.dateTimeValue = oDate;
 		}
 
 	});
