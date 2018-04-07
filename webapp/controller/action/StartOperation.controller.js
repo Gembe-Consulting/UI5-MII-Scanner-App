@@ -96,7 +96,9 @@ sap.ui.define([
 
 			/* Prepare success callback */
 			fnResolve = function(oData) {
-				var oOrderOperation,
+				var oOrderOperation = {
+						AUFNR: null
+					},
 					aRows,
 					bOrderOperationValid = true;
 
