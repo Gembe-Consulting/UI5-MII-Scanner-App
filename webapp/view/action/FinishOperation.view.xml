@@ -4,7 +4,7 @@
 		<customHeader>
 			<Toolbar id="header">
 				<ToolbarSpacer/>
-				<c:Icon id="finishOperationPageIcon" src="sap-icon://begin" size="2rem" color="#330066" alt="START"/>
+				<c:Icon id="finishOperationPageIcon" src="sap-icon://complete" size="2rem" color="#05b074" alt="FINISH"/>
 				<Title id="finishOperationPageTitle" text="{i18n>finishOperation.title.text}" class="suwFinishOperationTitle"/>
 				<ToolbarSpacer/>
 				<Button id="clearFormButton" icon="sap-icon://redo" press="onClearFormPress" tooltip="{i18n>general.clearFormButton.tooltip}"/>
