@@ -26,7 +26,7 @@ Feature: Finish Operation
 		 And I enter '10' into operationNumberInput in action.FinishOperation view
 		Then I can see processOrderFragmentOperationInfo with text '0010 - Gestartet: Verpackung aus Silo' in action.FinishOperation view
 		 And I can see processOrderFragmentRessourceInfo with text '00253110 - Absackanlage Milchprodukte' in action.FinishOperation view
-		 And I can see processOrderFragmentStatusInfo with text '0002 - Gestartet' in action.FinishOperation view
+		 And I can see processOrderFragmentStatusInfo with text '0003 - Gestartet' in action.FinishOperation view
 		When I enter '1000001' into orderNumberInput in action.FinishOperation view
 		Then I cannot see processOrderInfo in action.FinishOperation view
 	
