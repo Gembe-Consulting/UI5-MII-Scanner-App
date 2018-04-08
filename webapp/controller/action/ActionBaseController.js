@@ -212,6 +212,23 @@ sap.ui.define([
 			return oOrderOperationModel.loadMiiData(oOrderOperationModel._sServiceUrl, oParam);
 		},
 
+		requestOrderOperationIncidentsService: function(oData) {
+			var oOrderOperationIncidentsModel = this.getModel("orderIncidents"),
+				oParam;
+
+			if (!oData) {
+				return Promise.reject(new Error("Parameter 'oData' is missing!"));
+			}
+
+			oParam = {
+				"Param.1": oData.AUFNR,
+				"Param.2": oData.VORNR
+			};
+
+			return oOrderOperationIncidentsModel.loadMiiData(oOrderOperationIncidentsModel._sServiceUrl, oParam);
+
+		},
+
 		showControlBusyIndicator: function(oSource) {
 			return oSource.setBusyIndicatorDelay(0).setBusy(true);
 		},

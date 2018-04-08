@@ -48,7 +48,7 @@ sap.ui.define([
 		updateViewControls: function(oData) {
 			var oViewModel = this.getModel("view"),
 				bOrderOperationValid = oViewModel.getProperty("/bOrderOperationValid"),
-				bDateTimeEntryValid = oViewModel.getProperty("/bDateTimeEntryValid"),
+				bInputValuesValid,
 				bInputValuesComplete,
 				bNoErrorMessagesActive,
 				bReadyForPosting;
@@ -56,11 +56,13 @@ sap.ui.define([
 			// check if all required input data is present
 			bInputValuesComplete = this.isInputDataValid(oData);
 
+			bInputValuesValid = this.checkInputIsValid(oData);
+
 			// check if all input data has proper format
 			bNoErrorMessagesActive = this.isMessageModelClean();
 
 			// we are ready for posting once we have complete and proper formatted input
-			bReadyForPosting = bOrderOperationValid && bDateTimeEntryValid && bNoErrorMessagesActive && bInputValuesComplete;
+			bReadyForPosting = bInputValuesComplete && bOrderOperationValid && bInputValuesValid && bNoErrorMessagesActive;
 
 			oViewModel.setProperty("/bValid", bReadyForPosting);
 		},
@@ -77,7 +79,9 @@ sap.ui.define([
 				sOrderNumber = oDataModel.getProperty("/orderNumber"),
 				sOperationNumber = oDataModel.getProperty("/operationNumber"),
 				fnResolve,
-				fnReject;
+				fnReject,
+				fnResolveIncidentList,
+				fnRejectIncidentList;
 
 			/* check if current input is valid */
 			if (!sOrderNumber || !sOperationNumber) {
@@ -90,8 +94,7 @@ sap.ui.define([
 			/* Prepare UI: busy, value states, log messages */
 			this.showControlBusyIndicator(oOrderNumberInput);
 			this.showControlBusyIndicator(oOperationNumberInput);
-			oOrderNumberInput.setValueState(sap.ui.core.ValueState.None);
-			oOperationNumberInput.setValueState(sap.ui.core.ValueState.None);
+
 			this.removeAllUserMessages();
 
 			/* Prepare Data */
@@ -120,13 +123,7 @@ sap.ui.define([
 						});
 
 						bOrderOperationValid = false;
-
-					} else {
-						oDataModel.setData(oOrderOperation, true);
-
-						this.checkDateTimeIsValid();
 					}
-
 				} else {
 					this.addUserMessage({
 						text: this.getTranslation("finishOperation.messageText.orderNotFound", [sOrderNumber, sOperationNumber])
@@ -134,6 +131,8 @@ sap.ui.define([
 
 					bOrderOperationValid = false;
 				}
+
+				oDataModel.setData(oOrderOperation, true);
 
 				this.getModel("view").setProperty("/bOrderOperationValid", bOrderOperationValid);
 
@@ -144,6 +143,8 @@ sap.ui.define([
 					oOrderNumberInput.setValueState(sap.ui.core.ValueState.Error);
 					oOperationNumberInput.setValueState(sap.ui.core.ValueState.Error);
 				}
+
+				return oData;
 
 			}.bind(this);
 
@@ -160,6 +161,8 @@ sap.ui.define([
 			/* Perform service call, Hide Busy Indicator, Update View Controls */
 			this.requestOrderOperationInfoService(sOrderNumber, sOperationNumber)
 				.then(fnResolve, fnReject)
+				.then(this.requestOrderOperationIncidentsService.bind(this))
+				.then(fnResolveIncidentList, fnRejectIncidentList)
 				.then(function() {
 					this.hideControlBusyIndicator(oOrderNumberInput);
 					this.hideControlBusyIndicator(oOperationNumberInput);
@@ -169,33 +172,40 @@ sap.ui.define([
 				}.bind(this));
 		},
 
-		checkDateTimeIsValid: function() {
-			var oStartMoment, oFinishMoment, oLatestEventFinishMoment,
-				oData = this.getModel("data").getData(),
+		checkInputIsValid: function(oData) {
+			var oStartMoment, oFinishMoment, oLatstResumeMoment,
+				//oData = this.getModel("data").getData(),
 				oDateTimeInput = this.byId("dateTimeEntry");
 
-			this.removeAllUserMessages();
+			// 1. check if order is present
+			if (!oData.AUFNR) {
+				return false;
+			}
 
 			oStartMoment = moment(oData.ISTSTART);
-			oLatestEventFinishMoment = moment(oData.LATEST_EVENT_FINISH);
+			oLatstResumeMoment = moment(oData.LATEST_EVENT_FINISH);
 			oFinishMoment = moment(oData.dateTimeValue);
 
-			if (oFinishMoment.isBefore(oStartMoment)) { // ensure enterd finish date is after start date
+			// 2. ensure enterd finish date is after start date
+			if (oFinishMoment.isBefore(oStartMoment)) {
+				this.removeAllUserMessages();
 				this.addUserMessage({
 					text: this.getTranslation("finishOperation.messageText.finishDateBeforeStartDate", [oData.AUFNR, oData.VORNR, oFinishMoment.format("LLLL"), oStartMoment.format("LLLL")])
 				});
 
 				oDateTimeInput.setValueState(sap.ui.core.ValueState.Error);
 				return false;
+			}
 
-			} else if (oFinishMoment.isBefore(oLatestEventFinishMoment)) { // ensure entered finish date is after latest interruption finish date
+			// 3. ensure entered finish date is after latest interruption finish date
+			if (oFinishMoment.isBefore(oLatstResumeMoment)) {
+				this.removeAllUserMessages();
 				this.addUserMessage({
-					text: this.getTranslation("finishOperation.messageText.finishDateBeforeLatestEventFinish", [oData.AUFNR, oData.VORNR, oFinishMoment.format("LLLL"), oLatestEventFinishMoment.format("LLLL")])
+					text: this.getTranslation("finishOperation.messageText.finishDateBeforeLastResumeDate", [oData.AUFNR, oData.VORNR, oFinishMoment.format("LLLL"), oLatstResumeMoment.format("LLLL")])
 				});
 
 				oDateTimeInput.setValueState(sap.ui.core.ValueState.Error);
 				return false;
-
 			}
 
 			oDateTimeInput.setValueState(sap.ui.core.ValueState.Success);
@@ -211,11 +221,6 @@ sap.ui.define([
 		},
 
 		onDateTimeEntryChange: function(oEvent) {
-			var oSource = oEvent.getSource();
-			oSource.setValueState(sap.ui.core.ValueState.None);
-
-			this.getModel("view").setProperty("/bDateTimeEntryValid", this.checkDateTimeIsValid());
-
 			this.updateViewControls(this.getModel("data").getData());
 		},
 
