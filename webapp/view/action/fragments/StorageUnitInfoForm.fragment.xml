@@ -1,11 +1,10 @@
-<f:SimpleForm id="storageUnitInfo" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout" xmlns="sap.m" xmlns:c="sap.ui.core" 
-	layout="ResponsiveGridLayout" singleContainerFullSize="true" breakpointM="500" adjustLabelSpan="false" 
-	labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="4" 
-	emptySpanXL="4" emptySpanL="4" emptySpanM="1" emptySpanS="0"
-	visible="{=${data>/LENUM}!==null}" editable="false">
+<f:SimpleForm id="storageUnitInfo" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout" xmlns="sap.m" xmlns:c="sap.ui.core"
+	layout="ResponsiveGridLayout" singleContainerFullSize="true" breakpointM="500" adjustLabelSpan="false" labelSpanXL="4" labelSpanL="4"
+	labelSpanM="4" labelSpanS="4" emptySpanXL="4" emptySpanL="4" emptySpanM="2" emptySpanS="0" visible="{=${data>/LENUM}!==null}"
+	editable="false">
 	<f:content>
 		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentMaterial}"/>
-		<Text id="storageUnitFragmentMaterialInfoText" text="{data>/MATNR}\n{data>/MAKTX}" />
+		<Text id="storageUnitFragmentMaterialInfoText" text="{data>/MATNR}\n{data>/MAKTX}"/>
 		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentSpecialStockIndicator}" visible="{= ${data>/BESTQ}!=='0'}"/>
 		<HBox id="specialStockIndicatorBox" visible="{= ${data>/BESTQ}!=='0'}">
 			<Text id="storageUnitFragmentSpecialStockIndicatorText" text="{data>/BESTQ}" width="100px"
