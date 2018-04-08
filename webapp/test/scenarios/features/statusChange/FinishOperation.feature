@@ -42,7 +42,7 @@ Feature: Finish Operation
 		 And I can see saveButton in action.FinishOperation view
 		 And messageStripContainer in action.FinishOperation view contains no content
 		When I enter '1092694' into orderNumberInput in action.FinishOperation view
-		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0010' zu Auftrag '1092694' kann nicht gestartet werden. Vorgang hat den Status 'Abgeschlossen'.' in action.FinishOperation view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0010' zu Auftrag '1092694' kann nicht beendet werden. Vorgang hat den Status 'Abgeschlossen'.' in action.FinishOperation view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Error' in action.FinishOperation view
 		 And I can see orderNumberInput with valueState 'Error' in action.FinishOperation view
 		 And I cannot see saveButton in action.FinishOperation view
@@ -94,5 +94,5 @@ Feature: Finish Operation
 		 And I enter '10' into operationNumberInput in action.FinishOperation view
 		 And I enter '07.04.2018, 12:19:46' into dateTimeEntry in action.FinishOperation view
 		When I click on saveButton in action.FinishOperation view
-		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang wurde gestartet' in action.FinishOperation view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang wurde beendet' in action.FinishOperation view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Success' in action.FinishOperation view
