@@ -5,7 +5,6 @@ sap.ui.define([
 
 	return BaseController.extend("com.mii.scanner.controller.Login", {
 
-
 		/**
 		 * Löscht die aktuelle Zeichenkette im Einagebfeld nach einer bestimmten Zeitspanne.
 		 */
@@ -40,7 +39,7 @@ sap.ui.define([
 
 			// TODO: warum auch ungleich length 0?
 			if (bMobile && sCurrentInput.length !== 0) {
-				this.purgeInputAfterDelay(oInput);
+				this.purgeInputAfterDelay(oInput, 250);
 			}
 		},
 
@@ -55,7 +54,7 @@ sap.ui.define([
 			if (!sUserInput || sUserInput.length <= 0) {
 				return;
 			}
-			
+
 			sap.ui.core.BusyIndicator.show(0);
 
 			// Reset value state
@@ -66,7 +65,7 @@ sap.ui.define([
 			 * Navigate to homepage
 			 */
 			fnResolveHandler = function(oUser) {
-				this.getRouter().navTo("home", {}, true /*bReplace*/);
+				this.getRouter().navTo("home", {}, true /*bReplace*/ );
 				oInputControl.setValue();
 			}.bind(this);
 
