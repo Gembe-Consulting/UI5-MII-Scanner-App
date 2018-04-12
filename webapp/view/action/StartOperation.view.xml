@@ -20,13 +20,13 @@
 					<Input id="orderNumberInput" change="onOrderNumberInputChange" value="{path: 'data>/orderNumber', type:'.sapType.AUFNR'}"
 						valueState="{view>/orderInputValueState}" maxLength="12" class="noScannerInput suwIncreadedInputFontSize">
 						<layoutData>
-							<l:GridData span="XL3 L3 M4 S9"/>
+							<l:GridData span="XL3 L3 M4 S8"/>
 						</layoutData>
 					</Input>
 					<Input id="operationNumberInput" change="onOperationNumberInputChange" value="{path: 'data>/operationNumber', type:'.sapType.VORNR'}"
 						valueState="{view>/orderInputValueState}" maxLength="4" class="noScannerInput suwIncreadedInputFontSize">
 						<layoutData>
-							<l:GridData span="XL1 L1 M2 S3"/>
+							<l:GridData span="XL1 L1 M2 S4"/>
 						</layoutData>
 					</Input>
 					<!-- Date and Time Entry -->
