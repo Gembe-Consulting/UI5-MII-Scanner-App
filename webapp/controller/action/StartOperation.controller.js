@@ -40,9 +40,49 @@ sap.ui.define([
 
 		},
 
-		//http://su-mii-dev01.intern.suwelack.de:50000/XMII/Runner?Transaction=SUMISA/ProcessOrder/trx_SendBeginEndPhaseToSAP_TE&AUFNR=1093363&VORGANG=0010&STATUS=0003&STATUS_TXT=Gestartet&TRX_ID=B10&RUECKZEIT=07.04.2018 16:39:52&MATNR=1701705-030&STOER=&Debug=1&UNAME=PHIGEM&IllumLoginName=PHIGEM&OutputParameter=OutputXML&Content-Type=text/xml
 		onSave: function() {
+			var oDataModel = this.getModel("data"),
+				fnResolve,
+				fnReject;
 
+			this.getOwnerComponent().showBusyIndicator();
+
+			fnResolve = function(oData) {
+				var oConfiramationNumber,
+					aRows;
+
+				if (!oData.success) {
+
+					this.addUserMessage({
+						text: oData.lastErrorMessage.substring(19, oData.lastErrorMessage.length),
+						type: sap.ui.core.MessageType.Warning
+					});
+				} else {
+					throw new Error(oData.lastErrorMessage + " @BwA 101");
+				}
+
+				aRows = oData.d.results[0].Rowset.results[0].Row.results;
+
+				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
+				if (aRows.length === 1) {
+					oConfiramationNumber = aRows[0];
+				} else {
+					throw new Error(this.getTranslation("startOperation.messageText.resultIncomplete") + " @OpStart");
+				}
+
+				this.addMessageManagerMessage("Wareneingang von Palette  " + oConfiramationNumber.CONF_NO + "  erfolgreich.");
+
+			}.bind(this);
+
+			fnReject = function(oError) {
+				this.addUserMessage({
+					text: oError.message
+				});
+			}.bind(this);
+
+			//function(sOrderNumber, sOperationNumber, oStatus, oDate, sMaterialNumber, sIncident)
+			this.requestTimeTicketService(oDataModel.getProperty("/orderNumber"), oDataModel.getProperty("/operationNumber"), this.oProcessOrderStatus.started, oDataModel.getProperty("/dateTimeValue"), oDataModel.getProperty("/MATNR"))
+				.then(fnResolve, fnReject);
 		},
 
 		updateViewControls: function(oData) {

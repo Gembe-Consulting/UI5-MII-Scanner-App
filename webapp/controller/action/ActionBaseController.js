@@ -63,37 +63,43 @@ sap.ui.define([
 				"STATUS_TXT": "Freigegeben",
 				"STATUS_ID": "0002",
 				"STATUS_ICON": "sap-icon://sys-enter",
-				"STATUS_COLOR": "#05B074"
+				"STATUS_COLOR": "#05B074",
+				"ACTION_KEY": null
 			},
 			started: {
 				"STATUS_TXT": "Gestartet",
 				"STATUS_ID": "0003",
 				"STATUS_ICON": "sap-icon://initiative",
-				"STATUS_COLOR": "#BB07FF"
+				"STATUS_COLOR": "#BB07FF",
+				"ACTION_KEY": "B10"
 			},
 			stopped: {
 				"STATUS_TXT": "Beendet",
 				"STATUS_ID": "0045",
 				"STATUS_ICON": "ap-icon://stop",
-				"STATUS_COLOR": "#330066"
+				"STATUS_COLOR": "#330066",
+				"ACTION_KEY": "B40"
 			},
 			closed: {
 				"STATUS_TXT": "Abgeschlossen",
 				"STATUS_ID": "0046",
 				"STATUS_ICON": "sap-icon://locked",
-				"STATUS_COLOR": "#AAAAAA"
+				"STATUS_COLOR": "#AAAAAA",
+				"ACTION_KEY": null
 			},
 			disrupted: {
 				"STATUS_TXT": "Störung",
 				"STATUS_ID": "0098",
 				"STATUS_ICON": "sap-icon://warning2",
-				"STATUS_COLOR": "#FFAC00"
+				"STATUS_COLOR": "#FFAC00",
+				"ACTION_KEY": "B30"
 			},
 			paused: {
 				"STATUS_TXT": "Pausiert",
 				"STATUS_ID": "0097",
 				"STATUS_ICON": "sap-icon://pause",
-				"STATUS_COLOR": "#006E9E"
+				"STATUS_COLOR": "#006E9E",
+				"ACTION_KEY": "B20"
 			}
 		},
 
@@ -227,6 +233,29 @@ sap.ui.define([
 
 			return oOrderOperationIncidentsModel.loadMiiData(oOrderOperationIncidentsModel._sServiceUrl, oParam);
 
+		},
+
+		//http://su-mii-dev01.intern.suwelack.de:50000/XMII/Runner?Transaction=SUMISA/ProcessOrder/trx_SendBeginEndPhaseToSAP_TE&
+		//AUFNR=1093363&VORGANG=0010&STATUS=0003&STATUS_TXT=Gestartet&TRX_ID=B10&RUECKZEIT=07.04.2018 16:39:52&MATNR=1701705-030&STOER=&Debug=1&UNAME=PHIGEM&IllumLoginName=PHIGEM&OutputParameter=OutputXML&Content-Type=text/xml
+		requestTimeTicketService: function(sOrderNumber, sOperationNumber, oStatus, oDate, sMaterialNumber, sIncident) {
+			var oTimeTicketModel = this.getModel("timeTicket"),
+				sUsername = this.getModel("user").getProperty("/USERLOGIN"),
+				oParam;
+
+			oParam = {
+				"Param.1": sOrderNumber,
+				"Param.2": sOperationNumber,
+				"Param.3": "1000",
+				"Param.4": oStatus.STATUS_ID,
+				"Param.5": oStatus.STATUS_TXT,
+				"Param.6": oDate, //Format: 07.04.2018 16:39:52
+				"Param.7": sIncident || "",
+				"Param.8": sMaterialNumber || "",
+				"Param.9": oStatus.ACTION_KEY,
+				"Param.10": sUsername
+			};
+
+			return oTimeTicketModel.loadMiiData(oTimeTicketModel._sServiceUrl, oParam);
 		},
 
 		showControlBusyIndicator: function(oSource) {

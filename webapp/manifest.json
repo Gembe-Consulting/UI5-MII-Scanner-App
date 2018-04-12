@@ -159,6 +159,15 @@
 					"ignoreFatalError": true
 				}
 			},
+			"timeTicket": {
+				"dataSource": "illuminatorService",
+				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/timeticket/TimeticketCreateXac",
+				"type": "mii.util.model.illum.QueryTemplateModel",
+				"settings": {
+					"preventInitialLoad": true,
+					"preventParameterlessLoad": true
+				}
+			},
 			"currentProcessOrder": {
 				"dataSource": "illuminatorService",
 				"uri": "/XMII/IlluminatorOData/QueryTemplate?QueryTemplate=SAPUI5/services/rollerconveyor/GetCurrentProcessOrderQry",
