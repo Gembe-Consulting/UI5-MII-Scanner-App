@@ -42,6 +42,7 @@ sap.ui.define([
 
 		onSave: function() {
 			var oDataModel = this.getModel("data"),
+				oServiceData,
 				fnResolve,
 				fnReject;
 
@@ -54,11 +55,10 @@ sap.ui.define([
 				if (!oData.success) {
 
 					this.addUserMessage({
-						text: oData.lastErrorMessage.substring(19, oData.lastErrorMessage.length),
-						type: sap.ui.core.MessageType.Warning
+						text: oData.lastErrorMessage
 					});
-				} else {
-					throw new Error(oData.lastErrorMessage + " @BwA 101");
+
+					return;
 				}
 
 				aRows = oData.d.results[0].Rowset.results[0].Row.results;
@@ -70,7 +70,12 @@ sap.ui.define([
 					throw new Error(this.getTranslation("startOperation.messageText.resultIncomplete") + " @OpStart");
 				}
 
-				this.addMessageManagerMessage("Wareneingang von Palette  " + oConfiramationNumber.CONF_NO + "  erfolgreich.");
+				this.addUserMessage({
+					text: this.getTranslation("startOperation.messageText.postingSuccessfull", [oServiceData.orderNumber, oServiceData.operationNumber, moment(oServiceData.date).format("LLLL")]),
+					type: sap.ui.core.MessageType.Success
+				});
+
+				this.addMessageManagerMessage("Rückmeldung " + oConfiramationNumber.CONF_NO + " erfolgreich gebucht.");
 
 			}.bind(this);
 
@@ -80,9 +85,21 @@ sap.ui.define([
 				});
 			}.bind(this);
 
-			//function(sOrderNumber, sOperationNumber, oStatus, oDate, sMaterialNumber, sIncident)
-			this.requestTimeTicketService(oDataModel.getProperty("/orderNumber"), oDataModel.getProperty("/operationNumber"), this.oProcessOrderStatus.started, oDataModel.getProperty("/dateTimeValue"), oDataModel.getProperty("/MATNR"))
-				.then(fnResolve, fnReject);
+			oServiceData = {
+				orderNumber: oDataModel.getProperty("/orderNumber"),
+				operationNumber: oDataModel.getProperty("/operationNumber"),
+				newStatus: this.oProcessOrderStatus.started,
+				date: oDataModel.getProperty("/dateTimeValue"),
+				materialNumber: oDataModel.getProperty("/MATNR")
+			};
+
+			//function(sOrderNumber, sOperationNumber, oStatus, oDate, sMaterialNumber, sIncident) || function(oServiceData)
+			this.requestTimeTicketService(oServiceData)
+				.then(fnResolve, fnReject)
+				.then(this.getOwnerComponent().hideBusyIndicator)
+				.then(function() {
+					this.onClearFormPress({}, true /*bKeepMessageStrip*/ );
+				}.bind(this));
 		},
 
 		updateViewControls: function(oData) {

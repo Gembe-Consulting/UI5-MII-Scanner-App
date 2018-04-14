@@ -240,18 +240,38 @@ sap.ui.define([
 		requestTimeTicketService: function(sOrderNumber, sOperationNumber, oStatus, oDate, sMaterialNumber, sIncident) {
 			var oTimeTicketModel = this.getModel("timeTicket"),
 				sUsername = this.getModel("user").getProperty("/USERLOGIN"),
+				oServiceData,
 				oParam;
 
+			if (typeof sOrderNumber === "string") {
+				oServiceData = {
+					orderNumber: sOrderNumber,
+					operationNumber: sOperationNumber,
+					newStatus: oStatus,
+					date: oDate,
+					materialNumber: sMaterialNumber,
+					incident: sIncident
+				};
+			} else {
+				oServiceData = sOrderNumber;
+			}
+
+			if (!oServiceData.orderNumber || !oServiceData.operationNumber || !oServiceData.newStatus || !oServiceData.date) {
+				return Promise.reject(new Error("One or more mandatory parameters missing!"));
+			}
+
+			oServiceData.dateFormatted = moment(oServiceData.date).format("DD.MM.YYYY HH:mm:ss"); //Format: 07.04.2018 16:39:52 //see https://momentjs.com/docs/#/displaying/
+
 			oParam = {
-				"Param.1": sOrderNumber,
-				"Param.2": sOperationNumber,
+				"Param.1": oServiceData.orderNumber,
+				"Param.2": oServiceData.operationNumber,
 				"Param.3": "1000",
-				"Param.4": oStatus.STATUS_ID,
-				"Param.5": oStatus.STATUS_TXT,
-				"Param.6": oDate, //Format: 07.04.2018 16:39:52
-				"Param.7": sIncident || "",
-				"Param.8": sMaterialNumber || "",
-				"Param.9": oStatus.ACTION_KEY,
+				"Param.4": oServiceData.newStatus.STATUS_ID,
+				"Param.5": oServiceData.newStatus.STATUS_TXT,
+				"Param.6": oServiceData.dateFormatted,
+				"Param.7": oServiceData.incident || "",
+				"Param.8": oServiceData.materialNumber || "",
+				"Param.9": oServiceData.newStatus.ACTION_KEY,
 				"Param.10": sUsername
 			};
 

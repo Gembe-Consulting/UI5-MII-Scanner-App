@@ -66,7 +66,7 @@ Feature: Start Operation
 	Scenario: Should send timeticket confirmation to SAP ERP
 		When I enter '1092695' into orderNumberInput in action.StartOperation view
 		 And I enter '10' into operationNumberInput in action.StartOperation view
-		 And I enter '07.04.2018, 12:19:46' into dateTimeEntry in action.StartOperation view
+		 And I enter '14.04.2018, 11:09:46' into dateTimeEntry in action.StartOperation view
 		When I click on saveButton in action.StartOperation view
-		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang wurde gestartet' in action.StartOperation view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0010' zu Auftrag '1092695' wurde erfolgreich gestartet! Startzeitpunkt: Samstag, 14. April 2018 11:09' in action.StartOperation view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Success' in action.StartOperation view
