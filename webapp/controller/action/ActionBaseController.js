@@ -226,9 +226,13 @@ sap.ui.define([
 				return Promise.reject(new Error("Parameter 'oData' is missing!"));
 			}
 
+			if (oData.d.results[0].Rowset.results[0].Row.results.length !== 1) {
+				return Promise.reject(new Error("Rowset does not contain an operation!"));
+			}
+
 			oParam = {
-				"Param.1": oData.AUFNR,
-				"Param.2": oData.VORNR
+				"Param.1": oData.d.results[0].Rowset.results[0].Row.results[0].AUFNR,
+				"Param.2": oData.d.results[0].Rowset.results[0].Row.results[0].VORNR
 			};
 
 			return oOrderOperationIncidentsModel.loadMiiData(oOrderOperationIncidentsModel._sServiceUrl, oParam);

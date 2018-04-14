@@ -164,6 +164,38 @@
 							"EV_NUMMER": null,
 							"LOESCH_ID": null,
 							"RowId": 2
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"ID": 401,
+							"STRCODE": "P100",
+							"STR_BEGINN": "\/Date(1381472100000)\/",
+							"STR_ENDE": "\/Date(1381473000000)\/",
+							"STR_TXT": "Elektrische Störung",
+							"AUFNR": "1092696",
+							"VORNR": "0010",
+							"ERFASSER": "PHIGEM",
+							"EV_NUMMER": null,
+							"LOESCH_ID": null,
+							"RowId": 3
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(2)",
+								"type": "QueryTemplate.Row"
+							},
+							"ID": 400,
+							"STRCODE": "P101",
+							"STR_BEGINN": "\/Date(1381471200000)\/",
+							"STR_ENDE": "\/Date(1381473000000)\/",
+							"STR_TXT": "Mechanische Störung",
+							"AUFNR": "1092696",
+							"VORNR": "0010",
+							"ERFASSER": "PHIGEM",
+							"EV_NUMMER": null,
+							"LOESCH_ID": null,
+							"RowId": 4
 						}]
 					}
 				}]

@@ -10,6 +10,11 @@
 				<Button id="clearFormButton" icon="sap-icon://redo" press="onClearFormPress" tooltip="{i18n>general.clearFormButton.tooltip}"/>
 			</Toolbar>
 		</customHeader>
+		<subHeader>
+			<Toolbar id="subheader">
+				<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.ProcessOrderInfoChart" type="XML"/>
+			</Toolbar>
+		</subHeader>
 		<content>
 			<l:VerticalLayout id="messageStripContainer" width="100%"></l:VerticalLayout>
 			<f:SimpleForm id="dataEntry" editable="true" adjustLabelSpan="false" layout="ResponsiveGridLayout" breakpointM="500" labelSpanXL="4"

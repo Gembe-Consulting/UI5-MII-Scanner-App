@@ -2,13 +2,15 @@ sap.ui.define([
 	"./ActionBaseController",
 	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox",
-	"com/mii/scanner/model/sapType"
-], function(ActionBaseController, JSONModel, MessageBox, sapType) {
+	"com/mii/scanner/model/sapType",
+	"com/mii/scanner/model/formatter"
+], function(ActionBaseController, JSONModel, MessageBox, sapType, formatter) {
 	"use strict";
 
 	return ActionBaseController.extend("com.mii.scanner.controller.action.FinishOperation", {
 
 		sapType: sapType,
+		formatter: formatter,
 
 		_oInitData: {
 			//user input data
@@ -48,8 +50,8 @@ sap.ui.define([
 		updateViewControls: function(oData) {
 			var oViewModel = this.getModel("view"),
 				bOrderOperationValid = oViewModel.getProperty("/bOrderOperationValid"),
-				bInputValuesValid,
 				bInputValuesComplete,
+				bInputValuesValid,
 				bNoErrorMessagesActive,
 				bReadyForPosting;
 
@@ -62,7 +64,7 @@ sap.ui.define([
 			bNoErrorMessagesActive = this.isMessageModelClean();
 
 			// we are ready for posting once we have complete and proper formatted input
-			bReadyForPosting = bInputValuesComplete && bOrderOperationValid && bInputValuesValid && bNoErrorMessagesActive;
+			bReadyForPosting = bOrderOperationValid && bInputValuesComplete && bInputValuesValid && bNoErrorMessagesActive;
 
 			oViewModel.setProperty("/bValid", bReadyForPosting);
 		},
@@ -104,14 +106,8 @@ sap.ui.define([
 				var oOrderOperation = {
 						AUFNR: null
 					},
-					aRows,
+					aRows = oData.d.results[0].Rowset.results[0].Row.results,
 					bOrderOperationValid = true;
-
-				try {
-					aRows = oData.d.results[0].Rowset.results[0].Row.results;
-				} catch (oError) {
-					aRows = [];
-				}
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
 				if (aRows.length === 1) {
@@ -142,9 +138,27 @@ sap.ui.define([
 				} else {
 					oOrderNumberInput.setValueState(sap.ui.core.ValueState.Error);
 					oOperationNumberInput.setValueState(sap.ui.core.ValueState.Error);
+
 				}
 
 				return oData;
+
+			}.bind(this);
+
+			fnResolveIncidentList = function(oData) {
+				var aRows = oData.d.results[0].Rowset.results[0].Row.results,
+					oLatestIncidentFinishDate,
+					maxEndDate;
+
+				maxEndDate = function(oldDate, oIncident, currentIndex, array) {
+					var oNewDate = this.formatter.parseJSONDate(oIncident.STR_ENDE);
+					return oldDate < oNewDate ? oldDate : oNewDate;
+				}.bind(this);
+
+				oLatestIncidentFinishDate = aRows.reduce(maxEndDate);
+
+				// set LATEST_EVENT_FINISH property
+				this.getModel("data").setProperty("/LATEST_EVENT_FINISH", oLatestIncidentFinishDate);
 
 			}.bind(this);
 
@@ -152,6 +166,15 @@ sap.ui.define([
 			fnReject = function(oError) {
 				MessageBox.error(oError.responseText || oError.message, {
 					title: this.getTranslation("error.miiTransactionErrorText", ["OrderOperationRead"]),
+					contentWidth: "500px"
+				});
+				//oSource.setValueState(sap.ui.core.ValueState.Error).setValue("");
+				this.getModel("view").setProperty("/bOrderOperationValid", false);
+			}.bind(this);
+
+			fnRejectIncidentList = function(oError) {
+				MessageBox.error(oError.responseText || oError.message, {
+					title: this.getTranslation("error.miiTransactionErrorText", ["OrderIncidentsRead"]),
 					contentWidth: "500px"
 				});
 				//oSource.setValueState(sap.ui.core.ValueState.Error).setValue("");
@@ -177,12 +200,12 @@ sap.ui.define([
 				//oData = this.getModel("data").getData(),
 				oDateTimeInput = this.byId("dateTimeEntry");
 
-			// 1. check if order is present
-			if (!oData.AUFNR) {
+			// 1. check if necessary data is present
+			if (!oData.AUFNR || !oData.dateTimeValue) {
 				return false;
 			}
 
-			oStartMoment = moment(oData.ISTSTART);
+			oStartMoment = this.formatter.parseJSONDate(oData.ISTSTART);
 			oLatstResumeMoment = moment(oData.LATEST_EVENT_FINISH);
 			oFinishMoment = moment(oData.dateTimeValue);
 
@@ -222,6 +245,10 @@ sap.ui.define([
 
 		onDateTimeEntryChange: function(oEvent) {
 			this.updateViewControls(this.getModel("data").getData());
+		},
+
+		onProcessOrderChartPress: function(oEvent) {
+			MessageBox.show("Statuswechsel zu Auftrag 4711: \nStart: 13.07.18, 19:00 \nStörung: 14.07.18, 03:00 bis 14.07.18, 07:00 \nStörung: 14.07.18, 10:30 bis 14.07.18, 10:45");
 		},
 
 		_refreshDateValue: function() {

@@ -271,6 +271,19 @@ sap.ui.define([
 			});
 
 			return oData;
+		},
+
+		fnGetOrderIncidentsQry: function(oData, oParams) {
+			var oUriParameters = jQuery.sap.getUriParameters(),
+				sOrderNumber = oParams.get("Param.1"),
+				sOperationNumber = oParams.get("Param.2"),
+				aIncidentList = oData.d.results[0].Rowset.results[0].Row.results;
+
+			oData.d.results[0].Rowset.results[0].Row.results = jQuery.grep(aIncidentList, function(oRow, index) {
+				return oRow.AUFNR === sOrderNumber && oRow.VORNR === sOperationNumber;
+			});
+
+			return oData;
 		}
 	};
 

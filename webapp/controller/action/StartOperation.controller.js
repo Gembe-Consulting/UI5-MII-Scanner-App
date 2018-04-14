@@ -2,13 +2,15 @@ sap.ui.define([
 	"./ActionBaseController",
 	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox",
-	"com/mii/scanner/model/sapType"
-], function(ActionBaseController, JSONModel, MessageBox, sapType) {
+	"com/mii/scanner/model/sapType",
+	"com/mii/scanner/model/formatter"
+], function(ActionBaseController, JSONModel, MessageBox, sapType, formatter) {
 	"use strict";
 
 	return ActionBaseController.extend("com.mii.scanner.controller.action.StartOperation", {
 
 		sapType: sapType,
+		formatter: formatter,
 
 		_oInitData: {
 			//user input data
@@ -158,14 +160,8 @@ sap.ui.define([
 				var oOrderOperation = {
 						AUFNR: null
 					},
-					aRows,
+					aRows = oData.d.results[0].Rowset.results[0].Row.results,
 					bOrderOperationValid = true;
-
-				try {
-					aRows = oData.d.results[0].Rowset.results[0].Row.results;
-				} catch (oError) {
-					aRows = [];
-				}
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
 				if (aRows.length === 1) {
