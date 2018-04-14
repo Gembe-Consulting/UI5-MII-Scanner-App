@@ -13,8 +13,6 @@
 		<Text id="processOrderFragmentActualDateInfo" text="Start: {data>/ISTSTART} - Ende: {data>/ISTEND}"/>
 		<Label text="{i18n>processOrderInfoActionFragment.label.text.scheduledDates}"/>
 		<Text id="processOrderFragmentScheduledDateInfo" text="Start: {data>/STARTTRM} - Ende: {data>/ENDTRM}"/>
-		<Label text="{i18n>processOrderInfoActionFragment.label.text.confirmationDates}"/>
-		<Text id="processOrderFragmentConfiramtionDateInfo" text="Start: {data>/TRUECK_START} - Ende: {data>/TRUECK_ENDE}"/>
 		<Label text="{i18n>processOrderInfoActionFragment.label.text.materialInfo}"/>
 		<Text id="processOrderFragmentMaterialInfo" text="{data>/MATNR}\n{data>/MAT_TXT}"/>
 		<Label text="{i18n>processOrderInfoActionFragment.label.text.quantityInfo}"/>
