@@ -1,6 +1,6 @@
 <f:SimpleForm id="storageUnitInfo" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout" xmlns="sap.m" xmlns:c="sap.ui.core"
 	layout="ResponsiveGridLayout" singleContainerFullSize="true" breakpointM="500" adjustLabelSpan="false" labelSpanXL="4" labelSpanL="4"
-	labelSpanM="4" labelSpanS="4" emptySpanXL="4" emptySpanL="4" emptySpanM="2" emptySpanS="0" visible="{=${data>/LENUM}!==null}"
+	labelSpanM="4" labelSpanS="4" emptySpanXL="4" emptySpanL="3" emptySpanM="2" emptySpanS="0" visible="{=${data>/LENUM}!==null}"
 	editable="false">
 	<f:content>
 		<Label text="{i18n>labelTextStorageUnitInfoActionFragmentMaterial}"/>
