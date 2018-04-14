@@ -10,9 +10,11 @@
 		<Label text="{i18n>processOrderInfoActionFragment.label.text.statusInfo}"/>
 		<Text id="processOrderFragmentStatusInfo" text="{data>/STATUS} - {data>/STATUS_TXT}"/>
 		<Label text="{i18n>processOrderInfoActionFragment.label.text.actualDates}"/>
-		<Text id="processOrderFragmentActualDateInfo" text="Start: {data>/ISTSTART} - Ende: {data>/ISTEND}"/>
+		<Text id="processOrderFragmentActualDateInfo"
+			text="{path: 'data>/ISTSTART', formatter:'.formatter.parseJSONDateToShort'} -> {path: 'data>/ISTEND', formatter:'.formatter.parseJSONDateToShort'}"/>
 		<Label text="{i18n>processOrderInfoActionFragment.label.text.scheduledDates}"/>
-		<Text id="processOrderFragmentScheduledDateInfo" text="Start: {data>/STARTTRM} - Ende: {data>/ENDTRM}"/>
+		<Text id="processOrderFragmentScheduledDateInfo"
+			text="{path: 'data>/STARTTRM', formatter:'.formatter.parseJSONDateToShort'} -> {path: 'data>/ENDTRM', formatter:'.formatter.parseJSONDateToShort'}"/>
 		<Label text="{i18n>processOrderInfoActionFragment.label.text.materialInfo}"/>
 		<Text id="processOrderFragmentMaterialInfo" text="{data>/MATNR}\n{data>/MAT_TXT}"/>
 		<Label text="{i18n>processOrderInfoActionFragment.label.text.quantityInfo}"/>

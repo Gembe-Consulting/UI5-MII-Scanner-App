@@ -1,12 +1,70 @@
 sap.ui.define([
+	"sap/ui/core/format/DateFormat",
 	"com/mii/scanner/libs/momentjs/moment"
-], function() {
+], function(DateFormat) {
 	"use strict";
 
 	const LAST_STORAGE_UNIT_NUMBERS = [90025311000000000000, 90024811000000000000, 90000000000000000000 /* keep lagacy support */ ];
 	const ZERO_STOCK_STORAGE_UNIT_QUANTITIES = [0.0, 0.001];
 
 	return {
+		/**
+		 * Parses the JSON Date representation into a Date object.
+		 * @public
+		 * @param {string} vJSDate the date you want to compare to
+		 * @returns {Date}  A Date object if the value matches one; falsy otherwise.
+		 */
+		parseJSONDate: function(vJSDate) {
+
+			var value = vJSDate,
+				jsonDateRegEx = /^\/Date\((-?\d+)(\+|-)?(\d+)?\)\/$/,
+				arr = value && jsonDateRegEx.exec(value),
+				result;
+
+			if (arr) {
+				// 0 - complete results; 1 - ticks; 2 - sign; 3 - minutes
+				result = new Date(parseInt(arr[1], 10));
+				if (arr[2]) {
+					throw new Error("JSON Date has been deliverd with offset. parseJSONDate() does not support offset. See /src/sap.ui.core/src/sap/ui/thirdparty/datajs.js for solutions.");
+				}
+				if (!isNaN(result.valueOf())) {
+					return result;
+				}
+			}
+
+			return result; // Allow undefined to be returned.
+		},
+
+		parseJSONDateToShort: function(vJSDate) {
+
+			var oDate = this.formatter.parseJSONDate(vJSDate),
+				oDateTimeFormat;
+
+			if (!oDate) {
+				return null;
+			}
+
+			oDateTimeFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
+				style: "short"
+			});
+
+			return oDateTimeFormat.format(oDate);
+		},
+
+		parseJSONDateToMedium: function(vJSDate) {
+			var oDate = this.formatter.parseJSONDate(vJSDate),
+				oDateTimeFormat;
+
+			if (!oDate) {
+				return null;
+			}
+
+			oDateTimeFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
+				style: "medium"
+			});
+
+			return oDateTimeFormat.format(oDate);
+		},
 
 		/**
 		 * Checks if a given date is before current date
