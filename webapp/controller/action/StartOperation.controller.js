@@ -136,7 +136,8 @@ sap.ui.define([
 				sOrderNumber = oDataModel.getProperty("/orderNumber"),
 				sOperationNumber = oDataModel.getProperty("/operationNumber"),
 				fnResolve,
-				fnReject;
+				fnReject,
+				fnCleanUp;
 
 			/* check if current input is valid */
 			if (!sOrderNumber || !sOperationNumber) {
@@ -207,16 +208,16 @@ sap.ui.define([
 				this.getModel("view").setProperty("/bOrderOperationValid", false);
 			}.bind(this);
 
+			fnCleanUp = function(oDate) {
+				this.hideControlBusyIndicator(oOrderNumberInput);
+				this.hideControlBusyIndicator(oOperationNumberInput);
+				this.updateViewControls(this.getModel("data").getData());
+			}.bind(this);
+
 			/* Perform service call, Hide Busy Indicator, Update View Controls */
 			this.requestOrderOperationInfoService(sOrderNumber, sOperationNumber)
 				.then(fnResolve, fnReject)
-				.then(function() {
-					this.hideControlBusyIndicator(oOrderNumberInput);
-					this.hideControlBusyIndicator(oOperationNumberInput);
-				}.bind(this))
-				.then(function() {
-					this.updateViewControls(this.getModel("data").getData());
-				}.bind(this));
+				.then(fnCleanUp);
 		},
 
 		onOrderNumberInputChange: function(oEvent) {
