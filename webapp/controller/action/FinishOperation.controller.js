@@ -205,28 +205,26 @@ sap.ui.define([
 				return false;
 			}
 
+			this.removeAllUserMessages();
+
 			oStartMoment = moment(this.formatter.parseJSONDate(oData.ISTSTART));
 			oLatstResumeMoment = moment(oData.LATEST_EVENT_FINISH);
 			oFinishMoment = moment(oData.dateTimeValue);
 
 			// 2. ensure enterd finish date is after start date
 			if (oFinishMoment.isBefore(oStartMoment)) {
-				this.removeAllUserMessages();
 				this.addUserMessage({
-					text: this.getTranslation("finishOperation.messageText.finishDateBeforeStartDate", [oData.AUFNR, oData.VORNR, oFinishMoment.format("LLLL"), oStartMoment.format("LLLL")])
+					text: this.getTranslation("finishOperation.messageText.finishDateBeforeStartDate", [oData.AUFNR, oData.VORNR, oStartMoment.format("LLLL"), oFinishMoment.format("LLLL")])
 				});
-
 				oDateTimeInput.setValueState(sap.ui.core.ValueState.Error);
 				return false;
 			}
 
 			// 3. ensure entered finish date is after latest interruption finish date
 			if (oFinishMoment.isBefore(oLatstResumeMoment)) {
-				this.removeAllUserMessages();
 				this.addUserMessage({
-					text: this.getTranslation("finishOperation.messageText.finishDateBeforeLastResumeDate", [oData.AUFNR, oData.VORNR, oFinishMoment.format("LLLL"), oLatstResumeMoment.format("LLLL")])
+					text: this.getTranslation("finishOperation.messageText.finishDateBeforeLastResumeDate", [oData.AUFNR, oData.VORNR, oStartMoment.format("LLLL"), oFinishMoment.format("LLLL")])
 				});
-
 				oDateTimeInput.setValueState(sap.ui.core.ValueState.Error);
 				return false;
 			}
@@ -244,7 +242,9 @@ sap.ui.define([
 		},
 
 		onDateTimeEntryChange: function(oEvent) {
-			this.updateViewControls(this.getModel("data").getData());
+			var oData = this.getModel("data").getData();
+
+			this.updateViewControls(oData);
 		},
 
 		onProcessOrderChartPress: function(oEvent) {
