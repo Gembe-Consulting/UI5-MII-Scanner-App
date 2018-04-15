@@ -205,7 +205,7 @@ sap.ui.define([
 				return false;
 			}
 
-			oStartMoment = this.formatter.parseJSONDate(oData.ISTSTART);
+			oStartMoment = moment(this.formatter.parseJSONDate(oData.ISTSTART));
 			oLatstResumeMoment = moment(oData.LATEST_EVENT_FINISH);
 			oFinishMoment = moment(oData.dateTimeValue);
 
