@@ -155,7 +155,7 @@ sap.ui.define([
 					return oldDate < oNewDate ? oldDate : oNewDate;
 				}.bind(this);
 
-				oLatestIncidentFinishDate = aRows.reduce(maxEndDate);
+				oLatestIncidentFinishDate = aRows.reduce(maxEndDate, null /*initial value*/ );
 
 				// set LATEST_EVENT_FINISH property
 				this.getModel("data").setProperty("/LATEST_EVENT_FINISH", oLatestIncidentFinishDate);
