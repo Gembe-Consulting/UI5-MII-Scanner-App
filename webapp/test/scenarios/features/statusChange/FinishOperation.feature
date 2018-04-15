@@ -54,14 +54,14 @@ Feature: Finish Operation
 		Then on the Finish Operation Page: I should see data model and view model are initial
 
 	Scenario: Should show error message if users enter order number that has been started after entry date
-		When I enter '01.02.2018, 12:12:12' into dateTimeEntry in action.FinishOperation view
+		When I enter '18.01.1970, 10:24:56' into dateTimeEntry in action.FinishOperation view
 		 And I enter '1092697' into orderNumberInput in action.FinishOperation view
 		 And I enter '10' into operationNumberInput in action.FinishOperation view
-		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0010' zu Auftrag '1092697' wurde am '01.04.2018, 00:00:00' gestartet und kann daher nicht zum '01.02.2018, 12:12:12' beendet werden.' in action.FinishOperation view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0010' zu Auftrag '1092697' wurde am 'Sonntag, 18. Januar 1970 16:16' gestartet und kann daher nicht zum 'Sonntag, 18. Januar 1970 10:24' beendet werden.' in action.FinishOperation view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Error' in action.FinishOperation view
 		 And I can see dateTimeEntry with valueState 'Error' in action.FinishOperation view
 		 And I cannot see saveButton in action.FinishOperation view
-		When I enter '02.04.2018, 00:00:00' into dateTimeEntry in action.FinishOperation view
+		When I enter '18.01.70, 16:20' into dateTimeEntry in action.FinishOperation view
 		Then I can see saveButton in action.FinishOperation view
 		 And I can see dateTimeEntry with valueState 'Success' in action.FinishOperation view
 		 And messageStripContainer in action.FinishOperation view contains no content
