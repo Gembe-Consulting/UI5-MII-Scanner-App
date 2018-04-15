@@ -25,7 +25,8 @@ sap.ui.define([
 			bValid: false,
 			bOrderOperationValid: false,
 			bDateTimeEntryValid: true,
-			orderInputValueState: sap.ui.core.ValueState.None
+			orderInputValueState: sap.ui.core.ValueState.None,
+			dateTimeInputValueState: sap.ui.core.ValueState.None
 		},
 
 		onInit: function() {
@@ -148,15 +149,15 @@ sap.ui.define([
 			fnResolveIncidentService = function(oData) {
 				var aRows = oData.d.results[0].Rowset.results[0].Row.results,
 					oLatestIncidentFinishDate,
-					fnLatestEndDate,
-					oMaxDate = new Date(8640000000000000);
+					oNullDate = null,
+					fnLatestEndDate;
 
 				fnLatestEndDate = function(oldDate, oIncident, currentIndex, array) {
 					var oNewDate = this.formatter.parseJSONDate(oIncident.STR_ENDE);
-					return oldDate < oNewDate ? oldDate : oNewDate;
+					return oldDate > oNewDate ? oldDate : oNewDate;
 				}.bind(this);
 
-				oLatestIncidentFinishDate = aRows.reduce(fnLatestEndDate, oMaxDate /*initial value*/ );
+				oLatestIncidentFinishDate = aRows.reduce(fnLatestEndDate, oNullDate /*initial value*/ );
 
 				// set LATEST_EVENT_FINISH property
 				this.getModel("data").setProperty("/LATEST_EVENT_FINISH", oLatestIncidentFinishDate);
@@ -197,14 +198,13 @@ sap.ui.define([
 				return false;
 			}
 
-			this.removeAllUserMessages();
-
 			oStartMoment = moment(this.formatter.parseJSONDate(oData.ISTSTART));
 			oLastResumeMoment = moment(oData.LATEST_EVENT_FINISH);
 			oFinishMoment = moment(oData.dateTimeValue);
 
 			// 2. ensure enterd finish date is after start date
 			if (oFinishMoment.isBefore(oStartMoment)) {
+				this.removeAllUserMessages();
 				this.addUserMessage({
 					text: this.getTranslation("finishOperation.messageText.finishDateBeforeStartDate", [oData.AUFNR, oData.VORNR, oStartMoment.format("LLLL"), oFinishMoment.format("LLLL")])
 				});
@@ -214,6 +214,7 @@ sap.ui.define([
 
 			// 3. ensure entered finish date is after latest interruption finish date
 			if (oFinishMoment.isBefore(oLastResumeMoment)) {
+				this.removeAllUserMessages();
 				this.addUserMessage({
 					text: this.getTranslation("finishOperation.messageText.finishDateBeforeLastResumeDate", [oData.AUFNR, oData.VORNR, oLastResumeMoment.format("LLLL"), oFinishMoment.format("LLLL")])
 				});
@@ -235,7 +236,7 @@ sap.ui.define([
 
 		onDateTimeEntryChange: function(oEvent) {
 			var oData = this.getModel("data").getData();
-
+			this.removeAllUserMessages();
 			this.updateViewControls(oData);
 		},
 
