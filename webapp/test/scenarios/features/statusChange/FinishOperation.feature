@@ -24,16 +24,16 @@ Feature: Finish Operation
 	Scenario: Should show order information if users enter valid order number
 		When I enter '1092696' into orderNumberInput in action.FinishOperation view
 		 And I enter '10' into operationNumberInput in action.FinishOperation view
-		Then I can see processOrderFragmentOperationInfo with text '0010 - Gestartet: Verpackung aus Silo' in action.FinishOperation view
+		Then I can see processOrderFragmentOperationInfo with text 'Gestartet: Verpackung aus Silo' in action.FinishOperation view
 		 And I can see processOrderFragmentRessourceInfo with text '00253110 - Absackanlage Milchprodukte' in action.FinishOperation view
-		 And I can see processOrderFragmentStatusInfo with text '0003 - Gestartet' in action.FinishOperation view
+		 And I can see processOrderFragmentStatusInfo with text 'Gestartet (0003)' in action.FinishOperation view
 		When I enter '1000001' into orderNumberInput in action.FinishOperation view
 		Then I cannot see processOrderInfo in action.FinishOperation view
 	
 	Scenario: Should show error message if users enter invalid order number (not existing or wrong status)
 		When I enter '1000001' into orderNumberInput in action.FinishOperation view
 		 And I enter '10' into operationNumberInput in action.FinishOperation view
-		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Prozessauftrag '1000001' nicht gefunden.' in action.FinishOperation view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Prozessauftrag '1000001' nicht gefunden oder Vorgang '0010' nicht vorhanden.' in action.FinishOperation view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Error' in action.FinishOperation view
 		 And I can see orderNumberInput with valueState 'Error' in action.FinishOperation view
 		 And I cannot see saveButton in action.FinishOperation view
@@ -67,10 +67,10 @@ Feature: Finish Operation
 		 And messageStripContainer in action.FinishOperation view contains no content
 		 
 	Scenario: Should show error message if users enter order number that has an closed incident after entry date
-		When I enter '01.03.2018, 13:13:13' into dateTimeEntry in action.FinishOperation view
+		When I enter '01.01.70, 03:00' into dateTimeEntry in action.FinishOperation view
 		 And I enter '1092698' into orderNumberInput in action.FinishOperation view
-		 And I enter '10' into operationNumberInput in action.FinishOperation view
-		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0010' zu Auftrag '1092697' wurde am '01.04.2018, 00:00:00' aus einer Störung heraus fortgesetzt und kann daher nicht zum '01.03.2018, 13:13:13' beendet werden.' in action.FinishOperation view
+		 And I enter '20' into operationNumberInput in action.FinishOperation view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0020' zu Auftrag '1092698' wurde am 'Donnerstag, 1. Januar 1970 03:35' aus einer Störung heraus fortgesetzt und kann daher nicht zum 'Donnerstag, 1. Januar 1970 03:00' beendet werden.' in action.FinishOperation view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Error' in action.FinishOperation view
 		 And I can see dateTimeEntry with valueState 'Error' in action.FinishOperation view
 		 And I cannot see saveButton in action.FinishOperation view

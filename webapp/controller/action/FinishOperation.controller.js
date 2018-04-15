@@ -82,8 +82,8 @@ sap.ui.define([
 				sOperationNumber = oDataModel.getProperty("/operationNumber"),
 				fnResolve,
 				fnReject,
-				fnResolveIncidentList,
-				fnRejectIncidentList;
+				fnResolveIncidentService,
+				fnCleanUp;
 
 			/* check if current input is valid */
 			if (!sOrderNumber || !sOperationNumber) {
@@ -138,24 +138,25 @@ sap.ui.define([
 				} else {
 					oOrderNumberInput.setValueState(sap.ui.core.ValueState.Error);
 					oOperationNumberInput.setValueState(sap.ui.core.ValueState.Error);
-
+					return Promise.reject("Order or Operation not found!");
 				}
 
 				return oData;
 
 			}.bind(this);
 
-			fnResolveIncidentList = function(oData) {
+			fnResolveIncidentService = function(oData) {
 				var aRows = oData.d.results[0].Rowset.results[0].Row.results,
 					oLatestIncidentFinishDate,
-					maxEndDate;
+					fnLatestEndDate,
+					oMaxDate = new Date(8640000000000000);
 
-				maxEndDate = function(oldDate, oIncident, currentIndex, array) {
+				fnLatestEndDate = function(oldDate, oIncident, currentIndex, array) {
 					var oNewDate = this.formatter.parseJSONDate(oIncident.STR_ENDE);
 					return oldDate < oNewDate ? oldDate : oNewDate;
 				}.bind(this);
 
-				oLatestIncidentFinishDate = aRows.reduce(maxEndDate, null /*initial value*/ );
+				oLatestIncidentFinishDate = aRows.reduce(fnLatestEndDate, oMaxDate /*initial value*/ );
 
 				// set LATEST_EVENT_FINISH property
 				this.getModel("data").setProperty("/LATEST_EVENT_FINISH", oLatestIncidentFinishDate);
@@ -172,31 +173,22 @@ sap.ui.define([
 				this.getModel("view").setProperty("/bOrderOperationValid", false);
 			}.bind(this);
 
-			fnRejectIncidentList = function(oError) {
-				MessageBox.error(oError.responseText || oError.message, {
-					title: this.getTranslation("error.miiTransactionErrorText", ["OrderIncidentsRead"]),
-					contentWidth: "500px"
-				});
-				//oSource.setValueState(sap.ui.core.ValueState.Error).setValue("");
-				this.getModel("view").setProperty("/bOrderOperationValid", false);
+			fnCleanUp = function(oDate) {
+				this.hideControlBusyIndicator(oOrderNumberInput);
+				this.hideControlBusyIndicator(oOperationNumberInput);
+				this.updateViewControls(this.getModel("data").getData());
 			}.bind(this);
 
 			/* Perform service call, Hide Busy Indicator, Update View Controls */
 			this.requestOrderOperationInfoService(sOrderNumber, sOperationNumber)
 				.then(fnResolve, fnReject)
 				.then(this.requestOrderOperationIncidentsService.bind(this))
-				.then(fnResolveIncidentList, fnRejectIncidentList)
-				.then(function() {
-					this.hideControlBusyIndicator(oOrderNumberInput);
-					this.hideControlBusyIndicator(oOperationNumberInput);
-				}.bind(this))
-				.then(function() {
-					this.updateViewControls(this.getModel("data").getData());
-				}.bind(this));
+				.then(fnResolveIncidentService, jQuery.noop)
+				.then(fnCleanUp);
 		},
 
 		checkInputIsValid: function(oData) {
-			var oStartMoment, oFinishMoment, oLatstResumeMoment,
+			var oStartMoment, oFinishMoment, oLastResumeMoment,
 				//oData = this.getModel("data").getData(),
 				oDateTimeInput = this.byId("dateTimeEntry");
 
@@ -208,7 +200,7 @@ sap.ui.define([
 			this.removeAllUserMessages();
 
 			oStartMoment = moment(this.formatter.parseJSONDate(oData.ISTSTART));
-			oLatstResumeMoment = moment(oData.LATEST_EVENT_FINISH);
+			oLastResumeMoment = moment(oData.LATEST_EVENT_FINISH);
 			oFinishMoment = moment(oData.dateTimeValue);
 
 			// 2. ensure enterd finish date is after start date
@@ -221,9 +213,9 @@ sap.ui.define([
 			}
 
 			// 3. ensure entered finish date is after latest interruption finish date
-			if (oFinishMoment.isBefore(oLatstResumeMoment)) {
+			if (oFinishMoment.isBefore(oLastResumeMoment)) {
 				this.addUserMessage({
-					text: this.getTranslation("finishOperation.messageText.finishDateBeforeLastResumeDate", [oData.AUFNR, oData.VORNR, oStartMoment.format("LLLL"), oFinishMoment.format("LLLL")])
+					text: this.getTranslation("finishOperation.messageText.finishDateBeforeLastResumeDate", [oData.AUFNR, oData.VORNR, oLastResumeMoment.format("LLLL"), oFinishMoment.format("LLLL")])
 				});
 				oDateTimeInput.setValueState(sap.ui.core.ValueState.Error);
 				return false;

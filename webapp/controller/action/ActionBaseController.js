@@ -218,21 +218,35 @@ sap.ui.define([
 			return oOrderOperationModel.loadMiiData(oOrderOperationModel._sServiceUrl, oParam);
 		},
 
-		requestOrderOperationIncidentsService: function(oData) {
+		requestOrderOperationIncidentsService: function(sOrderNumber, sOperationNumber) {
 			var oOrderOperationIncidentsModel = this.getModel("orderIncidents"),
+				oServiceData,
 				oParam;
 
-			if (!oData) {
-				return Promise.reject(new Error("Parameter 'oData' is missing!"));
+			if (typeof sOrderNumber === "string") {
+				oServiceData = {
+					orderNumber: sOrderNumber,
+					operationNumber: sOperationNumber
+				};
+			} else {
+
+				if (!sOrderNumber || sOrderNumber.d.results[0].Rowset.results[0].Row.results.length !== 1) {
+					return Promise.reject(new Error("Rowset does not contain an operation!"));
+				}
+
+				oServiceData = {
+					orderNumber: sOrderNumber.d.results[0].Rowset.results[0].Row.results[0].AUFNR,
+					operationNumber: sOrderNumber.d.results[0].Rowset.results[0].Row.results[0].AUFNR
+				};
 			}
 
-			if (oData.d.results[0].Rowset.results[0].Row.results.length !== 1) {
-				return Promise.reject(new Error("Rowset does not contain an operation!"));
+			if (!oServiceData.operationNumber || !oServiceData.operationNumber) {
+				return Promise.reject(new Error("Parameter 'order number' and/or 'operation number' is missing!"));
 			}
 
 			oParam = {
-				"Param.1": oData.d.results[0].Rowset.results[0].Row.results[0].AUFNR,
-				"Param.2": oData.d.results[0].Rowset.results[0].Row.results[0].VORNR
+				"Param.1": oServiceData.operationNumber,
+				"Param.2": oServiceData.operationNumber
 			};
 
 			return oOrderOperationIncidentsModel.loadMiiData(oOrderOperationIncidentsModel._sServiceUrl, oParam);
