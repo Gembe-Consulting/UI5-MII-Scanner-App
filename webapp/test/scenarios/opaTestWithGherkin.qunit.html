@@ -27,18 +27,6 @@
 			"use strict";
 
 			testHarness.test({
-				featurePath: "com/mii/scanner/test/features/statusChange/StartOperation", 
-				steps: Steps,
-				generateMissingSteps : true
-			});
-			
-			testHarness.test({
-				featurePath: "com/mii/scanner/test/features/statusChange/FinishOperation", 
-				steps: Steps,
-				generateMissingSteps : true
-			});
-			
-			testHarness.test({
 				featurePath: "com/mii/scanner/test/features/Navigation", 
 				steps: Steps,
 				generateMissingSteps : true
@@ -46,6 +34,18 @@
 			
 			testHarness.test({
 				featurePath: "com/mii/scanner/test/features/CallFromExternalApplication", 
+				steps: Steps,
+				generateMissingSteps : true
+			});
+	
+			testHarness.test({
+				featurePath: "com/mii/scanner/test/features/statusChange/StartOperation", 
+				steps: Steps,
+				generateMissingSteps : true
+			});
+			
+			testHarness.test({
+				featurePath: "com/mii/scanner/test/features/statusChange/FinishOperation", 
 				steps: Steps,
 				generateMissingSteps : true
 			});
@@ -80,11 +80,11 @@
 				generateMissingSteps : true
 			});
 			
-			testHarness.test({
-				featurePath: "com/mii/scanner/test/features/ShowPseudoFatalError", 
-				steps: Steps,
-				generateMissingSteps : true
-			});
+			// testHarness.test({
+			// 	featurePath: "com/mii/scanner/test/features/ShowPseudoFatalError", 
+			// 	steps: Steps,
+			// 	generateMissingSteps : true
+			// });
 			
 			// testHarness.test({
 			// 	featurePath: "com/mii/scanner/test/features/HandlePageFocus", 
@@ -92,11 +92,11 @@
 			// 	generateMissingSteps : true
 			// });
 			
-			testHarness.test({
-				featurePath: "com/mii/scanner/test/features/HandleServiceErrors", 
-				steps: Steps,
-				generateMissingSteps : true
-			});
+			// testHarness.test({
+			// 	featurePath: "com/mii/scanner/test/features/HandleServiceErrors", 
+			// 	steps: Steps,
+			// 	generateMissingSteps : true
+			// });
 			
 			QUnit.start();
 			
