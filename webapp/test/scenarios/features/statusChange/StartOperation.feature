@@ -24,16 +24,16 @@ Feature: Start Operation
 	Scenario: Should show order information if users enter valid order number
 		When I enter '1092695' into orderNumberInput in action.StartOperation view
 		 And I enter '10' into operationNumberInput in action.StartOperation view
-		Then I can see processOrderFragmentOperationInfo with text '0010 - Freigegeben: Verpackung aus Silo' in action.StartOperation view
+		Then I can see processOrderFragmentOperationInfo with text 'Freigegeben: Verpackung aus Silo' in action.StartOperation view
 		 And I can see processOrderFragmentRessourceInfo with text '00253110 - Absackanlage Milchprodukte' in action.StartOperation view
-		 And I can see processOrderFragmentStatusInfo with text '0002 - Freigegeben' in action.StartOperation view
+		 And I can see processOrderFragmentStatusInfo with text 'Freigegeben (0002)' in action.StartOperation view
 		When I enter '1000001' into orderNumberInput in action.StartOperation view
 		Then I cannot see processOrderInfo in action.StartOperation view
 	
 	Scenario: Should show error message if users enter invalid order number
 		When I enter '1000001' into orderNumberInput in action.StartOperation view
 		 And I enter '10' into operationNumberInput in action.StartOperation view
-		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Prozessauftrag '1000001' nicht gefunden.' in action.StartOperation view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Prozessauftrag '1000001' nicht gefunden oder Vorgang '0010' nicht vorhanden.' in action.StartOperation view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Error' in action.StartOperation view
 		 And I can see orderNumberInput with valueState 'Error' in action.StartOperation view
 		 And I cannot see saveButton in action.StartOperation view
