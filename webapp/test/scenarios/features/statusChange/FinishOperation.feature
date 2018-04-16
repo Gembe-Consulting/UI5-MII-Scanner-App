@@ -90,9 +90,9 @@ Feature: Finish Operation
 		Then I can see saveButton in action.FinishOperation view
 
 	Scenario: Should send timeticket confirmation to SAP ERP
-		When I enter '1092695' into orderNumberInput in action.FinishOperation view
-		 And I enter '10' into operationNumberInput in action.FinishOperation view
+		When I enter '1092699' into orderNumberInput in action.FinishOperation view
+		 And I enter '1132' into operationNumberInput in action.FinishOperation view
 		 And I enter '07.04.2018, 12:19:46' into dateTimeEntry in action.FinishOperation view
 		When I click on saveButton in action.FinishOperation view
-		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang wurde beendet' in action.FinishOperation view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '1132' zu Auftrag '1092699' wurde erfolgreich beendet! Endezeitpunkt: Samstag, 07. April 2018 12:19' in action.FinishOperation view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Success' in action.FinishOperation view
