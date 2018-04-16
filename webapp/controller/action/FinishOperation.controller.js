@@ -45,7 +45,65 @@ sap.ui.define([
 
 		//http://su-mii-dev01.intern.suwelack.de:50000/XMII/Runner?Transaction=SUMISA/ProcessOrder/trx_SendBeginEndPhaseToSAP_TE&AUFNR=1093363&VORGANG=0010&STATUS=0045&STATUS_TXT=Beendet&TRX_ID=B40&RUECKZEIT=07.04.2018 16:43:41&MATNR=1701705-030&STOER=&UNAME=PHIGEM&IllumLoginName=PHIGEM&OutputParameter=OutputXML&Content-Type=text/xml
 		onSave: function() {
+			var oDataModel = this.getModel("data"),
+				oServiceData,
+				fnResolve,
+				fnReject;
 
+			this.getOwnerComponent().showBusyIndicator();
+
+			fnResolve = function(oData) {
+				var oConfiramationNumber,
+					aRows;
+
+				if (!oData.success) {
+
+					this.addUserMessage({
+						text: oData.lastErrorMessage
+					});
+
+					return;
+				}
+
+				aRows = oData.d.results[0].Rowset.results[0].Row.results;
+
+				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
+				if (aRows.length === 1) {
+					oConfiramationNumber = aRows[0];
+				} else {
+					throw new Error(this.getTranslation("finishOperation.messageText.resultIncomplete") + " @OpFinish");
+				}
+
+				this.addUserMessage({
+					text: this.getTranslation("finishOperation.messageText.postingSuccessfull", [oServiceData.orderNumber, oServiceData.operationNumber, moment(oServiceData.date).format("LLLL")]),
+					type: sap.ui.core.MessageType.Success
+				});
+
+				this.addMessageManagerMessage("Rückmeldung " + oConfiramationNumber.CONF_NO + " erfolgreich gebucht.");
+
+			}.bind(this);
+
+			fnReject = function(oError) {
+				this.addUserMessage({
+					text: oError.message
+				});
+			}.bind(this);
+
+			oServiceData = {
+				orderNumber: oDataModel.getProperty("/orderNumber"),
+				operationNumber: oDataModel.getProperty("/operationNumber"),
+				newStatus: this.oProcessOrderStatus.finished,
+				date: oDataModel.getProperty("/dateTimeValue"),
+				materialNumber: oDataModel.getProperty("/MATNR")
+			};
+
+			//function(sOrderNumber, sOperationNumber, oStatus, oDate, sMaterialNumber, sIncident) || function(oServiceData)
+			this.requestTimeTicketService(oServiceData)
+				.then(fnResolve, fnReject)
+				.then(this.getOwnerComponent().hideBusyIndicator)
+				.then(function() {
+					this.onClearFormPress({}, true /*bKeepMessageStrip*/ );
+				}.bind(this));
 		},
 
 		updateViewControls: function(oData) {
