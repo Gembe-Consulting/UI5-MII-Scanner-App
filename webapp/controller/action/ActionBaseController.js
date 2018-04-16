@@ -73,7 +73,7 @@ sap.ui.define([
 				"STATUS_COLOR": "#BB07FF",
 				"ACTION_KEY": "B10"
 			},
-			stopped: {
+			finished: {
 				"STATUS_TXT": "Beendet",
 				"STATUS_ID": "0045",
 				"STATUS_ICON": "ap-icon://stop",
