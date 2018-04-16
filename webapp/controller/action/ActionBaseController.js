@@ -236,16 +236,16 @@ sap.ui.define([
 
 				oServiceData = {
 					orderNumber: sOrderNumber.d.results[0].Rowset.results[0].Row.results[0].AUFNR,
-					operationNumber: sOrderNumber.d.results[0].Rowset.results[0].Row.results[0].AUFNR
+					operationNumber: sOrderNumber.d.results[0].Rowset.results[0].Row.results[0].VORNR
 				};
 			}
 
-			if (!oServiceData.operationNumber || !oServiceData.operationNumber) {
+			if (!oServiceData.orderNumber || !oServiceData.operationNumber) {
 				return Promise.reject(new Error("Parameter 'order number' and/or 'operation number' is missing!"));
 			}
 
 			oParam = {
-				"Param.1": oServiceData.operationNumber,
+				"Param.1": oServiceData.orderNumber,
 				"Param.2": oServiceData.operationNumber
 			};
 
