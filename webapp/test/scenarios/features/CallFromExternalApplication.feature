@@ -78,3 +78,19 @@ Feature: Pass data from external application
 		 And I can see materialNumberInput with value '1200666-006' in action.GoodsIssue view
 		 And I can see storageLocationInput with value 'RB01' in action.GoodsIssue view
 		 And I can see unitOfMeasureInput with value 'KG' in action.GoodsIssue view
+		 
+	Scenario: Should open Start Operation Page with given order number and operation number
+		Given I start the app on "/Statusmeldung" using remote user "phigem"
+		When I navigate to "/VS?AUFNR=1092698&VORNR=1132"
+		Then I can see orderNumberInput with value '1092698' in action.StartOperation view
+		 And I can see operationNumberInput with value '1132' in action.StartOperation view
+		 And I can see orderNumberInput with valueState 'Success' in action.StartOperation view
+		 And I can see operationNumberInput with valueState 'Success' in action.StartOperation view
+		 
+	Scenario: Should open Finish Operation Page with given order number and operation number
+		Given I start the app on "/Statusmeldung" using remote user "phigem"
+		When I navigate to "/VB?AUFNR=1092695&VORNR=0010"
+		Then I can see orderNumberInput with value '1092695' in action.StartOperation view
+		 And I can see operationNumberInput with value '0010' in action.StartOperation view
+		 And I can see orderNumberInput with valueState 'Success' in action.StartOperation view
+		 And I can see operationNumberInput with valueState 'Success' in action.StartOperation view
