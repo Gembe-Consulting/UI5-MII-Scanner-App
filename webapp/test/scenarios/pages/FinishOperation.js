@@ -79,7 +79,8 @@ sap.ui.require([
 								bValid: false,
 								bOrderOperationValid: false,
 								bDateTimeEntryValid: true,
-								orderInputValueState: sap.ui.core.ValueState.None
+								orderInputValueState: sap.ui.core.ValueState.None,
+								dateTimeInputValueState: sap.ui.core.ValueState.None
 							};
 
 						return this.waitFor({
