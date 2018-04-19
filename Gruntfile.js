@@ -1,20 +1,44 @@
 module.exports = function(grunt) {
 	"use strict";
-
 	grunt.loadNpmTasks("@sap/grunt-sapui5-bestpractice-build");
-	grunt.loadNpmTasks('grunt-text-replace');
+
+	//grunt.file.write("defaultSapGruntCongig.json", JSON.stringify(grunt.config.get()));
 
 	var oConfig = {
 		"openui5_preload": {
+			"preloadDbg": {
+				"options": {
+					"resources": {
+						"cwd": "dist/tmp-dbg",
+						"src": ["**/*.js", "!**/node_modules/**", "!neo-app.json", "!**/test/**"],
+						"prefix": "com/mii/scanner"
+					},
+					"compress": false,
+					"dest": "dist/tmp-dbg"
+				},
+				"components": true
+			},
 			"preloadTmp": {
 				"options": {
 					"resources": {
 						"cwd": "dist/tmp",
-						"src": ["**/*.js", "**/*.fragment.html", "**/*.fragment.json", "**/*.fragment.xml", "**/*.view.html", "**/*.view.json", "**/*.view.xml", "**/*.properties", "manifest.json", "!test/**", "!**/node_modules/**", "!neo-app.json"],
+						"src": ["**/*.js", "**/changes-bundle.json", "**/*.fragment.html", "**/*.fragment.json", "**/*.fragment.xml", "**/*.view.html", "**/*.view.json", "**/*.view.xml", "**/*.properties", "manifest.json", "!**/node_modules/**", "!neo-app.json", "!**/test/**"],
 						"prefix": "com/mii/scanner"
 					},
 					"compress": true,
 					"dest": "dist/tmp"
+				},
+				"components": true
+			},
+			"preloadRootProject": {
+				"options": {
+					"resources": {
+						"cwd": "webapp",
+						"src": ["**/*.js", "**/*.fragment.html", "**/*.fragment.json", "**/*.fragment.xml", "**/*.view.html", "**/*.view.json", "**/*.view.xml", "!**/node_modules/**", "!neo-app.json", "!**/test/**"],
+						"prefix": "com/mii/scanner"
+					},
+					"compress": false,
+					"dest": "webapp"
 				},
 				"components": true
 			}
@@ -57,12 +81,11 @@ module.exports = function(grunt) {
 
 	grunt.config.merge(oConfig);
 
+	grunt.log.write(JSON.stringify(grunt.config.get())).ok();
+
 	grunt.registerTask("default", [
 		"clean",
 		"lint",
-		"build",
-		"copy:irpt",
-		"copy:ext",
-		"replace:ext"
+		"build"
 	]);
 };
