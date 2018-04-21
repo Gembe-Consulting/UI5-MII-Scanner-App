@@ -108,6 +108,10 @@ sap.ui.define([
 			return !!oData.dateTimeValue && !!oData.orderNumber && !!oData.operationNumber;
 		},
 
+		checkInputIsValid: function(oData) {
+			return true;
+		},
+
 		onOrderChange: function(oEvent) {
 			var oSource = oEvent.getSource(),
 				oOrderNumberInput = this.byId("orderNumberInput"),
