@@ -81,19 +81,19 @@ Feature: Pass data from external application
 		 
 	Scenario: Should open Start Operation Page with given order number and operation number
 		Given I start the app on "/Statusmeldung" using remote user "phigem"
-		When I navigate to "/VS?AUFNR=1092698&VORNR=1132"
-		Then I can see orderNumberInput with value '1092698' in action.tt.StartOperation view
-		 And I can see operationNumberInput with value '1132' in action.tt.StartOperation view
+		When I navigate to "/VS?AUFNR=1092695&VORNR=0010"
+		Then I can see orderNumberInput with value '1092695' in action.tt.StartOperation view
+		 And I can see operationNumberInput with value '0010' in action.tt.StartOperation view
 		 And I can see orderNumberInput with valueState 'Success' in action.tt.StartOperation view
 		 And I can see operationNumberInput with valueState 'Success' in action.tt.StartOperation view
 		 
 	Scenario: Should open Interrupt Operation Page with given order number and operation number
 		Given I start the app on "/Statusmeldung" using remote user "phigem"
 		When I navigate to "/VU?AUFNR=1092700&VORNR=0001"
-		Then I can see orderNumberInput with value '1092700' in action.InterruptOperation view
-		 And I can see operationNumberInput with value '0001' in action.InterruptOperation view
-		 And I can see orderNumberInput with valueState 'Success' in action.InterruptOperation view
-		 And I can see operationNumberInput with valueState 'Success' in action.InterruptOperation view
+		Then I can see orderNumberInput with value '1092700' in action.tt.InterruptOperation view
+		 And I can see operationNumberInput with value '0001' in action.tt.InterruptOperation view
+		 And I can see orderNumberInput with valueState 'Success' in action.tt.InterruptOperation view
+		 And I can see operationNumberInput with valueState 'Success' in action.tt.InterruptOperation view
 	
 	Scenario: Should open Resume Operation Page with given order number and operation number
 		Given I start the app on "/Statusmeldung" using remote user "phigem"
@@ -105,8 +105,8 @@ Feature: Pass data from external application
 		 
 	Scenario: Should open Finish Operation Page with given order number and operation number
 		Given I start the app on "/Statusmeldung" using remote user "phigem"
-		When I navigate to "/VB?AUFNR=1092695&VORNR=0010"
-		Then I can see orderNumberInput with value '1092695' in action.tt.FinishOperation view
+		When I navigate to "/VB?AUFNR=1092696&VORNR=0010"
+		Then I can see orderNumberInput with value '1092696' in action.tt.FinishOperation view
 		 And I can see operationNumberInput with value '0010' in action.tt.FinishOperation view
 		 And I can see orderNumberInput with valueState 'Success' in action.tt.FinishOperation view
 		 And I can see operationNumberInput with valueState 'Success' in action.tt.FinishOperation view
