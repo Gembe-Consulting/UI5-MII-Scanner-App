@@ -61,17 +61,21 @@ sap.ui.define([
 				bOrderOperationValid = oViewModel.getProperty("/bOrderOperationValid"),
 				bDateTimeEntryValid = oViewModel.getProperty("/bDateTimeEntryValid"),
 				bInputValuesComplete,
+				bInputIsValid,
 				bNoErrorMessagesActive,
 				bReadyForPosting;
 
 			// check if all required input data is present
 			bInputValuesComplete = this.isInputDataValid(oData);
 
+			// check if status and date input is allowed
+			bInputIsValid = this.checkInputIsValid(oData);
+
 			// check if all input data has proper format
 			bNoErrorMessagesActive = this.isMessageModelClean();
 
 			// we are ready for posting once we have complete and proper formatted input
-			bReadyForPosting = bOrderOperationValid && bDateTimeEntryValid && bNoErrorMessagesActive && bInputValuesComplete;
+			bReadyForPosting = bOrderOperationValid && bDateTimeEntryValid && bInputValuesComplete && bInputIsValid && bNoErrorMessagesActive;
 
 			oViewModel.setProperty("/bValid", bReadyForPosting);
 		},
