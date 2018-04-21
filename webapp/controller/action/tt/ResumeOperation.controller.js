@@ -152,6 +152,11 @@ sap.ui.define([
 				// set LATEST_EVENT_FINISH property
 				this.getModel("data").setProperty("/LATEST_EVENT_START", oLatestInterruptionStartDate);
 
+				this.addUserMessage({
+					text: this.getTranslation("resumeOperation.messageText.currentInterruption", [sOrderNumber, sOperationNumber, oLatestInterruption.STRCODE, oLatestInterruption.STR_TXT, oLatestInterruption.ERFASSER]),
+					type: sap.ui.core.MessageType.Information
+				});
+
 				return oData;
 			};
 
