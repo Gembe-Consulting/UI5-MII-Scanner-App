@@ -168,6 +168,7 @@ sap.ui.define([
 
 		onReasonSelectionChange: function(oEvent) {
 			var oData = this.getModel("data").getData();
+			this.removeAllUserMessages();
 			this.updateViewControls(oData);
 		},
 
