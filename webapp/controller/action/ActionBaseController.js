@@ -87,7 +87,7 @@ sap.ui.define([
 				"STATUS_COLOR": "#AAAAAA",
 				"ACTION_KEY": null
 			},
-			disrupted: {
+			interrupted: {
 				"STATUS_TXT": "Störung",
 				"STATUS_ID": "0098",
 				"STATUS_ICON": "sap-icon://warning2",

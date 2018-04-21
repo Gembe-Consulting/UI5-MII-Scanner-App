@@ -171,14 +171,6 @@ sap.ui.define([
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
 				if (aRows.length === 1) {
 					oOrderOperation = aRows[0];
-
-					if (oOrderOperation.STATUS !== this.oProcessOrderStatus.started.STATUS_ID) { // check if operation has status "started"
-						this.addUserMessage({
-							text: this.getTranslation("finishOperation.messageText.wrongCurrentStatus", [sOrderNumber, sOperationNumber, oOrderOperation.STATUS_TXT])
-						});
-
-						bOrderOperationValid = false;
-					}
 				} else {
 					this.addUserMessage({
 						text: this.getTranslation("finishOperation.messageText.orderNotFound", [sOrderNumber, sOperationNumber])
@@ -249,9 +241,11 @@ sap.ui.define([
 		checkInputIsValid: function(oData) {
 			var oStartMoment, oFinishMoment, oLastResumeMoment,
 				//oData = this.getModel("data").getData(),
+				oOrderNumberInput = this.byId("orderNumberInput"),
+				oOperationNumberInput = this.byId("operationNumberInput"),
 				oDateTimeInput = this.byId("dateTimeEntry");
 
-			// 1. check if necessary data is present
+			// 0. check if necessary data is present
 			if (!oData.AUFNR || !oData.dateTimeValue) {
 				return false;
 			}
@@ -259,6 +253,16 @@ sap.ui.define([
 			oStartMoment = moment(this.formatter.parseJSONDate(oData.ISTSTART));
 			oLastResumeMoment = moment(oData.LATEST_EVENT_FINISH);
 			oFinishMoment = moment(oData.dateTimeValue);
+
+			// 1. ensure operation status is valid
+			if (oData.STATUS !== this.oProcessOrderStatus.started.STATUS_ID) { // check if operation has status "started"
+				this.addUserMessage({
+					text: this.getTranslation("finishOperation.messageText.wrongCurrentStatus", [oData.AUFNR, oData.VORNR, oData.STATUS_TXT])
+				});
+				oOrderNumberInput.setValueState(sap.ui.core.ValueState.Error);
+				oOperationNumberInput.setValueState(sap.ui.core.ValueState.Error);
+				return false;
+			}
 
 			// 2. ensure enterd finish date is after start date
 			if (oFinishMoment.isBefore(oStartMoment)) {
@@ -280,6 +284,8 @@ sap.ui.define([
 				return false;
 			}
 
+			oOrderNumberInput.setValueState(sap.ui.core.ValueState.Success);
+			oOperationNumberInput.setValueState(sap.ui.core.ValueState.Success);
 			oDateTimeInput.setValueState(sap.ui.core.ValueState.Success);
 			return true;
 		},

@@ -87,10 +87,26 @@ Feature: Pass data from external application
 		 And I can see orderNumberInput with valueState 'Success' in action.StartOperation view
 		 And I can see operationNumberInput with valueState 'Success' in action.StartOperation view
 		 
+	Scenario: Should open Interrupt Operation Page with given order number and operation number
+		Given I start the app on "/Statusmeldung" using remote user "phigem"
+		When I navigate to "/VU?AUFNR=1092700&VORNR=0001"
+		Then I can see orderNumberInput with value '1092700' in action.InterruptOperation view
+		 And I can see operationNumberInput with value '0001' in action.InterruptOperation view
+		 And I can see orderNumberInput with valueState 'Success' in action.InterruptOperation view
+		 And I can see operationNumberInput with valueState 'Success' in action.InterruptOperation view
+	
+	Scenario: Should open Resume Operation Page with given order number and operation number
+		Given I start the app on "/Statusmeldung" using remote user "phigem"
+		When I navigate to "/VF?AUFNR=1092710&VORNR=0011"
+		Then I can see orderNumberInput with value '1092710' in action.ResumeOperation view
+		 And I can see operationNumberInput with value '0011' in action.ResumeOperation view
+		 And I can see orderNumberInput with valueState 'Success' in action.ResumeOperation view
+		 And I can see operationNumberInput with valueState 'Success' in action.ResumeOperation view
+		 
 	Scenario: Should open Finish Operation Page with given order number and operation number
 		Given I start the app on "/Statusmeldung" using remote user "phigem"
 		When I navigate to "/VB?AUFNR=1092695&VORNR=0010"
-		Then I can see orderNumberInput with value '1092695' in action.StartOperation view
-		 And I can see operationNumberInput with value '0010' in action.StartOperation view
-		 And I can see orderNumberInput with valueState 'Success' in action.StartOperation view
-		 And I can see operationNumberInput with valueState 'Success' in action.StartOperation view
+		Then I can see orderNumberInput with value '1092695' in action.FinishOperation view
+		 And I can see operationNumberInput with value '0010' in action.FinishOperation view
+		 And I can see orderNumberInput with valueState 'Success' in action.FinishOperation view
+		 And I can see operationNumberInput with valueState 'Success' in action.FinishOperation view

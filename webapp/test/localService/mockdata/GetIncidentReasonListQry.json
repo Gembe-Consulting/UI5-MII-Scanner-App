@@ -1,0 +1,465 @@
+{
+	"d": {
+		"results": [{
+			"__metadata": {
+				"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Rowsets('SAPUI5/services/incidents/GetIncidentReasonListQry')",
+				"type": "QueryTemplate.Rowsets"
+			},
+			"DateCreated": "\/Date(1524148779000)\/",
+			"EndDate": "\/Date(1524148779000)\/",
+			"StartDate": "\/Date(1524145179000)\/",
+			"Version": "14.0 SP7 Patch 15 (Jan 13, 2016)",
+			"QueryTemplate": "SAPUI5/services/incidents/GetIncidentReasonListQry",
+			"Rowset": {
+				"results": [{
+					"__metadata": {
+						"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Rowset(QueryTemplate='SAPUI5/services/incidents/GetIncidentReasonListQry',RowsetId=1)",
+						"type": "QueryTemplate.Rowset"
+					},
+					"RowsetId": 1,
+					"QueryTemplate": "SAPUI5/services/incidents/GetIncidentReasonListQry",
+					"Column": {
+						"results": [{
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('STRCODE')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "STRCODE",
+							"Description": "STRCODE",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "STRCODE"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('STRGRUND')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "STRGRUND",
+							"Description": "STRGRUND",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "STRGRUND"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('STRGRD_TXT')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "STRGRD_TXT",
+							"Description": "STRGRD_TXT",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "STRGRD_TXT"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('GESPEICHERT_VON')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "GESPEICHERT_VON",
+							"Description": "GESPEICHERT_VON",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "GESPEICHERT_VON"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('GESPEICHERT_AM')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "GESPEICHERT_AM",
+							"Description": "GESPEICHERT_AM",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 93,
+							"SourceColumn": "GESPEICHERT_AM"
+						}]
+					},
+					"Row": {
+						"results": [{
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "STEL",
+							"STRGRUND": "P100",
+							"STRGRD_TXT": "Elektrische Störung",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 1
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(2)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "STME",
+							"STRGRUND": "P101",
+							"STRGRD_TXT": "Mechanische Störung",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 2
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(3)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "STEN",
+							"STRGRUND": "P102",
+							"STRGRD_TXT": "Strg. Energie-/Kältevrsrg",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 3
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(4)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "ERKS",
+							"STRGRUND": "P104",
+							"STRGRD_TXT": "Strg. d.Kaffeesatzentsrg.",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 4
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(5)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "STET",
+							"STRGRUND": "P105",
+							"STRGRD_TXT": "Störung der Etikettierung",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 5
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(6)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "STEI",
+							"STRGRUND": "P106",
+							"STRGRD_TXT": "Ex-Schutz Instandhaltung",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 6
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(7)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "ERQS",
+							"STRGRUND": "P150",
+							"STRGRD_TXT": "Unterbr. wg fehl. QS-Frg",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 7
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(8)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "STMM",
+							"STRGRUND": "P151",
+							"STRGRD_TXT": "Unterbr. wg Mat.-mangels",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 8
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(9)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "STPM",
+							"STRGRUND": "P152",
+							"STRGRD_TXT": "Unterbr. wg Pers.-mangels",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 9
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(10)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "STRI",
+							"STRGRUND": "P153",
+							"STRGRD_TXT": "Unterbr. wegen Reinigung",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 10
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(11)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "STRR",
+							"STRGRUND": "P154",
+							"STRGRD_TXT": "Unterbr. wg Reings.-Ktrl.",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 11
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(12)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "STRS",
+							"STRGRUND": "P155",
+							"STRGRD_TXT": "Unterbr. wg Nachrüstens",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 12
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(13)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "STSB",
+							"STRGRUND": "P156",
+							"STRGRD_TXT": "Schalenwaschanlage belegt",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 13
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(14)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "ERGS",
+							"STRGRUND": "P157",
+							"STRGRD_TXT": "Geplanter Stillstand",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 14
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(15)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "ERRL",
+							"STRGRUND": "P158",
+							"STRGRD_TXT": "Rohw./Packm. nicht im Lg",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 15
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(16)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "STER",
+							"STRGRUND": "P159",
+							"STRGRD_TXT": "Ex-Schutz Reinigung",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 16
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(17)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "STNR",
+							"STRGRUND": "P160",
+							"STRGRD_TXT": "Nachfolg. Ressource gestö",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 17
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(18)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "STVR",
+							"STRGRUND": "P161",
+							"STRGRD_TXT": "Vorherg. Ressource gestör",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 18
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(19)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "ERPL",
+							"STRGRUND": "P162",
+							"STRGRD_TXT": "Ver-/Entsrg. Log. Rollbah",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 19
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(20)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "ERSL",
+							"STRGRUND": "P163",
+							"STRGRD_TXT": "Ver-/Entsrg. Log. Schleu",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 20
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(21)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "STLW",
+							"STRGRUND": "P190",
+							"STRGRD_TXT": "Störung Werk",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 21
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(22)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "RLWR",
+							"STRGRUND": "P199",
+							"STRGRD_TXT": "Wdhlg.-reing innerh. Auft",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 22
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(23)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "ERVE",
+							"STRGRUND": "P200",
+							"STRGRD_TXT": "Versuche",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 23
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(24)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "ERZS",
+							"STRGRUND": "P201",
+							"STRGRD_TXT": "Zusatzschicht",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 24
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(25)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "ERFB",
+							"STRGRUND": "P202",
+							"STRGRD_TXT": "Falsche Buchungszeit",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 25
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(26)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "RLLE",
+							"STRGRUND": "P300",
+							"STRGRD_TXT": "Mechanisches Problem",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 26
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(27)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "RLLS",
+							"STRGRUND": "P301",
+							"STRGRD_TXT": "Probleme Elektrik",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 27
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(28)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "RLER",
+							"STRGRUND": "P303",
+							"STRGRD_TXT": "Probleme Etikettierung",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 28
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(29)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "RLLP",
+							"STRGRUND": "P350",
+							"STRGRD_TXT": "Personalmangel",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 29
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(30)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "RLLW",
+							"STRGRUND": "P190",
+							"STRGRD_TXT": "Störung Werk",
+							"GESPEICHERT_VON": "PHIGEM",
+							"GESPEICHERT_AM": "\/Date(1405985030000)\/",
+							"RowId": 30
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(31)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "RLNR",
+							"STRGRUND": "P352",
+							"STRGRD_TXT": "längere Rüstzeit erfrdrl.",
+							"GESPEICHERT_VON": "SUW_MII",
+							"GESPEICHERT_AM": "\/Date(1346457605000)\/",
+							"RowId": 31
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(32)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "STMW",
+							"STRGRUND": "P164",
+							"STRGRD_TXT": "Messerwechsel Walze",
+							"GESPEICHERT_VON": "DANHAR01",
+							"GESPEICHERT_AM": "\/Date(1406231764000)\/",
+							"RowId": 32
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(33)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "RLBB",
+							"STRGRUND": "P197",
+							"STRGRD_TXT": "Problem VBT - Zwei Bänder",
+							"GESPEICHERT_VON": "PHIGEM",
+							"GESPEICHERT_AM": "\/Date(1405985126000)\/",
+							"RowId": 33
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(34)",
+								"type": "QueryTemplate.Row"
+							},
+							"STRCODE": "RLBA",
+							"STRGRUND": "P198",
+							"STRGRD_TXT": "Problem VBT - Ein Band",
+							"GESPEICHERT_VON": "PHIGEM",
+							"GESPEICHERT_AM": "\/Date(1405985145000)\/",
+							"RowId": 34
+						}]
+					}
+				}]
+			},
+			"Messages": {
+				"results": [
+
+				]
+			}
+		}]
+	}
+}

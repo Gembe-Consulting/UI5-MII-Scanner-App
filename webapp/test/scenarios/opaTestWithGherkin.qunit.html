@@ -43,6 +43,18 @@
 				steps: Steps,
 				generateMissingSteps : true
 			});
+
+			testHarness.test({
+				featurePath: "com/mii/scanner/test/features/statusChange/InterruptOperation", 
+				steps: Steps,
+				generateMissingSteps : true
+			});
+			
+			testHarness.test({
+				featurePath: "com/mii/scanner/test/features/statusChange/ResumeOperation", 
+				steps: Steps,
+				generateMissingSteps : true
+			});
 			
 			testHarness.test({
 				featurePath: "com/mii/scanner/test/features/statusChange/FinishOperation", 
@@ -80,11 +92,11 @@
 				generateMissingSteps : true
 			});
 			
-			// testHarness.test({
-			// 	featurePath: "com/mii/scanner/test/features/ShowPseudoFatalError", 
-			// 	steps: Steps,
-			// 	generateMissingSteps : true
-			// });
+			testHarness.test({
+				featurePath: "com/mii/scanner/test/features/ShowPseudoFatalError", 
+				steps: Steps,
+				generateMissingSteps : true
+			});
 			
 			// testHarness.test({
 			// 	featurePath: "com/mii/scanner/test/features/HandlePageFocus", 

@@ -1,38 +1,73 @@
 <mvc:View controllerName="com.mii.scanner.controller.action.InterruptOperation" xmlns="sap.m" xmlns:c="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
-	<Page title="{i18n>titleInterruptOperation}" showNavButton="true" navButtonPress="onNavBack" showSubHeader="{= !${device>/system/phone} }">
+	<Page id="interruptOperationPage">
 		<customHeader>
 			<Toolbar id="header">
 				<ToolbarSpacer/>
-				<c:Icon id="stockTransferPageIcon" src="sap-icon://offsite-work" size="2rem" color="#FFAC00" alt="GI"/>
-				<c:Icon id="stockTransferPageIcon2" src="sap-icon://shipping-status" size="1.25rem" color="#FFAC00" class="sapUiSmallMarginEnd"/>
-				<Title id="stockTransferPageTitle" text="{i18n>titleStockTransfer}" class="suwStockTransferTitle"/>
+				<c:Icon id="interruptOperationPageIcon" src="sap-icon://error" size="2rem" color="#FFAC00" alt="INTERRUPT"/>
+				<Title id="interruptOperationPageTitle" text="{i18n>interruptOperation.title.text}" class="suwInterruptOperationTitle"/>
 				<ToolbarSpacer/>
-				<Button id="clearFormButton" icon="sap-icon://redo" press="onClearFormPress"/>
+				<Button id="clearFormButton" icon="sap-icon://redo" press="onClearFormPress" tooltip="{i18n>general.clearFormButton.tooltip}"/>
 			</Toolbar>
 		</customHeader>
 		<subHeader>
-			<Bar>
-				<contentMiddle>
-					<Label text="Aktueller Status: Störung STEL seit 9 Stunden (10.12.17 15:11)"/>
-				</contentMiddle>
-			</Bar>
+			<Toolbar id="subheader">
+				<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.ProcessOrderInfoChart" type="XML"/>
+			</Toolbar>
 		</subHeader>
 		<content>
-			<f:SimpleForm id="dataEntry" title="{i18n>titleFormInterruptOperation}" editable="true" layout="ResponsiveGridLayout">
+			<l:VerticalLayout id="messageStripContainer" width="100%"></l:VerticalLayout>
+			<f:SimpleForm id="dataEntry" editable="true" adjustLabelSpan="false" layout="ResponsiveGridLayout" breakpointM="500" labelSpanXL="4"
+				labelSpanL="4" labelSpanM="3" labelSpanS="12" emptySpanXL="4" emptySpanL="3" emptySpanM="2" emptySpanS="0">
 				<f:content>
-					<Label text="{i18n>lableTextFormInterruptOperationOrderNumber}"/>
-					<Input value="{ORDERID}"/>
-					<Label text="DateTime"/>
-					<DateTimePicker></DateTimePicker>
+					<!-- Order Number -->
+					<Label text="{i18n>interruptOperation.form.label.orderAndOperationNumber}" labelFor="orderNumberInput"/>
+					<Input id="orderNumberInput" change="onOrderNumberInputChange" value="{path: 'data>/orderNumber', type:'.sapType.AUFNR'}"
+						valueState="{view>/orderInputValueState}" maxLength="12" class="noScannerInput suwIncreadedInputFontSize">
+						<layoutData>
+							<l:GridData span="XL3 L3 M4 S8"/>
+						</layoutData>
+					</Input>
+					<Input id="operationNumberInput" change="onOperationNumberInputChange" value="{path: 'data>/operationNumber', type:'.sapType.VORNR'}"
+						valueState="{view>/orderInputValueState}" maxLength="4" class="noScannerInput suwIncreadedInputFontSize">
+						<layoutData>
+							<l:GridData span="XL1 L1 M2 S4"/>
+						</layoutData>
+					</Input>
+					<!-- Interruption Reason -->
+					<Label text="{i18n>interruptOperation.form.label.interruptionReason}" labelFor="reasonSelection"/>
+					<ComboBox id="reasonSelection" items="{ path: 'interruptionReasonList>/d/results/0/Rowset/results/0/Row/results' }"
+						selectedKey="{data>/interruptionReason}" change="onReasonSelectionChange" selectionChange="onReasonSelectionChange"
+						valueState="{= ${data>/interruptionReason} === null ? 'None': ${data>/interruptionReason} === '' ? 'Error' : 'Success' }"
+						showSecondaryValues="true" filterSecondaryValues="true" class="noScannerInput suwIncreadedInputFontSize">
+						<items>
+							<c:ListItem key="{interruptionReasonList>STRGRUND}" text="{interruptionReasonList>STRCODE} [ {interruptionReasonList>STRGRUND} ]"
+								additionalText="{interruptionReasonList>STRGRD_TXT}"/>
+						</items>
+						<layoutData>
+							<l:GridData span="XL4 L4 M6 S12"/>
+						</layoutData>
+					</ComboBox>
+					<!-- Date and Time Entry -->
+					<Label text="{i18n>interruptOperation.form.label.startDateTime}" labelFor="dateTimeEntry"/>
+					<DateTimePicker id="dateTimeEntry" change="onDateTimeEntryChange" dateValue="{data>/dateTimeValue}"
+						valueState="{view>/dateTimeInputValueState}" displayFormat="medium" class="noScannerInput suwIncreadedInputFontSize">
+						<layoutData>
+							<l:GridData span="XL4 L4 M6 S12"/>
+						</layoutData>
+					</DateTimePicker>
 				</f:content>
 			</f:SimpleForm>
+			<!-- Process Order Info Form -->
+			<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.ProcessOrderInfoForm" type="XML"/>
 		</content>
 		<footer>
 			<Toolbar id="footer">
+				<Button visible="{= ${message>/}.length === 0 ? false : true}" icon="sap-icon://message-popup" text="{= ${message>/}.length }"
+					type="Emphasized" press="onShowMessagePopoverPress"/>
 				<ToolbarSpacer/>
-				<Button id="saveButton" type="Accept" text="{i18n>textButtonSaveInterruptOperation}" press="onSave"/>
-				<Button id="cancelButton" type="Reject" text="{i18n>textButtonCancelInterruptOperation}" press="onCancelAction"/>
+				<Button id="saveButton" type="Accept" text="{i18n>interruptOperation.button.text.save}" press="onSave" enabled="{view>/bValid}"/>
+				<Button id="cancelButton" type="Reject" text="{i18n>interruptOperation.button.text.cancel}" press="onCancelAction"/>
 			</Toolbar>
 		</footer>
 	</Page>

@@ -31,3 +31,13 @@
     color: #05B074;
     font-weight: bold;
 }
+
+#scanner---interruptOperation--interruptOperationPageTitle.suwInterruptOperationTitle {
+    color: #FFAC00;
+    font-weight: bold;
+}
+
+#scanner---resumeOperation--resumeOperationPageTitle.suwResumeOperationTitle {
+    color: #BB07FF;
+    font-weight: bold;
+}

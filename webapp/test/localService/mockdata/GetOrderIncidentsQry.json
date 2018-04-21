@@ -180,6 +180,22 @@
 							"EV_NUMMER": null,
 							"LOESCH_ID": null,
 							"RowId": 3
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"ID": 403,
+							"STRCODE": "P100",
+							"STR_BEGINN": "\/Date(20099900)\/",
+							"STR_ENDE": "\/Date(1524144212433)\/",
+							"STR_TXT": "Elektrische Störung",
+							"AUFNR": "1092701",
+							"VORNR": "0001",
+							"ERFASSER": "PHIGEM",
+							"EV_NUMMER": null,
+							"LOESCH_ID": null,
+							"RowId": 4
 						}]
 					}
 				}]

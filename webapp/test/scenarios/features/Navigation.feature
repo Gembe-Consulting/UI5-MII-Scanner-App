@@ -122,22 +122,22 @@ Feature: Navigation between pages
 		When I navigate to /Statusmeldung
 		Then I can see statusChangePage in nav.StatusChange view
 		When I click on startOperationItem in nav.StatusChange view
-		 And I enter '1' into quantityInput in action.StartOperation view
+		 And I enter '1234567' into orderNumberInput in action.StartOperation view
 		 And I click on cancelButton in action.StartOperation view
 		When on the Start Operation Page: I confirm the message box
 		Then I can see statusChangePage in nav.StatusChange view
 		When I click on interruptOperationItem in nav.StatusChange view
-		 And I enter '1' into quantityInput in action.InterruptOperation view
+		 And I enter '1234567' into orderNumberInput in action.InterruptOperation view
 		 And I click on cancelButton in action.InterruptOperation view
 		When on the Interrupt Operation Page: I confirm the message box
 		Then I can see statusChangePage in nav.StatusChange view
 		When I click on resumeOperationItem in nav.StatusChange view
-		 And I enter '1' into quantityInput in action.ResumeOperation view
+		 And I enter '1234567' into orderNumberInput in action.ResumeOperation view
 		 And I click on cancelButton in action.ResumeOperation view
 		 When on the Resume Operation Page: I confirm the message box
 		Then I can see statusChangePage in nav.StatusChange view
 		When I click on finishOperationItem in nav.StatusChange view
-		 And I enter '1' into quantityInput in action.FinishOperation view
+		 And I enter '1234567' into orderNumberInput in action.FinishOperation view
 		 And I click on cancelButton in action.FinishOperation view
 		When on the Finish Operation Page: I confirm the message box
 		Then I can see statusChangePage in nav.StatusChange view
