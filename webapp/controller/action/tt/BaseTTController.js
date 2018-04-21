@@ -1,6 +1,7 @@
 sap.ui.define([
-	"com/mii/scanner/controller/action/ActionBaseController"
-], function(ActionBaseController) {
+	"com/mii/scanner/controller/action/ActionBaseController",
+	"sap/suite/ui/microchart/StackedBarMicroChartBar"
+], function(ActionBaseController, StackedBarMicroChartBar) {
 	return ActionBaseController.extend("com.mii.scanner.controller.action.tt.BaseTTController", {
 
 		oProcessOrderStatus: {
@@ -54,6 +55,77 @@ sap.ui.define([
 			this.getView().addEventDelegate({
 				onBeforeShow: this._refreshDateValue
 			}, this);
+		},
+
+		generateOperationTimeline: function(oStartDate, aInterruptions, oEndDate) {
+
+			// example: valueColor="Good" value="60" displayValue="60min"
+
+			return new Promise(function(resolve, reject) {
+				// do a thing, possibly async, then…
+
+				var aTimeLine = [],
+					iDuration = 0,
+					startMoment,
+					endMoment;
+
+				if (!oStartDate) {
+					reject(new Error("No start date provided"));
+				}
+
+				if (!oEndDate) {
+					oEndDate = new Date();
+				}
+
+				startMoment = moment(oStartDate);
+				endMoment = moment(oEndDate);
+
+				iDuration = endMoment - startMoment;
+
+				if (!aInterruptions) {
+					aTimeLine.push(new StackedBarMicroChartBar({
+						valueColor: "Good",
+						value: iDuration,
+						displayValue: iDuration + " min"
+					}));
+				} else {
+					var fnMicroChartBarFactory = function(oInterruption) {
+						var length = oInterruption.STR_ENDE - oInterruption.STR_BEGINN;
+						length = length / 3600;
+
+						return new StackedBarMicroChartBar({
+							valueColor: "Error",
+							value: length,
+							displayValue: length + " min"
+						});
+
+					};
+
+					//Start -> 1st Interruption
+					var iFirstLength = aInterruptions[0].STR_BEGINN - startMoment;
+					aTimeLine.push(new StackedBarMicroChartBar({
+						valueColor: "Good",
+						value: iFirstLength,
+						displayValue: iFirstLength + " min"
+					}));
+
+					//Interruptions
+					aInterruptions = aInterruptions.map(fnMicroChartBarFactory);
+
+					aTimeLine = aTimeLine.concat(aInterruptions);
+
+					//last Interruption -> End
+					var iLastLength = endMoment - aInterruptions[aInterruptions.length - 1].STR_ENDE;
+					aTimeLine.push(new StackedBarMicroChartBar({
+						valueColor: "Good",
+						value: iLastLength,
+						displayValue: iLastLength + " min"
+					}));
+				}
+
+				resolve(aTimeLine);
+
+			});
 		},
 
 		updateViewControls: function(oData) {
