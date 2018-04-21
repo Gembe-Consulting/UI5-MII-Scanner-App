@@ -10,7 +10,7 @@ sap.ui.require([
 	],
 	function(Opa5, Interactable, Properties, PropertyStrictEquals, Ancestor, Press, EnterText, Common) {
 		"use strict";
-		var sViewName = "action.FinishOperation";
+		var sViewName = "action.tt.FinishOperation";
 
 		Opa5.createPageObjects({
 
@@ -90,7 +90,7 @@ sap.ui.require([
 								var oView = oControl.getParent(),
 									oDataModel, oViewModel;
 
-								Opa5.assert.strictEqual(oView.getViewName(), "com.mii.scanner.view.action.FinishOperation", "View " + oView.getViewName() + " found");
+								Opa5.assert.strictEqual(oView.getViewName(), "com.mii.scanner.view.action.tt.FinishOperation", "View " + oView.getViewName() + " found");
 
 								oDataModel = oView.getModel("data");
 								oViewModel = oView.getModel("view");

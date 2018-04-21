@@ -58,63 +58,63 @@ Feature: Navigation between pages
 		When I navigate to /Materialbewegung
 		Then I can see goodsMovementPage in nav.GoodsMovement view
 		When I click on goodsReceiptItem in nav.GoodsMovement view
-		 And I click on cancelButton in action.GoodsReceipt view
+		 And I click on cancelButton in action.gm.GoodsReceipt view
 		Then I can see goodsMovementPage in nav.GoodsMovement view
 		When I click on goodsIssueWithLEItem in nav.GoodsMovement view
-		 And I click on cancelButton in action.GoodsIssue view
+		 And I click on cancelButton in action.gm.GoodsIssue view
 		Then I can see goodsMovementPage in nav.GoodsMovement view
 		When I click on goodsIssueNonLEItem in nav.GoodsMovement view
-		 And I click on cancelButton in action.GoodsIssue view
+		 And I click on cancelButton in action.gm.GoodsIssue view
 		Then I can see goodsMovementPage in nav.GoodsMovement view
 		When I click on rollerConveyorItem in nav.GoodsMovement view
-		 And I click on cancelButton in action.RollerConveyor view
+		 And I click on cancelButton in action.gm.RollerConveyor view
 		Then I can see goodsMovementPage in nav.GoodsMovement view
 		When I click on stockTransferItem in nav.GoodsMovement view
-		 And I click on cancelButton in action.StockTransfer view
+		 And I click on cancelButton in action.gm.StockTransfer view
 		Then I can see goodsMovementPage in nav.GoodsMovement view
 
 	Scenario: Should allow confirmless cancel of status change if data has not changed
 		When I navigate to /Statusmeldung
 		Then I can see statusChangePage in nav.StatusChange view
 		When I click on startOperationItem in nav.StatusChange view
-		 And I click on cancelButton in action.StartOperation view
+		 And I click on cancelButton in action.tt.StartOperation view
 		Then I can see statusChangePage in nav.StatusChange view
 		When I click on interruptOperationItem in nav.StatusChange view
-		 And I click on cancelButton in action.InterruptOperation view
+		 And I click on cancelButton in action.tt.InterruptOperation view
 		Then I can see statusChangePage in nav.StatusChange view
 		When I click on resumeOperationItem in nav.StatusChange view
-		 And I click on cancelButton in action.ResumeOperation view
+		 And I click on cancelButton in action.tt.ResumeOperation view
 		Then I can see statusChangePage in nav.StatusChange view
 		When I click on finishOperationItem in nav.StatusChange view
-		 And I click on cancelButton in action.FinishOperation view
+		 And I click on cancelButton in action.tt.FinishOperation view
 		Then I can see statusChangePage in nav.StatusChange view
 		
 	Scenario: Should show confirmation message on cancel of goods movement if data has been changed
 		When I navigate to /Materialbewegung
 		Then I can see goodsMovementPage in nav.GoodsMovement view
 		When I click on goodsReceiptItem in nav.GoodsMovement view
-		 And I enter '1' into quantityInput in action.GoodsReceipt view
-		 And I click on cancelButton in action.GoodsReceipt view
+		 And I enter '1' into quantityInput in action.gm.GoodsReceipt view
+		 And I click on cancelButton in action.gm.GoodsReceipt view
 		When on the Goods Receipt Page: I confirm the message box
 		Then I can see goodsMovementPage in nav.GoodsMovement view
 		When I click on goodsIssueWithLEItem in nav.GoodsMovement view
-		 And I enter '1' into quantityInput in action.GoodsIssue view
-		 And I click on cancelButton in action.GoodsIssue view
+		 And I enter '1' into quantityInput in action.gm.GoodsIssue view
+		 And I click on cancelButton in action.gm.GoodsIssue view
 		When on the Goods Issue Page: I confirm the message box
 		Then I can see goodsMovementPage in nav.GoodsMovement view
 		When I click on goodsIssueNonLEItem in nav.GoodsMovement view
-		 And I enter '1' into quantityInput in action.GoodsIssue view
-		 And I click on cancelButton in action.GoodsIssue view
+		 And I enter '1' into quantityInput in action.gm.GoodsIssue view
+		 And I click on cancelButton in action.gm.GoodsIssue view
 		When on the Goods Issue Page: I confirm the message box
 		Then I can see goodsMovementPage in nav.GoodsMovement view
 		When I click on rollerConveyorItem in nav.GoodsMovement view
-		 And I enter '1' into quantityInput in action.RollerConveyor view
-		 And I click on cancelButton in action.RollerConveyor view
+		 And I enter '1' into quantityInput in action.gm.RollerConveyor view
+		 And I click on cancelButton in action.gm.RollerConveyor view
 		When on the Roller Conveyor Page: I confirm the message box
 		Then I can see goodsMovementPage in nav.GoodsMovement view
 		When I click on stockTransferItem in nav.GoodsMovement view
-		 And I enter '1' into quantityInput in action.StockTransfer view
-		 And I click on cancelButton in action.StockTransfer view
+		 And I enter '1' into quantityInput in action.gm.StockTransfer view
+		 And I click on cancelButton in action.gm.StockTransfer view
 		When on the Stock Transfer Page: I confirm the message box
 		Then I can see goodsMovementPage in nav.GoodsMovement view
 		
@@ -122,22 +122,22 @@ Feature: Navigation between pages
 		When I navigate to /Statusmeldung
 		Then I can see statusChangePage in nav.StatusChange view
 		When I click on startOperationItem in nav.StatusChange view
-		 And I enter '1234567' into orderNumberInput in action.StartOperation view
-		 And I click on cancelButton in action.StartOperation view
+		 And I enter '1234567' into orderNumberInput in action.tt.StartOperation view
+		 And I click on cancelButton in action.tt.StartOperation view
 		When on the Start Operation Page: I confirm the message box
 		Then I can see statusChangePage in nav.StatusChange view
 		When I click on interruptOperationItem in nav.StatusChange view
-		 And I enter '1234567' into orderNumberInput in action.InterruptOperation view
-		 And I click on cancelButton in action.InterruptOperation view
+		 And I enter '1234567' into orderNumberInput in action.tt.InterruptOperation view
+		 And I click on cancelButton in action.tt.InterruptOperation view
 		When on the Interrupt Operation Page: I confirm the message box
 		Then I can see statusChangePage in nav.StatusChange view
 		When I click on resumeOperationItem in nav.StatusChange view
-		 And I enter '1234567' into orderNumberInput in action.ResumeOperation view
-		 And I click on cancelButton in action.ResumeOperation view
+		 And I enter '1234567' into orderNumberInput in action.tt.ResumeOperation view
+		 And I click on cancelButton in action.tt.ResumeOperation view
 		 When on the Resume Operation Page: I confirm the message box
 		Then I can see statusChangePage in nav.StatusChange view
 		When I click on finishOperationItem in nav.StatusChange view
-		 And I enter '1234567' into orderNumberInput in action.FinishOperation view
-		 And I click on cancelButton in action.FinishOperation view
+		 And I enter '1234567' into orderNumberInput in action.tt.FinishOperation view
+		 And I click on cancelButton in action.tt.FinishOperation view
 		When on the Finish Operation Page: I confirm the message box
 		Then I can see statusChangePage in nav.StatusChange view

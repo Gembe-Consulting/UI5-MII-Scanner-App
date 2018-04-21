@@ -1,4 +1,4 @@
-<mvc:View controllerName="com.mii.scanner.controller.action.InterruptOperation" xmlns="sap.m" xmlns:c="sap.ui.core"
+<mvc:View controllerName="com.mii.scanner.controller.action.tt.InterruptOperation" xmlns="sap.m" xmlns:c="sap.ui.core"
 	xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
 	<Page id="interruptOperationPage">
 		<customHeader>

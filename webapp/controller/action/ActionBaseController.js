@@ -58,51 +58,6 @@ sap.ui.define([
 
 		}],
 
-		oProcessOrderStatus: {
-			released: {
-				"STATUS_TXT": "Freigegeben",
-				"STATUS_ID": "0002",
-				"STATUS_ICON": "sap-icon://sys-enter",
-				"STATUS_COLOR": "#05B074",
-				"ACTION_KEY": null
-			},
-			started: {
-				"STATUS_TXT": "Gestartet",
-				"STATUS_ID": "0003",
-				"STATUS_ICON": "sap-icon://initiative",
-				"STATUS_COLOR": "#BB07FF",
-				"ACTION_KEY": "B10"
-			},
-			finished: {
-				"STATUS_TXT": "Beendet",
-				"STATUS_ID": "0045",
-				"STATUS_ICON": "ap-icon://stop",
-				"STATUS_COLOR": "#330066",
-				"ACTION_KEY": "B40"
-			},
-			closed: {
-				"STATUS_TXT": "Abgeschlossen",
-				"STATUS_ID": "0046",
-				"STATUS_ICON": "sap-icon://locked",
-				"STATUS_COLOR": "#AAAAAA",
-				"ACTION_KEY": null
-			},
-			interrupted: {
-				"STATUS_TXT": "Störung",
-				"STATUS_ID": "0098",
-				"STATUS_ICON": "sap-icon://warning2",
-				"STATUS_COLOR": "#FFAC00",
-				"ACTION_KEY": "B30"
-			},
-			paused: {
-				"STATUS_TXT": "Pausiert",
-				"STATUS_ID": "0097",
-				"STATUS_ICON": "sap-icon://pause",
-				"STATUS_COLOR": "#006E9E",
-				"ACTION_KEY": "B20"
-			}
-		},
-
 		onInit: function() {
 			PageBaseController.prototype.onInit.call(this);
 
@@ -304,29 +259,6 @@ sap.ui.define([
 			return oSource.setBusyIndicatorDelay(0).setBusy(false);
 		},
 
-		/**
-		 * Check is a given storage location is allowed for posting
-		 */
-		isStorageLocationAllowed: function(sStorageLocation) {
-			return this._aDisallowedStorageLocations.indexOf(sStorageLocation.toUpperCase()) === -1;
-		},
-
-		_formatStorageUnitData: function(oStorageUnit) {
-
-			if (!oStorageUnit) {
-				return null;
-			}
-
-			var fnNumberOrDefault = function(vAttr, vDefault) {
-				return jQuery.isNumeric(vAttr) ? Number(vAttr) : vDefault;
-			};
-
-			oStorageUnit.LENUM = fnNumberOrDefault(oStorageUnit.LENUM, null);
-			oStorageUnit.SOLLME = fnNumberOrDefault(oStorageUnit.SOLLME, 0.0);
-
-			return oStorageUnit;
-		},
-
 		getScannerInputType: function(sScannedString) {
 
 			return this.aScannerInputTypes.find(function(type) {
@@ -352,12 +284,6 @@ sap.ui.define([
 
 			return this.byId(oInputType.defaultControlId);
 
-		},
-
-		onSave: function() {
-			jQuery.sap.log.error("This onSave function is a placeholder. Please make sure to implement this function in your action page controller!");
-			MessageToast.show(this.getResourceText("messageSuccessBaseActionController"));
-			this.onNavBack();
 		},
 
 		onClearFormPress: function(oEvent, bKeepMessageStrip) {
@@ -443,7 +369,8 @@ sap.ui.define([
 			var oMsgContainer = this.byId("messageStripContainer");
 			oMsgContainer.destroyContent();
 		},
-		/*
+
+		/***************************************************************************
 				addLogMessage: function(oMessage) {
 					var oMessageStripContainer = this.byId("messageStripContainer"),
 						oMsgStrip;
@@ -471,7 +398,8 @@ sap.ui.define([
 
 					oMessageStripContainer.destroyContent();
 				},
-		*/
+		******************************************************************************/
+
 		isMessageModelClean: function() {
 			var oMessageModel = sap.ui.getCore()
 				.getMessageManager()

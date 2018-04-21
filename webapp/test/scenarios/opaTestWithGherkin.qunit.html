@@ -39,61 +39,67 @@
 			});
 	
 			testHarness.test({
-				featurePath: "com/mii/scanner/test/features/statusChange/StartOperation", 
+				featurePath: "com/mii/scanner/test/features/tt/StartOperation", 
 				steps: Steps,
 				generateMissingSteps : true
 			});
 
 			testHarness.test({
-				featurePath: "com/mii/scanner/test/features/statusChange/InterruptOperation", 
+				featurePath: "com/mii/scanner/test/features/tt/InterruptOperation", 
 				steps: Steps,
 				generateMissingSteps : true
 			});
 			
 			testHarness.test({
-				featurePath: "com/mii/scanner/test/features/statusChange/ResumeOperation", 
+				featurePath: "com/mii/scanner/test/features/tt/ResumeOperation", 
 				steps: Steps,
 				generateMissingSteps : true
 			});
 			
 			testHarness.test({
-				featurePath: "com/mii/scanner/test/features/statusChange/FinishOperation", 
+				featurePath: "com/mii/scanner/test/features/tt/FinishOperation", 
 				steps: Steps,
 				generateMissingSteps : true
 			});
 			
 			testHarness.test({
-				featurePath: "com/mii/scanner/test/features/GoodsReceipt", 
+				featurePath: "com/mii/scanner/test/features/gm/GoodsReceipt", 
 				steps: Steps,
 				generateMissingSteps : true
 			});
 			
 			testHarness.test({
-				featurePath: "com/mii/scanner/test/features/GoodsIssueStorageUnit", 
+				featurePath: "com/mii/scanner/test/features/gm/GoodsIssueStorageUnit", 
 				steps: Steps,
 				generateMissingSteps : true
 			});
 			
 			testHarness.test({
-				featurePath: "com/mii/scanner/test/features/GoodsIssueStorageLocation", 
+				featurePath: "com/mii/scanner/test/features/gm/GoodsIssueStorageLocation", 
 				steps: Steps,
 				generateMissingSteps : true
 			});
 		
 			testHarness.test({
-				featurePath: "com/mii/scanner/test/features/StockTransfer", 
+				featurePath: "com/mii/scanner/test/features/gm/StockTransfer", 
 				steps: Steps,
 				generateMissingSteps : true
 			});
 			
 			testHarness.test({
-				featurePath: "com/mii/scanner/test/features/RollerConveyor", 
+				featurePath: "com/mii/scanner/test/features/gm/RollerConveyor", 
 				steps: Steps,
 				generateMissingSteps : true
 			});
 			
 			testHarness.test({
-				featurePath: "com/mii/scanner/test/features/ShowPseudoFatalError", 
+				featurePath: "com/mii/scanner/test/features/gm/ShowPseudoFatalError", 
+				steps: Steps,
+				generateMissingSteps : true
+			});
+			
+			testHarness.test({
+				featurePath: "com/mii/scanner/test/features/HandleServiceErrors", 
 				steps: Steps,
 				generateMissingSteps : true
 			});
@@ -104,11 +110,7 @@
 			// 	generateMissingSteps : true
 			// });
 			
-			// testHarness.test({
-			// 	featurePath: "com/mii/scanner/test/features/HandleServiceErrors", 
-			// 	steps: Steps,
-			// 	generateMissingSteps : true
-			// });
+
 			
 			QUnit.start();
 			

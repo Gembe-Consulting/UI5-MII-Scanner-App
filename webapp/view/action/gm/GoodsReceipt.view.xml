@@ -1,4 +1,4 @@
-<mvc:View controllerName="com.mii.scanner.controller.action.GoodsReceipt" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+<mvc:View controllerName="com.mii.scanner.controller.action.gm.GoodsReceipt" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
 	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
 	<Page id="goodsReceiptPage">
 		<customHeader>

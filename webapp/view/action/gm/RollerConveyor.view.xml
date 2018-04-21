@@ -1,5 +1,6 @@
-<mvc:View controllerName="com.mii.scanner.controller.action.RollerConveyor" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
-	xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:storageBinData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+<mvc:View controllerName="com.mii.scanner.controller.action.gm.RollerConveyor" xmlns="sap.m" xmlns:c="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:storageBinData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 	<Page id="rollerConveyorPage">
 		<customHeader>
 			<Toolbar id="header">

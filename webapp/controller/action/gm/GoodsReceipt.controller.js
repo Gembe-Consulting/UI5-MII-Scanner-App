@@ -1,13 +1,13 @@
 sap.ui.define([
-	"./ActionBaseController",
+	"./BaseGMController",
 	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox",
 	"com/mii/scanner/model/sapType",
 	"com/mii/scanner/model/formatter"
-], function(ActionBaseController, JSONModel, MessageBox, sapType, formatter) {
+], function(BaseGMController, JSONModel, MessageBox, sapType, formatter) {
 	"use strict";
 
-	return ActionBaseController.extend("com.mii.scanner.controller.action.GoodsReceipt", {
+	return BaseGMController.extend("com.mii.scanner.controller.action.gm.GoodsReceipt", {
 
 		sapType: sapType,
 		formatter: formatter,
@@ -36,7 +36,7 @@ sap.ui.define([
 
 		onInit: function() {
 			//call super class onInit to apply user login protection. DO NOT DELETE!
-			ActionBaseController.prototype.onInit.call(this);
+			BaseGMController.prototype.onInit.call(this);
 
 			this.setModel(new JSONModel(jQuery.extend({}, this._oInitData)), "data");
 

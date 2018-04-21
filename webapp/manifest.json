@@ -341,56 +341,56 @@
 				},
 				"goodsReceipt": {
 					"viewName": "GoodsReceipt",
-					"viewPath": "com.mii.scanner.view.action",
+					"viewPath": "com.mii.scanner.view.action.gm",
 					"viewId": "goodsReceipt",
 					"viewLevel": 3,
 					"title": "{{manifest.routing.target.title.goodsMovement.goodsReceipt}}"
 				},
 				"goodsIssue": {
 					"viewName": "GoodsIssue",
-					"viewPath": "com.mii.scanner.view.action",
+					"viewPath": "com.mii.scanner.view.action.gm",
 					"viewId": "goodsIssue",
 					"viewLevel": 3,
 					"title": "{{manifest.routing.target.title.goodsMovement.goodsIssue}}"
 				},
 				"stockTransfer": {
 					"viewName": "StockTransfer",
-					"viewPath": "com.mii.scanner.view.action",
+					"viewPath": "com.mii.scanner.view.action.gm",
 					"viewId": "stockTransfer",
 					"viewLevel": 3,
 					"title": "{{manifest.routing.target.title.goodsMovement.stockTransfer}}"
 				},
 				"rollerConveyor": {
 					"viewName": "RollerConveyor",
-					"viewPath": "com.mii.scanner.view.action",
+					"viewPath": "com.mii.scanner.view.action.gm",
 					"viewId": "rollerConveyor",
 					"viewLevel": 3,
 					"title": "{{manifest.routing.target.title.goodsMovement.rollerConveyor}}"
 				},
 				"startOperation": {
 					"viewName": "StartOperation",
-					"viewPath": "com.mii.scanner.view.action",
+					"viewPath": "com.mii.scanner.view.action.tt",
 					"viewId": "startOperation",
 					"viewLevel": 3,
 					"title": "{{manifest.routing.target.title.statusChange.startOperation}}"
 				},
 				"interruptOperation": {
 					"viewName": "InterruptOperation",
-					"viewPath": "com.mii.scanner.view.action",
+					"viewPath": "com.mii.scanner.view.action.tt",
 					"viewId": "interruptOperation",
 					"viewLevel": 3,
 					"title": "{{manifest.routing.target.title.statusChange.interruptOperation}}"
 				},
 				"resumeOperation": {
 					"viewName": "ResumeOperation",
-					"viewPath": "com.mii.scanner.view.action",
+					"viewPath": "com.mii.scanner.view.action.tt",
 					"viewId": "resumeOperation",
 					"viewLevel": 3,
 					"title": "{{manifest.routing.target.title.statusChange.resumeOperation}}"
 				},
 				"finishOperation": {
 					"viewName": "FinishOperation",
-					"viewPath": "com.mii.scanner.view.action",
+					"viewPath": "com.mii.scanner.view.action.tt",
 					"viewId": "finishOperation",
 					"viewLevel": 3,
 					"title": "{{manifest.routing.target.title.statusChange.finishOperation}}"

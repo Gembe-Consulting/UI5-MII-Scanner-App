@@ -1,13 +1,13 @@
 sap.ui.define([
-	"./ActionBaseController",
+	"./BaseTTController",
 	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox",
 	"com/mii/scanner/model/sapType",
 	"com/mii/scanner/model/formatter"
-], function(ActionBaseController, JSONModel, MessageBox, sapType, formatter) {
+], function(BaseTTController, JSONModel, MessageBox, sapType, formatter) {
 	"use strict";
 
-	return ActionBaseController.extend("com.mii.scanner.controller.action.InterruptOperation", {
+	return BaseTTController.extend("com.mii.scanner.controller.action.tt.FinishOperation", {
 
 		sapType: sapType,
 		formatter: formatter,
@@ -16,7 +16,6 @@ sap.ui.define([
 			//user input data
 			orderNumber: null,
 			operationNumber: null,
-			interruptionReason: null,
 			dateTimeValue: null,
 			//external data
 			AUFNR: null
@@ -32,18 +31,19 @@ sap.ui.define([
 
 		onInit: function() {
 			//call super class onInit to apply user login protection. DO NOT DELETE!
-			ActionBaseController.prototype.onInit.call(this);
+			BaseTTController.prototype.onInit.call(this);
 
 			this.setModel(new JSONModel(jQuery.extend({}, this._oInitData)), "data");
 
 			this.setModel(new JSONModel(jQuery.extend({}, this._oInitView)), "view");
 
-			this.getView().addEventDelegate({
-				onBeforeShow: this._refreshDateValue
-			}, this);
+			this.getRouter()
+				.getRoute("finishOperation")
+				.attachMatched(this._onRouteMatched, this);
+
 		},
 
-		//http://su-mii-dev01.intern.suwelack.de:50000/XMII/Illuminator?QueryTemplate=SUMISA/ProcessOrder/xac_SendBeginEndPhaseToSAP_TE&Param.2=1093364&Param.3=0010&Param.4=0098&Param.5=Störung&Param.9=B30&Param.6=19.04.2018 14:17:27&Param.7=P150&Param.8=PHIGEM&Param.32=1&Content-Type=text/xml
+		//http://su-mii-dev01.intern.suwelack.de:50000/XMII/Runner?Transaction=SUMISA/ProcessOrder/trx_SendBeginEndPhaseToSAP_TE&AUFNR=1093363&VORGANG=0010&STATUS=0045&STATUS_TXT=Beendet&TRX_ID=B40&RUECKZEIT=07.04.2018 16:43:41&MATNR=1701705-030&STOER=&UNAME=PHIGEM&IllumLoginName=PHIGEM&OutputParameter=OutputXML&Content-Type=text/xml
 		onSave: function() {
 			var oDataModel = this.getModel("data"),
 				oServiceData,
@@ -71,11 +71,11 @@ sap.ui.define([
 				if (aRows.length === 1) {
 					oConfiramationNumber = aRows[0];
 				} else {
-					throw new Error(this.getTranslation("interruptOperation.messageText.resultIncomplete") + " @OpInterrupt");
+					throw new Error(this.getTranslation("finishOperation.messageText.resultIncomplete") + " @OpFinish");
 				}
 
 				this.addUserMessage({
-					text: this.getTranslation("interruptOperation.messageText.postingSuccessfull", [oServiceData.orderNumber, oServiceData.operationNumber, moment(oServiceData.date).format("LLLL")]),
+					text: this.getTranslation("finishOperation.messageText.postingSuccessfull", [oServiceData.orderNumber, oServiceData.operationNumber, moment(oServiceData.date).format("LLLL")]),
 					type: sap.ui.core.MessageType.Success
 				});
 
@@ -92,10 +92,9 @@ sap.ui.define([
 			oServiceData = {
 				orderNumber: oDataModel.getProperty("/orderNumber"),
 				operationNumber: oDataModel.getProperty("/operationNumber"),
-				newStatus: this.oProcessOrderStatus.interrupted,
+				newStatus: this.oProcessOrderStatus.finished,
 				date: oDataModel.getProperty("/dateTimeValue"),
-				materialNumber: oDataModel.getProperty("/MATNR"),
-				incident: oDataModel.getProperty("/interruptionReason")
+				materialNumber: oDataModel.getProperty("/MATNR")
 			};
 
 			//function(sOrderNumber, sOperationNumber, oStatus, oDate, sMaterialNumber, sIncident) || function(oServiceData)
@@ -105,6 +104,10 @@ sap.ui.define([
 				.then(function() {
 					this.onClearFormPress({}, true /*bKeepMessageStrip*/ );
 				}.bind(this));
+		},
+
+		isInputDataValid: function(oData) {
+			return !!oData.dateTimeValue && !!oData.orderNumber && !!oData.operationNumber;
 		},
 
 		onOrderChange: function(oEvent) {
@@ -148,7 +151,7 @@ sap.ui.define([
 					oOrderOperation = aRows[0];
 				} else {
 					this.addUserMessage({
-						text: this.getTranslation("interruptOperation.messageText.orderNotFound", [sOrderNumber, sOperationNumber])
+						text: this.getTranslation("finishOperation.messageText.orderNotFound", [sOrderNumber, sOperationNumber])
 					});
 
 					bOrderOperationValid = false;
@@ -213,32 +216,6 @@ sap.ui.define([
 				.then(fnCleanUp);
 		},
 
-		updateViewControls: function(oData) {
-			var oViewModel = this.getModel("view"),
-				bOrderOperationValid = oViewModel.getProperty("/bOrderOperationValid"),
-				bInputValuesComplete,
-				bInputValuesValid,
-				bNoErrorMessagesActive,
-				bReadyForPosting;
-
-			// check if all required input data is present
-			bInputValuesComplete = this.isInputDataValid(oData);
-
-			bInputValuesValid = this.checkInputIsValid(oData);
-
-			// check if all input data has proper format
-			bNoErrorMessagesActive = this.isMessageModelClean();
-
-			// we are ready for posting once we have complete and proper formatted input
-			bReadyForPosting = bOrderOperationValid && bInputValuesComplete && bInputValuesValid && bNoErrorMessagesActive;
-
-			oViewModel.setProperty("/bValid", bReadyForPosting);
-		},
-
-		isInputDataValid: function(oData) {
-			return !!oData.interruptionReason && !!oData.dateTimeValue && !!oData.orderNumber && !!oData.operationNumber;
-		},
-
 		checkInputIsValid: function(oData) {
 			var oStartMoment, oFinishMoment, oLastResumeMoment,
 				//oData = this.getModel("data").getData(),
@@ -258,7 +235,7 @@ sap.ui.define([
 			// 1. ensure operation status is valid
 			if (oData.STATUS !== this.oProcessOrderStatus.started.STATUS_ID) { // check if operation has status "started"
 				this.addUserMessage({
-					text: this.getTranslation("interruptOperation.messageText.wrongCurrentStatus", [oData.AUFNR, oData.VORNR, oData.STATUS_TXT])
+					text: this.getTranslation("finishOperation.messageText.wrongCurrentStatus", [oData.AUFNR, oData.VORNR, oData.STATUS_TXT])
 				});
 				oOrderNumberInput.setValueState(sap.ui.core.ValueState.Error);
 				oOperationNumberInput.setValueState(sap.ui.core.ValueState.Error);
@@ -269,7 +246,7 @@ sap.ui.define([
 			if (oFinishMoment.isBefore(oStartMoment)) {
 				this.removeAllUserMessages();
 				this.addUserMessage({
-					text: this.getTranslation("interruptOperation.messageText.finishDateBeforeStartDate", [oData.AUFNR, oData.VORNR, oStartMoment.format("LLLL"), oFinishMoment.format("LLLL")])
+					text: this.getTranslation("finishOperation.messageText.finishDateBeforeStartDate", [oData.AUFNR, oData.VORNR, oStartMoment.format("LLLL"), oFinishMoment.format("LLLL")])
 				});
 				oDateTimeInput.setValueState(sap.ui.core.ValueState.Error);
 				return false;
@@ -279,7 +256,7 @@ sap.ui.define([
 			if (oFinishMoment.isBefore(oLastResumeMoment)) {
 				this.removeAllUserMessages();
 				this.addUserMessage({
-					text: this.getTranslation("interruptOperation.messageText.finishDateBeforeLastResumeDate", [oData.AUFNR, oData.VORNR, oLastResumeMoment.format("LLLL"), oFinishMoment.format("LLLL")])
+					text: this.getTranslation("finishOperation.messageText.finishDateBeforeLastResumeDate", [oData.AUFNR, oData.VORNR, oLastResumeMoment.format("LLLL"), oFinishMoment.format("LLLL")])
 				});
 				oDateTimeInput.setValueState(sap.ui.core.ValueState.Error);
 				return false;
@@ -288,34 +265,13 @@ sap.ui.define([
 			oOrderNumberInput.setValueState(sap.ui.core.ValueState.Success);
 			oOperationNumberInput.setValueState(sap.ui.core.ValueState.Success);
 			oDateTimeInput.setValueState(sap.ui.core.ValueState.Success);
-
 			return true;
 		},
 
-		onDateTimeEntryChange: function(oEvent) {
-			var oData = this.getModel("data").getData();
-			this.removeAllUserMessages();
-			this.updateViewControls(oData);
-		},
-
-		onOrderNumberInputChange: function(oEvent) {
-			this.onOrderChange(oEvent);
-		},
-
-		onOperationNumberInputChange: function(oEvent) {
-			this.onOrderChange(oEvent);
-		},
-
-		onReasonSelectionChange: function(oEvent) {
-			var oData = this.getModel("data").getData();
-			this.updateViewControls(oData);
-		},
-
-		_refreshDateValue: function() {
-			var oDate = new Date();
-			this.getModel("data").setProperty("/dateTimeValue", oDate);
-			this._oInitData.dateTimeValue = oDate;
+		onProcessOrderChartPress: function(oEvent) {
+			MessageBox.show("Statuswechsel zu Auftrag 4711: \nStart: 13.07.18, 19:00 \nStörung: 14.07.18, 03:00 bis 14.07.18, 07:00 \nStörung: 14.07.18, 10:30 bis 14.07.18, 10:45");
 		}
+
 	});
 
 });
