@@ -616,8 +616,8 @@
 							"ARBID": "00253110",
 							"ARBTXT": "Absackanlage Milchprodukte",
 							"VORNR_PARENT": null,
-							"STATUS": "0003",
-							"STATUS_TXT": "Gestartet",
+							"STATUS": "0098",
+							"STATUS_TXT": "Störung",
 							"WERK": "1000",
 							"STARTTRM": "\/Date(21999900)\/",
 							"ISTSTART": "\/Date(21999900)\/",
@@ -634,8 +634,8 @@
 							"SOLL_MENGE": "21000",
 							"IST_MENGE": "10000",
 							"EINHEIT": "KG",
-							"KOPF_STATUS": "0003",
-							"KOPF_STATUS_TEXT": "Gestartet",
+							"KOPF_STATUS": "0098",
+							"KOPF_STATUS_TEXT": "Störung",
 							"QUANTITY_DONE": "49.00",
 							"RowId": 4
 						}]
