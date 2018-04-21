@@ -3,7 +3,7 @@ Feature: Resume Operation
 	
 	Background:
 		Given I start the app from 'com/mii/scanner/app/mockServer.html'
-		  And I navigate to /VU
+		  And I navigate to /VF
 		
 	Scenario: Should navigate to Resume Operation Page and see all UI elements
 		Then I can see resumeOperationPage in action.tt.resumeOperation view
@@ -23,10 +23,12 @@ Feature: Resume Operation
 	
 	Scenario: Should show order information if users enter valid order number
 		When I enter '1092710' into orderNumberInput in action.tt.resumeOperation view
-		 And I enter '1' into operationNumberInput in action.tt.resumeOperation view
-		Then I can see processOrderFragmentOperationInfo with text 'Gestartet: Verpackung aus Silo' in action.tt.resumeOperation view
+		 And I enter '11' into operationNumberInput in action.tt.resumeOperation view
+		Then I can see processOrderFragmentOperationInfo with text 'Störung: Verpackung aus Silo' in action.tt.resumeOperation view
 		 And I can see processOrderFragmentRessourceInfo with text '00253110 - Absackanlage Milchprodukte' in action.tt.resumeOperation view
-		 And I can see processOrderFragmentStatusInfo with text 'Gestartet (0003)' in action.tt.resumeOperation view
+		 And I can see processOrderFragmentStatusInfo with text 'Störung (0098)' in action.tt.resumeOperation view
+		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Störung 'P100: Aktuelle Elektrische Störung' angelegt seit 'Sonntag, 18. Januar 1970 16:16' von 'PHIGEM'.' in action.tt.resumeOperation view
+		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Information' in action.tt.resumeOperation view
 		When I enter '1000001' into orderNumberInput in action.tt.resumeOperation view
 		Then I cannot see processOrderInfo in action.tt.resumeOperation view
 	
@@ -37,12 +39,12 @@ Feature: Resume Operation
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Error' in action.tt.resumeOperation view
 		 And I can see orderNumberInput with valueState 'Error' in action.tt.resumeOperation view
 		 And I cannot see saveButton in action.tt.resumeOperation view
-		When I enter '1092700' into orderNumberInput in action.tt.resumeOperation view
+		When I enter '1092710' into orderNumberInput in action.tt.resumeOperation view
 		Then I can see orderNumberInput with valueState 'Success' in action.tt.resumeOperation view
 		 And I can see saveButton in action.tt.resumeOperation view
 		 And messageStripContainer in action.tt.resumeOperation view contains no content
 		When I enter '1092694' into orderNumberInput in action.tt.resumeOperation view
-		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0010' zu Auftrag '1092694' kann nicht beendet werden. Vorgang hat den Status 'Abgeschlossen'.' in action.tt.resumeOperation view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0010' zu Auftrag '1092694' kann nicht forgesetzt werden. Vorgang hat den Status 'Abgeschlossen'.' in action.tt.resumeOperation view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Error' in action.tt.resumeOperation view
 		 And I can see orderNumberInput with valueState 'Error' in action.tt.resumeOperation view
 		 And I cannot see saveButton in action.tt.resumeOperation view
@@ -53,11 +55,11 @@ Feature: Resume Operation
 		Then on the Resume Operation Page: I should see all input fields are initial
 		Then on the Resume Operation Page: I should see data model and view model are initial
 
-	Scenario: Should show error message if users enter order number that has been started after entry date
+	Scenario: Should show error message if users enter order number with current interruption that has been started after entry date
 		When I enter '18.01.1970, 10:24:56' into dateTimeEntry in action.tt.resumeOperation view
 		 And I enter '1092711' into orderNumberInput in action.tt.resumeOperation view
-		 And I enter '1' into operationNumberInput in action.tt.resumeOperation view
-		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Störung 'Foobar' an Vorgang '0001' zu Auftrag '1092711' wurde am 'Sonntag, 18. Januar 1970 16:16' gestartet und kann daher nicht zum 'Sonntag, 18. Januar 1970 10:24' beendet werden.' in action.tt.resumeOperation view
+		 And I enter '11' into operationNumberInput in action.tt.resumeOperation view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Störung 'Foobar' an Vorgang '0011' zu Auftrag '1092711' wurde am 'Sonntag, 18. Januar 1970 16:16' gestartet und kann daher nicht zum 'Sonntag, 18. Januar 1970 10:24' beendet werden.' in action.tt.resumeOperation view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Error' in action.tt.resumeOperation view
 		 And I can see dateTimeEntry with valueState 'Error' in action.tt.resumeOperation view
 		 And I cannot see saveButton in action.tt.resumeOperation view
@@ -67,19 +69,23 @@ Feature: Resume Operation
 		 And messageStripContainer in action.tt.resumeOperation view contains no content
 		 
 	Scenario: Should validate user input and activate save button
-		When I enter '1092696' into orderNumberInput in action.tt.resumeOperation view
+		When I enter '1092710' into orderNumberInput in action.tt.resumeOperation view
 		Then I cannot see saveButton in action.tt.resumeOperation view
-		When I enter '10' into operationNumberInput in action.tt.resumeOperation view
+		When I enter '11' into operationNumberInput in action.tt.resumeOperation view
 		Then I can see saveButton in action.tt.resumeOperation view
 		When I enter '' into dateTimeEntry in action.tt.resumeOperation view
 		Then I cannot see saveButton in action.tt.resumeOperation view
 		When I enter '07.04.2018, 12:19:46' into dateTimeEntry in action.tt.resumeOperation view
 		Then I can see saveButton in action.tt.resumeOperation view
-
+		When I enter '' into orderNumberInput in action.tt.resumeOperation view
+		Then I cannot see saveButton in action.tt.resumeOperation view
+		When I enter '1092710' into orderNumberInput in action.tt.resumeOperation view
+		Then I can see saveButton in action.tt.resumeOperation view
+		
 	Scenario: Should send timeticket confirmation to SAP ERP
-		When I enter '1092712' into orderNumberInput in action.tt.resumeOperation view
+		When I enter '1092715' into orderNumberInput in action.tt.resumeOperation view
 		 And I enter '1002' into operationNumberInput in action.tt.resumeOperation view
 		 And I enter '07.04.2018, 12:19:46' into dateTimeEntry in action.tt.resumeOperation view
 		When I click on saveButton in action.tt.resumeOperation view
-		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Störung 'Foobar' Vorgang '1002' zu Auftrag '1092712' wurde erfolgreich beendet! Endezeitpunkt: Samstag, 7. April 2018 12:19' in action.tt.resumeOperation view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Störung 'Foobar' Vorgang '1002' zu Auftrag '1092715' wurde erfolgreich beendet! Endezeitpunkt: Samstag, 7. April 2018 12:19' in action.tt.resumeOperation view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Success' in action.tt.resumeOperation view

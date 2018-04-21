@@ -73,35 +73,17 @@ sap.ui.define([
 
 			/* Prepare success callback */
 			fnResolve = function(oData) {
-				var oOrderOperation = {
-						AUFNR: null
-					},
-					aRows = oData.d.results[0].Rowset.results[0].Row.results,
-					bOrderOperationValid = true;
+				var oOrderOperation,
+					aRows = oData.d.results[0].Rowset.results[0].Row.results;
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
 				if (aRows.length === 1) {
 					oOrderOperation = aRows[0];
 				} else {
-					this.addUserMessage({
-						text: this.getTranslation("resumeOperation.messageText.orderNotFound", [sOrderNumber, sOperationNumber])
-					});
-
-					bOrderOperationValid = false;
+					return Promise.reject(new Error(this.getTranslation("resumeOperation.messageText.orderNotFound", [sOrderNumber, sOperationNumber])));
 				}
 
 				oDataModel.setData(oOrderOperation, true);
-
-				this.getModel("view").setProperty("/bOrderOperationValid", bOrderOperationValid);
-
-				if (bOrderOperationValid) {
-					oOrderNumberInput.setValueState(sap.ui.core.ValueState.Success);
-					oOperationNumberInput.setValueState(sap.ui.core.ValueState.Success);
-				} else {
-					oOrderNumberInput.setValueState(sap.ui.core.ValueState.Error);
-					oOperationNumberInput.setValueState(sap.ui.core.ValueState.Error);
-					return Promise.reject(new Error("Order or Operation not found!"));
-				}
 
 				return oData;
 
@@ -118,11 +100,7 @@ sap.ui.define([
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
 				if (aRows.length === 0) {
-					this.addUserMessage({
-						text: this.getTranslation("resumeOperation.messageText.noInterruptionFound", [sOrderNumber, sOperationNumber])
-					});
-
-					return Promise.reject(new Error("No Interruption found for the order!"));
+					return Promise.reject(new Error(this.getTranslation("resumeOperation.messageText.noInterruptionFound", [sOrderNumber, sOperationNumber])));
 				}
 
 				fnLatestIncident = function(oPrevIncident, oIncident, currentIndex, array) {
@@ -140,17 +118,17 @@ sap.ui.define([
 				oLatestInterruption = aRows.reduce(fnLatestIncident, oNullBeginn /*initial value*/ );
 
 				if (oLatestInterruption.STR_ENDE !== "TimeUnavailable") {
-					this.addUserMessage({
-						text: this.getTranslation("resumeOperation.messageText.noOpenInterruptionFound", [sOrderNumber, sOperationNumber])
-					});
-
-					return Promise.reject(new Error("No open Interruption found for the order!"));
+					return Promise.reject(new Error(this.getTranslation("resumeOperation.messageText.noOpenInterruptionFound", [sOrderNumber, sOperationNumber])));
 				}
 
 				oLatestInterruptionStartDate = this.formatter.parseJSONDate(oLatestInterruption.STR_BEGINN);
 
 				// set LATEST_EVENT_FINISH property
 				this.getModel("data").setProperty("/LATEST_EVENT_START", oLatestInterruptionStartDate);
+
+				this.getModel("view").setProperty("/bOrderOperationValid", true);
+				oOrderNumberInput.setValueState(sap.ui.core.ValueState.Success);
+				oOperationNumberInput.setValueState(sap.ui.core.ValueState.Success);
 
 				this.addUserMessage({
 					text: this.getTranslation("resumeOperation.messageText.currentInterruption", [sOrderNumber, sOperationNumber, oLatestInterruption.STRCODE, oLatestInterruption.STR_TXT, oLatestInterruption.ERFASSER]),
@@ -162,11 +140,19 @@ sap.ui.define([
 
 			/* Prepare error callback */
 			fnReject = function(oError) {
-				MessageBox.error(oError.responseText || oError.message, {
-					title: this.getTranslation("error.miiTransactionErrorText", ["OrderOperationRead"]),
-					contentWidth: "500px"
+				var oOrderOperation = {
+					AUFNR: null
+				};
+
+				oDataModel.setData(oOrderOperation, true);
+
+				this.addUserMessage({
+					text: oError.responseText || oError.message
 				});
+
 				this.getModel("view").setProperty("/bOrderOperationValid", false);
+				oOrderNumberInput.setValueState(sap.ui.core.ValueState.Error);
+				oOperationNumberInput.setValueState(sap.ui.core.ValueState.Error);
 			};
 
 			fnCleanUp = function(oDate) {
