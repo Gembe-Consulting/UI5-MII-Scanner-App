@@ -109,25 +109,45 @@ sap.ui.define([
 
 			fnResolveIncidentService = function(oData) {
 				var aRows = oData.d.results[0].Rowset.results[0].Row.results,
+					oNullBeginn = {
+						STR_BEGINN: null
+					},
+					oLatestInterruption,
 					oLatestInterruptionStartDate,
-					oNullDate = null,
-					fnLatestStartDate;
+					fnLatestIncident;
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
 				if (aRows.length === 0) {
 					this.addUserMessage({
-						text: this.getTranslation("resumeOperation.messageText.orderNotFound", [sOrderNumber, sOperationNumber])
+						text: this.getTranslation("resumeOperation.messageText.noInterruptionFound", [sOrderNumber, sOperationNumber])
 					});
 
-					return Promise.reject(new Error("No Interruption not found!"));
+					return Promise.reject(new Error("No Interruption found for the order!"));
 				}
 
-				fnLatestStartDate = function(oldDate, oIncident, currentIndex, array) {
-					var oNewDate = this.formatter.parseJSONDate(oIncident.STR_START);
-					return oldDate > oNewDate ? oldDate : oNewDate;
+				fnLatestIncident = function(oPrevIncident, oIncident, currentIndex, array) {
+					var oNewDate = this.formatter.parseJSONDate(oIncident.STR_BEGINN),
+						oOldDate = this.formatter.parseJSONDate(oPrevIncident.STR_BEGINN);
+
+					if (oOldDate > oNewDate) {
+						return oPrevIncident;
+					}
+
+					return oIncident;
+
 				}.bind(this);
 
-				oLatestInterruptionStartDate = aRows.reduce(fnLatestStartDate, oNullDate /*initial value*/ );
+				oLatestInterruption = aRows.reduce(fnLatestIncident, oNullBeginn /*initial value*/ );
+
+				if (oLatestInterruption.STR_ENDE !== "TimeUnavailable") {
+					this.addUserMessage({
+						text: this.getTranslation("resumeOperation.messageText.noOpenInterruptionFound", [sOrderNumber, sOperationNumber])
+					});
+
+					return Promise.reject(new Error("No open Interruption found for the order!"));
+				}
+
+				oLatestInterruptionStartDate = this.formatter.parseJSONDate(oLatestInterruption.STR_BEGINN);
 
 				// set LATEST_EVENT_FINISH property
 				this.getModel("data").setProperty("/LATEST_EVENT_START", oLatestInterruptionStartDate);
@@ -141,7 +161,6 @@ sap.ui.define([
 					title: this.getTranslation("error.miiTransactionErrorText", ["OrderOperationRead"]),
 					contentWidth: "500px"
 				});
-				//oSource.setValueState(sap.ui.core.ValueState.Error).setValue("");
 				this.getModel("view").setProperty("/bOrderOperationValid", false);
 			};
 
@@ -177,6 +196,7 @@ sap.ui.define([
 			}
 
 			oLastInterruptionStartMoment = moment(oData.LATEST_EVENT_START);
+			oFinishMoment = moment(oData.dateTimeValue);
 
 			// 1. ensure operation status is valid
 			if (oData.STATUS !== this.oProcessOrderStatus.interrupted.STATUS_ID) { // check if operation has status "interrupted"
