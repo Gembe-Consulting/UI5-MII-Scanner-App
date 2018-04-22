@@ -34,6 +34,14 @@
 							<l:GridData span="XL1 L1 M2 S4"/>
 						</layoutData>
 					</Input>
+					<!-- Date and Time Entry -->
+					<Label text="{i18n>interruptOperation.form.label.startDateTime}" labelFor="dateTimeEntry"/>
+					<DateTimePicker id="dateTimeEntry" change="onDateTimeEntryChange" dateValue="{data>/dateTimeValue}"
+						valueState="{view>/dateTimeInputValueState}" displayFormat="medium" class="noScannerInput suwIncreadedInputFontSize">
+						<layoutData>
+							<l:GridData span="XL4 L4 M6 S12"/>
+						</layoutData>
+					</DateTimePicker>
 					<!-- Interruption Reason -->
 					<Label text="{i18n>interruptOperation.form.label.interruptionReason}" labelFor="reasonSelection"/>
 					<ComboBox id="reasonSelection" items="{ path: 'interruptionReasonList>/d/results/0/Rowset/results/0/Row/results' }"
@@ -48,14 +56,6 @@
 							<l:GridData span="XL4 L4 M6 S12"/>
 						</layoutData>
 					</ComboBox>
-					<!-- Date and Time Entry -->
-					<Label text="{i18n>interruptOperation.form.label.startDateTime}" labelFor="dateTimeEntry"/>
-					<DateTimePicker id="dateTimeEntry" change="onDateTimeEntryChange" dateValue="{data>/dateTimeValue}"
-						valueState="{view>/dateTimeInputValueState}" displayFormat="medium" class="noScannerInput suwIncreadedInputFontSize">
-						<layoutData>
-							<l:GridData span="XL4 L4 M6 S12"/>
-						</layoutData>
-					</DateTimePicker>
 				</f:content>
 			</f:SimpleForm>
 			<!-- Process Order Info Form -->
