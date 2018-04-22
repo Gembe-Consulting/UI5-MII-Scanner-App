@@ -12,11 +12,11 @@ Feature: Resume Operation
 		 And I can see dateTimeEntry in action.tt.ResumeOperation view
 		 And I can see clearFormButton in action.tt.ResumeOperation view
 		 And I can see cancelButton with text 'Abbrechen' in action.tt.ResumeOperation view
-		 And I can see ResumeOperationPageTitle with text 'Vorgang fortsetzen' in action.tt.ResumeOperation view
+		 And I can see resumeOperationPageTitle with text 'Vorgang fortsetzen' in action.tt.ResumeOperation view
 		 And I cannot see saveButton in action.tt.ResumeOperation view
-		 And I can see ResumeOperationPageIcon with src 'sap-icon://restart' in action.tt.ResumeOperation view
-		 And I can see ResumeOperationPageIcon with color '#BB07FF' in action.tt.ResumeOperation view
-		 And I can see ResumeOperationPageTitle in action.tt.ResumeOperation view has css color '#BB07FF'
+		 And I can see resumeOperationPageIcon with src 'sap-icon://restart' in action.tt.ResumeOperation view
+		 And I can see resumeOperationPageIcon with color '#BB07FF' in action.tt.ResumeOperation view
+		 And I can see resumeOperationPageTitle in action.tt.ResumeOperation view has css color '#BB07FF'
 		Then on the Resume Operation Page: I should see the save button is disabled
 		Then on the Resume Operation Page: I should see all input fields are initial
 		Then on the Resume Operation Page: I should see data model and view model are initial
@@ -27,7 +27,7 @@ Feature: Resume Operation
 		Then I can see processOrderFragmentOperationInfo with text 'Störung: Verpackung aus Silo' in action.tt.ResumeOperation view
 		 And I can see processOrderFragmentRessourceInfo with text '00253110 - Absackanlage Milchprodukte' in action.tt.ResumeOperation view
 		 And I can see processOrderFragmentStatusInfo with text 'Störung (0098)' in action.tt.ResumeOperation view
-		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Störung 'P100: Aktuelle Elektrische Störung' angelegt seit 'Sonntag, 18. Januar 1970 16:16' von 'PHIGEM'.' in action.tt.ResumeOperation view
+		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Unterbrechung 'P100: Aktuelle Elektrische Störung' angelegt am 'Sonntag, 18. Januar 1970 16:16' von 'PHIGEM'.' in action.tt.ResumeOperation view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Information' in action.tt.ResumeOperation view
 		When I enter '1000001' into orderNumberInput in action.tt.ResumeOperation view
 		Then I cannot see processOrderInfo in action.tt.ResumeOperation view
