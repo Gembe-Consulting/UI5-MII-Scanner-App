@@ -131,7 +131,7 @@ sap.ui.define([
 				oOperationNumberInput.setValueState(sap.ui.core.ValueState.Success);
 
 				this.addUserMessage({
-					text: this.getTranslation("resumeOperation.messageText.currentInterruption", [sOrderNumber, sOperationNumber, oLatestInterruption.STRCODE, oLatestInterruption.STR_TXT, oLatestInterruption.ERFASSER]),
+					text: this.getTranslation("resumeOperation.messageText.currentInterruption", [sOrderNumber, sOperationNumber, oLatestInterruption.STRCODE, oLatestInterruption.STR_TXT, moment(oLatestInterruptionStartDate).format("LLLL"), oLatestInterruption.ERFASSER]),
 					type: sap.ui.core.MessageType.Information
 				});
 
