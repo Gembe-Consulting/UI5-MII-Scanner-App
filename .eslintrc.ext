@@ -40,11 +40,6 @@
 			"category": "Stylistic Issue",
 			"helpUrl": "http://eslint.org/docs/rules/quotes"
 		},
-		"space-in-brackets": {
-			"severity": "info",
-			"category": "Stylistic Issue",
-			"helpUrl": "http://eslint.org/docs/rules/space-in-brackets"
-		},
 		"no-return-assign": {
 			"severity": "warning",
 			"category": "Best Practices",
@@ -125,20 +120,10 @@
 			"category": "Best Practices",
 			"helpUrl": "http://eslint.org/docs/rules/yoda"
 		},
-		"no-reserved-keys": {
-			"severity": "warning",
-			"category": "Possible Error",
-			"helpUrl": "http://eslint.org/docs/rules/no-reserved-keys"
-		},
 		"no-delete-var": {
 			"severity": "warning",
 			"category": "Possible Error",
 			"helpUrl": "http://eslint.org/docs/rules/no-delete-var"
-		},
-		"spaced-line-comment": {
-			"severity": "warning",
-			"category": "Stylistic Issue",
-			"helpUrl": "http://eslint.org/docs/rules/spaced-line-comment"
 		},
 		"no-ternary": {
 			"severity": "info",
@@ -290,11 +275,6 @@
 			"category": "Node.js",
 			"helpUrl": "http://eslint.org/docs/rules/handle-callback-err"
 		},
-		"space-before-function-parentheses": {
-			"severity": "warning",
-			"category": "Stylistic Issue",
-			"helpUrl": "http://eslint.org/docs/rules/space-before-function-parentheses"
-		},
 		"space-before-function-paren": {
 			"severity": "warning",
 			"category": "Stylistic Issue",
@@ -319,11 +299,6 @@
 			"severity": "info",
 			"category": "Best Practices",
 			"helpUrl": "http://eslint.org/docs/rules/dot-location"
-		},
-		"space-return-throw-case": {
-			"severity": "info",
-			"category": "Stylistic Issue",
-			"helpUrl": "http://eslint.org/docs/rules/space-return-throw-case"
 		},
 		"no-bitwise": {
 			"severity": "warning",
@@ -455,11 +430,6 @@
 			"category": "Design Guidelines",
 			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?5b3269859327434d887d66ec556628e5.html"
 		},
-		"space-after-function-name": {
-			"severity": "warning",
-			"category": "Stylistic Issue",
-			"helpUrl": "http://eslint.org/docs/rules/space-after-function-name"
-		},
 		"no-native-reassign": {
 			"severity": "error",
 			"category": "Best Practices",
@@ -485,11 +455,6 @@
 			"category": "Possible Error",
 			"helpUrl": "http://eslint.org/docs/rules/comma-dangle"
 		},
-		"no-wrap-func": {
-			"severity": "info",
-			"category": "Stylistic Issue",
-			"helpUrl": "http://eslint.org/docs/rules/no-wrap-func"
-		},
 		"no-else-return": {
 			"severity": "warning",
 			"category": "Best Practices",
@@ -506,8 +471,8 @@
 			"helpUrl": "http://eslint.org/docs/rules/use-isnan"
 		},
 		"quote-props": {
-			"severity": "warning",
-			"category": "Possible Error",
+			"severity": "info",
+			"category": "Stylistic Issue",
 			"helpUrl": "http://eslint.org/docs/rules/quote-props"
 		},
 		"sap-no-location-usage": {
@@ -580,19 +545,14 @@
 			"category": "Possible Error",
 			"helpUrl": "http://eslint.org/docs/rules/no-negated-in-lhs"
 		},
-		"space-after-keywords": {
+		"keyword-spacing": {
 			"severity": "info",
-			"category": "Stylistic Issue",
-			"helpUrl": "http://eslint.org/docs/rules/space-after-keywords"
-		},
-		"global-strict": {
-			"severity": "warning",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "http://eslint.org/docs/rules/global-strict"
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/keyword-spacing"
 		},
 		"sap-no-history-manipulation": {
 			"severity": "warning",
-			"category": "Fiori Architectural Guidelinesr",
+			"category": "Fiori Architectural Guidelines",
 			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?499b03d3fb8a427da8172fb29e90b11c.html"
 		},
 		"no-implied-eval": {
@@ -624,11 +584,6 @@
 			"severity": "info",
 			"category": "Stylistic Issue",
 			"helpUrl": "http://eslint.org/docs/rules/no-unneeded-ternary"
-		},
-		"generator-star": {
-			"severity": "warning",
-			"category": "ECMAScript6",
-			"helpUrl": "http://eslint.org/docs/rules/generator-star"
 		},
 		"no-plusplus": {
 			"severity": "warning",
@@ -721,7 +676,7 @@
 			"helpUrl": "http://eslint.org/docs/rules/no-new-require"
 		},
 		"sap-no-hardcoded-url": {
-			"severity": "info",
+			"severity": "error",
 			"category": "Fiori Architectural Guidelines",
 			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?fa158d772a2a48bc9b1530713ac03bbd.html"
 		},
@@ -759,11 +714,6 @@
 			"severity": "error",
 			"category": "Fiori Architectural Guidelines",
 			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?617f912454a547eab7f0cd48faab501c.html"
-		},
-		"no-extra-strict": {
-			"severity": "warning",
-			"category": "StrictMode",
-			"helpUrl": "http://eslint.org/docs/rules/no-extra-strict"
 		},
 		"no-octal": {
 			"severity": "warning",
@@ -941,14 +891,9 @@
 			"helpUrl": "http://eslint.org/docs/rules/semi-spacing"
 		},
 		"linebreak-style": {
-			"severity": "info",
+			"severity": "error",
 			"category": "Best Practices",
 			"helpUrl": "http://eslint.org/docs/rules/linebreak-style"
-		},
-		"no-empty-label": {
-			"severity": "warning",
-			"category": "Best Practices",
-			"helpUrl": "http://eslint.org/docs/rules/no-empty-label"
 		},
 		"max-params": {
 			"severity": "info",
@@ -1000,15 +945,400 @@
 			"category": "ECMAScript6",
 			"helpUrl": "http://eslint.org/docs/rules/prefer-const"
 		},
-		"no-empty-class": {
-			"severity": "warning",
-			"category": "Possible Error",
-			"helpUrl": "http://eslint.org/docs/rules/no-empty-class"
-		},
 		"no-this-before-super": {
 			"severity": "info",
 			"category": "ECMAScript6",
 			"helpUrl": "http://eslint.org/docs/rules/no-this-before-super"
+		},
+		"array-callback-return": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/array-callback-return"
+		},
+		"arrow-body-style": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/arrow-body-style"
+		},
+		"arrow-parens": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/arrow-parens"
+		},
+		"arrow-spacing": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/arrow-spacing"
+		},
+		"block-spacing": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/block-spacing"
+		},
+		"callback-return": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/callback-return"
+		},
+		"class-methods-use-this": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/class-methods-use-this"
+		},
+		"func-call-spacing": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/func-call-spacing"
+		},
+		"func-name-matching": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/func-name-matching"
+		},
+		"global-require": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/global-require"
+		},
+		"id-blacklist": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/id-blacklist"
+		},
+		"id-length": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/id-length"
+		},
+		"id-match": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/id-match"
+		},
+		"init-declarations": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/init-declarations"
+		},
+		"jsx-quotes": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/jsx-quotes"
+		},
+		"line-comment-position": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/line-comment-position"
+		},
+		"lines-around-directive": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/lines-around-directive"
+		},
+		"max-lines": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/max-lines"
+		},
+		"max-statements-per-line": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/max-statements-per-line"
+		},
+		"multiline-ternary": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/multiline-ternary"
+		},
+		"newline-before-return": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/newline-before-return"
+		},
+		"newline-per-chained-call": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/newline-per-chained-call"
+		},
+		"no-case-declarations": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-case-declarations"
+		},
+		"no-class-assign": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-class-assign"
+		},
+		"no-confusing-arrow": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-confusing-arrow"
+		},
+		"no-const-assign": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-const-assign"
+		},
+		"no-dupe-class-members": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-dupe-class-members"
+		},
+		"no-duplicate-imports": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-duplicate-imports"
+		},
+		"no-empty-function": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-empty-function"
+		},
+		"no-empty-pattern": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-empty-pattern"
+		},
+		"no-extra-label": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-extra-label"
+		},
+		"no-global-assign": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-global-assign"
+		},
+		"no-implicit-coercion": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-implicit-coercio"
+		},
+		"no-implicit-globals": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-implicit-globals"
+		},
+		"no-invalid-this": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-invalid-this"
+		},
+		"no-magic-numbers": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-magic-numbers"
+		},
+		"no-mixed-operators": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-mixed-operators"
+		},
+		"no-negated-condition": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-negated-condition"
+		},
+		"no-new-symbol": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-new-symbol"
+		},
+		"no-prototype-builtins": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-prototype-builtins"
+		},
+		"no-restricted-globals": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-restricted-globals"
+		},
+		"no-restricted-imports": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-restricted-imports"
+		},
+		"no-restricted-properties": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-restricted-properties"
+		},
+		"no-restricted-syntax": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-restricted-syntax"
+		},
+		"no-return-await": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-return-await"
+		},
+		"no-self-assign": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-self-assign"
+		},
+		"no-tabs": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-tabs"
+		},
+		"no-template-curly-in-string": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-template-curly-in-string"
+		},
+		"no-unmodified-loop-condition": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-unmodified-loop-condition"
+		},
+		"no-unsafe-finally": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-unsafe-finally"
+		},
+		"no-unsafe-negation": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-unsafe-negation"
+		},
+		"no-unused-labels": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-unused-labels"
+		},
+		"no-useless-call": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-useless-call"
+		},
+		"no-useless-computed-key": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-useless-computed-key"
+		},
+		"no-useless-concat": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-useless-concat"
+		},
+		"no-useless-constructor": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-useless-constructor"
+		},
+		"no-useless-escape": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-useless-escape"
+		},
+		"no-useless-rename": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-useless-rename"
+		},
+		"no-useless-return": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-useless-return"
+		},
+		"no-whitespace-before-property": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/no-whitespace-before-property"
+		},
+		"object-curly-newline": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/object-curly-newline"
+		},
+		"object-property-newline": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/object-property-newline"
+		},
+		"one-var-declaration-per-line": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/one-var-declaration-per-line"
+		},
+		"prefer-arrow-callback": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/prefer-arrow-callback"
+		},
+		"prefer-numeric-literals": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/prefer-numeric-literals"
+		},
+		"prefer-reflect": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/prefer-reflect"
+		},
+		"prefer-rest-params": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/prefer-rest-params"
+		},
+		"prefer-spread": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/prefer-spread"
+		},
+		"prefer-template": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/prefer-template"
+		},
+		"require-jsdoc": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/require-jsdoc"
+		},
+		"require-yield": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/require-yield"
+		},
+		"rest-spread-spacing": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/rest-spread-spacing"
+		},
+		"sort-imports": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/sort-imports"
+		},
+		"sort-keys": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/sort-keys"
+		},
+		"symbol-description": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/symbol-description"
+		},
+		"template-curly-spacing": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/template-curly-spacing"
+		},
+		"unicode-bom": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/unicode-bom"
+		},
+		"yield-star-spacing": {
+			"severity": "error",
+			"category": "Possible Error",
+			"helpUrl": "http://eslint.org/docs/rules/yield-star-spacing"
 		}
 	}
 }
