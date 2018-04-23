@@ -57,6 +57,7 @@ sap.ui.define([
 
 			/* check if current input is valid */
 			if (!sOrderNumber || !sOperationNumber) {
+				this.updateViewControls(oDataModel.getData());
 				return;
 			}
 			if (this.controlHasValidationError(oSource)) {
@@ -73,17 +74,21 @@ sap.ui.define([
 
 			/* Prepare success callback */
 			fnResolve = function(oData) {
-				var oOrderOperation,
+				var oOperation,
 					aRows = oData.d.results[0].Rowset.results[0].Row.results;
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
 				if (aRows.length === 1) {
-					oOrderOperation = aRows[0];
+					oOperation = aRows[0];
 				} else {
 					return Promise.reject(new Error(this.getTranslation("resumeOperation.messageText.orderNotFound", [sOrderNumber, sOperationNumber])));
 				}
 
-				oDataModel.setData(oOrderOperation, true);
+				if (oOperation.STATUS !== this.oProcessOrderStatus.interrupted.STATUS_ID) { // check if operation has status "interrupted"
+					return Promise.reject(new Error(this.getTranslation("resumeOperation.messageText.wrongCurrentStatus", [oOperation.AUFNR, oOperation.VORNR, oOperation.STATUS_TXT])));
+				}
+
+				oDataModel.setData(oOperation, true);
 
 				return oData;
 
@@ -95,7 +100,6 @@ sap.ui.define([
 						STR_BEGINN: null
 					},
 					oLatestInterruption,
-					oLatestInterruptionStartDate,
 					fnLatestIncident;
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
@@ -121,19 +125,13 @@ sap.ui.define([
 					return Promise.reject(new Error(this.getTranslation("resumeOperation.messageText.noOpenInterruptionFound", [sOrderNumber, sOperationNumber])));
 				}
 
-				oLatestInterruptionStartDate = this.formatter.parseJSONDate(oLatestInterruption.STR_BEGINN);
+				// set LATEST EVENT property
+				oDataModel.setProperty("/latestInterruption", oLatestInterruption);
 
-				// set LATEST_EVENT_FINISH property
-				this.getModel("data").setProperty("/LATEST_EVENT_START", oLatestInterruptionStartDate);
-
+				// update UI
 				this.getModel("view").setProperty("/bOrderOperationValid", true);
 				oOrderNumberInput.setValueState(sap.ui.core.ValueState.Success);
 				oOperationNumberInput.setValueState(sap.ui.core.ValueState.Success);
-
-				this.addUserMessage({
-					text: this.getTranslation("resumeOperation.messageText.currentInterruption", [sOrderNumber, sOperationNumber, oLatestInterruption.STRCODE, oLatestInterruption.STR_TXT, moment(oLatestInterruptionStartDate).format("LLLL"), oLatestInterruption.ERFASSER]),
-					type: sap.ui.core.MessageType.Information
-				});
 
 				return oData;
 			};
@@ -158,7 +156,7 @@ sap.ui.define([
 			fnCleanUp = function(oDate) {
 				this.hideControlBusyIndicator(oOrderNumberInput);
 				this.hideControlBusyIndicator(oOperationNumberInput);
-				this.updateViewControls(this.getModel("data").getData());
+				this.updateViewControls(oDataModel.getData());
 			};
 
 			/* Perform service call, Hide Busy Indicator, Update View Controls */
@@ -171,44 +169,43 @@ sap.ui.define([
 		},
 
 		isInputDataValid: function(oData) {
-			return !!oData.dateTimeValue && !!oData.orderNumber && !!oData.operationNumber;
+			return !!oData.dateTimeValue && !!oData.orderNumber && !!oData.operationNumber && !!oData.AUFNR;
 		},
 
 		checkInputIsValid: function(oData) {
 			var oFinishMoment, // entry date by user
-				oLastInterruptionStartMoment,
+				oLatestInterruptionStartMoment,
 				oOrderNumberInput = this.byId("orderNumberInput"),
 				oOperationNumberInput = this.byId("operationNumberInput"),
 				oDateTimeInput = this.byId("dateTimeEntry");
 
-			// 0. check if necessary data is present
-			if (!oData.AUFNR || !oData.dateTimeValue) {
+			// 1. check if necessary data is present
+			if (!oData.AUFNR || !oData.dateTimeValue || !oData.latestInterruption) {
 				return false;
 			}
 
-			oLastInterruptionStartMoment = moment(oData.LATEST_EVENT_START);
 			oFinishMoment = moment(oData.dateTimeValue);
+			oLatestInterruptionStartMoment = moment(this.formatter.parseJSONDate(oData.latestInterruption.STR_BEGINN));
 
-			// 1. ensure operation status is valid
-			if (oData.STATUS !== this.oProcessOrderStatus.interrupted.STATUS_ID) { // check if operation has status "interrupted"
-				this.addUserMessage({
-					text: this.getTranslation("resumeOperation.messageText.wrongCurrentStatus", [oData.AUFNR, oData.VORNR, oData.STATUS_TXT])
-				});
-				oOrderNumberInput.setValueState(sap.ui.core.ValueState.Error);
-				oOperationNumberInput.setValueState(sap.ui.core.ValueState.Error);
-				return false;
-			}
+			// 2. ensure entered finish date is after start date 
+			// not needed -> we already made sure to only habe operations with status "Störung" 
 
-			// 2. ensure entered finish date is after latest interruption start date
-			if (oFinishMoment.isBefore(oLastInterruptionStartMoment)) {
+			// 3. ensure entered finish date is after latest interruption start date
+			if (oFinishMoment.isBefore(oLatestInterruptionStartMoment)) {
 				this.removeAllUserMessages();
 				this.addUserMessage({
-					text: this.getTranslation("resumeOperation.messageText.finishDateBeforeLastInterruptionDate", [oData.AUFNR, oData.VORNR, oLastInterruptionStartMoment.format("LLLL"), oFinishMoment.format("LLLL")])
+					text: this.getTranslation("resumeOperation.messageText.finishDateBeforeLastInterruptionDate", [oData.AUFNR, oData.VORNR, oData.latestInterruption.STRCODE, oData.latestInterruption.STR_TXT, oLatestInterruptionStartMoment.format("LLLL"), oFinishMoment.format("LLLL")])
 				});
 				oDateTimeInput.setValueState(sap.ui.core.ValueState.Error);
 				return false;
 			}
 
+			// everything is ok
+
+			this.addUserMessage({
+				text: this.getTranslation("resumeOperation.messageText.currentInterruption", [oData.AUFNR, oData.VORNR, oData.latestInterruption.STRCODE, oData.latestInterruption.STR_TXT, oLatestInterruptionStartMoment.format("LLLL"), oData.latestInterruption.ERFASSER]),
+				type: sap.ui.core.MessageType.Information
+			});
 			oOrderNumberInput.setValueState(sap.ui.core.ValueState.Success);
 			oOperationNumberInput.setValueState(sap.ui.core.ValueState.Success);
 			oDateTimeInput.setValueState(sap.ui.core.ValueState.Success);

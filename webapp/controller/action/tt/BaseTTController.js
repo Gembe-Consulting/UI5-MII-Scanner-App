@@ -55,6 +55,13 @@ sap.ui.define([
 			this.getView().addEventDelegate({
 				onBeforeShow: this._refreshDateValue
 			}, this);
+
+			this.getView().attachParseError(function() {
+				this.updateViewControls(this.getModel("data").getData());
+			}.bind(this));
+			this.getView().attachValidationError(function() {
+				this.updateViewControls(this.getModel("data").getData());
+			}.bind(this));
 		},
 
 		generateOperationTimeline: function(oStartDate, aInterruptions, oEndDate) {
