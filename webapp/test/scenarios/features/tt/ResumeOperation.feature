@@ -73,10 +73,10 @@ Feature: Resume Operation
 		 And I cannot see saveButton in action.tt.ResumeOperation view
 
 	Scenario: Should show error message if users enter order number with current interruption that has been started after entry date
-		When I enter '18.01.1970, 10:24:56' into dateTimeEntry in action.tt.ResumeOperation view
-		 And I enter '1092711' into orderNumberInput in action.tt.ResumeOperation view
+		When I enter '01.01.1970, 06:30:00' into dateTimeEntry in action.tt.ResumeOperation view
+		 And I enter '1092710' into orderNumberInput in action.tt.ResumeOperation view
 		 And I enter '11' into operationNumberInput in action.tt.ResumeOperation view
-		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Störung 'Foobar' an Vorgang '0011' zu Auftrag '1092711' wurde am 'Sonntag, 18. Januar 1970 16:16' gestartet und kann daher nicht zum 'Sonntag, 18. Januar 1970 10:24' beendet werden.' in action.tt.ResumeOperation view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Unterbrechung 'P100: Aktuelle Elektrische Störung' an Vorgang '0011' zu Auftrag '1092710' wurde am 'Donnerstag, 1. Januar 1970 06:34' gestartet und kann daher nicht zum 'Donnerstag, 1. Januar 1970 06:30' beendet werden.' in action.tt.ResumeOperation view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Error' in action.tt.ResumeOperation view
 		 And I can see dateTimeEntry with valueState 'Error' in action.tt.ResumeOperation view
 		 And I cannot see saveButton in action.tt.ResumeOperation view
