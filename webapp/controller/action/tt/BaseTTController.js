@@ -1,7 +1,8 @@
 sap.ui.define([
 	"com/mii/scanner/controller/action/ActionBaseController",
-	"sap/suite/ui/microchart/StackedBarMicroChartBar"
-], function(ActionBaseController, StackedBarMicroChartBar) {
+	"sap/suite/ui/microchart/StackedBarMicroChartBar",
+	"com/mii/scanner/libs/momentjs/moment"
+], function(ActionBaseController, StackedBarMicroChartBar, moment) {
 	return ActionBaseController.extend("com.mii.scanner.controller.action.tt.BaseTTController", {
 
 		oProcessOrderStatus: {

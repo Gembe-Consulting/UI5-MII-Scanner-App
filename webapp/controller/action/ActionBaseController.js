@@ -6,8 +6,9 @@ sap.ui.define([
 	"sap/m/MessagePopover",
 	"sap/m/MessageItem",
 	"sap/ui/core/message/Message",
-	"com/mii/scanner/model/formatter"
-], function(PageBaseController, MessageBox, MessageToast, MessageStrip, MessagePopover, MessageItem, Message, formatter) {
+	"com/mii/scanner/model/formatter",
+	"com/mii/scanner/libs/momentjs/moment"
+], function(PageBaseController, MessageBox, MessageToast, MessageStrip, MessagePopover, MessageItem, Message, formatter, moment) {
 	"use strict";
 
 	return PageBaseController.extend("com.mii.scanner.controller.action.ActionBaseController", {
