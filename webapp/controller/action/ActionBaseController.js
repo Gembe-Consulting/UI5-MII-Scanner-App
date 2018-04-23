@@ -6,9 +6,8 @@ sap.ui.define([
 	"sap/m/MessagePopover",
 	"sap/m/MessageItem",
 	"sap/ui/core/message/Message",
-	"com/mii/scanner/model/formatter",
-	"com/mii/scanner/libs/momentjs/moment"
-], function(PageBaseController, MessageBox, MessageToast, MessageStrip, MessagePopover, MessageItem, Message, formatter, moment) {
+	"com/mii/scanner/model/formatter"
+], function(PageBaseController, MessageBox, MessageToast, MessageStrip, MessagePopover, MessageItem, Message, formatter) {
 	"use strict";
 
 	return PageBaseController.extend("com.mii.scanner.controller.action.ActionBaseController", {
@@ -66,6 +65,10 @@ sap.ui.define([
 			this._oMessageModel = this._oMessageManager.getMessageModel();
 
 			this.setModel(this._oMessageModel, "message");
+
+			this.getView().attachValidationError(function(oEvent) {
+				this.updateViewControls(this.getModel("view").setProperty("/bValid", false));
+			}.bind(this));
 
 			this.getView().addEventDelegate({
 				"onBeforeShow": function(oEvent) {

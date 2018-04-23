@@ -35,8 +35,7 @@ sap.ui.require([
 
 					iShouldSeeStoragebinselectionContains2EnabledItems: function() {
 						var iNumberOfItems = 2,
-							sControlId = "storageBinSelection",
-							sViewName = "action.RollerConveyor";
+							sControlId = "storageBinSelection";
 
 						return this.waitFor({
 							id: sControlId,
@@ -52,8 +51,7 @@ sap.ui.require([
 					},
 					iShouldSeeStoragebinselectionContainsOther2EnabledItems: function() {
 						var iNumberOfItems = 2,
-							sControlId = "storageBinSelection",
-							sViewName = "action.RollerConveyor";
+							sControlId = "storageBinSelection";
 
 						return this.waitFor({
 							id: sControlId,

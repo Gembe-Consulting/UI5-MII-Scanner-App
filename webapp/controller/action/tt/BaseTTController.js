@@ -1,8 +1,7 @@
 sap.ui.define([
 	"com/mii/scanner/controller/action/ActionBaseController",
-	"sap/suite/ui/microchart/StackedBarMicroChartBar",
-	"com/mii/scanner/libs/momentjs/moment"
-], function(ActionBaseController, StackedBarMicroChartBar, moment) {
+	"sap/suite/ui/microchart/StackedBarMicroChartBar"
+], function(ActionBaseController, StackedBarMicroChartBar) {
 	return ActionBaseController.extend("com.mii.scanner.controller.action.tt.BaseTTController", {
 
 		oProcessOrderStatus: {
@@ -56,13 +55,6 @@ sap.ui.define([
 			this.getView().addEventDelegate({
 				onBeforeShow: this._refreshDateValue
 			}, this);
-
-			this.getView().attachParseError(function() {
-				this.updateViewControls(this.getModel("data").getData());
-			}.bind(this));
-			this.getView().attachValidationError(function() {
-				this.updateViewControls(this.getModel("data").getData());
-			}.bind(this));
 		},
 
 		generateOperationTimeline: function(oStartDate, aInterruptions, oEndDate) {
