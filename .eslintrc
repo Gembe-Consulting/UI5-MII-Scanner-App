@@ -353,6 +353,7 @@
 		"travel": true
 	},
 	"env": {
+		"es6":true,
 		"node": false,
 		"browser": true,
 		"amd": true,
