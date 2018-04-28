@@ -23,7 +23,7 @@ sap.ui.define([
 
 		_oInitView: {
 			bValid: false,
-			bOrderOperationValid: false,
+			bOrderOperationExists: false,
 			bDateTimeEntryValid: true,
 			orderInputValueState: sap.ui.core.ValueState.None,
 			dateTimeInputValueState: sap.ui.core.ValueState.None

@@ -21,13 +21,6 @@ sap.ui.define([
 			AUFNR: null
 		},
 
-		_oInitView: {
-			bValid: false,
-			bOrderOperationValid: false,
-			bDateTimeEntryValid: true,
-			orderInputValueState: sap.ui.core.ValueState.None
-		},
-
 		onInit: function() {
 			//call super class onInit to apply user login protection. DO NOT DELETE!
 			BaseTTController.prototype.onInit.call(this);
@@ -42,6 +35,7 @@ sap.ui.define([
 
 		},
 
+		//http://su-mii-dev01.intern.suwelack.de:50000/XMII/Runner?Transaction=SUMISA/ProcessOrder/trx_SendBeginEndPhaseToSAP_TE
 		onSave: function() {
 			var oDataModel = this.getModel("data"),
 				oServiceData,
@@ -109,99 +103,41 @@ sap.ui.define([
 		},
 
 		checkInputIsValid: function(oData) {
-			return true;
-		},
-
-		onOrderChange: function(oEvent) {
-			var oSource = oEvent.getSource(),
-				oOrderNumberInput = this.byId("orderNumberInput"),
+			var oOrderNumberInput = this.byId("orderNumberInput"),
 				oOperationNumberInput = this.byId("operationNumberInput"),
-				oDataModel = this.getModel("data"),
-				sOrderNumber = oDataModel.getProperty("/orderNumber"),
-				sOperationNumber = oDataModel.getProperty("/operationNumber"),
-				fnResolve,
-				fnReject,
-				fnCleanUp;
+				oDateTimeEntry = this.byId("dateTimeEntry"),
+				oStartMoment;
 
-			/* check if current input is valid */
-			if (!sOrderNumber || !sOperationNumber) {
-				return;
-			}
-			if (this.controlHasValidationError(oSource)) {
-				return;
+			oDateTimeEntry.setValueState(sap.ui.core.ValueState.None);
+
+			oStartMoment = moment(oData.dateTimeValue);
+
+			// 0. check if necessary data is present
+			if (!oData.AUFNR || !oData.dateTimeValue) {
+				return false;
 			}
 
-			/* Prepare UI: busy, value states, log messages */
-			this.showControlBusyIndicator(oOrderNumberInput);
-			this.showControlBusyIndicator(oOperationNumberInput);
-			oOrderNumberInput.setValueState(sap.ui.core.ValueState.None);
-			oOperationNumberInput.setValueState(sap.ui.core.ValueState.None);
-			this.removeAllUserMessages();
-
-			/* Prepare Data */
-
-			/* Prepare success callback */
-			fnResolve = function(oData) {
-				var oOrderOperation = {
-						AUFNR: null
-					},
-					aRows = oData.d.results[0].Rowset.results[0].Row.results,
-					bOrderOperationValid = true;
-
-				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
-				if (aRows.length === 1) {
-					oOrderOperation = aRows[0];
-
-					if (oOrderOperation.STATUS !== this.oProcessOrderStatus.released.STATUS_ID && oOrderOperation.STATUS !== this.oProcessOrderStatus.paused.STATUS_ID) {
-						this.addUserMessage({
-							text: this.getTranslation("startOperation.messageText.wrongCurrentStatus", [sOrderNumber, sOperationNumber, oOrderOperation.STATUS_TXT])
-						});
-
-						bOrderOperationValid = false;
-					}
-
-				} else {
-					this.addUserMessage({
-						text: this.getTranslation("startOperation.messageText.orderNotFound", [sOrderNumber, sOperationNumber])
-					});
-
-					bOrderOperationValid = false;
-				}
-
-				this.getModel("view").setProperty("/bOrderOperationValid", bOrderOperationValid);
-
-				oDataModel.setData(oOrderOperation, true);
-
-				if (bOrderOperationValid) {
-					oOrderNumberInput.setValueState(sap.ui.core.ValueState.Success);
-					oOperationNumberInput.setValueState(sap.ui.core.ValueState.Success);
-				} else {
-					oOrderNumberInput.setValueState(sap.ui.core.ValueState.Error);
-					oOperationNumberInput.setValueState(sap.ui.core.ValueState.Error);
-				}
-
-			}.bind(this);
-
-			/* Prepare error callback */
-			fnReject = function(oError) {
-				MessageBox.error(oError.responseText || oError.message, {
-					title: this.getTranslation("error.miiTransactionErrorText", ["OrderOperationRead"]),
-					contentWidth: "500px"
+			// 1. ensure operation status is valid
+			if (oData.STATUS !== this.oProcessOrderStatus.released.STATUS_ID && oData.STATUS !== this.oProcessOrderStatus.paused.STATUS_ID) { // check if operation has status "Freigegeben"
+				this.addUserMessage({
+					text: this.getTranslation("startOperation.messageText.wrongCurrentStatus", [oData.AUFNR, oData.VORNR, oData.STATUS_TXT])
 				});
-				//oSource.setValueState(sap.ui.core.ValueState.Error).setValue("");
-				this.getModel("view").setProperty("/bOrderOperationValid", false);
-			}.bind(this);
+				oOrderNumberInput.setValueState(sap.ui.core.ValueState.Error);
+				oOperationNumberInput.setValueState(sap.ui.core.ValueState.Error);
+				return false;
+			}
 
-			fnCleanUp = function(oDate) {
-				this.hideControlBusyIndicator(oOrderNumberInput);
-				this.hideControlBusyIndicator(oOperationNumberInput);
-				this.updateViewControls(this.getModel("data").getData());
-			}.bind(this);
+			// Last: Check min/max contrains for date input
+			if (!this.checkDateTimeEntryMinMaxContraints(oStartMoment, oDateTimeEntry)) {
+				return false;
+			}
 
-			/* Perform service call, Hide Busy Indicator, Update View Controls */
-			this.requestOrderOperationInfoService(sOrderNumber, sOperationNumber)
-				.then(fnResolve, fnReject)
-				.then(fnCleanUp);
+			// All good!
+			oOrderNumberInput.setValueState(sap.ui.core.ValueState.Success);
+			oOperationNumberInput.setValueState(sap.ui.core.ValueState.Success);
+			oDateTimeEntry.setValueState(sap.ui.core.ValueState.Success);
+
+			return true;
 		}
 	});
 });

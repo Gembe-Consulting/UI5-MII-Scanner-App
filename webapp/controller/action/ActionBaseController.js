@@ -67,8 +67,14 @@ sap.ui.define([
 			this.setModel(this._oMessageModel, "message");
 
 			this.getView().attachValidationError(function(oEvent) {
-				this.updateViewControls(this.getModel("view").setProperty("/bValid", false));
+				this.updateViewControls(this.getModel("data").getData()); //this.getModel("view").setProperty("/bValid", false)
 			}.bind(this));
+			// this.getView().attachParseError(function(oEvent) {
+			// 	this.updateViewControls(this.getModel("data").getData()); //this.getModel("view").setProperty("/bValid", false)
+			// }.bind(this));
+			// this.getView().attachFormatError(function(oEvent) {
+			// 	this.updateViewControls(this.getModel("data").getData()); //this.getModel("view").setProperty("/bValid", false)
+			// }.bind(this));
 
 			this.getView().addEventDelegate({
 				"onBeforeShow": function(oEvent) {

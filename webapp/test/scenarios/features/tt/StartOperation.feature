@@ -40,7 +40,7 @@ Feature: Start Operation
 		 And I can see dateTimeEntry with valueState 'Success' in action.tt.StartOperation view
 		When I enter '' into dateTimeEntry in action.tt.StartOperation view
 		Then I cannot see saveButton in action.tt.StartOperation view
-		 And I can see dateTimeEntry with valueState 'Error' in action.tt.StartOperation view
+		 And I can see dateTimeEntry with valueState 'None' in action.tt.StartOperation view
 		When I enter '07.04.2018, 12:19:46' into dateTimeEntry in action.tt.StartOperation view
 		Then I can see saveButton in action.tt.StartOperation view
 	
@@ -61,8 +61,9 @@ Feature: Start Operation
 		 And I can see orderNumberInput with valueState 'Error' in action.tt.StartOperation view
 		 And I cannot see saveButton in action.tt.StartOperation view
 		When I click on clearFormButton in action.tt.StartOperation view
-		 Then I can see orderNumberInput with valueState 'None' in action.tt.StartOperation view
-		  And I cannot see saveButton in action.tt.StartOperation view
+		 Then I cannot see saveButton in action.tt.StartOperation view
+		  And I can see orderNumberInput with valueState 'None' in action.tt.StartOperation view
+		  And I can see dateTimeEntry with valueState 'None' in action.tt.StartOperation view
 		  And messageStripContainer in action.tt.StartOperation view contains no content
 		Then on the Start Operation Page: I should see all input fields are initial
 		Then on the Start Operation Page: I should see data model and view model are initial
@@ -70,7 +71,9 @@ Feature: Start Operation
 	Scenario: Should send timeticket confirmation to SAP ERP
 		When I enter '1092695' into orderNumberInput in action.tt.StartOperation view
 		 And I enter '10' into operationNumberInput in action.tt.StartOperation view
-		 And I enter '14.04.2018, 11:09:46' into dateTimeEntry in action.tt.StartOperation view
+		 And I enter '28.04.2018, 11:09:46' into dateTimeEntry in action.tt.StartOperation view
 		When I click on saveButton in action.tt.StartOperation view
-		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0010' zu Auftrag '1092695' wurde erfolgreich gestartet! Startzeitpunkt: Samstag, 14. April 2018 11:09' in action.tt.StartOperation view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0010' zu Auftrag '1092695' wurde erfolgreich gestartet! Startzeitpunkt: Samstag, 28. April 2018 11:09' in action.tt.StartOperation view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Success' in action.tt.StartOperation view
+		Then on the Start Operation Page: I should see all input fields are initial
+		Then on the Start Operation Page: I should see data model and view model are initial

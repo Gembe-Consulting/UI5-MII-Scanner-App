@@ -77,10 +77,11 @@ sap.ui.require([
 							},
 							oExpectedViewData = {
 								bValid: false,
-								bOrderOperationValid: false,
-								bDateTimeEntryValid: true,
+								bOrderOperationExists: false,
 								orderInputValueState: sap.ui.core.ValueState.None,
-								dateTimeInputValueState: sap.ui.core.ValueState.None
+								dateTimeInputValueState: sap.ui.core.ValueState.None,
+								maxDate: {},
+								minDate: {}
 							};
 
 						return this.waitFor({
@@ -98,6 +99,7 @@ sap.ui.require([
 								Opa5.assert.propEqual(oDataModel.getData(), oExpectedDataData, "Data model is inital");
 
 								Opa5.assert.propEqual(oViewModel.getData(), oExpectedViewData, "View model is inital");
+
 							},
 							errorMessage: "Could not find control"
 						});

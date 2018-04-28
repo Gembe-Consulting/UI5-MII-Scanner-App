@@ -31,8 +31,9 @@
 					</Input>
 					<!-- Date and Time Entry -->
 					<Label text="{i18n>startOperation.form.label.startDateTime}" labelFor="dateTimeEntry"/>
-					<DateTimePicker id="dateTimeEntry" change="onDateTimeEntryChange" dateValue="{data>/dateTimeValue}" minDate="{view>/minDateSelectable}"
-						maxDate="{view>/maxDateSelectable}" displayFormat="medium" class="noScannerInput suwIncreadedInputFontSize">
+					<DateTimePicker id="dateTimeEntry" change="onDateTimeEntryChange" dateValue="{data>/dateTimeValue}" minDate="{view>/minDate}"
+						maxDate="{view>/maxDate}" displayFormat="medium" valueState="{view>/dateTimeInputValueState}"
+						class="noScannerInput suwIncreadedInputFontSize">
 						<layoutData>
 							<l:GridData span="XL4 L4 M6 S12"/>
 						</layoutData>

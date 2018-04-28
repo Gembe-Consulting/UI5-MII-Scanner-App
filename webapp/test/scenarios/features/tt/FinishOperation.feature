@@ -40,8 +40,8 @@ Feature: Finish Operation
 		 And I can see dateTimeEntry with valueState 'Success' in action.tt.FinishOperation view	 
 		When I enter '' into dateTimeEntry in action.tt.FinishOperation view
 		Then I cannot see saveButton in action.tt.FinishOperation view
-		 And I can see dateTimeEntry with valueState 'Error' in action.tt.FinishOperation view	 
-		When I enter '07.04.2018, 12:19:46' into dateTimeEntry in action.tt.FinishOperation view
+		 And I can see dateTimeEntry with valueState 'None' in action.tt.FinishOperation view	 
+		When I enter '28.04.2018, 12:19:46' into dateTimeEntry in action.tt.FinishOperation view
 		Then I can see saveButton in action.tt.FinishOperation view
 		
 	Scenario: Should show error message if users enter invalid order number (not existing or wrong status)
@@ -61,34 +61,35 @@ Feature: Finish Operation
 		 And I can see orderNumberInput with valueState 'Error' in action.tt.FinishOperation view
 		 And I cannot see saveButton in action.tt.FinishOperation view
 		When I click on clearFormButton in action.tt.FinishOperation view
-		 Then I can see orderNumberInput with valueState 'None' in action.tt.FinishOperation view
-		  And I cannot see saveButton in action.tt.FinishOperation view
+		 Then I cannot see saveButton in action.tt.FinishOperation view
+		  And I can see orderNumberInput with valueState 'None' in action.tt.FinishOperation view	
+		  And I can see dateTimeEntry with valueState 'None' in action.tt.FinishOperation view
 		  And messageStripContainer in action.tt.FinishOperation view contains no content
 		Then on the Finish Operation Page: I should see all input fields are initial
 		Then on the Finish Operation Page: I should see data model and view model are initial
 
 	Scenario: Should show error message if users enter order number that has been started after entry date
-		When I enter '18.01.1970, 10:24:56' into dateTimeEntry in action.tt.FinishOperation view
+		When I enter '25.04.2018, 16:40:00' into dateTimeEntry in action.tt.FinishOperation view
 		 And I enter '1092697' into orderNumberInput in action.tt.FinishOperation view
 		 And I enter '10' into operationNumberInput in action.tt.FinishOperation view
-		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0010' zu Auftrag '1092697' wurde am 'Sonntag, 18. Januar 1970 16:16' gestartet und kann daher nicht zum 'Sonntag, 18. Januar 1970 10:24' beendet werden.' in action.tt.FinishOperation view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0010' zu Auftrag '1092697' wurde am 'Mittwoch, 25. April 2018 16:41' gestartet und kann daher nicht zum 'Mittwoch, 25. April 2018 16:40' beendet werden.' in action.tt.FinishOperation view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Error' in action.tt.FinishOperation view
 		 And I can see dateTimeEntry with valueState 'Error' in action.tt.FinishOperation view
 		 And I cannot see saveButton in action.tt.FinishOperation view
-		When I enter '18.01.70, 16:20' into dateTimeEntry in action.tt.FinishOperation view
+		When I enter '25.04.2018, 16:42:00' into dateTimeEntry in action.tt.FinishOperation view
 		Then I can see saveButton in action.tt.FinishOperation view
 		 And I can see dateTimeEntry with valueState 'Success' in action.tt.FinishOperation view
 		 And messageStripContainer in action.tt.FinishOperation view contains no content
 		 
 	Scenario: Should show error message if users enter order number that has an closed incident after entry date
-		When I enter '01.01.70, 03:00' into dateTimeEntry in action.tt.FinishOperation view
+		When I enter '26.04.2018, 16:40' into dateTimeEntry in action.tt.FinishOperation view
 		 And I enter '1092698' into orderNumberInput in action.tt.FinishOperation view
 		 And I enter '20' into operationNumberInput in action.tt.FinishOperation view
-		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0020' zu Auftrag '1092698' wurde am 'Donnerstag, 1. Januar 1970 03:35' aus einer Störung heraus fortgesetzt und kann daher nicht zum 'Donnerstag, 1. Januar 1970 03:00' beendet werden.' in action.tt.FinishOperation view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0020' zu Auftrag '1092698' wurde am 'Donnerstag, 26. April 2018 16:41' aus einer Störung heraus fortgesetzt und kann daher nicht zum 'Donnerstag, 26. April 2018 16:40' beendet werden.' in action.tt.FinishOperation view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Error' in action.tt.FinishOperation view
 		 And I can see dateTimeEntry with valueState 'Error' in action.tt.FinishOperation view
 		 And I cannot see saveButton in action.tt.FinishOperation view
-		When I enter '02.04.2018, 00:00:00' into dateTimeEntry in action.tt.FinishOperation view
+		When I enter '26.04.2018, 16:42' into dateTimeEntry in action.tt.FinishOperation view
 		Then I can see saveButton in action.tt.FinishOperation view
 		 And I can see dateTimeEntry with valueState 'Success' in action.tt.FinishOperation view
 		 And messageStripContainer in action.tt.FinishOperation view contains no content
@@ -96,7 +97,8 @@ Feature: Finish Operation
 	Scenario: Should send timeticket confirmation to SAP ERP
 		When I enter '1092699' into orderNumberInput in action.tt.FinishOperation view
 		 And I enter '1132' into operationNumberInput in action.tt.FinishOperation view
-		 And I enter '07.04.2018, 12:19:46' into dateTimeEntry in action.tt.FinishOperation view
 		When I click on saveButton in action.tt.FinishOperation view
-		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '1132' zu Auftrag '1092699' wurde erfolgreich beendet! Endezeitpunkt: Samstag, 7. April 2018 12:19' in action.tt.FinishOperation view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '1132' zu Auftrag '1092699' wurde erfolgreich beendet! Endezeitpunkt:' in action.tt.FinishOperation view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Success' in action.tt.FinishOperation view
+		Then on the Finish Operation Page: I should see all input fields are initial
+		Then on the Finish Operation Page: I should see data model and view model are initial

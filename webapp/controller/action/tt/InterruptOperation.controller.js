@@ -24,7 +24,7 @@ sap.ui.define([
 
 		_oInitView: {
 			bValid: false,
-			bOrderOperationValid: false,
+			bOrderOperationExists: false,
 			bDateTimeEntryValid: true,
 			orderInputValueState: sap.ui.core.ValueState.None,
 			dateTimeInputValueState: sap.ui.core.ValueState.None
@@ -108,114 +108,8 @@ sap.ui.define([
 				}.bind(this));
 		},
 
-		onOrderChange: function(oEvent) {
-			var oSource = oEvent.getSource(),
-				oOrderNumberInput = this.byId("orderNumberInput"),
-				oOperationNumberInput = this.byId("operationNumberInput"),
-				oDataModel = this.getModel("data"),
-				sOrderNumber = oDataModel.getProperty("/orderNumber"),
-				sOperationNumber = oDataModel.getProperty("/operationNumber"),
-				fnResolve,
-				fnReject,
-				fnResolveIncidentService,
-				fnCleanUp;
-
-			/* check if current input is valid */
-			if (!sOrderNumber || !sOperationNumber) {
-				return;
-			}
-			if (this.controlHasValidationError(oSource)) {
-				return;
-			}
-
-			/* Prepare UI: busy, value states, log messages */
-			this.showControlBusyIndicator(oOrderNumberInput);
-			this.showControlBusyIndicator(oOperationNumberInput);
-
-			this.removeAllUserMessages();
-
-			/* Prepare Data */
-
-			/* Prepare success callback */
-			fnResolve = function(oData) {
-				var oOrderOperation = {
-						AUFNR: null
-					},
-					aRows = oData.d.results[0].Rowset.results[0].Row.results,
-					bOrderOperationValid = true;
-
-				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
-				if (aRows.length === 1) {
-					oOrderOperation = aRows[0];
-				} else {
-					this.addUserMessage({
-						text: this.getTranslation("interruptOperation.messageText.orderNotFound", [sOrderNumber, sOperationNumber])
-					});
-
-					bOrderOperationValid = false;
-				}
-
-				oDataModel.setData(oOrderOperation, true);
-
-				this.getModel("view").setProperty("/bOrderOperationValid", bOrderOperationValid);
-
-				if (bOrderOperationValid) {
-					oOrderNumberInput.setValueState(sap.ui.core.ValueState.Success);
-					oOperationNumberInput.setValueState(sap.ui.core.ValueState.Success);
-				} else {
-					oOrderNumberInput.setValueState(sap.ui.core.ValueState.Error);
-					oOperationNumberInput.setValueState(sap.ui.core.ValueState.Error);
-					return Promise.reject("Order or Operation not found!");
-				}
-
-				return oData;
-
-			}.bind(this);
-
-			fnResolveIncidentService = function(oData) {
-				var aRows = oData.d.results[0].Rowset.results[0].Row.results,
-					oLatestIncidentFinishDate,
-					oNullDate = null,
-					fnLatestEndDate;
-
-				fnLatestEndDate = function(oldDate, oIncident, currentIndex, array) {
-					var oNewDate = this.formatter.parseJSONDate(oIncident.STR_ENDE);
-					return oldDate > oNewDate ? oldDate : oNewDate;
-				}.bind(this);
-
-				oLatestIncidentFinishDate = aRows.reduce(fnLatestEndDate, oNullDate /*initial value*/ );
-
-				// set LATEST_EVENT_FINISH property
-				this.getModel("data").setProperty("/LATEST_EVENT_FINISH", oLatestIncidentFinishDate);
-
-			}.bind(this);
-
-			/* Prepare error callback */
-			fnReject = function(oError) {
-				MessageBox.error(oError.responseText || oError.message, {
-					title: this.getTranslation("error.miiTransactionErrorText", ["OrderOperationRead"]),
-					contentWidth: "500px"
-				});
-				//oSource.setValueState(sap.ui.core.ValueState.Error).setValue("");
-				this.getModel("view").setProperty("/bOrderOperationValid", false);
-			}.bind(this);
-
-			fnCleanUp = function(oDate) {
-				this.hideControlBusyIndicator(oOrderNumberInput);
-				this.hideControlBusyIndicator(oOperationNumberInput);
-				this.updateViewControls(this.getModel("data").getData());
-			}.bind(this);
-
-			/* Perform service call, Hide Busy Indicator, Update View Controls */
-			this.requestOrderOperationInfoService(sOrderNumber, sOperationNumber)
-				.then(fnResolve, fnReject)
-				.then(this.requestOrderOperationIncidentsService.bind(this))
-				.then(fnResolveIncidentService, jQuery.noop)
-				.then(fnCleanUp);
-		},
-
 		isInputDataValid: function(oData) {
-			return !!oData.interruptionReason && !!oData.dateTimeValue && !!oData.orderNumber && !!oData.operationNumber;
+			return !!oData.interruptionReason && !!oData.dateTimeValue && !!oData.orderNumber && !!oData.operationNumber && !!oData.AUFNR;
 		},
 
 		checkInputIsValid: function(oData) {
