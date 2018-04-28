@@ -11,7 +11,7 @@
       "description": "openui5-generic-app-testing"
     },
     {
-      "path": "/ui5miiutilities/mii/util/",
+      "path": "/webapp/ui5miiutilities/mii/util/",
       "target": {
         "type": "application",
         "name": "ui5miiutilities",
@@ -24,7 +24,8 @@
       "target": {
         "type": "service",
         "name": "sapui5",
-        "entryPath": "/resources"
+        "entryPath": "/resources",
+        "version": "1.54.3"
       },
       "description": "SAPUI5 Resources"
     },
@@ -33,7 +34,8 @@
       "target": {
         "type": "service",
         "name": "sapui5",
-        "entryPath": "/test-resources"
+        "entryPath": "/test-resources",
+        "version": "1.54.3"
       },
       "description": "SAPUI5 Test Resources"
     },
@@ -42,7 +44,8 @@
       "target": {
         "type": "service",
         "name": "sapui5",
-        "entryPath": "/resources"
+        "entryPath": "/resources",
+        "version": "1.54.3"
       },
       "description": "SAPUI5 Resources"
     },
@@ -51,7 +54,8 @@
       "target": {
         "type": "service",
         "name": "sapui5",
-        "entryPath": "/test-resources"
+        "entryPath": "/test-resources",
+        "version": "1.54.3"
       },
       "description": "SAPUI5 Test Resources"
     }

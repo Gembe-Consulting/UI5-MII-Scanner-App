@@ -10,7 +10,7 @@ sap.ui.require([
 	],
 	function(Opa5, Interactable, Properties, PropertyStrictEquals, Ancestor, Press, EnterText, Common) {
 		"use strict";
-		var sViewName = "action.GoodsReceipt";
+		var sViewName = "action.gm.GoodsReceipt";
 
 		Opa5.createPageObjects({
 			onTheGoodsReceiptPage: {
@@ -28,17 +28,17 @@ sap.ui.require([
 						var bEnabled = false;
 						return this.iShouldSeeTheSaveButton(sViewName, bEnabled);
 					},
-					
-					iShouldSeeTheSaveButtonIsEnabled : function() {
+
+					iShouldSeeTheSaveButtonIsEnabled: function() {
 						var bEnabled = true;
 						return this.iShouldSeeTheSaveButton(sViewName, bEnabled);
 					},
-					
+
 					iCanSeeTheErrorMessage: function() {
 						var sErrorMessage = "Lagerort 'VG01' ist nicht für Buchungen vorgesehen.\nBitte korrigieren sie ihre Eingabe!";
 						return this.iShouldSeeTheErrorMessageBox(sErrorMessage);
 					},
-					
+
 					iShouldSeeAllInputFieldsAreInitial: function() {
 
 						var oInitialControlData = {
@@ -86,7 +86,7 @@ sap.ui.require([
 								var oView = oControl.getParent(),
 									oDataModel, oViewModel;
 
-								Opa5.assert.strictEqual(oView.getViewName(), "com.mii.scanner.view.action.GoodsReceipt", "View " + oView.getViewName() + " found");
+								Opa5.assert.strictEqual(oView.getViewName(), "com.mii.scanner.view.action.gm.GoodsReceipt", "View " + oView.getViewName() + " found");
 
 								oDataModel = oView.getModel("data");
 								oViewModel = oView.getModel("view");

@@ -66,6 +66,16 @@ sap.ui.define([
 
 			this.setModel(this._oMessageModel, "message");
 
+			this.getView().attachValidationError(function(oEvent) {
+				this.updateViewControls(this.getModel("data").getData()); //this.getModel("view").setProperty("/bValid", false)
+			}.bind(this));
+			// this.getView().attachParseError(function(oEvent) {
+			// 	this.updateViewControls(this.getModel("data").getData()); //this.getModel("view").setProperty("/bValid", false)
+			// }.bind(this));
+			// this.getView().attachFormatError(function(oEvent) {
+			// 	this.updateViewControls(this.getModel("data").getData()); //this.getModel("view").setProperty("/bValid", false)
+			// }.bind(this));
+
 			this.getView().addEventDelegate({
 				"onBeforeShow": function(oEvent) {
 					jQuery(document).on("scannerDetectionComplete", this.handleBarcodeScanned.bind(this));
@@ -158,35 +168,105 @@ sap.ui.define([
 			return oStorageUnitModel.loadMiiData(oStorageUnitModel._sServiceUrl, oParam);
 		},
 
+		requestOrderOperationInfoService: function(sOrderNumber, sOperationNumber) {
+
+			if (!sOrderNumber || !sOperationNumber) {
+				return Promise.reject(new Error("Parameter 'sOrderNumber' or 'sOperationNumber' is missing!"));
+			}
+
+			var oOrderOperationModel = this.getModel("orderOperation"),
+				oParam = {
+					"Param.1": sOrderNumber,
+					"Param.2": sOperationNumber
+				};
+
+			return oOrderOperationModel.loadMiiData(oOrderOperationModel._sServiceUrl, oParam);
+		},
+
+		requestOrderOperationIncidentsService: function(sOrderNumber, sOperationNumber) {
+			var oOrderOperationIncidentsModel = this.getModel("orderIncidents"),
+				oServiceData,
+				oParam;
+
+			if (typeof sOrderNumber === "string") {
+				oServiceData = {
+					orderNumber: sOrderNumber,
+					operationNumber: sOperationNumber
+				};
+			} else {
+
+				if (!sOrderNumber || sOrderNumber.d.results[0].Rowset.results[0].Row.results.length !== 1) {
+					return Promise.reject(new Error("Rowset does not contain an operation!"));
+				}
+
+				oServiceData = {
+					orderNumber: sOrderNumber.d.results[0].Rowset.results[0].Row.results[0].AUFNR,
+					operationNumber: sOrderNumber.d.results[0].Rowset.results[0].Row.results[0].VORNR
+				};
+			}
+
+			if (!oServiceData.orderNumber || !oServiceData.operationNumber) {
+				return Promise.reject(new Error("Parameter 'order number' and/or 'operation number' is missing!"));
+			}
+
+			oParam = {
+				"Param.1": oServiceData.orderNumber,
+				"Param.2": oServiceData.operationNumber
+			};
+
+			return oOrderOperationIncidentsModel.loadMiiData(oOrderOperationIncidentsModel._sServiceUrl, oParam);
+
+		},
+
+		//http://su-mii-dev01.intern.suwelack.de:50000/XMII/Runner?Transaction=SUMISA/ProcessOrder/trx_SendBeginEndPhaseToSAP_TE&
+		//AUFNR=1093363&VORGANG=0010&STATUS=0003&STATUS_TXT=Gestartet&TRX_ID=B10&RUECKZEIT=07.04.2018 16:39:52&MATNR=1701705-030&STOER=&Debug=1&UNAME=PHIGEM&IllumLoginName=PHIGEM&OutputParameter=OutputXML&Content-Type=text/xml
+		requestTimeTicketService: function(sOrderNumber, sOperationNumber, oStatus, oDate, sMaterialNumber, sIncident) {
+			var oTimeTicketModel = this.getModel("timeTicket"),
+				sUsername = this.getModel("user").getProperty("/USERLOGIN"),
+				oServiceData,
+				oParam;
+
+			if (typeof sOrderNumber === "string") {
+				oServiceData = {
+					orderNumber: sOrderNumber,
+					operationNumber: sOperationNumber,
+					newStatus: oStatus,
+					date: oDate,
+					materialNumber: sMaterialNumber,
+					incident: sIncident
+				};
+			} else {
+				oServiceData = sOrderNumber;
+			}
+
+			if (!oServiceData.orderNumber || !oServiceData.operationNumber || !oServiceData.newStatus || !oServiceData.date) {
+				return Promise.reject(new Error("One or more mandatory parameters missing!"));
+			}
+
+			oServiceData.dateFormatted = moment(oServiceData.date).format("DD.MM.YYYY HH:mm:ss"); //Format: 07.04.2018 16:39:52 //see https://momentjs.com/docs/#/displaying/
+
+			oParam = {
+				"Param.1": oServiceData.orderNumber,
+				"Param.2": oServiceData.operationNumber,
+				"Param.3": "1000",
+				"Param.4": oServiceData.newStatus.STATUS_ID,
+				"Param.5": oServiceData.newStatus.STATUS_TXT,
+				"Param.6": oServiceData.dateFormatted,
+				"Param.7": oServiceData.incident || "",
+				"Param.8": oServiceData.materialNumber || "",
+				"Param.9": oServiceData.newStatus.ACTION_KEY,
+				"Param.10": sUsername
+			};
+
+			return oTimeTicketModel.loadMiiData(oTimeTicketModel._sServiceUrl, oParam);
+		},
+
 		showControlBusyIndicator: function(oSource) {
 			return oSource.setBusyIndicatorDelay(0).setBusy(true);
 		},
 
 		hideControlBusyIndicator: function(oSource) {
 			return oSource.setBusyIndicatorDelay(0).setBusy(false);
-		},
-
-		/**
-		 * Check is a given storage location is allowed for posting
-		 */
-		isStorageLocationAllowed: function(sStorageLocation) {
-			return this._aDisallowedStorageLocations.indexOf(sStorageLocation.toUpperCase()) === -1;
-		},
-
-		_formatStorageUnitData: function(oStorageUnit) {
-
-			if (!oStorageUnit) {
-				return null;
-			}
-
-			var fnNumberOrDefault = function(vAttr, vDefault) {
-				return jQuery.isNumeric(vAttr) ? Number(vAttr) : vDefault;
-			};
-
-			oStorageUnit.LENUM = fnNumberOrDefault(oStorageUnit.LENUM, null);
-			oStorageUnit.SOLLME = fnNumberOrDefault(oStorageUnit.SOLLME, 0.0);
-
-			return oStorageUnit;
 		},
 
 		getScannerInputType: function(sScannedString) {
@@ -214,12 +294,6 @@ sap.ui.define([
 
 			return this.byId(oInputType.defaultControlId);
 
-		},
-
-		onSave: function() {
-			jQuery.sap.log.error("This onSave function is a placeholder. Please make sure to implement this function in your action page controller!");
-			MessageToast.show(this.getResourceText("messageSuccessBaseActionController"));
-			this.onNavBack();
 		},
 
 		onClearFormPress: function(oEvent, bKeepMessageStrip) {
@@ -278,6 +352,7 @@ sap.ui.define([
 			if (!this._isDataModelInitial(oCurrentData, oInitialData)) {
 				this.handleConfirmationMessageBoxPress(oEvent);
 			} else {
+				this.onClearFormPress();
 				this.onNavBack();
 			}
 
@@ -305,7 +380,8 @@ sap.ui.define([
 			var oMsgContainer = this.byId("messageStripContainer");
 			oMsgContainer.destroyContent();
 		},
-		/*
+
+		/***************************************************************************
 				addLogMessage: function(oMessage) {
 					var oMessageStripContainer = this.byId("messageStripContainer"),
 						oMsgStrip;
@@ -333,7 +409,8 @@ sap.ui.define([
 
 					oMessageStripContainer.destroyContent();
 				},
-		*/
+		******************************************************************************/
+
 		isMessageModelClean: function() {
 			var oMessageModel = sap.ui.getCore()
 				.getMessageManager()

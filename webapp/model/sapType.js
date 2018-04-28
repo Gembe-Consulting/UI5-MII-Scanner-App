@@ -5,8 +5,9 @@ sap.ui.define([
 	"com/mii/scanner/model/type/StorageLocation",
 	"com/mii/scanner/model/type/StorageUnitNumber",
 	"com/mii/scanner/model/type/UnitOfMeasure",
-	"com/mii/scanner/model/type/ProcessOrderNumber"
-], function(FloatType, IntegerType, StringType, StorageLocationType, StorageUnitNumberType, UnitOfMeasureType, ProcessOrderNumberType) {
+	"com/mii/scanner/model/type/ProcessOrderNumber",
+	"com/mii/scanner/model/type/OperationNumber"
+], function(FloatType, IntegerType, StringType, StorageLocationType, StorageUnitNumberType, UnitOfMeasureType, ProcessOrderNumberType, OperationNumberType) {
 	"use strict";
 
 	return {
@@ -44,6 +45,14 @@ sap.ui.define([
 			minLength: 7,
 			maxLength: 12,
 			startsWith: "1"
+		}),
+
+		VORNR: new OperationNumberType({
+			padWithChar: "0", // defines the character that is used to pad to max length
+			emptyString: null // defines what empty string is parsed as and what is formatted as empty string
+		}, {
+			minLength: 4,
+			maxLength: 4
 		}),
 
 		MEINS: new UnitOfMeasureType({

@@ -1,4 +1,4 @@
-jQuery.sap.registerModulePath("mii.util", "../../ui5miiutilities/mii/util/");
+jQuery.sap.registerModulePath("mii.util", "../ui5miiutilities/mii/util/");
 
 sap.ui.define([
 	"sap/ui/core/UIComponent",

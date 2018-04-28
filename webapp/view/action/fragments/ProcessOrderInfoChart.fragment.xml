@@ -1,0 +1,14 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.suite.ui.microchart" xmlns:m="sap.m">
+	<m:FlexBox height="100%" width="100%" justifyContent="Center" alignItems="Center" alignContent="Center">
+		<StackedBarMicroChart size="Responsive" press="onProcessOrderChartPress" precision="0" class="sapUiSmallMargin" id="processOrderChart">
+			<bars>
+				<StackedBarMicroChartBar valueColor="Good" value="60" displayValue="60min"/>
+				<StackedBarMicroChartBar valueColor="Error" value="30" displayValue="30min"/>
+				<StackedBarMicroChartBar valueColor="Good" value="180" displayValue="180min"/>
+				<StackedBarMicroChartBar valueColor="Neutral" value="45" displayValue="45min"/>
+				<StackedBarMicroChartBar valueColor="Error" value="15" displayValue="15min"/>
+				<StackedBarMicroChartBar valueColor="Good" value="130" displayValue="130min"/>
+			</bars>
+		</StackedBarMicroChart>
+	</m:FlexBox>
+</core:FragmentDefinition>

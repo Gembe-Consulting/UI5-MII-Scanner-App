@@ -11,7 +11,11 @@ sap.ui.define([
 	"com/mii/scanner/test/pages/GoodsReceipt",
 	"com/mii/scanner/test/pages/GoodsIssue",
 	"com/mii/scanner/test/pages/StockTransfer",
-	"com/mii/scanner/test/pages/RollerConveyor"
+	"com/mii/scanner/test/pages/RollerConveyor",
+	"com/mii/scanner/test/pages/StartOperation",
+	"com/mii/scanner/test/pages/FinishOperation",
+	"com/mii/scanner/test/pages/InterruptOperation",
+	"com/mii/scanner/test/pages/ResumeOperation"
 ], function(Opa5, QUnitUtils, Common) {
 	"use strict";
 

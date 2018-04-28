@@ -1,0 +1,274 @@
+{
+	"d": {
+		"results": [{
+			"__metadata": {
+				"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Rowsets('SAPUI5/services/orderdata/GetOrderIncidentsQry')",
+				"type": "QueryTemplate.Rowsets"
+			},
+			"DateCreated": "\/Date(1523120262000)\/",
+			"EndDate": "\/Date(1523120262000)\/",
+			"StartDate": "\/Date(1523116662000)\/",
+			"Version": "14.0 SP7 Patch 15 (Jan 13, 2016)",
+			"QueryTemplate": "SAPUI5/services/orderdata/GetOrderIncidentsQry",
+			"Rowset": {
+				"results": [{
+					"__metadata": {
+						"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Rowset(QueryTemplate='SAPUI5/services/orderdata/GetOrderIncidentsQry',RowsetId=1)",
+						"type": "QueryTemplate.Rowset"
+					},
+					"RowsetId": 1,
+					"QueryTemplate": "SAPUI5/services/orderdata/GetOrderIncidentsQry",
+					"Column": {
+						"results": [{
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('ID')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "ID",
+							"Description": "ID",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 4,
+							"SourceColumn": "ID"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('STRCODE')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "STRCODE",
+							"Description": "STRCODE",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "STRCODE"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('STR_BEGINN')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "STR_BEGINN",
+							"Description": "STR_BEGINN",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 93,
+							"SourceColumn": "STR_BEGINN"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('STR_ENDE')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "STR_ENDE",
+							"Description": "STR_ENDE",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 93,
+							"SourceColumn": "STR_ENDE"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('STR_TXT')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "STR_TXT",
+							"Description": "STR_TXT",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "STR_TXT"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('AUFNR')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "AUFNR",
+							"Description": "AUFNR",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "AUFNR"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('VORNR')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "VORNR",
+							"Description": "VORNR",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "VORNR"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('ERFASSER')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "ERFASSER",
+							"Description": "ERFASSER",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "ERFASSER"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('EV_NUMMER')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "EV_NUMMER",
+							"Description": "EV_NUMMER",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "EV_NUMMER"
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('LOESCH_ID')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "LOESCH_ID",
+							"Description": "LOESCH_ID",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 12,
+							"SourceColumn": "LOESCH_ID"
+						}]
+					},
+					"Row": {
+						"results": [{
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"ID": 401,
+							"STRCODE": "P100",
+							"STR_BEGINN": "\/Date(1381472100000)\/",
+							"STR_ENDE": "\/Date(1381473000000)\/",
+							"STR_TXT": "Elektrische Störung",
+							"AUFNR": "1008788",
+							"VORNR": "0010",
+							"ERFASSER": "PHIGEM",
+							"EV_NUMMER": null,
+							"LOESCH_ID": null,
+							"RowId": 1
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(2)",
+								"type": "QueryTemplate.Row"
+							},
+							"ID": 400,
+							"STRCODE": "P101",
+							"STR_BEGINN": "\/Date(1381471200000)\/",
+							"STR_ENDE": "\/Date(1381473000000)\/",
+							"STR_TXT": "Mechanische Störung",
+							"AUFNR": "1008788",
+							"VORNR": "0010",
+							"ERFASSER": "PHIGEM",
+							"EV_NUMMER": null,
+							"LOESCH_ID": null,
+							"RowId": 2
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"ID": 402,
+							"STRCODE": "P100",
+							"STR_BEGINN": "\/Date(1524751200000)\/",
+							"STR_ENDE": "\/Date(1524753660000)\/",
+							"STR_TXT": "Elektrische Störung",
+							"AUFNR": "1092698",
+							"VORNR": "0020",
+							"ERFASSER": "PHIGEM",
+							"EV_NUMMER": null,
+							"LOESCH_ID": null,
+							"RowId": 3
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"ID": 403,
+							"STRCODE": "P100",
+							"STR_BEGINN": "\/Date(20099900)\/",
+							"STR_ENDE": "\/Date(1524144212433)\/",
+							"STR_TXT": "Elektrische Störung",
+							"AUFNR": "1092701",
+							"VORNR": "0001",
+							"ERFASSER": "PHIGEM",
+							"EV_NUMMER": null,
+							"LOESCH_ID": null,
+							"RowId": 4
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"ID": 403,
+							"STRCODE": "P100",
+							"STR_BEGINN": "\/Date(1524051200000)\/",
+							"STR_ENDE": "\/Date(1524153660000)\/",
+							"STR_TXT": "Abgeschlossene Elektrische Störung",
+							"AUFNR": "1092710",
+							"VORNR": "0011",
+							"ERFASSER": "PHIGEM",
+							"EV_NUMMER": null,
+							"LOESCH_ID": null,
+							"RowId": 4
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"ID": 403,
+							"STRCODE": "P100",
+							"STR_BEGINN": "\/Date(1524751200000)\/",
+							"STR_ENDE": "TimeUnavailable",
+							"STR_TXT": "Aktuelle Elektrische Störung",
+							"AUFNR": "1092710",
+							"VORNR": "0011",
+							"ERFASSER": "PHIGEM",
+							"EV_NUMMER": null,
+							"LOESCH_ID": null,
+							"RowId": 4
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"ID": 403,
+							"STRCODE": "P100",
+							"STR_BEGINN": "\/Date(20099900)\/",
+							"STR_ENDE": "\/Date(920099900)\/",
+							"STR_TXT": "Elektrische Störung",
+							"AUFNR": "1092712",
+							"VORNR": "0011",
+							"ERFASSER": "PHIGEM",
+							"EV_NUMMER": null,
+							"LOESCH_ID": null,
+							"RowId": 4
+						}, {
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"ID": 403,
+							"STRCODE": "P100",
+							"STR_BEGINN": "\/Date(1524751200000)\/",
+							"STR_ENDE": "TimeUnavailable",
+							"STR_TXT": "Abgeschlossene Elektrische Störung",
+							"AUFNR": "1092715",
+							"VORNR": "1002",
+							"ERFASSER": "PHIGEM",
+							"EV_NUMMER": null,
+							"LOESCH_ID": null,
+							"RowId": 4
+						}]
+					}
+				}]
+			},
+			"Messages": {
+				"results": [
+
+				]
+			}
+		}]
+	}
+}

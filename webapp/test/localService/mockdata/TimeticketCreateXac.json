@@ -1,0 +1,82 @@
+{
+	"d": {
+		"results": [{
+			"__metadata": {
+				"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Rowsets('SAPUI5/services/timeticket/TimeticketCreateXac')",
+				"type": "QueryTemplate.Rowsets"
+			},
+			"DateCreated": "\/Date(1523703325000)\/",
+			"EndDate": "\/Date(1523703325000)\/",
+			"StartDate": "\/Date(1523699725000)\/",
+			"Version": "14.0 SP7 Patch 15 (Jan 13, 2016)",
+			"QueryTemplate": "SAPUI5/services/timeticket/TimeticketCreateXac",
+			"Rowset": {
+				"results": [{
+					"__metadata": {
+						"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Rowset(QueryTemplate='SAPUI5/services/timeticket/TimeticketCreateXac',RowsetId=1)",
+						"type": "QueryTemplate.Rowset"
+					},
+					"RowsetId": 1,
+					"QueryTemplate": "SAPUI5/services/timeticket/TimeticketCreateXac",
+					"Column": {
+						"results": [{
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Column('CONF_NO')",
+								"type": "QueryTemplate.Column"
+							},
+							"Name": "CONF_NO",
+							"Description": "Confirmation Number",
+							"MaxRange": 1,
+							"MinRange": 0,
+							"SQLDataType": 1,
+							"SourceColumn": "CONF_NO"
+						}]
+					},
+					"Row": {
+						"results": [{
+							"__metadata": {
+								"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Row(1)",
+								"type": "QueryTemplate.Row"
+							},
+							"CONF_NO": "0001234567",
+							"RowId": 1
+						}]
+					}
+				}]
+			},
+			"Messages": {
+				"results": [{
+					"__metadata": {
+						"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Messages('Message')",
+						"type": "QueryTemplate.Messages"
+					},
+					"Message": "Zu Vorgang 0010 auf Ressource 00251350 wurde Phase 0030 identifiziert"
+				}, {
+					"__metadata": {
+						"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Messages('Message')",
+						"type": "QueryTemplate.Messages"
+					},
+					"Message": "Parameter 'RUECKZEIT' ist 14.04.2018 10:27:42. Formatierte Zeit: 2018-04-14T10:27:42"
+				}, {
+					"__metadata": {
+						"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Messages('Message')",
+						"type": "QueryTemplate.Messages"
+					},
+					"Message": "Aktueller Status Aufragskopf: 0002 - Freigegeben"
+				}, {
+					"__metadata": {
+						"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Messages('Message')",
+						"type": "QueryTemplate.Messages"
+					},
+					"Message": "Vorgang gestartet. [Freigegeben -> Gestartet]"
+				}, {
+					"__metadata": {
+						"uri": "http://su-mii-dev01.intern.suwelack.de:50000/XMII/IlluminatorOData/Messages('Message')",
+						"type": "QueryTemplate.Messages"
+					},
+					"Message": "Rückmeldung zum Auftrag 000001090000 gesichert"
+				}]
+			}
+		}]
+	}
+}

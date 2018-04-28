@@ -1,0 +1,29 @@
+<c:FragmentDefinition xmlns="sap.m" xmlns:mc="sap.suite.ui.microchart" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout"
+	xmlns:c="sap.ui.core">
+	<f:SimpleForm id="processOrderInfo" layout="ResponsiveGridLayout" singleContainerFullSize="true" breakpointM="500" adjustLabelSpan="false"
+		labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="4" emptySpanXL="4" emptySpanL="3" emptySpanM="2" emptySpanS="0"
+		visible="{=${data>/AUFNR}!==null}" editable="false">
+		<f:content>
+			<Label text="{i18n>processOrderInfoActionFragment.label.text.ressourceInfo}"/>
+			<Text id="processOrderFragmentRessourceInfo" text="{data>/ARBID} - {data>/ARBTXT}"/>
+			<Label text="{i18n>processOrderInfoActionFragment.label.text.operationInfo}"/>
+			<Text id="processOrderFragmentOperationInfo" text="{data>/VORTEXT}"/>
+			<Label text="{i18n>processOrderInfoActionFragment.label.text.statusInfo}"/>
+			<Text id="processOrderFragmentStatusInfo" text="{data>/STATUS_TXT} ({data>/STATUS})"/>
+			<Label text="{i18n>processOrderInfoActionFragment.label.text.actualDates}"/>
+			<Text id="processOrderFragmentActualDateInfo"
+				text="{path: 'data>/ISTSTART', formatter:'.formatter.parseJSONDateToShort'} -> {path: 'data>/ISTEND', formatter:'.formatter.parseJSONDateToShort'}"/>
+			<Label text="{i18n>processOrderInfoActionFragment.label.text.scheduledDates}"/>
+			<Text id="processOrderFragmentScheduledDateInfo"
+				text="{path: 'data>/STARTTRM', formatter:'.formatter.parseJSONDateToShort'} -> {path: 'data>/ENDTRM', formatter:'.formatter.parseJSONDateToShort'}"/>
+			<Label text="{i18n>processOrderInfoActionFragment.label.text.materialInfo}"/>
+			<Text id="processOrderFragmentMaterialInfo" text="{data>/MATNR}\n{data>/MAT_TXT}"/>
+			<!--
+			<Label text="{i18n>processOrderInfoActionFragment.label.text.quantityInfo}"/>
+			<ProgressIndicator id="processOrderFragmentQuantityInfo" percentValue="{path: 'data>/QUANTITY_DONE', type:'sap.ui.model.type.String'}"
+				displayValue="{path: 'data>/IST_MENGE', type:'sap.ui.model.type.Float', formatOptions: {minFractionDigits: 1, maxFractionDigits:1}}{data>/EINHEIT} von {path: 'data>/SOLL_MENGE', type:'sap.ui.model.type.Float', formatOptions: {minFractionDigits: 1, maxFractionDigits:1}}{data>/EINHEIT}"
+				showValue="true" state="Success" displayOnly="true"/>
+			-->
+		</f:content>
+	</f:SimpleForm>
+</c:FragmentDefinition>

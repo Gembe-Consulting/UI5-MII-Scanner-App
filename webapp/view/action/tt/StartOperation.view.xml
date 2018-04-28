@@ -1,0 +1,56 @@
+<mvc:View controllerName="com.mii.scanner.controller.action.tt.StartOperation" xmlns="sap.m" xmlns:c="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form">
+	<Page id="startOperationPage">
+		<customHeader>
+			<Toolbar id="header">
+				<ToolbarSpacer/>
+				<c:Icon id="startOperationPageIcon" src="sap-icon://begin" size="2rem" color="#330066" alt="START"/>
+				<Title id="startOperationPageTitle" text="{i18n>startOperation.title.text}" class="suwStartOperationTitle"/>
+				<ToolbarSpacer/>
+				<Button id="clearFormButton" icon="sap-icon://redo" press="onClearFormPress" tooltip="{i18n>general.clearFormButton.tooltip}"/>
+			</Toolbar>
+		</customHeader>
+		<content>
+			<l:VerticalLayout id="messageStripContainer" width="100%"></l:VerticalLayout>
+			<f:SimpleForm id="dataEntry" editable="true" adjustLabelSpan="false" layout="ResponsiveGridLayout" breakpointM="500" labelSpanXL="4"
+				labelSpanL="4" labelSpanM="3" labelSpanS="12" emptySpanXL="4" emptySpanL="3" emptySpanM="2" emptySpanS="0">
+				<f:content>
+					<!-- Order Number -->
+					<Label text="{i18n>startOperation.form.label.orderAndOperationNumber}" labelFor="orderNumberInput"/>
+					<Input id="orderNumberInput" change="onOrderNumberInputChange" value="{path: 'data>/orderNumber', type:'.sapType.AUFNR'}"
+						valueState="{view>/orderInputValueState}" maxLength="12" class="noScannerInput suwIncreadedInputFontSize">
+						<layoutData>
+							<l:GridData span="XL3 L3 M4 S8"/>
+						</layoutData>
+					</Input>
+					<Input id="operationNumberInput" change="onOperationNumberInputChange" value="{path: 'data>/operationNumber', type:'.sapType.VORNR'}"
+						valueState="{view>/orderInputValueState}" maxLength="4" class="noScannerInput suwIncreadedInputFontSize">
+						<layoutData>
+							<l:GridData span="XL1 L1 M2 S4"/>
+						</layoutData>
+					</Input>
+					<!-- Date and Time Entry -->
+					<Label text="{i18n>startOperation.form.label.startDateTime}" labelFor="dateTimeEntry"/>
+					<DateTimePicker id="dateTimeEntry" change="onDateTimeEntryChange" dateValue="{data>/dateTimeValue}" minDate="{view>/minDate}"
+						maxDate="{view>/maxDate}" displayFormat="medium" valueState="{view>/dateTimeInputValueState}"
+						class="noScannerInput suwIncreadedInputFontSize">
+						<layoutData>
+							<l:GridData span="XL4 L4 M6 S12"/>
+						</layoutData>
+					</DateTimePicker>
+				</f:content>
+			</f:SimpleForm>
+			<!-- Process Order Info Form -->
+			<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.ProcessOrderInfoForm" type="XML"/>
+		</content>
+		<footer>
+			<Toolbar id="footer">
+				<Button visible="{= ${message>/}.length === 0 ? false : true}" icon="sap-icon://message-popup" text="{= ${message>/}.length }"
+					type="Emphasized" press="onShowMessagePopoverPress"/>
+				<ToolbarSpacer/>
+				<Button id="saveButton" type="Accept" text="{i18n>startOperation.button.text.save}" press="onSave" enabled="{view>/bValid}"/>
+				<Button id="cancelButton" type="Reject" text="{i18n>startOperation.button.text.cancel}" press="onCancelAction"/>
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

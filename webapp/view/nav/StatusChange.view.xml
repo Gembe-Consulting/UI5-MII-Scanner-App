@@ -3,7 +3,8 @@
 		<content>
 			<List mode="None" width="100%" class="sapUiSmallMarginTop" inset="{= !${device>/system/phone} }">
 				<items>
-					<CustomListItem type="Navigation" press="onNavForward">
+					<CustomListItem id="startOperationItem" type="Navigation" press="onNavForward" tooltip="{i18n>itemLabelTextStartOperationTooltip}"
+						visible="{= !${device>/system/phone} }">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<c:Icon src="sap-icon://begin" size="3rem" height="4rem" width="8rem" color="#330066" alt="START"/>
@@ -17,7 +18,7 @@
 							<c:CustomData key="target" value="startOperation"/>
 						</customData>
 					</CustomListItem>
-					<CustomListItem type="Navigation" press="onNavForward">
+					<CustomListItem id="interruptOperationItem" type="Navigation" press="onNavForward" tooltip="{i18n>itemLabelTextInterruptOperationTooltip}">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<c:Icon src="sap-icon://error" size="3rem" height="4rem" width="8rem" color="#FFAC00" alt="INTERRUPT"/>
@@ -31,13 +32,13 @@
 							<c:CustomData key="target" value="interruptOperation"/>
 						</customData>
 					</CustomListItem>
-					<CustomListItem type="Navigation" press="onNavForward">
+					<CustomListItem id="resumeOperationItem" type="Navigation" press="onNavForward" tooltip="{i18n>itemLabelTextResumeOperationTooltip}">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<c:Icon src="sap-icon://restart" size="3rem" height="4rem" width="8rem" color="#BB07FF" alt="RESUME"/>
 								<VBox width="100%">
-									<Label text="{i18n>itemLabelTextContinueOperation}" design="Bold" class="sapUiSmallMarginBegin"/>
-									<Label text="{i18n>itemInfoTextContinueOperation}" visible="{= !${device>/system/phone} }" class="sapUiSmallMarginBegin"/>
+									<Label text="{i18n>itemLabelTextResumeOperation}" design="Bold" class="sapUiSmallMarginBegin"/>
+									<Label text="{i18n>itemInfoTextResumeOperation}" visible="{= !${device>/system/phone} }" class="sapUiSmallMarginBegin"/>
 								</VBox>
 							</HBox>
 						</content>
@@ -45,7 +46,8 @@
 							<c:CustomData key="target" value="resumeOperation"/>
 						</customData>
 					</CustomListItem>
-					<CustomListItem type="Navigation" press="onNavForward">
+					<CustomListItem id="finishOperationItem" type="Navigation" press="onNavForward" tooltip="{i18n>itemLabelTextFinishOperationTooltip}"
+						visible="{= !${device>/system/phone} }">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<c:Icon src="sap-icon://complete" size="3rem" height="4rem" width="8rem" color="#05b074" alt="FINISH"/>

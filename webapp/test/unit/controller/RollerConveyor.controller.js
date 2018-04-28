@@ -1,5 +1,5 @@
 sap.ui.define([
-	"com/mii/scanner/controller/action/RollerConveyor.controller",
+	"com/mii/scanner/controller/action/gm/RollerConveyor.controller",
 	"sap/ui/model/json/JSONModel"
 ], function(RollerConveyorController, JSONModel) {
 	"use strict";
@@ -25,11 +25,13 @@ sap.ui.define([
 			}]
 		*/
 		//Prepare
-		var sBEUM = "BEUM", sR1 = "00248110",
-			sPALE = "PALE", sR2 = "00253110";
+		var sBEUM = "BEUM",
+			sR1 = "00248110",
+			sPALE = "PALE",
+			sR2 = "00253110";
 
 		// Assert
-		
+
 		assert.strictEqual(this.oRollerConveyorController.findRessourceOfStorageBin(sBEUM), sR1, "Storage Bin " + sBEUM + " resolves to ressource " + sR1);
 		assert.strictEqual(this.oRollerConveyorController.findRessourceOfStorageBin(sPALE), sR2, "Storage Bin " + sPALE + " resolves to ressource " + sR2);
 	});

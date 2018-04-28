@@ -10,7 +10,7 @@ sap.ui.require([
 	],
 	function(Opa5, Interactable, Properties, PropertyStrictEquals, Ancestor, Press, EnterText, Common) {
 		"use strict";
-		var sViewName = "action.RollerConveyor";
+		var sViewName = "action.gm.RollerConveyor";
 
 		Opa5.createPageObjects({
 
@@ -35,8 +35,7 @@ sap.ui.require([
 
 					iShouldSeeStoragebinselectionContains2EnabledItems: function() {
 						var iNumberOfItems = 2,
-							sControlId = "storageBinSelection",
-							sViewName = "action.RollerConveyor";
+							sControlId = "storageBinSelection";
 
 						return this.waitFor({
 							id: sControlId,
@@ -52,8 +51,7 @@ sap.ui.require([
 					},
 					iShouldSeeStoragebinselectionContainsOther2EnabledItems: function() {
 						var iNumberOfItems = 2,
-							sControlId = "storageBinSelection",
-							sViewName = "action.RollerConveyor";
+							sControlId = "storageBinSelection";
 
 						return this.waitFor({
 							id: sControlId,
@@ -129,7 +127,7 @@ sap.ui.require([
 								var oView = oControl.getParent(),
 									oDataModel, oViewModel;
 
-								Opa5.assert.strictEqual(oView.getViewName(), "com.mii.scanner.view.action.RollerConveyor", "View " + oView.getViewName() + " found");
+								Opa5.assert.strictEqual(oView.getViewName(), "com.mii.scanner.view.action.gm.RollerConveyor", "View " + oView.getViewName() + " found");
 
 								oDataModel = oView.getModel("data");
 								oViewModel = oView.getModel("view");

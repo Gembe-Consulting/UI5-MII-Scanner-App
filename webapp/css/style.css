@@ -1,23 +1,43 @@
 .sap-phone .suwIncreadedInputFontSize .sapMInputBaseInner {
-	font-size: 1.5rem;
+    font-size: 1.5rem;
 }
 
-#scanner---goodsReceipt--goodsReceiptPageTitle.suwGoodsReceiptTitle{
-   color: #1F35DE;
-   font-weight: bold;
+#scanner---goodsReceipt--goodsReceiptPageTitle.suwGoodsReceiptTitle {
+    color: #1F35DE;
+    font-weight: bold;
 }
 
-#scanner---goodsIssue--goodsIssuePageTitle.suwGoodsIssueTitle{
-   color: #BB07FF;
-   font-weight: bold;
+#scanner---goodsIssue--goodsIssuePageTitle.suwGoodsIssueTitle {
+    color: #BB07FF;
+    font-weight: bold;
 }
 
-#scanner---stockTransfer--stockTransferPageTitle.suwStockTransferTitle{
-   color: #FFAC00;
-   font-weight: bold;
+#scanner---stockTransfer--stockTransferPageTitle.suwStockTransferTitle {
+    color: #FFAC00;
+    font-weight: bold;
 }
 
-#scanner---rollerConveyor--rollerConveyorPageTitle.suwRollerConveyorTitle{
-   color: #05B074;
-   font-weight: bold;
+#scanner---rollerConveyor--rollerConveyorPageTitle.suwRollerConveyorTitle {
+    color: #05B074;
+    font-weight: bold;
+}
+
+#scanner---startOperation--startOperationPageTitle.suwStartOperationTitle {
+    color: #330066;
+    font-weight: bold;
+}
+
+#scanner---finishOperation--finishOperationPageTitle.suwFinishOperationTitle {
+    color: #05B074;
+    font-weight: bold;
+}
+
+#scanner---interruptOperation--interruptOperationPageTitle.suwInterruptOperationTitle {
+    color: #FFAC00;
+    font-weight: bold;
+}
+
+#scanner---resumeOperation--resumeOperationPageTitle.suwResumeOperationTitle {
+    color: #BB07FF;
+    font-weight: bold;
 }
