@@ -173,9 +173,17 @@ sap.ui.define([
 		},
 
 		_refreshDateValue: function() {
-			var oDate = new Date();
+			var iFutureOffset = 0,
+				iPastOffset = -7,
+				oDate = new Date();
 			this.getModel("data").setProperty("/dateTimeValue", oDate);
-			this._oInitData.dateTimeValue = oDate;
+
+			// prepare min and max date
+
+			this._oMaxDate = moment().subtract(iFutureOffset, "days").toDate();
+			this._oMinDate = moment().subtract(iPastOffset, "days").toDate();
+			this.getModel("view").setProperty("/maxDateSelectable", this._oMaxDate);
+			this.getModel("view").setProperty("/minDateSelectable", this._oMinDate);
 		},
 
 		_onRouteMatched: function(oEvent) {
