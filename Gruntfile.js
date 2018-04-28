@@ -1,6 +1,8 @@
 module.exports = function(grunt) {
 	"use strict";
+
 	grunt.loadNpmTasks("@sap/grunt-sapui5-bestpractice-build");
+	grunt.loadNpmTasks('grunt-text-replace');
 
 	//grunt.file.write("defaultSapGruntCongig.json", JSON.stringify(grunt.config.get()));
 
@@ -86,6 +88,9 @@ module.exports = function(grunt) {
 	grunt.registerTask("default", [
 		"clean",
 		"lint",
-		"build"
+		"build",
+		"copy:irpt",
+		"copy:ext",
+		"replace:ext"
 	]);
 };
