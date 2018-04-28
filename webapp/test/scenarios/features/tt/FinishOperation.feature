@@ -85,7 +85,7 @@ Feature: Finish Operation
 		When I enter '26.04.2018, 16:40' into dateTimeEntry in action.tt.FinishOperation view
 		 And I enter '1092698' into orderNumberInput in action.tt.FinishOperation view
 		 And I enter '20' into operationNumberInput in action.tt.FinishOperation view
-		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0020' zu Auftrag '1092698' wurde am 'Donnerstag, 26. April 2018 16:41' aus einer Störung heraus fortgesetzt und kann daher nicht zum 'Donnerstag, 26. April 2018 16:40' beendet werden.' in action.tt.FinishOperation view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0020' zu Auftrag '1092698' wurde am 'Donnerstag, 26. April 2018 16:41' aus einer Unterbrechung heraus fortgesetzt und kann daher nicht zum 'Donnerstag, 26. April 2018 16:40' beendet werden.' in action.tt.FinishOperation view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Error' in action.tt.FinishOperation view
 		 And I can see dateTimeEntry with valueState 'Error' in action.tt.FinishOperation view
 		 And I cannot see saveButton in action.tt.FinishOperation view

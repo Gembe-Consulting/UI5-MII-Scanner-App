@@ -77,10 +77,11 @@ sap.ui.require([
 							},
 							oExpectedViewData = {
 								bValid: false,
-								bOrderOperationValid: false,
-								bDateTimeEntryValid: true,
+								bOrderOperationExists: false,
 								orderInputValueState: sap.ui.core.ValueState.None,
-								dateTimeInputValueState: sap.ui.core.ValueState.None
+								dateTimeInputValueState: sap.ui.core.ValueState.None,
+								minDate: {},
+								maxDate: {}
 							};
 
 						return this.waitFor({

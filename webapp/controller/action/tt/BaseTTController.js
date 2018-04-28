@@ -82,11 +82,8 @@ sap.ui.define([
 				fnCleanUp;
 
 			/* check if current input is valid */
-			if (!sOrderNumber || !sOperationNumber) {
+			if (!sOrderNumber || !sOperationNumber || this.controlHasValidationError(oSource)) {
 				this.updateViewControls(oDataModel.getData());
-				return;
-			}
-			if (this.controlHasValidationError(oSource)) {
 				return;
 			}
 

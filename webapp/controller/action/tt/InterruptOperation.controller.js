@@ -22,14 +22,6 @@ sap.ui.define([
 			AUFNR: null
 		},
 
-		_oInitView: {
-			bValid: false,
-			bOrderOperationExists: false,
-			bDateTimeEntryValid: true,
-			orderInputValueState: sap.ui.core.ValueState.None,
-			dateTimeInputValueState: sap.ui.core.ValueState.None
-		},
-
 		onInit: function() {
 			//call super class onInit to apply user login protection. DO NOT DELETE!
 			BaseTTController.prototype.onInit.call(this);
@@ -58,11 +50,9 @@ sap.ui.define([
 					aRows;
 
 				if (!oData.success) {
-
 					this.addUserMessage({
 						text: oData.lastErrorMessage
 					});
-
 					return;
 				}
 
@@ -109,15 +99,14 @@ sap.ui.define([
 		},
 
 		isInputDataValid: function(oData) {
-			return !!oData.interruptionReason && !!oData.dateTimeValue && !!oData.orderNumber && !!oData.operationNumber && !!oData.AUFNR;
+			return !!oData.interruptionReason && !!oData.dateTimeValue && !!oData.orderNumber && !!oData.operationNumber;
 		},
 
 		checkInputIsValid: function(oData) {
 			var oStartMoment, oFinishMoment, oLastResumeMoment,
-				//oData = this.getModel("data").getData(),
 				oOrderNumberInput = this.byId("orderNumberInput"),
 				oOperationNumberInput = this.byId("operationNumberInput"),
-				oDateTimeInput = this.byId("dateTimeEntry");
+				oDateTimeEntry = this.byId("dateTimeEntry");
 
 			// 0. check if necessary data is present
 			if (!oData.AUFNR || !oData.dateTimeValue) {
@@ -125,7 +114,6 @@ sap.ui.define([
 			}
 
 			oStartMoment = moment(this.formatter.parseJSONDate(oData.ISTSTART));
-			oLastResumeMoment = moment(oData.LATEST_EVENT_FINISH);
 			oFinishMoment = moment(oData.dateTimeValue);
 
 			// 1. ensure operation status is valid
@@ -144,23 +132,26 @@ sap.ui.define([
 				this.addUserMessage({
 					text: this.getTranslation("interruptOperation.messageText.finishDateBeforeStartDate", [oData.AUFNR, oData.VORNR, oStartMoment.format("LLLL"), oFinishMoment.format("LLLL")])
 				});
-				oDateTimeInput.setValueState(sap.ui.core.ValueState.Error);
+				oDateTimeEntry.setValueState(sap.ui.core.ValueState.Error);
 				return false;
 			}
 
 			// 3. ensure entered finish date is after latest interruption finish date
-			if (oFinishMoment.isBefore(oLastResumeMoment)) {
-				this.removeAllUserMessages();
-				this.addUserMessage({
-					text: this.getTranslation("interruptOperation.messageText.finishDateBeforeLastResumeDate", [oData.AUFNR, oData.VORNR, oLastResumeMoment.format("LLLL"), oFinishMoment.format("LLLL")])
-				});
-				oDateTimeInput.setValueState(sap.ui.core.ValueState.Error);
-				return false;
+			if (oData.interruptions.length > 0) {
+				oLastResumeMoment = moment(this.formatter.parseJSONDate(oData.latestInterruption.STR_ENDE));
+				if (oFinishMoment.isBefore(oLastResumeMoment)) {
+					this.removeAllUserMessages();
+					this.addUserMessage({
+						text: this.getTranslation("interruptOperation.messageText.finishDateBeforeLastResumeDate", [oData.AUFNR, oData.VORNR, oLastResumeMoment.format("LLLL"), oFinishMoment.format("LLLL")])
+					});
+					oDateTimeEntry.setValueState(sap.ui.core.ValueState.Error);
+					return false;
+				}
 			}
 
 			oOrderNumberInput.setValueState(sap.ui.core.ValueState.Success);
 			oOperationNumberInput.setValueState(sap.ui.core.ValueState.Success);
-			oDateTimeInput.setValueState(sap.ui.core.ValueState.Success);
+			oDateTimeEntry.setValueState(sap.ui.core.ValueState.Success);
 
 			return true;
 		}
