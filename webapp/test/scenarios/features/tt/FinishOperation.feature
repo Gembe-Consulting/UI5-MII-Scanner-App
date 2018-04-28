@@ -29,7 +29,21 @@ Feature: Finish Operation
 		 And I can see processOrderFragmentStatusInfo with text 'Gestartet (0003)' in action.tt.FinishOperation view
 		When I enter '1000001' into orderNumberInput in action.tt.FinishOperation view
 		Then I cannot see processOrderInfo in action.tt.FinishOperation view
-	
+		 
+	Scenario: Should validate user input and activate save button
+		When I enter '1092696' into orderNumberInput in action.tt.FinishOperation view
+		Then I cannot see saveButton in action.tt.FinishOperation view
+		When I enter '10' into operationNumberInput in action.tt.FinishOperation view
+		Then I can see saveButton in action.tt.FinishOperation view
+		 And I can see orderNumberInput with valueState 'Success' in action.tt.FinishOperation view
+		 And I can see operationNumberInput with valueState 'Success' in action.tt.FinishOperation view
+		 And I can see dateTimeEntry with valueState 'Success' in action.tt.FinishOperation view	 
+		When I enter '' into dateTimeEntry in action.tt.FinishOperation view
+		Then I cannot see saveButton in action.tt.FinishOperation view
+		 And I can see dateTimeEntry with valueState 'Error' in action.tt.FinishOperation view	 
+		When I enter '07.04.2018, 12:19:46' into dateTimeEntry in action.tt.FinishOperation view
+		Then I can see saveButton in action.tt.FinishOperation view
+		
 	Scenario: Should show error message if users enter invalid order number (not existing or wrong status)
 		When I enter '1000001' into orderNumberInput in action.tt.FinishOperation view
 		 And I enter '10' into operationNumberInput in action.tt.FinishOperation view
@@ -78,16 +92,6 @@ Feature: Finish Operation
 		Then I can see saveButton in action.tt.FinishOperation view
 		 And I can see dateTimeEntry with valueState 'Success' in action.tt.FinishOperation view
 		 And messageStripContainer in action.tt.FinishOperation view contains no content
-		 
-	Scenario: Should validate user input and activate save button
-		When I enter '1092696' into orderNumberInput in action.tt.FinishOperation view
-		Then I cannot see saveButton in action.tt.FinishOperation view
-		When I enter '10' into operationNumberInput in action.tt.FinishOperation view
-		Then I can see saveButton in action.tt.FinishOperation view
-		When I enter '' into dateTimeEntry in action.tt.FinishOperation view
-		Then I cannot see saveButton in action.tt.FinishOperation view
-		When I enter '07.04.2018, 12:19:46' into dateTimeEntry in action.tt.FinishOperation view
-		Then I can see saveButton in action.tt.FinishOperation view
 
 	Scenario: Should send timeticket confirmation to SAP ERP
 		When I enter '1092699' into orderNumberInput in action.tt.FinishOperation view

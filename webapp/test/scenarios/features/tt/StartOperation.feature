@@ -29,6 +29,20 @@ Feature: Start Operation
 		 And I can see processOrderFragmentStatusInfo with text 'Freigegeben (0002)' in action.tt.StartOperation view
 		When I enter '1000001' into orderNumberInput in action.tt.StartOperation view
 		Then I cannot see processOrderInfo in action.tt.StartOperation view
+		
+	Scenario: Should validate user input and activate save button
+		When I enter '1092695' into orderNumberInput in action.tt.StartOperation view
+		Then I cannot see saveButton in action.tt.StartOperation view
+		When I enter '10' into operationNumberInput in action.tt.StartOperation view
+		Then I can see saveButton in action.tt.StartOperation view
+		 And I can see orderNumberInput with valueState 'Success' in action.tt.StartOperation view
+		 And I can see operationNumberInput with valueState 'Success' in action.tt.StartOperation view
+		 And I can see dateTimeEntry with valueState 'Success' in action.tt.StartOperation view
+		When I enter '' into dateTimeEntry in action.tt.StartOperation view
+		Then I cannot see saveButton in action.tt.StartOperation view
+		 And I can see dateTimeEntry with valueState 'Error' in action.tt.StartOperation view
+		When I enter '07.04.2018, 12:19:46' into dateTimeEntry in action.tt.StartOperation view
+		Then I can see saveButton in action.tt.StartOperation view
 	
 	Scenario: Should show error message if users enter invalid order number
 		When I enter '1000001' into orderNumberInput in action.tt.StartOperation view
@@ -52,16 +66,6 @@ Feature: Start Operation
 		  And messageStripContainer in action.tt.StartOperation view contains no content
 		Then on the Start Operation Page: I should see all input fields are initial
 		Then on the Start Operation Page: I should see data model and view model are initial
-		
-	Scenario: Should validate user input and activate save button
-		When I enter '1092695' into orderNumberInput in action.tt.StartOperation view
-		Then I cannot see saveButton in action.tt.StartOperation view
-		When I enter '10' into operationNumberInput in action.tt.StartOperation view
-		Then I can see saveButton in action.tt.StartOperation view
-		When I enter '' into dateTimeEntry in action.tt.StartOperation view
-		Then I cannot see saveButton in action.tt.StartOperation view
-		When I enter '07.04.2018, 12:19:46' into dateTimeEntry in action.tt.StartOperation view
-		Then I can see saveButton in action.tt.StartOperation view
 
 	Scenario: Should send timeticket confirmation to SAP ERP
 		When I enter '1092695' into orderNumberInput in action.tt.StartOperation view

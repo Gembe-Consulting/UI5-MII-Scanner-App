@@ -43,8 +43,12 @@ Feature: Resume Operation
 		Then I cannot see saveButton in action.tt.ResumeOperation view
 		When I enter '11' into operationNumberInput in action.tt.ResumeOperation view
 		Then I can see saveButton in action.tt.ResumeOperation view
+		 And I can see orderNumberInput with valueState 'Success' in action.tt.ResumeOperation view
+		 And I can see operationNumberInput with valueState 'Success' in action.tt.ResumeOperation view
+		 And I can see dateTimeEntry with valueState 'Success' in action.tt.ResumeOperation view
 		When I enter '' into dateTimeEntry in action.tt.ResumeOperation view
 		Then I cannot see saveButton in action.tt.ResumeOperation view
+		 And I can see dateTimeEntry with valueState 'Error' in action.tt.ResumeOperation view
 		When I enter '07.04.2018, 12:19:46' into dateTimeEntry in action.tt.ResumeOperation view
 		Then I can see saveButton in action.tt.ResumeOperation view
 		When I enter '' into orderNumberInput in action.tt.ResumeOperation view

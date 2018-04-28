@@ -44,11 +44,15 @@ Feature: Interrupt Operation
 		Then I cannot see saveButton in action.tt.InterruptOperation view
 		When I press ARROW_DOWN + ALT at reasonSelection in action.tt.InterruptOperation view
 		 And I click on first item of reasonSelection items in action.tt.InterruptOperation view
-		Then I can see reasonSelection with selectedKey 'P100' in action.tt.InterruptOperation view
-		 And I can see reasonSelection with valueState 'Success' in action.tt.InterruptOperation view
 		Then I can see saveButton in action.tt.InterruptOperation view
+		 And I can see reasonSelection with selectedKey 'P100' in action.tt.InterruptOperation view
+		 And I can see reasonSelection with valueState 'Success' in action.tt.InterruptOperation view
+		 And I can see orderNumberInput with valueState 'Success' in action.tt.InterruptOperation view
+		 And I can see operationNumberInput with valueState 'Success' in action.tt.InterruptOperation view
+		 And I can see dateTimeEntry with valueState 'Success' in action.tt.InterruptOperation view	 
 		When I enter '' into dateTimeEntry in action.tt.InterruptOperation view
 		Then I cannot see saveButton in action.tt.InterruptOperation view
+		 And I can see dateTimeEntry with valueState 'Error' in action.tt.InterruptOperation view	 
 		When I enter '07.04.2018, 12:19:46' into dateTimeEntry in action.tt.InterruptOperation view
 		Then I can see saveButton in action.tt.InterruptOperation view
 		
@@ -90,6 +94,8 @@ Feature: Interrupt Operation
 		Then I can see saveButton in action.tt.InterruptOperation view
 		 And I can see dateTimeEntry with valueState 'Success' in action.tt.InterruptOperation view
 		 And messageStripContainer in action.tt.InterruptOperation view contains no content
+	
+# Starten einer Störung zum GLEICHEN Zeitpnkt wie Vorgangstart
 		 
 	Scenario: Should show error message if users enter order number that has an closed incident after entry date
 		When I enter '01.01.70, 03:00' into dateTimeEntry in action.tt.InterruptOperation view
