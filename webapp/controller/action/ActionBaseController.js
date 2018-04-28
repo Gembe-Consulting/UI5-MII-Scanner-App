@@ -352,6 +352,7 @@ sap.ui.define([
 			if (!this._isDataModelInitial(oCurrentData, oInitialData)) {
 				this.handleConfirmationMessageBoxPress(oEvent);
 			} else {
+				this.onClearFormPress();
 				this.onNavBack();
 			}
 
