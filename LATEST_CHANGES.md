@@ -1,5 +1,3 @@
-[INTERNAL] update changelog
-[INTERNAL] update changelog
 [FEATURE] (statuschange nav): add tooltips
 [TEST] (status change nav): add test cases for navigation
 [TEST] (start operation): add basic test cases for UI
