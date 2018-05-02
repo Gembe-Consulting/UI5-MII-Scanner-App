@@ -1,9 +1,10 @@
 {
-  "name": "UI5-MII-Scanner-App",
-  "version": "0.0.1",
-  "description": "",
-  "private": true,
-  "devDependencies": {
-    "@sap/grunt-sapui5-bestpractice-build": "1.3.50"
-  }
+	"name": "UI5-MII-Scanner-App",
+	"version": "1.3.9",
+	"description": "Suwelack Scanner App",
+	"private": true,
+	"devDependencies": {
+		"grunt-text-replace": "",
+		"@sap/grunt-sapui5-bestpractice-build": "1.3.50"
+	}
 }
