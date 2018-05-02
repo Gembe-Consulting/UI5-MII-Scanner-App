@@ -35,7 +35,7 @@ sap.ui.define([
 
 		},
 
-		//http://su-mii-dev01.intern.suwelack.de:50000/XMII/Illuminator?QueryTemplate=SUMISA/ProcessOrder/xac_SendBeginEndPhaseToSAP_TE
+		//http://su-mii-dev01.intern.suwelack.de:50000/XMII/Illuminator?QueryTemplate=SUMISA/ProcessOrder/xac_SendBeginEndPhaseToSAP_TE&Param.2=1093379&Param.3=0010&Param.4=0003&Param.5=Gestartet&Param.9=B10&Param.6=01.05.2018 02:00:00&Param.7=P100&Param.8=PHIGEM&Param.32=1&1525272716126&Content-Type=text/xml
 		onSave: function() {
 			var oDataModel = this.getModel("data"),
 				oServiceData,
@@ -84,7 +84,8 @@ sap.ui.define([
 				operationNumber: oDataModel.getProperty("/operationNumber"),
 				newStatus: this.oProcessOrderStatus.started,
 				date: oDataModel.getProperty("/dateTimeValue"),
-				materialNumber: oDataModel.getProperty("/MATNR")
+				materialNumber: oDataModel.getProperty("/MATNR"),
+				incident: oDataModel.getProperty("/latestInterruption/STRCODE")
 			};
 
 			//function(sOrderNumber, sOperationNumber, oStatus, oDate, sMaterialNumber, sIncident) || function(oServiceData)

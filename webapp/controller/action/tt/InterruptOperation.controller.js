@@ -36,7 +36,7 @@ sap.ui.define([
 
 		},
 
-		//http://su-mii-dev01.intern.suwelack.de:50000/XMII/Illuminator?QueryTemplate=SUMISA/ProcessOrder/xac_SendBeginEndPhaseToSAP_TE&Param.2=1093364&Param.3=0010&Param.4=0098&Param.5=Störung&Param.9=B30&Param.6=19.04.2018 14:17:27&Param.7=P150&Param.8=PHIGEM&Param.32=1&Content-Type=text/xml
+		//http: //su-mii-dev01.intern.suwelack.de:50000/XMII/Illuminator?QueryTemplate=SUMISA/ProcessOrder/xac_SendBeginEndPhaseToSAP_TE&Param.2=1093379&Param.3=0010&Param.4=0098&Param.5=StÃ¶rung&Param.9=B30&Param.6=01.05.2018 01:00:00&Param.7=P100&Param.8=PHIGEM&Param.32=1&Content-Type=text/xml
 		onSave: function() {
 			var oDataModel = this.getModel("data"),
 				oServiceData,
