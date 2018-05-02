@@ -130,15 +130,16 @@ sap.ui.define([
 
 			// 3. check if we have an open interruption
 			// -> not needed - coverd by operation status
-			if (oData.latestInterruption.STR_ENDE !== "TimeUnavailable") {
-				this.addUserMessage({
-					text: this.getTranslation("resumeOperation.messageText.noOpenInterruptionFound", [oData.AUFNR, oData.VORNR])
-				});
-				oOrderNumberInput.setValueState(sap.ui.core.ValueState.Error);
-				oOperationNumberInput.setValueState(sap.ui.core.ValueState.Error);
-				return false;
-			}
-
+			/*
+				if (oData.latestInterruption.STR_ENDE !== "TimeUnavailable") {
+					this.addUserMessage({
+						text: this.getTranslation("resumeOperation.messageText.noOpenInterruptionFound", [oData.AUFNR, oData.VORNR])
+					});
+					oOrderNumberInput.setValueState(sap.ui.core.ValueState.Error);
+					oOperationNumberInput.setValueState(sap.ui.core.ValueState.Error);
+					return false;
+				}
+			*/
 			oLatestInterruptionMoment = moment(this.formatter.parseJSONDate(oData.latestInterruption.STR_BEGINN));
 
 			// 3. ensure entered resume date is after latest interruption start date
