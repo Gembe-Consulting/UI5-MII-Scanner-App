@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+	<edmx:DataServices m:DataServiceVersion="2.0" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+		<Schema Namespace="QueryTemplate" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+			<EntityType Name="Rowsets">
+				<Key><PropertyRef Name="QueryTemplate"/></Key><Property Name="FatalError" Type="Edm.String" Nullable="true"/><Property Name="DateCreated" Type="Edm.DateTime" Nullable="false"/><Property Name="EndDate" Type="Edm.DateTime" Nullable="false"/><Property Name="StartDate" Type="Edm.DateTime" Nullable="false"/><Property Name="Version" Type="Edm.String" Nullable="false"/><Property Name="QueryTemplate" Type="Edm.String" Nullable="false"/><NavigationProperty Name="Rowset" Relationship="QueryTemplate.RowsetAssociation" FromRole="RowsetsRole" ToRole="RowsetRole"/><NavigationProperty Name="Message" Relationship="QueryTemplate.MessagesAssociation" FromRole="RowsetsRole" ToRole="MessagesRole"/></EntityType>
+			<EntityType Name="Column">
+				<Key><PropertyRef Name="Name"/></Key><Property Name="Description" Type="Edm.String" Nullable="false"/><Property Name="MaxRange" Type="Edm.Decimal" Nullable="false"/><Property Name="MinRange" Type="Edm.Decimal" Nullable="false"/><Property Name="Name" Type="Edm.String" Nullable="false"/><Property Name="SQLDataType" Type="Edm.Int32" Nullable="false"/><Property Name="SourceColumn" Type="Edm.String" Nullable="false"/></EntityType>
+			<EntityType Name="Row">
+				<Key><PropertyRef Name="RowId"/></Key><Property Name="RowId" Type="Edm.String" Nullable="false"/></EntityType>
+			<EntityType Name="Rowset">
+				<Key><PropertyRef Name="RowsetId"/><PropertyRef Name="QueryTemplate"/></Key><Property Name="RowsetId" Type="Edm.String" Nullable="false"/><NavigationProperty Name="Column" Relationship="QueryTemplate.ColumnAssociation" FromRole="RowsetRole" ToRole="ColumnRole"/><NavigationProperty Name="Row" Relationship="QueryTemplate.RowAssociation" FromRole="RowsetRole" ToRole="RowRole"/></EntityType>
+			<EntityType Name="Messages">
+				<Key><PropertyRef Name="Message"/></Key><Property Name="Message" Type="Edm.String" Nullable="false"/></EntityType>
+			<Association Name="ColumnAssociation"><End Type="QueryTemplate.Rowset" Multiplicity="*" Role="RowsetRole"/><End Type="QueryTemplate.Column" Multiplicity="*" Role="ColumnRole"/></Association>
+			<Association Name="RowAssociation"><End Type="QueryTemplate.Rowset" Multiplicity="*" Role="RowsetRole"/><End Type="QueryTemplate.Row" Multiplicity="*" Role="RowRole"/></Association>
+			<Association Name="RowsetAssociation"><End Type="QueryTemplate.Rowsets" Multiplicity="*" Role="RowsetsRole"/><End Type="QueryTemplate.Rowset" Multiplicity="*" Role="RowsetRole"/></Association>
+			<Association Name="MessagesAssociation"><End Type="QueryTemplate.Rowsets" Multiplicity="*" Role="RowsetsRole"/><End Type="QueryTemplate.Messages" Multiplicity="*" Role="MessagesRole"/></Association>
+			<EntityContainer Name="QueryTemplateEntities" m:IsDefaultEntityContainer="true"><EntitySet Name="Rowsets" EntityType="QueryTemplate.Rowsets"/><EntitySet Name="Column" EntityType="QueryTemplate.Column"/><EntitySet Name="Row" EntityType="QueryTemplate.Row"/><EntitySet Name="Rowset" EntityType="QueryTemplate.Rowset"/><EntitySet Name="Messages" EntityType="QueryTemplate.Messages"/>
+				<AssociationSet Name="RowsetsTORowset" Association="QueryTemplate.RowsetAssociation"><End EntitySet="Rowsets" Role="RowsetsRole"/><End EntitySet="Rowset" Role="RowsetRole"/></AssociationSet>
+				<AssociationSet Name="RowsetTORow" Association="QueryTemplate.RowAssociation"><End EntitySet="Rowset" Role="RowsetRole"/><End EntitySet="Row" Role="RowRole"/></AssociationSet>
+				<AssociationSet Name="RowsetTOColumn" Association="QueryTemplate.ColumnAssociation"><End EntitySet="Rowset" Role="RowsetRole"/><End EntitySet="Column" Role="ColumnRole"/></AssociationSet>
+				<AssociationSet Name="RowsetsTOMessages" Association="QueryTemplate.MessagesAssociation"><End EntitySet="Rowsets" Role="RowsetsRole"/><End EntitySet="Messages" Role="MessagesRole"/></AssociationSet>
+			</EntityContainer>
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>
