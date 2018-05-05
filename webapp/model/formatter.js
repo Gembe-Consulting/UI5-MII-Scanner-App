@@ -10,29 +10,28 @@ sap.ui.define([
 	return {
 		/**
 		 * Parses the JSON Date representation into a Date object.
+		 * Note: moment() parser considers "/Date(ms)/" as JSON object.
+		 * By default, moment parses and displays in local time.
+		 * FOR SOME REASON IlluminatorOData Service of MII sends the DateTime already shifted!
+		 * This means, we need to unshift this offset to get the proper date.
 		 * @public
 		 * @param {string} vJSDate the date you want to compare to
 		 * @returns {Date}  A Date object if the value matches one; falsy otherwise.
 		 */
 		parseJSONDate: function(vJSDate) {
+			var oIllumODataDate = moment(vJSDate),
+				oMoment,
+				oDate;
 
-			var value = vJSDate,
-				jsonDateRegEx = /^\/Date\((-?\d+)(\+|-)?(\d+)?\)\/$/,
-				arr = value && jsonDateRegEx.exec(value),
-				result;
-
-			if (arr) {
-				// 0 - complete results; 1 - ticks; 2 - sign; 3 - minutes
-				result = new Date(parseInt(arr[1], 10));
-				if (arr[2]) {
-					throw new Error("JSON Date has been deliverd with offset. parseJSONDate() does not support offset. See /src/sap.ui.core/src/sap/ui/thirdparty/datajs.js for solutions.");
-				}
-				if (!isNaN(result.valueOf())) {
-					return result;
-				}
+			if (!vJSDate || !oIllumODataDate.isValid()) {
+				return oDate;
 			}
 
-			return result; // Allow undefined to be returned.
+			oMoment = oIllumODataDate.subtract(oIllumODataDate.utcOffset(), 'm'); //unshift
+
+			oDate = oMoment.toDate();
+
+			return oDate;
 		},
 
 		parseJSONDateToShort: function(vJSDate) {
