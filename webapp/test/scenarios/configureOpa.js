@@ -2,6 +2,8 @@ sap.ui.define([
 	"sap/ui/test/Opa5",
 	"sap/ui/qunit/QUnitUtils",
 	"com/mii/scanner/test/arrangement/Common",
+	"sap/ui/test/actions/EnterText",
+	"sap/ui/test/matchers/PropertyStrictEquals",
 	// QUnit additions
 	"sap/ui/qunit/qunit-css",
 	"sap/ui/qunit/qunit-junit",
@@ -16,7 +18,7 @@ sap.ui.define([
 	"com/mii/scanner/test/pages/FinishOperation",
 	"com/mii/scanner/test/pages/InterruptOperation",
 	"com/mii/scanner/test/pages/ResumeOperation"
-], function(Opa5, QUnitUtils, Common) {
+], function(Opa5, QUnitUtils, Common, EnterText, PropertyStrictEquals) {
 	"use strict";
 
 	Opa5.extendConfig({
@@ -26,9 +28,60 @@ sap.ui.define([
 		actions: new Opa5({
 			iLookAtTheScreen: function() {
 				return this;
+			},
+			iCanEnterRelativeDate: function(oOptions) {
+
+				Opa5.assert.strictEqual(!sap.ui.test.Opa.getContext().oDate, true, "Verified that oDate moment is initial before 'iCanEnterRelativeDate()'");
+				var oBaseDate = moment();
+				sap.ui.test.Opa.getContext().oDate = oBaseDate; // define for later use
+
+				if (oOptions.direction === "future") {
+					sap.ui.test.Opa.getContext().oDate.add(oOptions.offset, oOptions.unit).add(oOptions.timeOffset, oOptions.timeUnit);
+				} else if (oOptions.direction === "past") {
+					sap.ui.test.Opa.getContext().oDate.subtract(oOptions.offset, oOptions.unit).subtract(oOptions.timeOffset, oOptions.timeUnit);
+				} else {
+					Opa5.assert.ok(false, "'" + oOptions.direction + "' direction not valid");
+				}
+
+				return this.waitFor({
+					viewName: oOptions.viewName,
+					id: oOptions.controlId,
+					actions: new EnterText({
+						text: sap.ui.test.Opa.getContext().oDate.format("DD.MM.YYYY, HH:mm:ss")
+					}),
+					success: function(oControl) {
+						Opa5.assert.strictEqual(sap.ui.test.Opa.getContext().oDate.isValid(), true, "Verified that oDate moment is valid");
+						Opa5.assert.ok(true, "Enter value " + sap.ui.test.Opa.getContext().oDate.format("DD.MM.YYYY, HH:mm:ss") + " into " + oControl.getId());
+					},
+					errorMessage: "Could not obtain control"
+				});
 			}
 		}),
 		assertions: new Opa5({
+			iSouldSeeRelativeDate: function(oOptions) {
+
+				Opa5.assert.strictEqual(!sap.ui.test.Opa.getContext().oDate, false, "Verified that oDate moment has been set by 'iCanEnterRelativeDate()'");
+
+				return this.waitFor({
+					viewName: oOptions.viewName,
+					id: oOptions.controlId,
+					matchers: new PropertyStrictEquals({
+						name: "value",
+						value: sap.ui.test.Opa.getContext().oDate.format("DD.MM.YY, HH:mm")
+					}),
+					success: function(oControl) {
+						Opa5.assert.strictEqual(sap.ui.test.Opa.getContext().oDate.isValid(), true, "Verified that oDate moment is valid");
+						Opa5.assert.strictEqual(sap.ui.test.Opa.getContext().oDate.toDate().toString(), oControl.getDateValue().toString(), "Verified that the js Date object has equal timestamp: " + sap.ui.test.Opa.getContext().oDate.toDate().toString());
+
+						Opa5.assert.ok(true, oControl.getId() + " has value " + sap.ui.test.Opa.getContext().oDate.format("DD.MM.YY, HH:mm"));
+
+						sap.ui.test.Opa.getContext().oDate = undefined;
+
+						Opa5.assert.strictEqual(!sap.ui.test.Opa.getContext().oDate, true, "Verified that oDate moment is initial after 'iCanEnterRelativeDate()'");
+					},
+					errorMessage: "Could not obtain control"
+				});
+			},
 			iCanSeeControlHasFocus: function(sControlId, sViewName) {
 				var that = this;
 				return this.waitFor({

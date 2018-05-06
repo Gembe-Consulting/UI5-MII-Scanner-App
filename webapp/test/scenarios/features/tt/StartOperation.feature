@@ -4,6 +4,12 @@ Feature: Start Operation
 	Background:
 		Given I start the app from 'com/mii/scanner/app/mockServer.html'
 		  And I navigate to /VS
+	
+	Scenario: Should prevent entering date older 7 days and date in future
+		When I can enter a date 1 days and 20 minutes in the past into dateTimeEntry in action.tt.StartOperation view
+		Then I should see dateTimeEntry with date 1 days and 15 minutes in the past in action.tt.StartOperation view
+		When I can enter a date 1 days and 20 minutes in the future into dateTimeEntry in action.tt.StartOperation view
+		Then I should see dateTimeEntry with date 1 days and 20 minutes in the past in action.tt.StartOperation view
 		
 	Scenario: Should navigate to Start Operation Page and see all UI elements
 		Then I can see startOperationPage in action.tt.StartOperation view

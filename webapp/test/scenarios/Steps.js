@@ -90,6 +90,37 @@ sap.ui.define([
 				}
 			);
 
+			//I can see (.*?) has focus in (.*?) view$/i
+			//this.register(/^I can see (.+?) in (.+?) view has css (.+?) '(.+?)'$/i,
+			this.register(/^I can enter a date (\d+) (.+) and (\d+) (.+) in the (future|past) into (.+) in (.+) view$/i,
+				function(iOffset, sUnit, iTimeOffset, sTimeUnit, sDirection, sControlId, sViewName, Given, When, Then) {
+					When.iCanEnterRelativeDate({
+						offset: iOffset,
+						unit: sUnit,
+						timeOffset: iTimeOffset,
+						timeUnit: sTimeUnit,
+						direction: sDirection,
+						controlId: sControlId,
+						viewName: sViewName
+					});
+				}
+			);
+
+			//this.register(/^I enter a date\s(\d)\s(.+?)\sand\s(\d)\s(.+?)\sin\sthe\s(future|past)\sinto\s(.+?)\sin\s(.+?)$/i,
+			this.register(/^I should see (.+) with date (\d+) (.+) and (\d+) (.+) in the (future|past) in (.+) view$/i,
+				function(sControlId, iOffset, sUnit, iTimeOffset, sTimeUnit, sDirection, sViewName, Given, When, Then) {
+					Then.iSouldSeeRelativeDate({
+						offset: iOffset,
+						unit: sUnit,
+						timeOffset: iTimeOffset,
+						timeUnit: sTimeUnit,
+						direction: sDirection,
+						controlId: sControlId,
+						viewName: sViewName
+					});
+				}
+			);
+
 			oGenericSteps.register(
 				this, /* GherkinSteps */
 				opa, /* oOpaInstance */

@@ -7,6 +7,7 @@
 
 	<script id="sap-ui-bootstrap"
 			src="../../../resources/sap-ui-core.js"
+			data-sap-ui-loglevel="ALL"
 			data-sap-ui-resourceroots='{
 				"com.mii.scanner.test": "./",
 				"com.mii.scanner.app" : "../", 
@@ -15,6 +16,7 @@
 	></script>
 
 	<script src="../../../resources/sap/ui/thirdparty/qunit.js"></script>
+	<script src="../../libs/momentjs/moment.js"></script>
 	<script>
 		// we want to be able to load our tests asynchronously - pause QUnit until we loaded everything
 		QUnit.config.autostart = false;

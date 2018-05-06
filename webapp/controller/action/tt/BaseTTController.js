@@ -218,19 +218,21 @@ sap.ui.define([
 		onDateTimeEntryChange: function(oEvent) {
 			var oSource = oEvent.getSource(),
 				oData = this.getModel("data").getData(),
-				bValid = oEvent.getParameter("valid");
+				bValid = oEvent.getParameter("valid"),
+				oDateTimeFormat = oSource._getFormatInstance();
 
 			oSource.setValueState(sap.ui.core.ValueState.None);
 			this.removeAllUserMessages();
 
 			if (!bValid) {
-				oSource.setDateValue(this._oLastValidDate || new Date());
-				//oSource.setValueState(sap.ui.core.ValueState.Warning).setValueStateText("Eingabezeitpunkt '" + oEvent.getParameter("value") + "' ungültig. Eingabe wurde auf 'jetzt' zurückgesetzt.");
+				oSource.setValue(oDateTimeFormat.format(this._oLastValidDate || new Date()));
+				oSource.setValueState(sap.ui.core.ValueState.Warning).setValueStateText("Eingabezeitpunkt '" + oEvent.getParameter("value") + "' ungültig. Eingabe wurde zurückgesetzt.");
+				this.getModel("view").setProperty("/bValid", false);
 			} else {
 				this._oLastValidDate = oSource.getDateValue();
+				this.updateViewControls(oData);
 			}
 
-			this.updateViewControls(oData);
 		},
 
 		onReasonSelectionChange: function(oEvent) {
