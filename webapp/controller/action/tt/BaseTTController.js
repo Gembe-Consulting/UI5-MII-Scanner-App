@@ -312,14 +312,20 @@ sap.ui.define([
 					}));
 				} else {
 					var fnMicroChartBarFactory = function(oInterruption) {
-						var length = oInterruption.STR_ENDE - oInterruption.STR_BEGINN;
+						var oBar,
+							length = oInterruption.STR_ENDE - oInterruption.STR_BEGINN;
+
 						length = length / 3600;
 
-						return new StackedBarMicroChartBar({
+						oBar = new StackedBarMicroChartBar({
 							valueColor: "Error",
 							value: length,
 							displayValue: length + " min"
 						});
+
+						oBar.setTooltip(oInterruption.STR_ENDE + " -> " + oInterruption.STR_BEGINN + "\n" + oInterruption.STRCODE + ": " + oInterruption.STR_TXT);
+
+						return oBar;
 
 					};
 
