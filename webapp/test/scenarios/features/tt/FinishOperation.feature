@@ -41,7 +41,8 @@ Feature: Finish Operation
 		When I enter '' into dateTimeEntry in action.tt.FinishOperation view
 		Then I cannot see saveButton in action.tt.FinishOperation view
 		 And I can see dateTimeEntry with valueState 'None' in action.tt.FinishOperation view	 
-		When I enter '28.04.2018, 12:19:46' into dateTimeEntry in action.tt.FinishOperation view
+		When I can enter a date 4 days and 0 minutes in the past into dateTimeEntry in action.tt.FinishOperation view
+		Then I should see dateTimeEntry with date 4 days and 0 minutes in the past in action.tt.FinishOperation view
 		Then I can see saveButton in action.tt.FinishOperation view
 		
 	Scenario: Should show error message if users enter invalid order number (not existing or wrong status)
