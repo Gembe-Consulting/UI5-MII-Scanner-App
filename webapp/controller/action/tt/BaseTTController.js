@@ -6,6 +6,7 @@ sap.ui.define([
 	"com/mii/scanner/model/formatter"
 ], function(ActionBaseController, MessageBox, StackedBarMicroChartBar, sapType, formatter) {
 	return ActionBaseController.extend("com.mii.scanner.controller.action.tt.BaseTTController", {
+		/* globals moment */
 		sapType: sapType,
 		formatter: formatter,
 		oProcessOrderStatus: {
