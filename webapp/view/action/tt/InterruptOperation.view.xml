@@ -23,13 +23,15 @@
 					<!-- Order Number -->
 					<Label text="{i18n>interruptOperation.form.label.orderAndOperationNumber}" labelFor="orderNumberInput"/>
 					<Input id="orderNumberInput" change="onOrderNumberInputChange" value="{path: 'data>/orderNumber', type:'.sapType.AUFNR'}"
-						valueState="{view>/orderInputValueState}" maxLength="12" class="noScannerInput suwIncreadedInputFontSize">
+						placeholder="{i18n>interruptOperation.orderNumberInput.placeholder}" valueState="{view>/orderInputValueState}" maxLength="12"
+						class="noScannerInput suwIncreadedInputFontSize">
 						<layoutData>
 							<l:GridData span="XL3 L3 M4 S8"/>
 						</layoutData>
 					</Input>
 					<Input id="operationNumberInput" change="onOperationNumberInputChange" value="{path: 'data>/operationNumber', type:'.sapType.VORNR'}"
-						valueState="{view>/orderInputValueState}" maxLength="4" class="noScannerInput suwIncreadedInputFontSize">
+						placeholder="{i18n>interruptOperation.operationNumberInput.placeholder}" valueState="{view>/orderInputValueState}" maxLength="4"
+						class="noScannerInput suwIncreadedInputFontSize">
 						<layoutData>
 							<l:GridData span="XL1 L1 M2 S4"/>
 						</layoutData>
@@ -48,7 +50,8 @@
 					<ComboBox id="reasonSelection" items="{ path: 'interruptionReasonList>/d/results/0/Rowset/results/0/Row/results' }"
 						selectedKey="{data>/interruptionReason}" change="onReasonSelectionChange" selectionChange="onReasonSelectionChange"
 						valueState="{= ${data>/interruptionReason} === null ? 'None': ${data>/interruptionReason} === '' ? 'Error' : 'Success' }"
-						showSecondaryValues="true" filterSecondaryValues="true" class="noScannerInput suwIncreadedInputFontSize">
+						placeholder="{i18n>interruptOperation.reasonSelection.placeholder}" showSecondaryValues="true" filterSecondaryValues="true"
+						class="noScannerInput suwIncreadedInputFontSize">
 						<items>
 							<c:ListItem key="{interruptionReasonList>STRGRUND}" text="{interruptionReasonList>STRCODE} [ {interruptionReasonList>STRGRUND} ]"
 								additionalText="{interruptionReasonList>STRGRD_TXT}"/>
@@ -57,6 +60,14 @@
 							<l:GridData span="XL4 L4 M6 S12"/>
 						</layoutData>
 					</ComboBox>
+					<!-- Interruption user comment -->
+					<Label text="{i18n>interruptOperation.form.label.userComment}" labelFor="userCommentTextArea"/>
+					<TextArea id="userCommentTextArea" value="{data>/userComment}" placeholder="{i18n>interruptOperation.userComment.placeholder}"
+						growing="true" growingMaxLines="7" showExceededText="true" maxLength="1024">
+						<layoutData>
+							<l:GridData span="XL4 L4 M6 S12"/>
+						</layoutData>
+					</TextArea>
 				</f:content>
 			</f:SimpleForm>
 			<!-- Process Order Info Form -->

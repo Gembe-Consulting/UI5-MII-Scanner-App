@@ -156,7 +156,8 @@ sap.ui.define([
 
 			this.addUserMessage({
 				text: this.getTranslation("resumeOperation.messageText.currentInterruption", [oData.AUFNR, oData.VORNR, oData.latestInterruption.STRCODE, oData.latestInterruption.STR_TXT, oLatestInterruptionMoment.format("LLLL"), oData.latestInterruption.ERFASSER]),
-				type: sap.ui.core.MessageType.Information
+				type: sap.ui.core.MessageType.Information,
+				showCloseButton: false
 			});
 
 			oOrderNumberInput.setValueState(sap.ui.core.ValueState.Success);
@@ -164,6 +165,22 @@ sap.ui.define([
 			oDateTimeInput.setValueState(sap.ui.core.ValueState.Success);
 
 			return true;
+		},
+
+		onEditUserCommentPress: function(oEvent) {
+			var oTextArea = this.byId("userCommentTextArea"),
+				oSource = oEvent.getSource();
+
+			if (oTextArea.getEditable()) {
+				oTextArea.setEditable(false);
+				oTextArea.setValue(this._oldComment);
+				oSource.setIcon("sap-icon://response").setTooltip("Antworten");
+			} else {
+				oTextArea.setEditable(true);
+				this._oldComment = oTextArea.getValue();
+				oTextArea.setValue();
+				oSource.setIcon("sap-icon://reset").setTooltip("Antwort zurücksetzen");
+			}
 		}
 	});
 });

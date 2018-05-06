@@ -37,7 +37,8 @@ sap.ui.require([
 
 						var oInitialControlData = {
 							"orderNumberInput": "",
-							"operationNumberInput": ""
+							"operationNumberInput": "",
+							"userCommentTextArea": ""
 						};
 
 						jQuery.each(oInitialControlData, function(sControlId, sEmptyValue) {
@@ -51,6 +52,9 @@ sap.ui.require([
 											Opa5.assert.strictEqual(oControl.getState(), sEmptyValue, sControlClassName + " " + sControlId + " is cleared and has value '" + sEmptyValue + "' now.");
 											break;
 										case "sap.m.Input":
+											Opa5.assert.strictEqual(oControl.getValue(), sEmptyValue, sControlClassName + " " + sControlId + " is cleared and has value '" + sEmptyValue + "' now.");
+											break;
+										case "sap.m.TextArea":
 											Opa5.assert.strictEqual(oControl.getValue(), sEmptyValue, sControlClassName + " " + sControlId + " is cleared and has value '" + sEmptyValue + "' now.");
 											break;
 										case "sap.m.ComboBox":
@@ -81,7 +85,9 @@ sap.ui.require([
 								orderInputValueState: sap.ui.core.ValueState.None,
 								dateTimeInputValueState: sap.ui.core.ValueState.None,
 								minDate: {},
-								maxDate: {}
+								maxDate: {},
+								userCommentEditIcon: "sap-icon://response",
+								userCommentEditable: false
 							};
 
 						return this.waitFor({

@@ -11,6 +11,7 @@ Feature: Interrupt Operation
 		 And I can see operationNumberInput in action.tt.InterruptOperation view
 		 And I can see dateTimeEntry in action.tt.InterruptOperation view
 		 And I can see reasonSelection in action.tt.InterruptOperation view
+		 And I can see userCommentTextArea in action.tt.InterruptOperation view
 		 And I can see clearFormButton in action.tt.InterruptOperation view
 		 And I can see cancelButton with text 'Abbrechen' in action.tt.InterruptOperation view
 		 And I can see interruptOperationPageTitle with text 'Vorgang unterbrechen' in action.tt.InterruptOperation view

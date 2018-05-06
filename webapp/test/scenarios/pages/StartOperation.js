@@ -81,7 +81,9 @@ sap.ui.require([
 								orderInputValueState: sap.ui.core.ValueState.None,
 								dateTimeInputValueState: sap.ui.core.ValueState.None,
 								minDate: {},
-								maxDate: {}
+								maxDate: {},
+								userCommentEditIcon: "sap-icon://response",
+								userCommentEditable: false
 							};
 
 						return this.waitFor({

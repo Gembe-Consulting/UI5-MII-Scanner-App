@@ -253,12 +253,13 @@
 							"STRCODE": "P100",
 							"STR_BEGINN": "\/Date(1524751200000)\/",
 							"STR_ENDE": "TimeUnavailable",
-							"STR_TXT": "Abgeschlossene Elektrische Störung",
+							"STR_TXT": "Offene Elektrische Störung",
 							"AUFNR": "1092715",
 							"VORNR": "1002",
 							"ERFASSER": "PHIGEM",
 							"EV_NUMMER": null,
 							"LOESCH_ID": null,
+							"COMMENT": "Stecker defekt an Dose I-14-23. Gewechselt zuletzt gestern.\nMöglw. Absicht??",
 							"RowId": 4
 						}]
 					}

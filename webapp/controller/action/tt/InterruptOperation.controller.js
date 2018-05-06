@@ -86,7 +86,8 @@ sap.ui.define([
 				newStatus: this.oProcessOrderStatus.interrupted,
 				date: oDataModel.getProperty("/dateTimeValue"),
 				materialNumber: oDataModel.getProperty("/MATNR"),
-				incident: oDataModel.getProperty("/interruptionReason")
+				incident: oDataModel.getProperty("/interruptionReason"),
+				comment: oDataModel.getProperty("/userComment")
 			};
 
 			//function(sOrderNumber, sOperationNumber, oStatus, oDate, sMaterialNumber, sIncident) || function(oServiceData)

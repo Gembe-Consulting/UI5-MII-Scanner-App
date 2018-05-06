@@ -59,7 +59,9 @@ sap.ui.define([
 			orderInputValueState: sap.ui.core.ValueState.None,
 			dateTimeInputValueState: sap.ui.core.ValueState.None,
 			minDate: null,
-			maxDate: null
+			maxDate: null,
+			userCommentEditIcon: "sap-icon://response",
+			userCommentEditable: false
 		},
 
 		onInit: function() {

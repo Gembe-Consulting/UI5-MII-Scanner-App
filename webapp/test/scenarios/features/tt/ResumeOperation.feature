@@ -27,7 +27,7 @@ Feature: Resume Operation
 		Then I can see processOrderFragmentOperationInfo with text 'Störung: Verpackung aus Silo' in action.tt.ResumeOperation view
 		 And I can see processOrderFragmentRessourceInfo with text '00253110 - Absackanlage Milchprodukte' in action.tt.ResumeOperation view
 		 And I can see processOrderFragmentStatusInfo with text 'Störung (0098)' in action.tt.ResumeOperation view
-		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0011' zu Auftrag '1092710' unterbrochen wegen 'P100: Aktuelle Elektrische Störung' angelegt am 'Donnerstag, 26. April 2018 16:00' von 'PHIGEM'.' in action.tt.ResumeOperation view
+		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0011' zu Auftrag '1092710' unterbrochen wegen 'P100: Aktuelle Elektrische Störung' angelegt am 'Donnerstag, 26. April 2018 14:00' von 'PHIGEM'.' in action.tt.ResumeOperation view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Information' in action.tt.ResumeOperation view
 		When I enter '1000001' into orderNumberInput in action.tt.ResumeOperation view
 		Then I cannot see processOrderInfo in action.tt.ResumeOperation view
@@ -57,6 +57,15 @@ Feature: Resume Operation
 		Then I cannot see saveButton in action.tt.ResumeOperation view
 		When I enter '1092710' into orderNumberInput in action.tt.ResumeOperation view
 		Then I can see saveButton in action.tt.ResumeOperation view
+
+	Szenario: Should handle user comment
+		When I enter '1092715' into orderNumberInput in action.tt.ResumeOperation view
+		 And I enter '1002' into operationNumberInput in action.tt.ResumeOperation view
+		Then I can see userCommentTextArea with value starting with 'Stecker defekt an Dose I-14-23.' in action.tt.ResumeOperation view
+		 And I can see editUserComment with icon 'sap-icon://response' in action.tt.ResumeOperation view
+		When I click on editUserComment in action.tt.ResumeOperation view
+		Then I can see editUserComment with icon 'sap-icon://reset' in action.tt.ResumeOperation view
+		 And I can see userCommentTextArea with value '' in action.tt.ResumeOperation view
 		
 	Scenario: Should show error message if users enter invalid order number (not existing or wrong status)
 		When I enter '1000001' into orderNumberInput in action.tt.ResumeOperation view
@@ -79,17 +88,17 @@ Feature: Resume Operation
 		 And I cannot see saveButton in action.tt.ResumeOperation view
 
 	Scenario: Should show error message if users enter order number with current interruption that has been started after entry date
-		When I enter '26.04.2018, 15:59:00' into dateTimeEntry in action.tt.ResumeOperation view
+		When I enter '26.04.2018, 13:59:00' into dateTimeEntry in action.tt.ResumeOperation view
 		 And I enter '1092710' into orderNumberInput in action.tt.ResumeOperation view
 		 And I enter '11' into operationNumberInput in action.tt.ResumeOperation view
-		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0011' zu Auftrag '1092710' wurde am 'Donnerstag, 26. April 2018 16:00' mit 'P100: Aktuelle Elektrische Störung' unterbrochen und kann daher nicht zum 'Donnerstag, 26. April 2018 15:59' fortgesetzt werden.' in action.tt.ResumeOperation view
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0011' zu Auftrag '1092710' wurde am 'Donnerstag, 26. April 2018 14:00' mit 'P100: Aktuelle Elektrische Störung' unterbrochen und kann daher nicht zum 'Donnerstag, 26. April 2018 15:59' fortgesetzt werden.' in action.tt.ResumeOperation view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Error' in action.tt.ResumeOperation view
 		 And I can see dateTimeEntry with valueState 'Error' in action.tt.ResumeOperation view
 		 And I cannot see saveButton in action.tt.ResumeOperation view
-		When I enter '26.04.2018, 16:01:00' into dateTimeEntry in action.tt.ResumeOperation view
+		When I enter '26.04.2018, 14:01:00' into dateTimeEntry in action.tt.ResumeOperation view
 		Then I can see saveButton in action.tt.ResumeOperation view
 		 And I can see dateTimeEntry with valueState 'Success' in action.tt.ResumeOperation view
-		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0011' zu Auftrag '1092710' unterbrochen wegen 'P100: Aktuelle Elektrische Störung' angelegt am 'Donnerstag, 26. April 2018 16:00' von 'PHIGEM'.' in action.tt.ResumeOperation view
+		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0011' zu Auftrag '1092710' unterbrochen wegen 'P100: Aktuelle Elektrische Störung' angelegt am 'Donnerstag, 26. April 2018 14:00' von 'PHIGEM'.' in action.tt.ResumeOperation view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Information' in action.tt.ResumeOperation view
 		
 	Scenario: Should send timeticket confirmation to SAP ERP

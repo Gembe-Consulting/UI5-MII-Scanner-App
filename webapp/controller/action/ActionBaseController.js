@@ -220,7 +220,7 @@ sap.ui.define([
 
 		//http://su-mii-dev01.intern.suwelack.de:50000/XMII/Runner?Transaction=SUMISA/ProcessOrder/trx_SendBeginEndPhaseToSAP_TE&
 		//AUFNR=1093363&VORGANG=0010&STATUS=0003&STATUS_TXT=Gestartet&TRX_ID=B10&RUECKZEIT=07.04.2018 16:39:52&MATNR=1701705-030&STOER=&Debug=1&UNAME=PHIGEM&IllumLoginName=PHIGEM&OutputParameter=OutputXML&Content-Type=text/xml
-		requestTimeTicketService: function(sOrderNumber, sOperationNumber, oStatus, oDate, sMaterialNumber, sIncident) {
+		requestTimeTicketService: function(sOrderNumber, sOperationNumber, oStatus, oDate, sMaterialNumber, sIncident, sComment) {
 			var oTimeTicketModel = this.getModel("timeTicket"),
 				sUsername = this.getModel("user").getProperty("/USERLOGIN"),
 				oServiceData,
@@ -233,7 +233,8 @@ sap.ui.define([
 					newStatus: oStatus,
 					date: oDate,
 					materialNumber: sMaterialNumber,
-					incident: sIncident
+					incident: sIncident,
+					comment: window.btoa(sComment)
 				};
 			} else {
 				oServiceData = sOrderNumber;
@@ -255,7 +256,8 @@ sap.ui.define([
 				"Param.7": oServiceData.incident || "",
 				"Param.8": oServiceData.materialNumber || "",
 				"Param.9": oServiceData.newStatus.ACTION_KEY,
-				"Param.10": sUsername
+				"Param.10": sUsername,
+				"Param.11": oServiceData.comment
 			};
 
 			return oTimeTicketModel.loadMiiData(oTimeTicketModel._sServiceUrl, oParam);
@@ -362,11 +364,11 @@ sap.ui.define([
 			var oMsgContainer = this.byId("messageStripContainer"),
 				oMsgStrip = new MessageStrip({
 					text: oMessage.text || "Ein unbekannter Fehler ist aufgetreten",
-					showCloseButton: oMessage.showCloseButton || true,
-					showIcon: oMessage.showIcon || true,
+					showCloseButton: oMessage.showCloseButton === undefined ? true : false, //default true
+					showIcon: oMessage.showIcon === undefined ? true : false, //default true
 					customIcon: oMessage.customIcon,
 					type: oMessage.type || sap.ui.core.MessageType.Error,
-					enableFormattedText: oMessage.enableFormattedText || true
+					enableFormattedText: oMessage.enableFormattedText || true //default false
 				});
 
 			if (!bKeepExisting) {
