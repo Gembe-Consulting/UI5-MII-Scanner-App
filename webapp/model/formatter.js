@@ -10,13 +10,23 @@ sap.ui.define([
 	return {
 		/**
 		 * Parses the JSON Date representation into a Date object.
-		 * Note: moment() parser considers "/Date(ms)/" as JSON object.
-		 * By default, moment parses and displays in local time.
-		 * FOR SOME REASON IlluminatorOData Service of MII sends the DateTime already shifted!
+		 * Note: moment() parser considers "/Date(1524751200000)/" as JSON object.
+		 * Note: By default, moment parses and displays in local time.
+		 * Actually, MII stores the date "as is" like a string. When retrieved from DB, it does not provide a timezone.
+		 * moment() parses milliseconds since the UNIX epoch using the local time of the users browser/os, but considers the timestamp as UTC?.
+		 * This results into a over-shifted timestamp.
+		 *		--> moment("/Date(1524751200000)/").format() => 2018-04-26T16:00:00+02:00
 		 * This means, we need to unshift this offset to get the proper date.
+		 *		--> 2018-04-26T14:00:00+02:00
+		 * ---------------
+		 * Other solutions:
+		 * 1. We could also provide the timestamp from MII backend with the proper TZH:TZM offset. This would force moment() to considert this as-is.
+		 *		--> 2018-04-26T14:00:00+02:00
+		 * 2. We could consider the timestamp from MII as UTC timestamp.
+		 *		--> 2018-04-26T14:00:00Z
 		 * @public
 		 * @param {string} vJSDate the date you want to compare to
-		 * @returns {Date}  A Date object if the value matches one; falsy otherwise.
+		 * @returns {Date}  A Date object if the date is valid; falsy otherwise.
 		 */
 		parseJSONDate: function(vJSDate) {
 			var oIllumODataDate = moment(vJSDate),
@@ -24,7 +34,7 @@ sap.ui.define([
 				oDate;
 
 			if (!vJSDate || !oIllumODataDate.isValid()) {
-				return oDate;
+				return oDate; //undefined
 			}
 
 			oMoment = oIllumODataDate.subtract(oIllumODataDate.utcOffset(), 'm'); //unshift
