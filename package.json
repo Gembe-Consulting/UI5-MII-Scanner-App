@@ -1,6 +1,6 @@
 {
 	"name": "UI5-MII-Scanner-App",
-	"version": "1.3.9",
+	"version": "1.3.10",
 	"description": "Suwelack Scanner App",
 	"private": true,
 	"devDependencies": {
