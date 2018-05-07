@@ -8,7 +8,7 @@ sap.ui.define([
 	"use strict";
 
 	return BaseTTController.extend("com.mii.scanner.controller.action.tt.FinishOperation", {
-
+		/* globals moment */
 		sapType: sapType,
 		formatter: formatter,
 
