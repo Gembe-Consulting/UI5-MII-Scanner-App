@@ -82,7 +82,8 @@ sap.ui.define([
 				fnResolveOrderService,
 				fnResolveIncidentService,
 				fnReject,
-				fnCleanUp;
+				fnCleanUp,
+				fnBuildMicroChart;
 
 			/* check if current input is valid */
 			if (!sOrderNumber || !sOperationNumber || this.controlHasValidationError(oSource)) {
@@ -156,10 +157,30 @@ sap.ui.define([
 				oOperationNumberInput.setValueState(sap.ui.core.ValueState.Error);
 			};
 
-			fnCleanUp = function(oDate) {
+			fnCleanUp = function(oData) {
 				this.hideControlBusyIndicator(oOrderNumberInput);
 				this.hideControlBusyIndicator(oOperationNumberInput);
 				this.updateViewControls(this.getModel("data").getData());
+
+				return oData;
+			};
+
+			fnBuildMicroChart = function(oData) {
+
+				var aInterruptions = oData.d.results["0"].Rowset.results["0"].Row.results,
+					oStartDate = this.getModel("data").getProperty("/ISTSTART"),
+					oEndDate = this.getModel("data").getProperty("/ISTENDE");
+
+				//generateOperationTimeline: function(oStartDate, aInterruptions, oEndDate) {
+				this.generateOperationTimeline(oStartDate, aInterruptions, oEndDate)
+					.then(function(aBars) {
+						var oChart = this.byId("processOrderChart");
+						oChart.removeAllBars();
+						aBars.forEach(function(element) {
+							oChart.addBar(element);
+						});
+
+					}.bind(this));
 			};
 
 			/* Perform service call, Hide Busy Indicator, Update View Controls */
@@ -169,6 +190,7 @@ sap.ui.define([
 				.then(fnResolveIncidentService.bind(this))
 				.catch(fnReject.bind(this))
 				.then(fnCleanUp.bind(this));
+			//.then(fnBuildMicroChart.bind(this));
 		},
 
 		updateViewControls: function(oData) {
@@ -313,7 +335,9 @@ sap.ui.define([
 				} else {
 					var fnMicroChartBarFactory = function(oInterruption) {
 						var oBar,
-							length = oInterruption.STR_ENDE - oInterruption.STR_BEGINN;
+							startOfInterruption = moment(oInterruption.STR_BEGINN),
+							endOfInterruption = moment(oInterruption.STR_ENDE).isValid() ? moment(oInterruption.STR_ENDE) : moment(),
+							length = endOfInterruption - startOfInterruption;
 
 						length = length / 3600;
 
@@ -323,14 +347,14 @@ sap.ui.define([
 							displayValue: length + " min"
 						});
 
-						oBar.setTooltip(oInterruption.STR_ENDE + " -> " + oInterruption.STR_BEGINN + "\n" + oInterruption.STRCODE + ": " + oInterruption.STR_TXT);
+						oBar.setTooltip(startOfInterruption.format() + " -> " + endOfInterruption.format() + "\n" + oInterruption.STRCODE + ": " + oInterruption.STR_TXT);
 
 						return oBar;
 
 					};
 
 					//Start -> 1st Interruption
-					var iFirstLength = aInterruptions[0].STR_BEGINN - startMoment;
+					var iFirstLength = moment(aInterruptions[0].STR_BEGINN) - startMoment;
 					aTimeLine.push(new StackedBarMicroChartBar({
 						valueColor: "Good",
 						value: iFirstLength,
@@ -343,7 +367,7 @@ sap.ui.define([
 					aTimeLine = aTimeLine.concat(aInterruptions);
 
 					//last Interruption -> End
-					var iLastLength = endMoment - aInterruptions[aInterruptions.length - 1].STR_ENDE;
+					var iLastLength = endMoment - moment(aInterruptions[aInterruptions.length - 1].STR_ENDE);
 					aTimeLine.push(new StackedBarMicroChartBar({
 						valueColor: "Good",
 						value: iLastLength,
