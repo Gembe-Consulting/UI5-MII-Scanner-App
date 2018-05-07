@@ -24,6 +24,7 @@ sap.ui.define([
 		 *		--> 2018-04-26T14:00:00+02:00
 		 * 2. We could consider the timestamp from MII as UTC timestamp.
 		 *		--> 2018-04-26T14:00:00Z
+		 * 3. Also: moment([2016, 0, 1, 0, 0, 0]).utcOffset(-5, true) // Equivalent to "2016-01-01T00:00:00-05:00"
 		 * @public
 		 * @param {string} vJSDate the date you want to compare to
 		 * @returns {Date}  A Date object if the date is valid; falsy otherwise.
