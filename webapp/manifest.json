@@ -375,7 +375,10 @@
 			}, {
 				"uri": "libs/scannerdetection/scannerdetection.js",
 				"name": "scannerdetection.js"
-			}],
+			}, {
+					"uri": "libs/jquerybase64/jquery.base64.js",
+					"name": "jquery.base64.js"
+				}],
 			"css": [{
 				"uri": "css/style.css"
 			}]
