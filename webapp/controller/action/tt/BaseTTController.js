@@ -301,6 +301,11 @@ sap.ui.define([
 				}
 			}
 		},
+
+		appendSignAndDateToComment: function(sComment) {
+			return sComment ? sComment + "\n--" + this.getModel("user").getProperty("/USERLOGIN") + ", " + moment().format('LLL') : sComment;
+		},
+
 		generateOperationTimeline: function(oStartDate, aInterruptions, oEndDate) {
 
 			// example: valueColor="Good" value="60" displayValue="60min"

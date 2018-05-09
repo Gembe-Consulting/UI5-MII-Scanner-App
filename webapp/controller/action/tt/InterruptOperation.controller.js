@@ -87,7 +87,7 @@ sap.ui.define([
 				date: oDataModel.getProperty("/dateTimeValue"),
 				materialNumber: oDataModel.getProperty("/MATNR"),
 				incident: oDataModel.getProperty("/interruptionReason"),
-				comment: oDataModel.getProperty("/userComment")
+				comment: this.appendSignAndDateToComment(oDataModel.getProperty("/userComment")) || ""
 			};
 
 			//function(sOrderNumber, sOperationNumber, oStatus, oDate, sMaterialNumber, sIncident) || function(oServiceData)

@@ -234,7 +234,7 @@ sap.ui.define([
 					date: oDate,
 					materialNumber: sMaterialNumber,
 					incident: sIncident,
-					comment: window.btoa(sComment)
+					comment: $.base64.btoa(sComment, true)
 				};
 			} else {
 				oServiceData = sOrderNumber;
@@ -257,7 +257,7 @@ sap.ui.define([
 				"Param.8": oServiceData.materialNumber || "",
 				"Param.9": oServiceData.newStatus.ACTION_KEY,
 				"Param.10": sUsername,
-				"Param.11": oServiceData.comment
+				"Param.11": $.base64.btoa(oServiceData.comment, true)
 			};
 
 			return oTimeTicketModel.loadMiiData(oTimeTicketModel._sServiceUrl, oParam);

@@ -45,8 +45,8 @@
 					</DateTimePicker>
 					<!-- User Comment -->
 					<Label text="{i18n>resumeOperation.form.label.userComment}" labelFor="userCommentTextArea"/>
-					<TextArea id="userCommentTextArea" value="{data>/latestInterruption/COMMENT}" editable="{view>/userCommentEditable}" visible="true"
-						enabled="true" growing="true" growingMaxLines="5" rows="1">
+					<TextArea id="userCommentTextArea" value="{path: 'data>/latestInterruption/COMMENT', formatter:'.formatter.base64decode'}"
+						editable="{view>/userCommentEditable}" visible="true" enabled="true" growing="true" growingMaxLines="5" rows="1">
 						<layoutData>
 							<l:GridData span="XL4 L4 M6 S12"/>
 						</layoutData>

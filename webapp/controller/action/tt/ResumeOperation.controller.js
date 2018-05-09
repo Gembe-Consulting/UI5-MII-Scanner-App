@@ -85,7 +85,8 @@ sap.ui.define([
 				newStatus: this.oProcessOrderStatus.started,
 				date: oDataModel.getProperty("/dateTimeValue"),
 				materialNumber: oDataModel.getProperty("/MATNR"),
-				incident: oDataModel.getProperty("/latestInterruption/STRCODE")
+				incident: oDataModel.getProperty("/latestInterruption/STRCODE"),
+				comment: this.composeCommentResponse(this.byId("userCommentTextArea").getValue(), this._oldComment) || ""
 			};
 
 			//function(sOrderNumber, sOperationNumber, oStatus, oDate, sMaterialNumber, sIncident) || function(oServiceData)
@@ -95,6 +96,26 @@ sap.ui.define([
 				.then(function() {
 					this.onClearFormPress({}, true /*bKeepMessageStrip*/ );
 				}.bind(this));
+		},
+
+		composeCommentResponse: function(sResponse, sOldComment) {
+			var sResult;
+
+			if (!sOldComment) {
+				return sResponse;
+			}
+
+			if (sResponse) {
+				sResult = this.appendSignAndDateToComment(sResponse);
+			} else {
+				sResult = "";
+			}
+
+			if (sOldComment) {
+				sResult = sResult + "\n" + "=====" + "\n" + sOldComment;
+			}
+
+			return sResult;
 		},
 
 		isInputDataValid: function(oData) {

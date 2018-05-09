@@ -8,6 +8,11 @@ sap.ui.define([
 	const ZERO_STOCK_STORAGE_UNIT_QUANTITIES = [0.0, 0.001];
 
 	return {
+
+		base64decode: function(sEncodedString) {
+			return sEncodedString ? $.base64.atob(sEncodedString, true) : "";
+		},
+
 		/**
 		 * Parses the JSON Date representation into a Date object.
 		 * Note: moment() parser considers "/Date(1524751200000)/" as JSON object.
