@@ -314,7 +314,7 @@ sap.ui.define([
 				// do a thing, possibly async, then…
 
 				var aTimeLine = [],
-					sDurationFormatPattern = "d [Tage] h [Std] m [Min]",
+					sDurationFormatPattern = "d [T] h [S] m [M]",
 					startMoment,
 					endMoment;
 
@@ -338,21 +338,35 @@ sap.ui.define([
 						displayValue: moment.duration(iDuration).format(sDurationFormatPattern)
 					}));
 				} else {
-					var fnMicroChartBarFactory = function(oInterruption) {
+
+					var fnMicroChartBarFactory = function(oInterruption, index, interruptions) {
 						var oBar,
 							startOfInterruption = moment(oInterruption.STR_BEGINN),
 							endOfInterruption = moment(oInterruption.STR_ENDE).isValid() ? moment(oInterruption.STR_ENDE) : moment(),
-							length = endOfInterruption - startOfInterruption;
+							length = endOfInterruption - startOfInterruption,
+							oNextBar;
 
 						oBar = new StackedBarMicroChartBar({
 							valueColor: "Error",
 							value: length,
 							displayValue: moment.duration(length).format(sDurationFormatPattern)
-						});
+						}).setTooltip(startOfInterruption.format("LLL") + " > " + endOfInterruption.format("LLL") + " -- " + oInterruption.STRCODE + ": " + oInterruption.STR_TXT + " [" + moment.duration(length).format(sDurationFormatPattern) + "]");
 
-						oBar.setTooltip(startOfInterruption.format("LLL") + " >> " + endOfInterruption.format("LLL") + " - " + oInterruption.STRCODE + ": " + oInterruption.STR_TXT);
+						var oNextIntervall = interruptions[index + 1];
 
-						return oBar;
+						if (oNextIntervall) {
+							var endOfNextRunning = moment(oNextIntervall.STR_BEGINN);
+							var rest = endOfNextRunning - endOfInterruption;
+							oNextBar = new StackedBarMicroChartBar({
+								valueColor: "Good",
+								value: length,
+								displayValue: moment.duration(rest).format(sDurationFormatPattern)
+							}).setTooltip(endOfInterruption.format("LLL") + " > " + endOfNextRunning.format("LLL") + " -- In Betrieb [" + moment.duration(rest).format(sDurationFormatPattern) + "]");
+
+							return [oBar, oNextBar];
+						}
+
+						return [oBar];
 
 					};
 
@@ -363,10 +377,10 @@ sap.ui.define([
 						valueColor: "Good",
 						value: iFirstLength,
 						displayValue: moment.duration(iFirstLength).format(sDurationFormatPattern)
-					}).setTooltip(startMoment.format("LLL") + " >> " + firstInterruptionStart.format("LLL") + " -  In Betrieb"));
+					}).setTooltip(startMoment.format("LLL") + " > " + firstInterruptionStart.format("LLL") + " -- In Betrieb [" + moment.duration(iFirstLength).format(sDurationFormatPattern) + "]"));
 
 					//Interruptions
-					aTimeLine = aTimeLine.concat(aInterruptions.map(fnMicroChartBarFactory));
+					aTimeLine = aTimeLine.concat(_.flattenDeep(aInterruptions.map(fnMicroChartBarFactory)));
 
 					//last Interruption -> End
 					var lastInterruptionEnd = moment(aInterruptions[aInterruptions.length - 1].STR_ENDE).isValid() ? moment(aInterruptions[aInterruptions.length - 1].STR_ENDE) : moment();
@@ -376,7 +390,7 @@ sap.ui.define([
 							valueColor: "Good",
 							value: iLastLength,
 							displayValue: moment.duration(iLastLength).format(sDurationFormatPattern)
-						}).setTooltip(lastInterruptionEnd.format("LLL") + " >> " + endMoment.format("LLL") + " -  In Betrieb"));
+						}).setTooltip(lastInterruptionEnd.format("LLL") + " > " + endMoment.format("LLL") + " -- In Betrieb [" + moment.duration(iLastLength).format(sDurationFormatPattern) + "]"));
 					}
 				}
 
