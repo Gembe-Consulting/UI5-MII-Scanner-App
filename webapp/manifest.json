@@ -7,7 +7,12 @@
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
 		"title": "{{appTitle}}",
+		"subTitle": "{{appSubTitle}}",
+		"shortTitle": "{{appShortTitle}}",
 		"description": "{{appDescription}}",
+		"tags": {
+			"keywords": ["{{appKeyWord1}}", "{{appKeyWord2}}"]
+		},
 		"applicationVersion": {
 			"version": "{{appVersion}}"
 		},
@@ -72,7 +77,8 @@
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
 					"bundleName": "com.mii.scanner.i18n.i18n"
-				}
+				},
+				"preload": true
 			},
 			"user": {
 				"dataSource": "illuminatorService",
@@ -81,7 +87,8 @@
 				"settings": {
 					"preventInitialLoad": true,
 					"preventParameterlessLoad": true
-				}
+				},
+				"preload": false
 			},
 			"storageUnit": {
 				"dataSource": "illuminatorService",
@@ -90,7 +97,8 @@
 				"settings": {
 					"preventInitialLoad": true,
 					"preventParameterlessLoad": true
-				}
+				},
+				"preload": false
 			},
 			"storageUnitCreate": {
 				"dataSource": "illuminatorService",
@@ -99,7 +107,8 @@
 				"settings": {
 					"preventInitialLoad": true,
 					"preventParameterlessLoad": true
-				}
+				},
+				"preload": false
 			},
 			"orderHeader": {
 				"dataSource": "illuminatorService",
@@ -108,7 +117,8 @@
 				"settings": {
 					"preventInitialLoad": true,
 					"preventParameterlessLoad": true
-				}
+				},
+				"preload": false
 			},
 			"orderComponent": {
 				"dataSource": "illuminatorService",
@@ -117,7 +127,8 @@
 				"settings": {
 					"preventInitialLoad": true,
 					"preventParameterlessLoad": true
-				}
+				},
+				"preload": false
 			},
 			"orderOperation": {
 				"dataSource": "illuminatorService",
@@ -126,7 +137,8 @@
 				"settings": {
 					"preventInitialLoad": true,
 					"preventParameterlessLoad": true
-				}
+				},
+				"preload": false
 			},
 			"orderIncidents": {
 				"dataSource": "illuminatorService",
@@ -135,7 +147,8 @@
 				"settings": {
 					"preventInitialLoad": true,
 					"preventParameterlessLoad": true
-				}
+				},
+				"preload": false
 			},
 			"goodsMovement": {
 				"dataSource": "illuminatorService",
@@ -145,7 +158,8 @@
 					"preventInitialLoad": true,
 					"preventParameterlessLoad": true,
 					"ignoreFatalError": true
-				}
+				},
+				"preload": false
 			},
 			"goodsMovementRollerConveyor": {
 				"dataSource": "illuminatorService",
@@ -155,7 +169,8 @@
 					"preventInitialLoad": true,
 					"preventParameterlessLoad": true,
 					"ignoreFatalError": true
-				}
+				},
+				"preload": false
 			},
 			"timeTicket": {
 				"dataSource": "illuminatorService",
@@ -164,7 +179,8 @@
 				"settings": {
 					"preventInitialLoad": true,
 					"preventParameterlessLoad": true
-				}
+				},
+				"preload": false
 			},
 			"currentProcessOrder": {
 				"dataSource": "illuminatorService",
@@ -173,7 +189,8 @@
 				"settings": {
 					"preventInitialLoad": true,
 					"preventParameterlessLoad": true
-				}
+				},
+				"preload": false
 			},
 			"storageBinList": {
 				"dataSource": "illuminatorService",
@@ -182,7 +199,8 @@
 				"settings": {
 					"preventInitialLoad": false,
 					"preventParameterlessLoad": false
-				}
+				},
+				"preload": true
 			},
 			"interruptionReasonList": {
 				"dataSource": "illuminatorService",
@@ -191,7 +209,8 @@
 				"settings": {
 					"preventInitialLoad": false,
 					"preventParameterlessLoad": false
-				}
+				},
+				"preload": true
 			}
 		},
 		"routing": {
@@ -376,9 +395,9 @@
 				"uri": "libs/scannerdetection/scannerdetection.js",
 				"name": "scannerdetection.js"
 			}, {
-					"uri": "libs/jquerybase64/jquery.base64.js",
-					"name": "jquery.base64.js"
-				}],
+				"uri": "libs/jquerybase64/jquery.base64.js",
+				"name": "jquery.base64.js"
+			}],
 			"css": [{
 				"uri": "css/style.css"
 			}]

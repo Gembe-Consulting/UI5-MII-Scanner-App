@@ -1,12 +1,12 @@
-jQuery.sap.registerModulePath("mii.util", "../ui5miiutilities/mii/util/");
-
+//jQuery.sap.registerModulePath("mii.util", "../ui5miiutilities/mii/util/");
 sap.ui.define([
+	"jquery.sap.global",
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
 	"com/mii/scanner/model/models",
 	"com/mii/scanner/controller/ErrorHandler",
 	"sap/m/MessageBox"
-], function(UIComponent, Device, models, ErrorHandler, MessageBox) {
+], function(jQuery, UIComponent, Device, models, ErrorHandler, MessageBox) {
 	"use strict";
 
 	return UIComponent.extend("com.mii.scanner.Component", {
