@@ -172,7 +172,6 @@ sap.ui.define([
 					oStartDate = this.getModel("data").getProperty("/ISTSTART"),
 					oEndDate = this.getModel("data").getProperty("/ISTENDE");
 
-				//generateOperationTimeline: function(oStartDate, aInterruptions, oEndDate) {
 				this.generateOperationTimeline(oStartDate, aInterruptions, oEndDate)
 					.then(function(aBars) {
 						var oChart = this.byId("processOrderChart");
@@ -190,8 +189,8 @@ sap.ui.define([
 				.then(this.requestOrderOperationIncidentsService.bind(this))
 				.then(fnResolveIncidentService.bind(this))
 				.catch(fnReject.bind(this))
-				.then(fnCleanUp.bind(this));
-			//.then(fnBuildMicroChart.bind(this));
+				.then(fnCleanUp.bind(this))
+				.then(fnBuildMicroChart.bind(this));
 		},
 
 		updateViewControls: function(oData) {
@@ -315,7 +314,7 @@ sap.ui.define([
 				// do a thing, possibly async, then…
 
 				var aTimeLine = [],
-					iDuration = 0,
+					sDurationFormatPattern = "d [Tage] h [Std] m [Min]",
 					startMoment,
 					endMoment;
 
@@ -330,13 +329,13 @@ sap.ui.define([
 				startMoment = moment(oStartDate);
 				endMoment = moment(oEndDate);
 
-				iDuration = endMoment - startMoment;
-
 				if (!aInterruptions) {
+					var iDuration = endMoment - startMoment;
+					iDuration = iDuration / 3600; //ms -> min
 					aTimeLine.push(new StackedBarMicroChartBar({
 						valueColor: "Good",
 						value: iDuration,
-						displayValue: iDuration + " min"
+						displayValue: moment.duration(iDuration).format(sDurationFormatPattern)
 					}));
 				} else {
 					var fnMicroChartBarFactory = function(oInterruption) {
@@ -345,40 +344,40 @@ sap.ui.define([
 							endOfInterruption = moment(oInterruption.STR_ENDE).isValid() ? moment(oInterruption.STR_ENDE) : moment(),
 							length = endOfInterruption - startOfInterruption;
 
-						length = length / 3600;
-
 						oBar = new StackedBarMicroChartBar({
 							valueColor: "Error",
 							value: length,
-							displayValue: length + " min"
+							displayValue: moment.duration(length).format(sDurationFormatPattern)
 						});
 
-						oBar.setTooltip(startOfInterruption.format() + " -> " + endOfInterruption.format() + "\n" + oInterruption.STRCODE + ": " + oInterruption.STR_TXT);
+						oBar.setTooltip(startOfInterruption.format("LLL") + " >> " + endOfInterruption.format("LLL") + " - " + oInterruption.STRCODE + ": " + oInterruption.STR_TXT);
 
 						return oBar;
 
 					};
 
 					//Start -> 1st Interruption
-					var iFirstLength = moment(aInterruptions[0].STR_BEGINN) - startMoment;
+					var firstInterruptionStart = moment(aInterruptions[0].STR_BEGINN);
+					var iFirstLength = firstInterruptionStart - startMoment;
 					aTimeLine.push(new StackedBarMicroChartBar({
 						valueColor: "Good",
 						value: iFirstLength,
-						displayValue: iFirstLength + " min"
-					}));
+						displayValue: moment.duration(iFirstLength).format(sDurationFormatPattern)
+					}).setTooltip(startMoment.format("LLL") + " >> " + firstInterruptionStart.format("LLL") + " -  In Betrieb"));
 
 					//Interruptions
-					aInterruptions = aInterruptions.map(fnMicroChartBarFactory);
-
-					aTimeLine = aTimeLine.concat(aInterruptions);
+					aTimeLine = aTimeLine.concat(aInterruptions.map(fnMicroChartBarFactory));
 
 					//last Interruption -> End
-					var iLastLength = endMoment - moment(aInterruptions[aInterruptions.length - 1].STR_ENDE);
-					aTimeLine.push(new StackedBarMicroChartBar({
-						valueColor: "Good",
-						value: iLastLength,
-						displayValue: iLastLength + " min"
-					}));
+					var lastInterruptionEnd = moment(aInterruptions[aInterruptions.length - 1].STR_ENDE).isValid() ? moment(aInterruptions[aInterruptions.length - 1].STR_ENDE) : moment();
+					var iLastLength = endMoment - lastInterruptionEnd;
+					if (iLastLength > 0) {
+						aTimeLine.push(new StackedBarMicroChartBar({
+							valueColor: "Good",
+							value: iLastLength,
+							displayValue: moment.duration(iLastLength).format(sDurationFormatPattern)
+						}).setTooltip(lastInterruptionEnd.format("LLL") + " >> " + endMoment.format("LLL") + " -  In Betrieb"));
+					}
 				}
 
 				resolve(aTimeLine);

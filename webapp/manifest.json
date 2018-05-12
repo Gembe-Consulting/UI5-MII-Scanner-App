@@ -392,8 +392,12 @@
 				"version": "2.19.1"
 			}, {
 				"uri": "libs/momentjs/locale/de.js",
-				"name": "locale/de.js",
+				"name": "locale-de.js",
 				"version": "2.19.1"
+			}, {
+				"uri": "libs/momentjs/moment-duration-format.js",
+				"name": "moment-duration-format.js",
+				"version": "2.2.2"
 			}, {
 				"uri": "libs/scannerdetection/scannerdetection.js",
 				"name": "scannerdetection.js"
