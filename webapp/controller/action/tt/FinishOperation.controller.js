@@ -155,12 +155,7 @@ sap.ui.define([
 			oDateTimeEntry.setValueState(sap.ui.core.ValueState.Success);
 
 			return true;
-		},
-
-		onProcessOrderChartPress: function(oEvent) {
-			MessageBox.show("Statuswechsel zu Auftrag 4711: \nStart: 13.07.18, 19:00 \nStörung: 14.07.18, 03:00 bis 14.07.18, 07:00 \nStörung: 14.07.18, 10:30 bis 14.07.18, 10:45");
 		}
-
 	});
 
 });
