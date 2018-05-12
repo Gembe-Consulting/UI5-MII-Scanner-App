@@ -167,20 +167,22 @@ sap.ui.define([
 			};
 
 			fnBuildMicroChart = function(oData) {
+				if (oData) {
+					var aInterruptions = oData.d.results["0"].Rowset.results["0"].Row.results,
+						oStartDate = this.getModel("data").getProperty("/ISTSTART"),
+						oEndDate = this.getModel("data").getProperty("/ISTENDE");
 
-				var aInterruptions = oData.d.results["0"].Rowset.results["0"].Row.results,
-					oStartDate = this.getModel("data").getProperty("/ISTSTART"),
-					oEndDate = this.getModel("data").getProperty("/ISTENDE");
-
-				this.generateOperationTimeline(oStartDate, aInterruptions, oEndDate)
-					.then(function(aBars) {
-						var oChart = this.byId("processOrderChart");
-						oChart.removeAllBars();
-						aBars.forEach(function(element) {
-							oChart.addBar(element);
-						});
-
-					}.bind(this));
+					this.generateOperationTimeline(oStartDate, aInterruptions, oEndDate)
+						.then(function(aBars) {
+							var oChart = this.byId("processOrderChart");
+							oChart.removeAllBars();
+							aBars.forEach(function(element) {
+								oChart.addBar(element);
+							});
+						}.bind(this));
+				}else{
+						this.byId("processOrderChart").removeAllBars();
+				}
 			};
 
 			/* Perform service call, Hide Busy Indicator, Update View Controls */
