@@ -14,14 +14,14 @@ sap.ui.define([
 			oDefaults = {
 				clearQuantityInputIcon: {
 					mobile: {
-						size: '1.75rem',
-						width: '1.75rem',
-						height: '2.75rem'
+						size: "1.75rem",
+						width: "1.75rem",
+						height: "2.75rem"
 					},
 					desktop: {
-						size: '1.25rem',
-						width: '1.25rem',
-						height: '2.00rem'
+						size: "1.25rem",
+						width: "1.25rem",
+						height: "2.00rem"
 					}
 				}
 			};
