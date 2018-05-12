@@ -1,10 +1,11 @@
 sap.ui.define([
+	"jquery.sap.global",
 	"./BaseTTController",
 	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox",
 	"com/mii/scanner/model/sapType",
 	"com/mii/scanner/model/formatter"
-], function(BaseTTController, JSONModel, MessageBox, sapType, formatter) {
+], function(jQuery, BaseTTController, JSONModel, MessageBox, sapType, formatter) {
 	"use strict";
 
 	return BaseTTController.extend("com.mii.scanner.controller.action.tt.ResumeOperation", {

@@ -1,10 +1,11 @@
 sap.ui.define([
+	"jquery.sap.global",
 	"com/mii/scanner/controller/action/ActionBaseController",
 	"sap/m/MessageBox",
 	"sap/suite/ui/microchart/StackedBarMicroChartBar",
 	"com/mii/scanner/model/sapType",
 	"com/mii/scanner/model/formatter"
-], function(ActionBaseController, MessageBox, StackedBarMicroChartBar, sapType, formatter) {
+], function(jQuery, ActionBaseController, MessageBox, StackedBarMicroChartBar, sapType, formatter) {
 	return ActionBaseController.extend("com.mii.scanner.controller.action.tt.BaseTTController", {
 		/* globals moment */
 		sapType: sapType,

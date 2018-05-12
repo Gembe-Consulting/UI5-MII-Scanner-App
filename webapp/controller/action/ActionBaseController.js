@@ -1,4 +1,5 @@
 sap.ui.define([
+	"jquery.sap.global",
 	"com/mii/scanner/controller/PageBaseController",
 	"sap/m/MessageBox",
 	"sap/m/MessageToast",
@@ -7,7 +8,7 @@ sap.ui.define([
 	"sap/m/MessageItem",
 	"sap/ui/core/message/Message",
 	"com/mii/scanner/model/formatter"
-], function(PageBaseController, MessageBox, MessageToast, MessageStrip, MessagePopover, MessageItem, Message, formatter) {
+], function(jQuery, PageBaseController, MessageBox, MessageToast, MessageStrip, MessagePopover, MessageItem, Message, formatter) {
 	"use strict";
 
 	return PageBaseController.extend("com.mii.scanner.controller.action.ActionBaseController", {

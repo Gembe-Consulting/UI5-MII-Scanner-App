@@ -1,6 +1,7 @@
 sap.ui.define([
+	"jquery.sap.global",
 	"com/mii/scanner/controller/action/ActionBaseController"
-], function(ActionBaseController) {
+], function(jQuery, ActionBaseController) {
 	return ActionBaseController.extend("com.mii.scanner.controller.action.gm.BaseGMController", {
 		onInit: function() {
 			ActionBaseController.prototype.onInit.call(this); // DO NOT DELETE!
