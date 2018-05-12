@@ -26,7 +26,7 @@ sap.ui.define([
 		LENUM: new StorageUnitNumberType({
 			emptyString: null // defines what empty string is parsed as and what is formatted as empty string
 		}, {
-			minLength: 12,
+			minLength: 10,
 			maxLength: 20
 		}),
 
