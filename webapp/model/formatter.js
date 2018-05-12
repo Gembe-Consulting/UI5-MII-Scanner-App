@@ -14,7 +14,12 @@ sap.ui.define([
 	};
 
 	return {
-
+		/**
+		 * Simply decodes a BASE64 encoded string.
+		 * @public
+		 * @param {string} sEncodedString the B64 encoded string
+		 * @returns {string} decoded string or empty string
+		 */
 		base64decode: function(sEncodedString) {
 			return sEncodedString ? $.base64.atob(sEncodedString, true) : "";
 		},
@@ -56,6 +61,12 @@ sap.ui.define([
 			return oDate;
 		},
 
+		/**
+		 * Parses a JSON formatted Date into JS Date and uses sap.ui.core.format.DateFormat to format this Date into the localized display short format.
+		 * @public
+		 * @param {string} vJSDate the JSON formatted date you want to parse & format
+		 * @returns {string}  A localized short Date-Time.
+		 */
 		parseJSONDateToShort: function(vJSDate) {
 
 			var oDate = this.formatter.parseJSONDate(vJSDate),
@@ -72,6 +83,12 @@ sap.ui.define([
 			return oDateTimeFormat.format(oDate);
 		},
 
+		/**
+		 * Parses a JSON formatted Date into JS Date and uses sap.ui.core.format.DateFormat to format this Date into the localized display medium format.
+		 * @public
+		 * @param {string} vJSDate the JSON formatted date you want to parse & format
+		 * @returns {string}  A localized medium Date-Time.
+		 */
 		parseJSONDateToMedium: function(vJSDate) {
 			var oDate = this.formatter.parseJSONDate(vJSDate),
 				oDateTimeFormat;
@@ -114,6 +131,7 @@ sap.ui.define([
 			return !sQuantity || isInArray(parseFloat(sQuantity), ZERO_STOCK_STORAGE_UNIT_QUANTITIES);
 			//ZERO_STOCK_STORAGE_UNIT_QUANTITIES.includes(parseFloat(sQuantity)); //!sQuantity || (fQuantity === fZero) || (fQuantity === fNearToZero);
 		},
+
 		/**
 		 * Checks if a storage unit quantity is considered full / non-empty:
 		 * - if quantity not 0
