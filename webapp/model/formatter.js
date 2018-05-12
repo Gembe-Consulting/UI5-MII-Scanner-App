@@ -1,11 +1,17 @@
 sap.ui.define([
+	"jquery.sap.global",
 	"sap/ui/core/format/DateFormat",
 	"com/mii/scanner/libs/momentjs/moment"
-], function(DateFormat) {
+], function(jQuery, DateFormat) {
 	"use strict";
 
 	const LAST_STORAGE_UNIT_NUMBERS = [90025311000000000000, 90024811000000000000, 90000000000000000000 /* keep lagacy support */ ];
 	const ZERO_STOCK_STORAGE_UNIT_QUANTITIES = [0.0, 0.001];
+
+	/* wrapper for jQuery.inArray() to return a boolean value */
+	var isInArray = function(value, array, fromIndex) {
+		return jQuery.inArray(value, array, fromIndex) > -1;
+	};
 
 	return {
 
@@ -43,7 +49,7 @@ sap.ui.define([
 				return oDate; //undefined
 			}
 
-			oMoment = oIllumODataDate.subtract(oIllumODataDate.utcOffset(), 'm'); //unshift
+			oMoment = oIllumODataDate.subtract(oIllumODataDate.utcOffset(), "m"); //unshift
 
 			oDate = oMoment.toDate();
 
@@ -86,13 +92,13 @@ sap.ui.define([
 		 * @public
 		 * @param {string} sDate the date you want to compare to
 		 * @param {string} sFormat the format the date is provided in (default: MM-DD-YYYY)
-		 * @returns {boolean} 
+		 * @returns {boolean} true if sDate is before today
 		 */
 		isPastDate: function(sDate, sFormat) {
 			var oToday = moment(),
 				oDate = moment(sDate, sFormat || "MM-DD-YYYY");
 
-			return oDate.isBefore(oToday, 'day');
+			return oDate.isBefore(oToday, "day");
 		},
 
 		/**
@@ -105,7 +111,8 @@ sap.ui.define([
 		 * @returns {boolean} true if storage unit is considered empty, false if full
 		 */
 		isEmptyStorageUnit: function(sQuantity) {
-			return !sQuantity || ZERO_STOCK_STORAGE_UNIT_QUANTITIES.includes(parseFloat(sQuantity)); //!sQuantity || (fQuantity === fZero) || (fQuantity === fNearToZero);
+			return !sQuantity || isInArray(parseFloat(sQuantity), ZERO_STOCK_STORAGE_UNIT_QUANTITIES);
+			//ZERO_STOCK_STORAGE_UNIT_QUANTITIES.includes(parseFloat(sQuantity)); //!sQuantity || (fQuantity === fZero) || (fQuantity === fNearToZero);
 		},
 		/**
 		 * Checks if a storage unit quantity is considered full / non-empty:
@@ -117,7 +124,8 @@ sap.ui.define([
 		 * @returns {boolean} true if storage unit is considered full, false if empty
 		 */
 		isFullStorageUnit: function(sQuantity) {
-			return !!sQuantity && !ZERO_STOCK_STORAGE_UNIT_QUANTITIES.includes(parseFloat(sQuantity)); //!!sQuantity && (fQuantity !== fZero) && (fQuantity !== fNearToZero);
+			return !!sQuantity && !isInArray(parseFloat(sQuantity), ZERO_STOCK_STORAGE_UNIT_QUANTITIES);
+			//!ZERO_STOCK_STORAGE_UNIT_QUANTITIES.includes(parseFloat(sQuantity)); //!!sQuantity && (fQuantity !== fZero) && (fQuantity !== fNearToZero);
 		},
 
 		/**
@@ -129,7 +137,8 @@ sap.ui.define([
 		 * @return {boolean} true if is last, false if not last unit
 		 */
 		isLastStorageUnit: function(vStorageUnitNumber) {
-			return LAST_STORAGE_UNIT_NUMBERS.includes(parseInt(vStorageUnitNumber, 10)); //return !!vStorageUnitNumber && 90000000000000000000 === parseInt(vStorageUnitNumber, 10);
+			return isInArray(parseInt(vStorageUnitNumber, 10), LAST_STORAGE_UNIT_NUMBERS);
+			//LAST_STORAGE_UNIT_NUMBERS.includes(parseInt(vStorageUnitNumber, 10)); //return !!vStorageUnitNumber && 90000000000000000000 === parseInt(vStorageUnitNumber, 10);
 		},
 
 		/**
@@ -141,7 +150,8 @@ sap.ui.define([
 		 * @return {boolean} true if is not last, false if last unit
 		 */
 		isNotLastStorageUnit: function(vStorageUnitNumber) {
-			return !LAST_STORAGE_UNIT_NUMBERS.includes(parseInt(vStorageUnitNumber, 10)); //return !vStorageUnitNumber || 90000000000000000000 !== parseInt(vStorageUnitNumber, 10);
+			return !isInArray(parseInt(vStorageUnitNumber, 10), LAST_STORAGE_UNIT_NUMBERS);
+			//!LAST_STORAGE_UNIT_NUMBERS.includes(parseInt(vStorageUnitNumber, 10)); //return !vStorageUnitNumber || 90000000000000000000 !== parseInt(vStorageUnitNumber, 10);
 		}
 	};
 });
