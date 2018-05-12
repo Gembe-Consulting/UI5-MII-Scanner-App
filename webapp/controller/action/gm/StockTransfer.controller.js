@@ -1,10 +1,11 @@
 sap.ui.define([
+	"jquery.sap.global",
 	"./BaseGMController",
 	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox",
 	"com/mii/scanner/model/sapType",
 	"com/mii/scanner/model/formatter"
-], function(BaseGMController, JSONModel, MessageBox, sapType, formatter) {
+], function(jQuery, BaseGMController, JSONModel, MessageBox, sapType, formatter) {
 	"use strict";
 
 	return BaseGMController.extend("com.mii.scanner.controller.action.gm.StockTransfer", {
@@ -57,7 +58,7 @@ sap.ui.define([
 				if (!oData.success) {
 
 					bHasWarningLikeError = this._aWarningLikeFatalError.some(function(sMessage) {
-						return oData.lastErrorMessage.includes(sMessage);
+						return jQuery.inArray(sMessage, oData.lastErrorMessage) > -1;
 					});
 
 					if (bHasWarningLikeError) {

@@ -1,11 +1,12 @@
 sap.ui.define([
+	"jquery.sap.global",
 	"./BaseGMController",
 	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox",
 	"sap/ui/core/message/Message",
 	"com/mii/scanner/model/sapType",
 	"com/mii/scanner/model/formatter"
-], function(BaseGMController, JSONModel, MessageBox, Message, sapType, formatter) {
+], function(jQuery, BaseGMController, JSONModel, MessageBox, Message, sapType, formatter) {
 	"use strict";
 
 	return BaseGMController.extend("com.mii.scanner.controller.action.gm.RollerConveyor", {
@@ -163,7 +164,7 @@ sap.ui.define([
 
 				if (!oIllumData.success) {
 					bHasWarningLikeError = this._aWarningLikeFatalError.some(function(sMessage) {
-						return oIllumData.lastErrorMessage.includes(sMessage);
+						return jQuery.inArray(sMessage, oIllumData.lastErrorMessage) > -1;
 					});
 
 					if (bHasWarningLikeError) {
@@ -240,7 +241,7 @@ sap.ui.define([
 				if (!oIllumData.success) {
 
 					bHasWarningLikeError = this._aWarningLikeFatalError.some(function(sMessage) {
-						return oIllumData.lastErrorMessage.includes(sMessage);
+						return jQuery.inArray(sMessage, oIllumData.lastErrorMessage) > -1;
 					});
 
 					if (bHasWarningLikeError) {

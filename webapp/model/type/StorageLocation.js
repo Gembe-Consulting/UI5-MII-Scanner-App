@@ -47,7 +47,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/type/String', 'sap/ui/model/Fo
 					this.oConstraints.exludedStorageLocations = [this.oConstraints.exludedStorageLocations];
 				}
 
-				if (this.oConstraints.exludedStorageLocations.includes(sValue)) {
+				if (jQuery.inArray(sValue, this.oConstraints.exludedStorageLocations) > -1) {
 					aViolatedConstraints.push("exludedStorageLocations");
 					aMessages.push("Lagerort '" + sValue + "' ist nicht erlaubt");
 				}

@@ -41,7 +41,10 @@ sap.ui.require([
 							id: sControlId,
 							viewName: sViewName,
 							success: function(oControl) {
-								var activeItems = oControl.getItems().filter(item => item.getEnabled());
+								//var activeItems = oControl.getItems().filter(item => item.getEnabled());
+								var activeItems = oControl.getItems().filter(function(item) {
+									return item.getEnabled();
+								});
 
 								Opa5.assert.strictEqual(activeItems.length, iNumberOfItems, sControlId + " has " + iNumberOfItems + " active items");
 								Opa5.assert.strictEqual(activeItems[0].getKey(), "ROLLENBAHN", "First active item is ROLLENBAHN");
@@ -57,7 +60,9 @@ sap.ui.require([
 							id: sControlId,
 							viewName: sViewName,
 							success: function(oControl) {
-								var activeItems = oControl.getItems().filter(item => item.getEnabled());
+								var activeItems = oControl.getItems().filter(function(item) {
+									return item.getEnabled();
+								});
 
 								Opa5.assert.strictEqual(activeItems.length, iNumberOfItems, sControlId + " has " + iNumberOfItems + " active items");
 								Opa5.assert.strictEqual(activeItems[0].getKey(), "BEUM", "First active item is BEUM");
