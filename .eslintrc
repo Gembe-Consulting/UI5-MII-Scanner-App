@@ -285,6 +285,7 @@
 		"yield-star-spacing": 0
 	},
 	"globals": {
+		"_":true,
 		"moment": true,
 		"document": true,
 		"window":true,

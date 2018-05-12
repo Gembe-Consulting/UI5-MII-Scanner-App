@@ -399,6 +399,9 @@
 				"name": "moment-duration-format.js",
 				"version": "2.2.2"
 			}, {
+				"uri": "libs/lodashjs/lodash-core.min.js",
+				"name": "lodash.js"
+			}, {
 				"uri": "libs/scannerdetection/scannerdetection.js",
 				"name": "scannerdetection.js"
 			}, {
