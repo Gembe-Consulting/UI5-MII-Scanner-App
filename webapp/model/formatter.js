@@ -68,7 +68,6 @@ sap.ui.define([
 		 * @returns {string}  A localized short Date-Time.
 		 */
 		parseJSONDateToShort: function(vJSDate) {
-
 			var oDate = this.formatter.parseJSONDate(vJSDate),
 				oDateTimeFormat;
 
