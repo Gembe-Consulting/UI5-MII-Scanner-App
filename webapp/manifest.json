@@ -65,6 +65,9 @@
 				},
 				"sap.ui.unified": {
 					"minVersion": "1.54.0"
+				},
+				"mii.util":{
+					"minVersion": "1.0.0"
 				}
 			}
 		},
