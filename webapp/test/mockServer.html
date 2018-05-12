@@ -21,27 +21,32 @@
 		</script>
 		<script>
 			sap.ui.getCore().attachInit(function() {
+				//https://www.youtube.com/watch?v=Yls62sVnins
 				sap.ui.require([
+					"sap/m/Shell",
+					"sap/ui/core/ComponentContainer",
 					"com/mii/scanner/test/localService/mockserver"
-				], function (mockserver) {
+				], function (Shell, ComponentContainer, mockserver) {
 					// set up test service for local testing
 					mockserver.init();
 
-					//check if URL is in debug mode => set locale strage accordingly
+					//check if URL is in debug mode => set locale storage accordingly
 					if(jQuery.sap.getUriParameters().get("sap-ui-debug") === "true"){
 						localStorage.setItem("sap-ui-debug", true);
 					}else{
 						localStorage.removeItem("sap-ui-debug");
 					}
 					
-					new sap.m.Shell("shell",{
-	            		app : new sap.ui.core.ComponentContainer("container",{
-			               name : "com.mii.scanner",
-			               settings: {
-								id: "scanner"
+					new Shell("shell",{
+	            		"app" : new ComponentContainer("container",{
+	            			"async": true,
+	            			"name" : "com.mii.scanner",
+	            			"settings": {
+								"id": "scanner"
 							}
 	            		})
 					}).placeAt("content");
+					
 				});
 			});
 		</script>
