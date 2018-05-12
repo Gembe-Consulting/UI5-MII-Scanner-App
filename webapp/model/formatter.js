@@ -1,7 +1,6 @@
 sap.ui.define([
 	"jquery.sap.global",
-	"sap/ui/core/format/DateFormat",
-	"com/mii/scanner/libs/momentjs/moment"
+	"sap/ui/core/format/DateFormat"
 ], function(jQuery, DateFormat) {
 	"use strict";
 
