@@ -45,6 +45,7 @@ sap.ui.require([
 								.scannerDetection(sBarcodeString);
 						}
 					});
+					
 					return this.waitFor({
 						id: "cancelButton",
 						viewName: "GoodsReceipt",

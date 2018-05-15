@@ -456,7 +456,7 @@
 			"helpUrl": "http://eslint.org/docs/rules/comma-dangle"
 		},
 		"no-else-return": {
-			"severity": "warning",
+			"severity": "info",
 			"category": "Best Practices",
 			"helpUrl": "http://eslint.org/docs/rules/no-else-return"
 		},

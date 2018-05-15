@@ -19,9 +19,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/type/String', 'sap/ui/model/Fo
 		});
 
 		StorageLocationType.prototype.formatValue = function(sValue, sInternalType) {
-			var oValue = StringType.prototype.formatValue.apply(this, arguments);
+			var oValue = StringType.prototype.formatValue.apply(this, arguments),
+				iNoLength = 0;
 
-			if (oValue && oValue.length === 0) {
+			if (oValue && oValue.length === iNoLength) {
 				return this.oFormatOptions.emptyString;
 			}
 
@@ -40,21 +41,23 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/type/String', 'sap/ui/model/Fo
 
 		StorageLocationType.prototype.validateValue = function(sValue) {
 			var aViolatedConstraints = [],
-				aMessages = [];
+				aMessages = [],
+				iNoLength = 0,
+				notFound = -1;
 
 			if (this.oConstraints && this.oConstraints.exludedStorageLocations) {
 				if (typeof this.oConstraints.exludedStorageLocations === "string") {
 					this.oConstraints.exludedStorageLocations = [this.oConstraints.exludedStorageLocations];
 				}
 
-				if (jQuery.inArray(sValue, this.oConstraints.exludedStorageLocations) > -1) {
+				if (jQuery.inArray(sValue, this.oConstraints.exludedStorageLocations) !== notFound) {
 					aViolatedConstraints.push("exludedStorageLocations");
 					aMessages.push("Lagerort '" + sValue + "' ist nicht erlaubt");
 				}
 
 			}
 
-			if (aViolatedConstraints.length > 0) {
+			if (aViolatedConstraints.length > iNoLength) {
 				throw new ValidateException(aMessages.join(". "), aViolatedConstraints);
 			}
 

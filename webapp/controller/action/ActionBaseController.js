@@ -100,9 +100,9 @@ sap.ui.define([
 			oScannerInputType = this.getScannerInputType(sScannedString);
 
 			if (oScannerInputType) {
-				jQuery.sap.log.info("Barcode enthält folgende Information: \'" + sScannedString + "\' Sie haben \'" + oScannerInputType.name + "\' gescannt.");
+				jQuery.sap.log.info("Barcode enthält folgende Information: '" + sScannedString + "' Sie haben '" + oScannerInputType.name + "' gescannt.");
 				// TODO: remove message box
-				MessageBox.success("Barcode enthält folgende Information: \'" + sScannedString + "\' Sie haben \'" + oScannerInputType.name + "\' gescannt.");
+				MessageBox.success("Barcode enthält folgende Information: '" + sScannedString + "' Sie haben '" + oScannerInputType.name + "' gescannt.");
 
 				oControl = this.getControlByScannerInputType(oScannerInputType);
 
@@ -121,9 +121,9 @@ sap.ui.define([
 				}
 
 			} else {
-				jQuery.sap.log.warning("Ihr Barcode konnte zwar gelesen, aber nicht zugeordnet werden.\nInhalt: \'" + sScannedString + "\'");
+				jQuery.sap.log.warning("Ihr Barcode konnte zwar gelesen, aber nicht zugeordnet werden.\nInhalt: '" + sScannedString + "'");
 				// TODO: remove message box
-				MessageBox.warning("Ihr Barcode konnte zwar gelesen, aber nicht zugeordnet werden.\nInhalt war: \'" + sScannedString + "\'");
+				MessageBox.warning("Ihr Barcode konnte zwar gelesen, aber nicht zugeordnet werden.\nInhalt war: '" + sScannedString + "'");
 			}
 
 		},
@@ -187,7 +187,8 @@ sap.ui.define([
 		requestOrderOperationIncidentsService: function(sOrderNumber, sOperationNumber) {
 			var oOrderOperationIncidentsModel = this.getModel("orderIncidents"),
 				oServiceData,
-				oParam;
+				oParam,
+				iLengthOne = 1;
 
 			if (typeof sOrderNumber === "string") {
 				oServiceData = {
@@ -196,7 +197,7 @@ sap.ui.define([
 				};
 			} else {
 
-				if (!sOrderNumber || sOrderNumber.d.results[0].Rowset.results[0].Row.results.length !== 1) {
+				if (!sOrderNumber || sOrderNumber.d.results[0].Rowset.results[0].Row.results.length !== iLengthOne) {
 					return Promise.reject(new Error("Rowset does not contain an operation!"));
 				}
 
@@ -265,11 +266,15 @@ sap.ui.define([
 		},
 
 		showControlBusyIndicator: function(oSource) {
-			return oSource.setBusyIndicatorDelay(0).setBusy(true);
+			var iNoDelay = 0;
+			
+			return oSource.setBusyIndicatorDelay(iNoDelay).setBusy(true);
 		},
 
 		hideControlBusyIndicator: function(oSource) {
-			return oSource.setBusyIndicatorDelay(0).setBusy(false);
+			var iNoDelay = 0;
+			
+			return oSource.setBusyIndicatorDelay(iNoDelay).setBusy(false);
 		},
 
 		getScannerInputType: function(sScannedString) {
@@ -279,10 +284,12 @@ sap.ui.define([
 				return type.validationExpressions.find(function(regEx) {
 
 					var regxCheck = new RegExp(regEx);
+					
 					if (regxCheck.test(sScannedString)) {
 						return type;
 					}
-
+					
+					return null;
 				});
 
 			});
@@ -340,7 +347,9 @@ sap.ui.define([
 		},
 
 		_isDataModelInitial: function(oCurrentData, oInitialData) {
-			return jQuery.sap.equal(oCurrentData, oInitialData, 2, true); //(a, b, maxDepth?, contains?) : boolean
+			var iMaxDepth = 2;
+			
+			return jQuery.sap.equal(oCurrentData, oInitialData, iMaxDepth, true); //(a, b, maxDepth?, contains?) : boolean
 		},
 
 		/**
@@ -365,8 +374,8 @@ sap.ui.define([
 			var oMsgContainer = this.byId("messageStripContainer"),
 				oMsgStrip = new MessageStrip({
 					text: oMessage.text || "Ein unbekannter Fehler ist aufgetreten",
-					showCloseButton: oMessage.showCloseButton === undefined ? true : false, //default true
-					showIcon: oMessage.showIcon === undefined ? true : false, //default true
+					showCloseButton: typeof oMessage.showCloseButton === "undefined" ? true : false, //default true
+					showIcon: typeof oMessage.showIcon === "undefined" ? true : false, //default true
 					customIcon: oMessage.customIcon,
 					type: oMessage.type || sap.ui.core.MessageType.Error,
 					enableFormattedText: oMessage.enableFormattedText || true //default false
@@ -384,45 +393,17 @@ sap.ui.define([
 			oMsgContainer.destroyContent();
 		},
 
-		/***************************************************************************
-				addLogMessage: function(oMessage) {
-					var oMessageStripContainer = this.byId("messageStripContainer"),
-						oMsgStrip;
-
-					this.clearLogMessages();
-
-					oMsgStrip = new MessageStrip(this.createId("messageStrip"), {
-						text: oMessage.text || "Ein unbekannter Fehler ist aufgetreten",
-						showCloseButton: oMessage.showCloseButton || true,
-						showIcon: oMessage.showIcon || true,
-						customIcon: oMessage.customIcon,
-						type: oMessage.type || sap.ui.core.MessageType.Error
-					});
-
-					oMessageStripContainer.addContent(oMsgStrip);
-				},
-
-				clearLogMessages: function() {
-					var oMsgStrip = this.byId("messageStrip"),
-						oMessageStripContainer = this.byId("messageStripContainer");
-
-					if (oMsgStrip) {
-						oMsgStrip.destroy();
-					}
-
-					oMessageStripContainer.destroyContent();
-				},
-		******************************************************************************/
-
 		isMessageModelClean: function() {
 			var oMessageModel = sap.ui.getCore()
 				.getMessageManager()
 				.getMessageModel(),
-				aMessages = oMessageModel.getData();
+				aMessages = oMessageModel.getData(),
+				iZeroLength = 0;
 
-			if (aMessages && aMessages.length > 0) {
+			if (aMessages && aMessages.length > iZeroLength) {
 				return false;
 			}
+			
 			return true;
 			//oder einfach:
 			//return !!sap.ui.getCore().getMessageManager().getMessageModel().getData().length;
@@ -463,13 +444,17 @@ sap.ui.define([
 		},
 
 		padStorageUnitNumber: function(sStorageUnitNumber) {
-			return jQuery.sap.padLeft(sStorageUnitNumber.toString(), "0", 20);
+			var iMaxLength = 20,
+				sPadChar = "0";
+				
+			return jQuery.sap.padLeft(sStorageUnitNumber.toString(), sPadChar, iMaxLength);
 		},
 
 		deleteLeadingZeros: function(vNumber) {
 			if (jQuery.type(vNumber) === "string") {
 				return vNumber.replace(/^0+/, "");
 			}
+			
 			return vNumber;
 		},
 

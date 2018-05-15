@@ -19,11 +19,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/type/String', 'sap/ui/model/Fo
 		});
 
 		StorageUnitNumberType.prototype.parseValue = function(oValue, sInternalType) {
-			var sValue = StringType.prototype.parseValue.apply(this, arguments);
+			var sValue = StringType.prototype.parseValue.apply(this, arguments),
+				iNoLength = 0;
 
 			sValue = sValue.replace(/^0+/, "");
 
-			if (sValue.length === 0) {
+			if (sValue.length === iNoLength) {
 				return this.oFormatOptions.emptyString;
 			}
 
@@ -32,14 +33,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/model/type/String', 'sap/ui/model/Fo
 
 		StorageUnitNumberType.prototype.validateValue = function(sValue) {
 			var aViolatedConstraints = [],
-				aMessages = [];
+				aMessages = [],
+				iNoLength = 0;
 
 			if (!jQuery.isNumeric(sValue)) {
 				aViolatedConstraints.push("isNumeric");
 				aMessages.push("Palettennummer '" + sValue + "' ist nicht gültig");
 			}
 
-			if (aViolatedConstraints.length > 0) {
+			if (aViolatedConstraints.length > iNoLength) {
 				throw new ValidateException(aMessages.join(". "), aViolatedConstraints);
 			}
 

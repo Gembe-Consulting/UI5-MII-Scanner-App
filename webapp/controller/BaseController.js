@@ -57,6 +57,7 @@ sap.ui.define([
 			if (typeof aParameters === "undefined" || aParameters === null) {
 				return this.getResourceBundle().getText(sKey);
 			}
+			
 			return this.getResourceBundle().getText(sKey, aParameters);
 		},
 
@@ -71,8 +72,8 @@ sap.ui.define([
 		 * @param {string} event Event name
 		 * @param {object} data Event data
 		 */
-		sendEvent: function(channel, event, data) {
-			sap.ui.getCore().getEventBus().publish(channel, event, data);
+		sendEvent: function(sChannel, oEvent, oData) {
+			sap.ui.getCore().getEventBus().publish(sChannel, oEvent, oData);
 		},
 
 		/**
@@ -83,8 +84,8 @@ sap.ui.define([
 		 * @param {object} handler Event handler
 		 * @param {object} listener Event listener
 		 */
-		subscribe: function(channel, event, handler, listener) {
-			sap.ui.getCore().getEventBus().subscribe(channel, event, handler, listener);
+		subscribe: function(sChannel, oEvent, oHandler, oListener) {
+			sap.ui.getCore().getEventBus().subscribe(sChannel, oEvent, oHandler, oListener);
 		},
 
 		/**
@@ -95,8 +96,8 @@ sap.ui.define([
 		 * @param {object} handler Event handler
 		 * @param {object} listener Event listener
 		 */
-		unsubscribe: function(channel, event, handler, listener) {
-			sap.ui.getCore().getEventBus().unsubscribe(channel, event, handler, listener);
+		unsubscribe: function(sChannel, oEvent, oHandler, oListener) {
+			sap.ui.getCore().getEventBus().unsubscribe(sChannel, oEvent, oHandler, oListener);
 		},
 
 		/**
@@ -125,11 +126,14 @@ sap.ui.define([
 		},
 
 		onNavBack: function() {
-			var sPreviousHash = History.getInstance().getPreviousHash();
+			var sPreviousHash = History.getInstance().getPreviousHash(),
+				iBack = -1;
 
 			//The history contains a previous entry
 			if (typeof sPreviousHash !== "undefined") {
-				window.history.go(-1);
+				/* eslint-disable sap-no-history-manipulation */
+				window.history.go(iBack);
+				/* eslint-enable sap-no-history-manipulation */
 			} else {
 				// There is no history!
 				// Naviate to home page

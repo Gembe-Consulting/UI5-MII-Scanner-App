@@ -3,13 +3,21 @@ sap.ui.define([
 	"sap/ui/core/format/DateFormat"
 ], function(jQuery, DateFormat) {
 	"use strict";
-
-	const LAST_STORAGE_UNIT_NUMBERS = [90025311000000000000, 90024811000000000000, 90000000000000000000 /* keep lagacy support */ ];
-	const ZERO_STOCK_STORAGE_UNIT_QUANTITIES = [0.0, 0.001];
+	
+	const iBeumerDummyLE = 90025311000000000000;
+	const iPalettiererDummyLE = 90024811000000000000;
+	const iLagacyDummyLE = 90000000000000000000;/* keep lagacy support */ 
+	const LAST_STORAGE_UNIT_NUMBERS = [iBeumerDummyLE, iPalettiererDummyLE, iLagacyDummyLE ];
+	
+	const fEmpty = 0.0;
+	const fNearlyEmpty = 0.001;
+	const ZERO_STOCK_STORAGE_UNIT_QUANTITIES = [fEmpty, fNearlyEmpty];
 
 	/* wrapper for jQuery.inArray() to return a boolean value */
 	var isInArray = function(value, array, fromIndex) {
-		return jQuery.inArray(value, array, fromIndex) > -1;
+		var notFound = -1;
+		
+		return jQuery.inArray(value, array, fromIndex) !== notFound;
 	};
 
 	return {

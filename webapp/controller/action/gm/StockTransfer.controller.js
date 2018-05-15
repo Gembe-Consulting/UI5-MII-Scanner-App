@@ -53,17 +53,20 @@ sap.ui.define([
 			fnResolveGoodsReceipt = function(oData) {
 				var oStorageUnitNumber,
 					aRows,
-					bHasWarningLikeError;
+					bHasWarningLikeError,
+					iExactlyOne = 1,
+					notFound = -1,
+					iFromPos = 19;
 
 				if (!oData.success) {
 
 					bHasWarningLikeError = this._aWarningLikeFatalError.some(function(sMessage) {
-						return jQuery.inArray(sMessage, oData.lastErrorMessage) > -1;
+						return jQuery.inArray(sMessage, oData.lastErrorMessage) !== notFound;
 					});
 
 					if (bHasWarningLikeError) {
 						this.addUserMessage({
-							text: oData.lastErrorMessage.substring(19, oData.lastErrorMessage.length),
+							text: oData.lastErrorMessage.substring(iFromPos, oData.lastErrorMessage.length),
 							type: sap.ui.core.MessageType.Warning
 						});
 					} else {
@@ -74,7 +77,7 @@ sap.ui.define([
 				aRows = oData.d.results[0].Rowset.results[0].Row.results;
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
-				if (aRows.length === 1) {
+				if (aRows.length === iExactlyOne) {
 					oStorageUnitNumber = aRows[0];
 				} else {
 					throw new Error(this.getTranslation("stockTransfer.messageText.resultIncomplete") + " @BwA 101");
@@ -88,10 +91,11 @@ sap.ui.define([
 				var oStorageUnitNumber,
 					aRows = oData.d.results[0].Rowset.results[0].Row.results,
 					oDataModel = this.getModel("data"),
-					sSuccessMessage;
+					sSuccessMessage,
+					iExactlyOne = 1;
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
-				if (aRows.length === 1) {
+				if (aRows.length === iExactlyOne) {
 					oStorageUnitNumber = aRows[0];
 
 					if (bPerformGoodsReceipt) {
@@ -263,9 +267,10 @@ sap.ui.define([
 					},
 					oDataModel = this.getModel("data"),
 					bMergeData = true,
-					aRows = oData.d.results[0].Rowset.results[0].Row.results;
+					aRows = oData.d.results[0].Rowset.results[0].Row.results,
+					iExactlyOne = 1;
 
-				if (aRows.length === 1) {
+				if (aRows.length === iExactlyOne) {
 					oStorageUnit = aRows[0];
 					oSource.setValueState(sap.ui.core.ValueState.Success);
 

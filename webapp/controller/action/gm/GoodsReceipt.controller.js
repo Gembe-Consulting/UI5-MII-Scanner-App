@@ -60,7 +60,8 @@ sap.ui.define([
 			/* Prepare success callback */
 			fnResolve = function(oData) {
 				var oStorageUnitNumber,
-					aRows;
+					aRows,
+					iExactlyOne = 1;
 
 				try {
 					aRows = oData.d.results[0].Rowset.results[0].Row.results;
@@ -69,7 +70,7 @@ sap.ui.define([
 				}
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
-				if (aRows.length === 1) {
+				if (aRows.length === iExactlyOne) {
 					oStorageUnitNumber = aRows[0];
 					this.addUserMessage({
 						text: this.getTranslation("goodsReceipt.messageText.goodsReceiptPostingSuccessfull", [this.deleteLeadingZeros(oStorageUnitNumber.LENUM)]),
@@ -212,7 +213,9 @@ sap.ui.define([
 		},
 
 		isInputDataValid: function(oData) {
-			return !!oData.AUFNR && !!oData.SOLLME && oData.SOLLME > 0 && oData.SOLLME !== "" && !!oData.MEINH && !!oData.LGORT && ((!!oData.LENUM && oData.LGORT === this._sStorageLocationWarehouse) || (!oData.LENUM && oData.LGORT !== this._sStorageLocationWarehouse));
+			var fEmpty = 0;
+			
+			return !!oData.AUFNR && !!oData.SOLLME && oData.SOLLME > fEmpty && oData.SOLLME !== "" && !!oData.MEINH && !!oData.LGORT && ((!!oData.LENUM && oData.LGORT === this._sStorageLocationWarehouse) || (!oData.LENUM && oData.LGORT !== this._sStorageLocationWarehouse));
 		},
 
 		onStorageUnitNumberChange: function(oEvent) {
@@ -240,7 +243,9 @@ sap.ui.define([
 					},
 					aRows,
 					bStorageUnitValid = true,
-					oDataModel = this.getModel("data");
+					oDataModel = this.getModel("data"),
+					iExactlyOne = 1,
+					fEmpty = 0;
 
 				try {
 					aRows = oData.d.results[0].Rowset.results[0].Row.results;
@@ -249,12 +254,12 @@ sap.ui.define([
 				}
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
-				if (aRows.length === 1) {
+				if (aRows.length === iExactlyOne) {
 					oStorageUnit = this._formatStorageUnitData(aRows[0]);
 
 					oSource.setValueState(sap.ui.core.ValueState.Success);
 
-					if (oStorageUnit.SOLLME <= 0) {
+					if (oStorageUnit.SOLLME <= fEmpty) {
 						this.addUserMessage({
 							text: this.getTranslation("goodsReceipt.messageText.storageUnitAlreadyPosted", [sStorageUnitNumber])
 						});
@@ -320,7 +325,8 @@ sap.ui.define([
 				var oOrder,
 					aRows,
 					bOrderNumberValid = true,
-					oDataModel = this.getModel("data");
+					oDataModel = this.getModel("data"),
+					iExactlyOne = 1;
 
 				try {
 					aRows = oData.d.results[0].Rowset.results[0].Row.results;
@@ -329,7 +335,7 @@ sap.ui.define([
 				}
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
-				if (aRows.length === 1) {
+				if (aRows.length === iExactlyOne) {
 					oOrder = aRows[0];
 					oSource.setValueState(sap.ui.core.ValueState.Success);
 					oDataModel.setProperty("/AUFNR", oOrder.AUFNR);

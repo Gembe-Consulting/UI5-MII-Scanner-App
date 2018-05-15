@@ -33,6 +33,7 @@ sap.ui.define([
 
 		prepareUserModel: function() {
 			var oModel = new JSONModel();
+			
 			return oModel;
 		}
 

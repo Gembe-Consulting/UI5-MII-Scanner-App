@@ -193,11 +193,12 @@ sap.ui.define([
 		},
 
 		isInputDataValid: function(oData) {
+			var fZero = 0.0;
 			switch (this.getModel("view").getProperty("/type")) {
 				case "withLE":
-					return !!oData.entryQuantity && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageUnit;
+					return !!oData.entryQuantity && oData.entryQuantity > fZero && oData.entryQuantity !== "" && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageUnit;
 				case "nonLE":
-					return !!oData.entryQuantity && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageLocation && !!oData.materialNumber;
+					return !!oData.entryQuantity && oData.entryQuantity > fZero && oData.entryQuantity !== "" && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageLocation && !!oData.materialNumber;
 				default:
 					return false;
 			}
@@ -219,7 +220,8 @@ sap.ui.define([
 				var oOrderComponent,
 					aRows,
 					oDataModel = this.getModel("data"),
-					sComponentUnitOfMeasure;
+					sComponentUnitOfMeasure,
+					iExactlyOne = 1;
 
 				try {
 					aRows = oData.d.results[0].Rowset.results[0].Row.results;
@@ -228,7 +230,7 @@ sap.ui.define([
 				}
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
-				if (aRows.length === 1) {
+				if (aRows.length === iExactlyOne) {
 					oOrderComponent = aRows[0];
 					oSource.setValueState(sap.ui.core.ValueState.Success);
 
@@ -319,7 +321,9 @@ sap.ui.define([
 					bStorageUnitValid = true,
 					bMergeData = true,
 					oExpirationDateFormatted,
-					oDataModel = this.getModel("data");
+					oDataModel = this.getModel("data"),
+					iExactlyOne = 1,
+					iExactlyZero = 0;
 
 				try {
 					aRows = oData.d.results[0].Rowset.results[0].Row.results;
@@ -328,7 +332,7 @@ sap.ui.define([
 				}
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
-				if (aRows.length === 1) {
+				if (aRows.length === iExactlyOne) {
 					oStorageUnit = this._formatStorageUnitData(aRows[0]);
 
 					oSource.setValueState(sap.ui.core.ValueState.Success);
@@ -342,7 +346,7 @@ sap.ui.define([
 						oSource.setValueState(sap.ui.core.ValueState.Warning);
 					}
 
-					if (oStorageUnit.ISTME <= 0) {
+					if (oStorageUnit.ISTME <= iExactlyZero) {
 						this.addUserMessage({
 							text: this.getTranslation("goodsIssue.messageText.storageUnitIsEmpty", [sStorageUnitNumber])
 						});
@@ -418,7 +422,8 @@ sap.ui.define([
 				var oOrder,
 					aRows,
 					bOrderNumberValid = true,
-					oModel = this.getModel("data");
+					oModel = this.getModel("data"),
+					iExactlyOne = 1;
 
 				try {
 					aRows = oData.d.results[0].Rowset.results[0].Row.results;
@@ -427,7 +432,7 @@ sap.ui.define([
 				}
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
-				if (aRows.length === 1) {
+				if (aRows.length === iExactlyOne) {
 					oOrder = aRows[0];
 					oSource.setValueState(sap.ui.core.ValueState.Success);
 
@@ -481,8 +486,7 @@ sap.ui.define([
 				return;
 			}
 
-			//this.validateComponentWithdrawal(oDataModel.getProperty("/orderNumber"), oDataModel.getProperty("/materialNumber"), oSource);
-
+			this.validateComponentWithdrawal(oDataModel.getProperty("/orderNumber"), oDataModel.getProperty("/materialNumber"), oSource);
 		},
 
 		onMaterialNumberInputChange: function(oEvent) {
@@ -509,6 +513,7 @@ sap.ui.define([
 
 		setPageTitle: function(sType) {
 			var sTitleText = "titleGoodsIssue";
+			
 			return this.getTranslation(sTitleText + (sType || ""));
 		}
 
