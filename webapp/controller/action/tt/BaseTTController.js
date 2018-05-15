@@ -89,6 +89,7 @@ sap.ui.define([
 			/* check if current input is valid */
 			if (!sOrderNumber || !sOperationNumber || this.controlHasValidationError(oSource)) {
 				this.updateViewControls(oDataModel.getData());
+				
 				return;
 			}
 
@@ -103,10 +104,11 @@ sap.ui.define([
 			/* Prepare success callback */
 			fnResolveOrderService = function(oData) {
 				var oOperation,
-					aRows = oData.d.results[0].Rowset.results[0].Row.results;
+					aRows = oData.d.results[0].Rowset.results[0].Row.results,
+					iExactlyOne = 1;
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
-				if (aRows.length === 1) {
+				if (aRows.length === iExactlyOne) {
 					oOperation = aRows[0];
 				} else {
 					return Promise.reject(new Error(this.getTranslation("baseTTControllerOperation.messageText.orderNotFound", [sOrderNumber, sOperationNumber])));
@@ -132,6 +134,7 @@ sap.ui.define([
 					if (oOldDate > oNewDate) {
 						return oPrevIncident;
 					}
+					
 					return oIncident;
 				};
 
@@ -224,9 +227,11 @@ sap.ui.define([
 
 			if (oDateTimeEntryMoment.isBefore(minMoment, "day")) {
 				oDateTimeEntryControl.setValueState(sap.ui.core.ValueState.Error).setValueStateText("Eingabezeitpunkt ist zu klein. Eingabe nur ab '" + minMoment.format("LLL") + "' möglich.");
+				
 				return true;
 			} else if (oDateTimeEntryMoment.isAfter(maxMoment)) {
 				oDateTimeEntryControl.setValueState(sap.ui.core.ValueState.Error).setValueStateText("Eingabezeitpunkt ist zu groß. Eingabe nur bis '" + maxMoment.format("LLL") + "' möglich.");
+				
 				return false;
 			}
 
@@ -332,8 +337,10 @@ sap.ui.define([
 				endMoment = moment(oEndDate);
 
 				if (!aInterruptions) {
-					var iDuration = endMoment - startMoment;
-					iDuration = iDuration / 3600; //ms -> min
+					var iDuration = endMoment - startMoment,
+						MS_TO_MIN = 3600;
+					
+					iDuration = iDuration / MS_TO_MIN; //ms -> min
 					aTimeLine.push(new StackedBarMicroChartBar({
 						valueColor: "Good",
 						value: iDuration,
@@ -346,7 +353,8 @@ sap.ui.define([
 							startOfInterruption = moment(oInterruption.STR_BEGINN),
 							endOfInterruption = moment(oInterruption.STR_ENDE).isValid() ? moment(oInterruption.STR_ENDE) : moment(),
 							length = endOfInterruption - startOfInterruption,
-							oNextBar;
+							oNextBar,
+							iOne = 1;
 
 						oBar = new StackedBarMicroChartBar({
 							valueColor: "Error",
@@ -354,7 +362,7 @@ sap.ui.define([
 							displayValue: moment.duration(length).format(sDurationFormatPattern)
 						}).setTooltip(startOfInterruption.format("LLL") + " > " + endOfInterruption.format("LLL") + " -- " + oInterruption.STRCODE + ": " + oInterruption.STR_TXT + " [" + moment.duration(length).format(sDurationFormatPattern) + "]");
 
-						var oNextIntervall = interruptions[index + 1];
+						var oNextIntervall = interruptions[index + iOne];
 
 						if (oNextIntervall) {
 							var endOfNextRunning = moment(oNextIntervall.STR_BEGINN);

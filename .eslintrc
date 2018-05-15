@@ -232,7 +232,7 @@
 		"max-statements-per-line": 0,
 		"multiline-ternary": [2, "never"],
 		"newline-before-return": 2,
-		"newline-per-chained-call": 2,
+		"newline-per-chained-call": 0,
 		"no-case-declarations": 0,
 		"no-class-assign": 0,
 		"no-confusing-arrow": [2, {
@@ -245,12 +245,16 @@
 		"no-empty-pattern": 0,
 		"no-extra-label": 0,
 		"no-global-assign": 2,
-		"no-implicit-coercion": 2,
+		"no-implicit-coercion": [2, {
+			"allow": ["!!", "~"]
+		}],
 		"no-implicit-globals": 2,
 		"no-invalid-this": 0,
-		"no-magic-numbers": 2,
+		"no-magic-numbers": [2, {
+			"ignoreArrayIndexes": true
+		}],
 		"no-mixed-operators": 2,
-		"no-negated-condition": 2,
+		"no-negated-condition": 0,
 		"no-new-symbol": 2,
 		"no-prototype-builtins": 0,
 		"no-restricted-globals": 0,

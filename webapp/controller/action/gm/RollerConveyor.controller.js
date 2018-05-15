@@ -160,16 +160,19 @@ sap.ui.define([
 			fnResolve = function(oIllumData) {
 				var oRow,
 					aRows,
-					bHasWarningLikeError;
+					bHasWarningLikeError,
+					iExactlyOne = 1,
+					notFound = -1,
+					iFromPos = 19;
 
 				if (!oIllumData.success) {
 					bHasWarningLikeError = this._aWarningLikeFatalError.some(function(sMessage) {
-						return jQuery.inArray(sMessage, oIllumData.lastErrorMessage) > -1;
+						return jQuery.inArray(sMessage, oIllumData.lastErrorMessage) !== notFound;
 					});
 
 					if (bHasWarningLikeError) {
 						this.addUserMessage({
-							text: oIllumData.lastErrorMessage.substring(19, oIllumData.lastErrorMessage.length),
+							text: oIllumData.lastErrorMessage.substring(iFromPos, oIllumData.lastErrorMessage.length),
 							type: sap.ui.core.MessageType.Warning
 						});
 					} else {
@@ -180,7 +183,7 @@ sap.ui.define([
 				aRows = oIllumData.d.results[0].Rowset.results[0].Row.results;
 
 				/* Check if oIllumData contains required results: extract value, evaluate value, set UI, set model data */
-				if (aRows.length === 1) {
+				if (aRows.length === iExactlyOne) {
 					oRow = aRows[0];
 					oData.storageUnit = oRow.LENUM;
 				} else {
@@ -236,17 +239,20 @@ sap.ui.define([
 			fnResolve = function(oIllumData) {
 				var oRow,
 					aRows,
-					bHasWarningLikeError;
+					bHasWarningLikeError,
+					iExactlyOne = 1,
+					notFound = -1,
+					iFromPos = 19;
 
 				if (!oIllumData.success) {
 
 					bHasWarningLikeError = this._aWarningLikeFatalError.some(function(sMessage) {
-						return jQuery.inArray(sMessage, oIllumData.lastErrorMessage) > -1;
+						return jQuery.inArray(sMessage, oIllumData.lastErrorMessage) !== notFound;
 					});
 
 					if (bHasWarningLikeError) {
 						this.addUserMessage({
-							text: oIllumData.lastErrorMessage.substring(19, oIllumData.lastErrorMessage.length),
+							text: oIllumData.lastErrorMessage.substring(iFromPos, oIllumData.lastErrorMessage.length),
 							type: sap.ui.core.MessageType.Warning
 						});
 					} else {
@@ -257,7 +263,7 @@ sap.ui.define([
 				aRows = oIllumData.d.results[0].Rowset.results[0].Row.results;
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
-				if (aRows.length === 1) {
+				if (aRows.length === iExactlyOne) {
 					oRow = aRows[0];
 					oData.storageUnit = oRow.LENUM;
 				} else {
@@ -298,14 +304,16 @@ sap.ui.define([
 			var sendStockTransferPromise,
 				oStorageUnitCreateModel = this.getModel("storageUnitCreate"),
 				oParam,
+				iYes = 1,
+				iNo = 0,
 				fnResolve, fnReject;
 
 			this.addMessageManagerMessage("Starte Umbuchung auf Rollenbahn...");
 
 			oParam = {
 				"Param.1": oData.storageBinId, //Lagerplatz (ID),
-				"Param.2": oData.stretcherActive ? 1 : 0, //Stretch,
-				"Param.3": this.formatter.isLastStorageUnit(oData.storageUnit) ? 1 : 0, //LETZE_LE,
+				"Param.2": oData.stretcherActive ? iYes : iNo, //Stretch,
+				"Param.3": this.formatter.isLastStorageUnit(oData.storageUnit) ? iYes : iNo, //LETZE_LE,
 				"Param.4": this.padStorageUnitNumber(oData.storageUnit) //LE
 			};
 
@@ -351,9 +359,10 @@ sap.ui.define([
 
 			fnResolve = function(oIllumData) {
 				var oResult = oIllumData.d.results["0"],
-					oRow;
+					oRow,
+					iExactlyOne = 1;
 
-				if (oResult.Rowset.results["0"].Row.results.length === 1) {
+				if (oResult.Rowset.results["0"].Row.results.length === iExactlyOne) {
 					oRow = oResult.Rowset.results["0"].Row.results["0"];
 					oData.orderNumber = oRow.AUFNR;
 					oData.operationNumber = oRow.VORNR;
@@ -426,19 +435,22 @@ sap.ui.define([
 		getRessourceOfDummyStorageUnit: function(sStorageUnitNumber) {
 			var sRessource,
 				oRessource,
-				mRessource = new Map();
+				mRessource = new Map(),
+				iLENUMLength = 20,
+				iStartRessourcePart = 1,
+				iEndRessourcePart = 9;
 
 			// check if valid LE
-			if (!sStorageUnitNumber.startsWith("900") && sStorageUnitNumber.length === 20) {
+			if (!sStorageUnitNumber.startsWith("900") && sStorageUnitNumber.length === iLENUMLength) {
 				return mRessource;
 			}
 
 			// find ressource id
-			sRessource = sStorageUnitNumber.substring(1, 9);
+			sRessource = sStorageUnitNumber.substring(iStartRessourcePart, iEndRessourcePart);
 
 			//check ressource id
-			oRessource = this.mapStorageBinToRessource.filter(function(o) {
-				return Object.values(o)[0] === sRessource;
+			oRessource = this.mapStorageBinToRessource.filter(function(oRes) {
+				return Object.values(oRes)[0] === sRessource;
 			})[0];
 
 			if (!oRessource) {
@@ -471,12 +483,14 @@ sap.ui.define([
 		},
 
 		isInputDataValid: function(oData) {
-			return !!oData.storageUnit && !!oData.storageBin && !!oData.storageBinId && oData.entryQuantity > 0 && oData.entryQuantity !== "" && !!oData.unitOfMeasure;
+			var fEmpty = 0;
+			
+			return !!oData.storageUnit && !!oData.storageBin && !!oData.storageBinId && oData.entryQuantity > fEmpty && oData.entryQuantity !== "" && !!oData.unitOfMeasure;
 		},
 
 		findRessourceOfStorageBin: function(sStorageBin) {
-			return this.mapStorageBinToRessource.filter(function(o) {
-				return !!o[sStorageBin];
+			return this.mapStorageBinToRessource.filter(function(oRes) {
+				return !!oRes[sStorageBin];
 			})[0][sStorageBin];
 		},
 
@@ -516,13 +530,14 @@ sap.ui.define([
 			fnResolve = function(oData) {
 				var oStorageUnit,
 					aResultList,
-					bStorageUnitValid;
+					bStorageUnitValid,
+					iExactlyOne = 1;
 
 				try {
 
 					aResultList = oData.d.results[0].Rowset.results[0].Row.results;
 
-					if (aResultList.length === 1) {
+					if (aResultList.length === iExactlyOne) {
 						oStorageUnit = this._formatStorageUnitData(oData.d.results[0].Rowset.results[0].Row.results[0]);
 						oSource.setValueState(sap.ui.core.ValueState.Success);
 						bStorageUnitValid = true;
@@ -548,9 +563,9 @@ sap.ui.define([
 						}
 					}
 
-				} catch (err) {
+				} catch (sError) {
 					MessageBox.error(oBundle.getText("rollerConveyor.errorMessageText.storageUnit"), {
-						title: err
+						title: sError
 					});
 					oSource.setValueState(sap.ui.core.ValueState.Error);
 					bStorageUnitValid = false;

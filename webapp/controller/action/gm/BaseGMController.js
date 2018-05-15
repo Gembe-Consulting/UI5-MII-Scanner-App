@@ -10,10 +10,13 @@ sap.ui.define([
 		 * Check is a given storage location is allowed for posting
 		 */
 		isStorageLocationAllowed: function(sStorageLocation) {
-			return this._aDisallowedStorageLocations.indexOf(sStorageLocation.toUpperCase()) === -1;
+			var nonExistng = -1;
+			
+			return this._aDisallowedStorageLocations.indexOf(sStorageLocation.toUpperCase()) === nonExistng;
 		},
 
 		_formatStorageUnitData: function(oStorageUnit) {
+			var fEmpty = 00;
 
 			if (!oStorageUnit) {
 				return null;
@@ -24,7 +27,7 @@ sap.ui.define([
 			};
 
 			oStorageUnit.LENUM = fnNumberOrDefault(oStorageUnit.LENUM, null);
-			oStorageUnit.SOLLME = fnNumberOrDefault(oStorageUnit.SOLLME, 0.0);
+			oStorageUnit.SOLLME = fnNumberOrDefault(oStorageUnit.SOLLME, fEmpty);
 
 			return oStorageUnit;
 		}

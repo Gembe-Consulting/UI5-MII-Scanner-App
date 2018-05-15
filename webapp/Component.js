@@ -68,14 +68,16 @@ sap.ui.define([
 
 				try {
 					oUser = oLoginResult.d.results[0].Rowset.results[0].Row.results[0];
-				} catch (err) {
-					jQuery.sap.log.error("Das Resultset enthält keine Benutzerdaten!", [err], ["Component.testUserLoginName"]);
-					return Promise.reject(err);
+				} catch (oError) {
+					jQuery.sap.log.error("Das Resultset enthält keine Benutzerdaten!", [oError], ["Component.testUserLoginName"]);
+					
+					return Promise.reject(oError);
 				}
 
 				if (oUser && oUser.USERLOGIN === sUserInputUpper) {
 					return oUser;
 				}
+				
 				return Promise.reject("Der zurückgegeben Username entspricht nicht der Benutzereingabe!", [], ["Component.testUserLoginName"]);
 
 			}.bind(this);
@@ -119,11 +121,13 @@ sap.ui.define([
 			//always return true if we are in debug mode
 			if (this._bDebugMode) {
 				oModel.setProperty("/USERLOGIN", "SUW_MII_DEBUG");
+				
 				return true;
 			}
 
 			if (!oModel || !oModel.getProperty("/USERLOGIN") || oModel.getProperty("/USERLOGIN") === "") {
 				jQuery.sap.log.warning("User nicht angemeldet", "this.getModel('user') undefined or property USERLOGIN not given or empty.", this.toString());
+				
 				return false;
 			}
 
@@ -140,6 +144,7 @@ sap.ui.define([
 					sIllumLoginName = $("#IllumLoginName").val();
 					if (sIllumLoginName) {
 						resolve(sIllumLoginName);
+						
 						return;
 					}
 					reject(new Error("Could not read #IllumLoginName"));
@@ -152,6 +157,7 @@ sap.ui.define([
 
 		resetUserModel: function(oObject) {
 			var oEmpty = oObject || {};
+			
 			return this.getModel("user").setProperty("/", oEmpty);
 		},
 
@@ -165,9 +171,11 @@ sap.ui.define([
 			this.getRouter().initialize();
 
 			// purge username from user modele, once login page is displayed
-			this.getRouter().getTarget("login").attachDisplay(function(oEvent) {
-				this.resetUserModel();
-			}.bind(this));
+			this.getRouter()
+				.getTarget("login")
+				.attachDisplay(function(oEvent) {
+					this.resetUserModel();
+				}.bind(this));
 
 			// set the browser page title based on navigation
 			this.getRouter().attachTitleChanged(function(oEvent) {
@@ -205,7 +213,8 @@ sap.ui.define([
 		 * Only if current system is not a desktop device!
 		 */
 		setupScannerDetection: function() {
-			var bMobile = this.getModel("device").getProperty("/browser/mobile");
+			var bMobile = this.getModel("device").getProperty("/browser/mobile"),
+				iEnterKey = 13;
 			if (bMobile) {
 
 				jQuery(document).scannerDetection({
@@ -218,16 +227,16 @@ sap.ui.define([
 						//});
 						jQuery.sap.log.error("Scan war nicht erfolgreich: " + sString, "Event: onError", "ScannerDetection");
 					},
-					onReceive: function(event, a, b, c) { // Callback after receiving and processing a char (scanned char in parameter)
-						jQuery.sap.log.debug("Key stroke detected from Scanner: " + event.key + " (" + event.keyCode + ")", "Event: onReceive", "ScannerDetection");
+					onReceive: function(oEvent) { // Callback after receiving and processing a char (scanned char in parameter)
+						jQuery.sap.log.debug("Key stroke detected from Scanner: " + oEvent.key + " (" + oEvent.keyCode + ")", "Event: onReceive", "ScannerDetection");
 					},
-					onKeyDetect: function(event) { // Callback after detecting a keyDown (key char in parameter) - in contrast to onReceive, this fires for non-character keys like tab, arrows, etc. too!
-						jQuery.sap.log.debug("Key stroke detected: " + event.key + " (" + event.keyCode + ")", "Event: onKeyDetect", "ScannerDetection");
+					onKeyDetect: function(oEvent) { // Callback after detecting a keyDown (key char in parameter) - in contrast to onReceive, this fires for non-character keys like tab, arrows, etc. too!
+						jQuery.sap.log.debug("Key stroke detected: " + oEvent.key + " (" + oEvent.keyCode + ")", "Event: onKeyDetect", "ScannerDetection");
 					},
 					timeBeforeScanTest: 100, // Wait duration (ms) after keypress event to check if scanning is finished. default: 100
 					avgTimeByChar: 30, // Average time (ms) between 2 chars. Used to do difference between keyboard typing and scanning. default : 30
 					minLength: 4, // Minimum length for a scanning. default: 6
-					endChar: [13], // Chars to remove and means end of scanning
+					endChar: [iEnterKey], // Chars to remove and means end of scanning
 					startChar: [], // Chars to remove and means start of scanning
 					ignoreIfFocusOn: ".noScannerInput", // do not handle scans if the currently focused element matches this selector
 					scanButtonKeyCode: false, // Key code of the scanner hardware button (if the scanner button a acts as a key itself) 
@@ -254,6 +263,7 @@ sap.ui.define([
 		 */
 		setupSpaceAndTime: function() {
 			var sCurrentLocale = sap.ui.getCore().getConfiguration().getLanguage();
+			
 			moment.locale(sCurrentLocale);
 		},
 
@@ -277,6 +287,7 @@ sap.ui.define([
 					this._sContentDensityClass = "sapUiSizeCozy";
 				}
 			}
+			
 			return this._sContentDensityClass;
 		},
 
@@ -301,7 +312,8 @@ sap.ui.define([
 		},
 
 		showBusyIndicator: function(iDelay) {
-			iDelay = iDelay || 0;
+			var iDefaultDelay = 0;
+			iDelay = iDelay || iDefaultDelay;
 			sap.ui.core.BusyIndicator.show(iDelay);
 		},
 
