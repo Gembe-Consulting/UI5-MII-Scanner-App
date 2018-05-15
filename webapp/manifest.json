@@ -1,5 +1,5 @@
 {
-	"_version": "1.7.0",
+	"_version": "1.8.0",
 	"start_url": "index.html",
 	"sap.app": {
 		"_version": "1.5.0",
@@ -11,7 +11,10 @@
 		"shortTitle": "{{appShortTitle}}",
 		"description": "{{appDescription}}",
 		"tags": {
-			"keywords": ["{{appKeyWord1}}", "{{appKeyWord2}}"]
+			"keywords": [
+				"{{appKeyWord1}}",
+				"{{appKeyWord2}}"
+			]
 		},
 		"applicationVersion": {
 			"version": "{{appVersion}}"
@@ -40,7 +43,9 @@
 			"tablet": true,
 			"phone": true
 		},
-		"supportedThemes": ["sap_belize"]
+		"supportedThemes": [
+			"sap_belize"
+		]
 	},
 	"sap.ui5": {
 		"_version": "1.3.0",
@@ -57,6 +62,9 @@
 				"sap.m": {
 					"minVersion": "1.54.0"
 				},
+				"sap.suite.ui.microchart": {
+					"minVersion": ""
+				},
 				"sap.ui.core": {
 					"minVersion": "1.54.0"
 				},
@@ -65,9 +73,6 @@
 				},
 				"sap.ui.unified": {
 					"minVersion": "1.54.0"
-				},
-				"mii.util":{
-					"minVersion": "1.0.0"
 				}
 			}
 		},
@@ -224,67 +229,112 @@
 				"controlId": "navContainer",
 				"controlAggregation": "pages",
 				"bypassed": {
-					"target": ["notFound"]
+					"target": [
+						"notFound"
+					]
 				},
 				"async": true
 			},
-			"routes": [{
-				"pattern": "",
-				"name": "empty",
-				"target": ["login"]
-			}, {
-				"pattern": "{{manifest.routing.route.pattern.login}}",
-				"name": "login",
-				"target": ["login"]
-			}, {
-				"pattern": "{{manifest.routing.route.pattern.forbidden}}",
-				"name": "forbidden",
-				"target": ["forbidden"]
-			}, {
-				"pattern": "{{manifest.routing.route.pattern.home}}",
-				"name": "home",
-				"target": ["home"]
-			}, {
-				"pattern": "{{manifest.routing.route.pattern.statusChange}}",
-				"name": "statusChange",
-				"target": ["statusChange"]
-			}, {
-				"pattern": "{{manifest.routing.route.pattern.goodsMovement}}",
-				"name": "goodsMovement",
-				"target": ["goodsMovement"]
-			}, {
-				"pattern": "{{manifest.routing.route.pattern.goodsMovement.goodsReceipt}}:?query:",
-				"name": "goodsReceipt",
-				"target": ["goodsReceipt"]
-			}, {
-				"pattern": "{{manifest.routing.route.pattern.goodsMovement.goodsIssue}}:?query:",
-				"name": "goodsIssue",
-				"target": ["goodsIssue"]
-			}, {
-				"pattern": "{{manifest.routing.route.pattern.goodsMovement.stockTransfer}}",
-				"name": "stockTransfer",
-				"target": ["stockTransfer"]
-			}, {
-				"pattern": "{{manifest.routing.route.pattern.goodsMovement.rollerConveyor}}",
-				"name": "rollerConveyor",
-				"target": ["rollerConveyor"]
-			}, {
-				"pattern": "{{manifest.routing.route.pattern.statusChange.startOperation}}:?query:",
-				"name": "startOperation",
-				"target": ["startOperation"]
-			}, {
-				"pattern": "{{manifest.routing.route.pattern.statusChange.interruptOperation}}:?query:",
-				"name": "interruptOperation",
-				"target": ["interruptOperation"]
-			}, {
-				"pattern": "{{manifest.routing.route.pattern.statusChange.resumeOperation}}:?query:",
-				"name": "resumeOperation",
-				"target": ["resumeOperation"]
-			}, {
-				"pattern": "{{manifest.routing.route.pattern.statusChange.finishOperation}}:?query:",
-				"name": "finishOperation",
-				"target": ["finishOperation"]
-			}],
+			"routes": [
+				{
+					"pattern": "",
+					"name": "empty",
+					"target": [
+						"login"
+					]
+				},
+				{
+					"pattern": "{{manifest.routing.route.pattern.login}}",
+					"name": "login",
+					"target": [
+						"login"
+					]
+				},
+				{
+					"pattern": "{{manifest.routing.route.pattern.forbidden}}",
+					"name": "forbidden",
+					"target": [
+						"forbidden"
+					]
+				},
+				{
+					"pattern": "{{manifest.routing.route.pattern.home}}",
+					"name": "home",
+					"target": [
+						"home"
+					]
+				},
+				{
+					"pattern": "{{manifest.routing.route.pattern.statusChange}}",
+					"name": "statusChange",
+					"target": [
+						"statusChange"
+					]
+				},
+				{
+					"pattern": "{{manifest.routing.route.pattern.goodsMovement}}",
+					"name": "goodsMovement",
+					"target": [
+						"goodsMovement"
+					]
+				},
+				{
+					"pattern": "{{manifest.routing.route.pattern.goodsMovement.goodsReceipt}}:?query:",
+					"name": "goodsReceipt",
+					"target": [
+						"goodsReceipt"
+					]
+				},
+				{
+					"pattern": "{{manifest.routing.route.pattern.goodsMovement.goodsIssue}}:?query:",
+					"name": "goodsIssue",
+					"target": [
+						"goodsIssue"
+					]
+				},
+				{
+					"pattern": "{{manifest.routing.route.pattern.goodsMovement.stockTransfer}}",
+					"name": "stockTransfer",
+					"target": [
+						"stockTransfer"
+					]
+				},
+				{
+					"pattern": "{{manifest.routing.route.pattern.goodsMovement.rollerConveyor}}",
+					"name": "rollerConveyor",
+					"target": [
+						"rollerConveyor"
+					]
+				},
+				{
+					"pattern": "{{manifest.routing.route.pattern.statusChange.startOperation}}:?query:",
+					"name": "startOperation",
+					"target": [
+						"startOperation"
+					]
+				},
+				{
+					"pattern": "{{manifest.routing.route.pattern.statusChange.interruptOperation}}:?query:",
+					"name": "interruptOperation",
+					"target": [
+						"interruptOperation"
+					]
+				},
+				{
+					"pattern": "{{manifest.routing.route.pattern.statusChange.resumeOperation}}:?query:",
+					"name": "resumeOperation",
+					"target": [
+						"resumeOperation"
+					]
+				},
+				{
+					"pattern": "{{manifest.routing.route.pattern.statusChange.finishOperation}}:?query:",
+					"name": "finishOperation",
+					"target": [
+						"finishOperation"
+					]
+				}
+			],
 			"targets": {
 				"login": {
 					"viewName": "Login",
@@ -386,31 +436,40 @@
 			}
 		},
 		"resources": {
-			"js": [{
-				"uri": "libs/momentjs/moment.js",
-				"name": "moment.js",
-				"version": "2.19.1"
-			}, {
-				"uri": "libs/momentjs/locale/de.js",
-				"name": "locale-de.js",
-				"version": "2.19.1"
-			}, {
-				"uri": "libs/momentjs/moment-duration-format.js",
-				"name": "moment-duration-format.js",
-				"version": "2.2.2"
-			}, {
-				"uri": "libs/lodashjs/lodash-core.min.js",
-				"name": "lodash.js"
-			}, {
-				"uri": "libs/scannerdetection/scannerdetection.js",
-				"name": "scannerdetection.js"
-			}, {
-				"uri": "libs/jquerybase64/jquery.base64.js",
-				"name": "jquery.base64.js"
-			}],
-			"css": [{
-				"uri": "css/style.css"
-			}]
+			"js": [
+				{
+					"uri": "libs/momentjs/moment.js",
+					"name": "moment.js",
+					"version": "2.19.1"
+				},
+				{
+					"uri": "libs/momentjs/locale/de.js",
+					"name": "locale-de.js",
+					"version": "2.19.1"
+				},
+				{
+					"uri": "libs/momentjs/moment-duration-format.js",
+					"name": "moment-duration-format.js",
+					"version": "2.2.2"
+				},
+				{
+					"uri": "libs/lodashjs/lodash-core.js",
+					"name": "lodash.js"
+				},
+				{
+					"uri": "libs/scannerdetection/scannerdetection.js",
+					"name": "scannerdetection.js"
+				},
+				{
+					"uri": "libs/jquerybase64/jquery.base64.js",
+					"name": "jquery.base64.js"
+				}
+			],
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
 		}
 	},
 	"sap.platform.hcp": {
