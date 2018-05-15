@@ -1,8 +1,9 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/core/routing/History",
-	"sap/ui/Device"
-], function(Controller, History, Device) {
+	"sap/ui/Device",
+	"./utilities"
+], function(Controller, History, Device, Util) {
 	"use strict";
 
 	return Controller.extend("com.mii.scanner.controller.BaseController", {
