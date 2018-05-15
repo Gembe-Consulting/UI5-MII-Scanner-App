@@ -4,6 +4,6 @@
 	"description": "SAPUI5 Scanner App for Suwelack on SAP MII",
 	"private": true,
 	"devDependencies": {
-		"@sap/grunt-sapui5-bestpractice-build": ""
+		"@sap/grunt-sapui5-bestpractice-build": "1.3.55"
 	}
 }
