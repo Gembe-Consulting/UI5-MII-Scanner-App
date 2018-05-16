@@ -4,14 +4,14 @@ sap.ui.define([
 ], function(jQuery, DateFormat) {
 	"use strict";
 	
-	const iBeumerDummyLE = 90025311000000000000;
-	const iPalettiererDummyLE = 90024811000000000000;
-	const iLagacyDummyLE = 90000000000000000000;/* keep lagacy support */ 
-	const LAST_STORAGE_UNIT_NUMBERS = [iBeumerDummyLE, iPalettiererDummyLE, iLagacyDummyLE ];
+	var iBeumerDummyLE = 90025311000000000000;
+	var iPalettiererDummyLE = 90024811000000000000;
+	var iLagacyDummyLE = 90000000000000000000;/* keep lagacy support */ 
+	var LAST_STORAGE_UNIT_NUMBERS = [iBeumerDummyLE, iPalettiererDummyLE, iLagacyDummyLE ];
 	
-	const fEmpty = 0.0;
-	const fNearlyEmpty = 0.001;
-	const ZERO_STOCK_STORAGE_UNIT_QUANTITIES = [fEmpty, fNearlyEmpty];
+	var fEmpty = 0.0;
+	var fNearlyEmpty = 0.001;
+	var ZERO_STOCK_STORAGE_UNIT_QUANTITIES = [fEmpty, fNearlyEmpty];
 
 	/* wrapper for jQuery.inArray() to return a boolean value */
 	var isInArray = function(value, array, fromIndex) {
