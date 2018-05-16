@@ -17,7 +17,7 @@ sap.ui.define([
 					onRejectedUser = jQuery.proxy(oComponent.forceRedirectToLoginPage, oComponent);
 					onResolvedUser = jQuery.proxy(oComponent.testUserLoginName, oComponent);
 
-					// First try to read user model. If no uer model is present
+					// First try to read user model. If no user model is present
 					// Try to discover/fetch IllumLoginName vom html body
 					// Test discovered IllumLoginName against MII backend
 					// If this username is invalid, we will redirect to login page
