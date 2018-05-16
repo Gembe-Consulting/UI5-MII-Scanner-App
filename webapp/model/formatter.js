@@ -1,7 +1,9 @@
 sap.ui.define([
 	"jquery.sap.global",
-	"sap/ui/core/format/DateFormat"
-], function(jQuery, DateFormat) {
+	"sap/ui/core/format/DateFormat",
+	"com/mii/scanner/libs/momentjs/moment"
+], function(jQuery, DateFormat, momentjs) {
+	/* global moment:true */
 	"use strict";
 	
 	var iBeumerDummyLE = 90025311000000000000;
