@@ -1,12 +1,14 @@
 sap.ui.define([
 	"jquery.sap.global",
+	"com/mii/scanner/libs/momentjs/moment",
 	"./BaseTTController",
 	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox",
 	"com/mii/scanner/model/sapType",
 	"com/mii/scanner/model/formatter"
-], function(jQuery, BaseTTController, JSONModel, MessageBox, sapType, formatter) {
+], function(jQuery, momentjs, BaseTTController, JSONModel, MessageBox, sapType, formatter) {
 	"use strict";
+	/* global moment:true */
 
 	return BaseTTController.extend("com.mii.scanner.controller.action.tt.InterruptOperation", {
 
@@ -55,7 +57,7 @@ sap.ui.define([
 					this.addUserMessage({
 						text: oData.lastErrorMessage
 					});
-					
+
 					return;
 				}
 

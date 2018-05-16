@@ -1,12 +1,14 @@
 sap.ui.define([
 	"jquery.sap.global",
+	"com/mii/scanner/libs/momentjs/moment",
 	"./BaseGMController",
 	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox",
 	"com/mii/scanner/model/sapType",
 	"com/mii/scanner/model/formatter"
-], function(jQuery, BaseGMController, JSONModel, MessageBox, sapType, formatter) {
+], function(jQuery, momentjs, BaseGMController, JSONModel, MessageBox, sapType, formatter) {
 	"use strict";
+	/* global moment:true */
 
 	return BaseGMController.extend("com.mii.scanner.controller.action.gm.GoodsIssue", {
 
@@ -513,7 +515,7 @@ sap.ui.define([
 
 		setPageTitle: function(sType) {
 			var sTitleText = "titleGoodsIssue";
-			
+
 			return this.getTranslation(sTitleText + (sType || ""));
 		}
 
