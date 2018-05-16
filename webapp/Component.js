@@ -1,14 +1,15 @@
 //jQuery.sap.registerModulePath("mii.util", "../ui5miiutilities/mii/util/");
 sap.ui.define([
 	"jquery.sap.global",
+	"com/mii/scanner/libs/momentjs/moment",
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
 	"com/mii/scanner/model/models",
 	"com/mii/scanner/controller/ErrorHandler",
 	"sap/m/MessageBox"
-], function(jQuery, UIComponent, Device, models, ErrorHandler, MessageBox) {
+], function(jQuery, momentjs, UIComponent, Device, models, ErrorHandler, MessageBox) {
 	"use strict";
-
+	/* global moment:true */
 	return UIComponent.extend("com.mii.scanner.Component", {
 
 		metadata: {
@@ -70,14 +71,14 @@ sap.ui.define([
 					oUser = oLoginResult.d.results[0].Rowset.results[0].Row.results[0];
 				} catch (oError) {
 					jQuery.sap.log.error("Das Resultset enthält keine Benutzerdaten!", [oError], ["Component.testUserLoginName"]);
-					
+
 					return Promise.reject(oError);
 				}
 
 				if (oUser && oUser.USERLOGIN === sUserInputUpper) {
 					return oUser;
 				}
-				
+
 				return Promise.reject("Der zurückgegeben Username entspricht nicht der Benutzereingabe!", [], ["Component.testUserLoginName"]);
 
 			}.bind(this);
@@ -121,13 +122,13 @@ sap.ui.define([
 			//always return true if we are in debug mode
 			if (this._bDebugMode) {
 				oModel.setProperty("/USERLOGIN", "SUW_MII_DEBUG");
-				
+
 				return true;
 			}
 
 			if (!oModel || !oModel.getProperty("/USERLOGIN") || oModel.getProperty("/USERLOGIN") === "") {
 				jQuery.sap.log.warning("User nicht angemeldet", "this.getModel('user') undefined or property USERLOGIN not given or empty.", this.toString());
-				
+
 				return false;
 			}
 
@@ -144,7 +145,7 @@ sap.ui.define([
 					sIllumLoginName = $("#IllumLoginName").val();
 					if (sIllumLoginName) {
 						resolve(sIllumLoginName);
-						
+
 						return;
 					}
 					reject(new Error("Could not read #IllumLoginName"));
@@ -157,7 +158,7 @@ sap.ui.define([
 
 		resetUserModel: function(oObject) {
 			var oEmpty = oObject || {};
-			
+
 			return this.getModel("user").setProperty("/", oEmpty);
 		},
 
@@ -263,7 +264,7 @@ sap.ui.define([
 		 */
 		setupSpaceAndTime: function() {
 			var sCurrentLocale = sap.ui.getCore().getConfiguration().getLanguage();
-			
+
 			moment.locale(sCurrentLocale);
 		},
 
@@ -287,7 +288,7 @@ sap.ui.define([
 					this._sContentDensityClass = "sapUiSizeCozy";
 				}
 			}
-			
+
 			return this._sContentDensityClass;
 		},
 
