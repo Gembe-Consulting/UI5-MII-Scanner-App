@@ -439,31 +439,22 @@
 		"resources": {
 			"js": [
 				{
-					"uri": "libs/momentjs/moment.js",
-					"name": "moment.js",
-					"version": "2.19.1"
+					"uri": "libs/momentjs/moment.js"
 				},
 				{
-					"uri": "libs/momentjs/locale/de.js",
-					"name": "locale-de.js",
-					"version": "2.19.1"
+					"uri": "libs/momentjs/locale/de.js"
 				},
 				{
-					"uri": "libs/momentjs/moment-duration-format.js",
-					"name": "moment-duration-format.js",
-					"version": "2.2.2"
+					"uri": "libs/momentjs/moment-duration-format.js"
 				},
 				{
-					"uri": "libs/lodashjs/lodash-core.js",
-					"name": "lodash.js"
+					"uri": "libs/lodashjs/lodash-core.js"
 				},
 				{
-					"uri": "libs/scannerdetection/scannerdetection.js",
-					"name": "scannerdetection.js"
+					"uri": "libs/scannerdetection/scannerdetection.js"
 				},
 				{
-					"uri": "libs/jquerybase64/jquery.base64.js",
-					"name": "jquery.base64.js"
+					"uri": "libs/jquerybase64/jquery.base64.js"
 				}
 			],
 			"css": [
