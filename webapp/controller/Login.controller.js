@@ -37,7 +37,6 @@ sap.ui.define([
 				oInput = oEvent.getSource(),
 				bMobile = this.getModel("device").getProperty("/browser/mobile");
 
-			// TODO: warum auch ungleich length 0?
 			if (bMobile && sCurrentInput.length !== 0) {
 				this.purgeInputAfterDelay(oInput, 250);
 			}
