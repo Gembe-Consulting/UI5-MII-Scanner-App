@@ -1,3 +1,4 @@
+# /node_modules/* and /bower_components/* in the project root are ignored by default
 # exclude libs folder
 */webapp/libs/*
 UI5-MII-Scanner-App/webapp/libs/*
