@@ -1,5 +1,6 @@
 sap.ui.define([
 	"jquery.sap.global",
+	"com/mii/scanner/libs/momentjs/moment",
 	"com/mii/scanner/controller/PageBaseController",
 	"sap/m/MessageBox",
 	"sap/m/MessageToast",
@@ -8,9 +9,10 @@ sap.ui.define([
 	"sap/m/MessageItem",
 	"sap/ui/core/message/Message",
 	"com/mii/scanner/model/formatter"
-], function(jQuery, PageBaseController, MessageBox, MessageToast, MessageStrip, MessagePopover, MessageItem, Message, formatter) {
+], function(jQuery, momentjs, PageBaseController, MessageBox, MessageToast, MessageStrip, MessagePopover, MessageItem, Message, formatter) {
 	"use strict";
-
+	/* global moment:true */
+	
 	return PageBaseController.extend("com.mii.scanner.controller.action.ActionBaseController", {
 		formatter: formatter,
 
@@ -267,13 +269,13 @@ sap.ui.define([
 
 		showControlBusyIndicator: function(oSource) {
 			var iNoDelay = 0;
-			
+
 			return oSource.setBusyIndicatorDelay(iNoDelay).setBusy(true);
 		},
 
 		hideControlBusyIndicator: function(oSource) {
 			var iNoDelay = 0;
-			
+
 			return oSource.setBusyIndicatorDelay(iNoDelay).setBusy(false);
 		},
 
@@ -284,11 +286,11 @@ sap.ui.define([
 				return type.validationExpressions.find(function(regEx) {
 
 					var regxCheck = new RegExp(regEx);
-					
+
 					if (regxCheck.test(sScannedString)) {
 						return type;
 					}
-					
+
 					return null;
 				});
 
@@ -348,7 +350,7 @@ sap.ui.define([
 
 		_isDataModelInitial: function(oCurrentData, oInitialData) {
 			var iMaxDepth = 2;
-			
+
 			return jQuery.sap.equal(oCurrentData, oInitialData, iMaxDepth, true); //(a, b, maxDepth?, contains?) : boolean
 		},
 
@@ -403,7 +405,7 @@ sap.ui.define([
 			if (aMessages && aMessages.length > iZeroLength) {
 				return false;
 			}
-			
+
 			return true;
 			//oder einfach:
 			//return !!sap.ui.getCore().getMessageManager().getMessageModel().getData().length;
@@ -446,7 +448,7 @@ sap.ui.define([
 		padStorageUnitNumber: function(sStorageUnitNumber) {
 			var iMaxLength = 20,
 				sPadChar = "0";
-				
+
 			return jQuery.sap.padLeft(sStorageUnitNumber.toString(), sPadChar, iMaxLength);
 		},
 
@@ -454,7 +456,7 @@ sap.ui.define([
 			if (jQuery.type(vNumber) === "string") {
 				return vNumber.replace(/^0+/, "");
 			}
-			
+
 			return vNumber;
 		},
 
