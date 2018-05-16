@@ -1,14 +1,13 @@
 module.exports = function(grunt) {
 	"use strict";
-	
+
 	var http = "https://";
 	var url = http + "sapui5.hana.ondemand.com/resources/sap-ui-core.js";
-	
+
 	grunt.loadNpmTasks("@sap/grunt-sapui5-bestpractice-build");
 	grunt.loadNpmTasks('grunt-text-replace');
 
 	grunt.file.write("GruntConfig.sap.json", JSON.stringify(grunt.config.get()));
-
 
 	var oConfig = {
 		"openui5_preload": {
