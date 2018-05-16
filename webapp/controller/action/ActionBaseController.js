@@ -447,9 +447,9 @@ sap.ui.define([
 
 		padStorageUnitNumber: function(sStorageUnitNumber) {
 			var iMaxLength = 20,
-				sPadChar = "0";
+				sCharToPad = "0";
 
-			return jQuery.sap.padLeft(sStorageUnitNumber.toString(), sPadChar, iMaxLength);
+			return jQuery.sap.padLeft(sStorageUnitNumber.toString(), sCharToPad, iMaxLength);
 		},
 
 		deleteLeadingZeros: function(vNumber) {
