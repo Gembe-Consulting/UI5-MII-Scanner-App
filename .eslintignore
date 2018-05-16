@@ -1,6 +1,9 @@
 # exclude libs folder
-*/libs/*
+*/webapp/libs/*
+UI5-MII-Scanner-App/webapp/libs/*
 # exclude test folder
-*/test/*
+*/webapp/test/*
+UI5-MII-Scanner-App/webapp/test/*
 # exclude dist folder
 */dist/*
+UI5-MII-Scanner-App/dist/*
