@@ -10,6 +10,7 @@ sap.ui.define([
 ], function(jQuery, momentjs, UIComponent, Device, models, ErrorHandler, MessageBox) {
 	"use strict";
 	/* global moment:true */
+	
 	return UIComponent.extend("com.mii.scanner.Component", {
 
 		metadata: {

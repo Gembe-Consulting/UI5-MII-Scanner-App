@@ -16,7 +16,7 @@ sap.ui.define([
 		},
 
 		_formatStorageUnitData: function(oStorageUnit) {
-			var fEmpty = 00;
+			var fEmpty = 0.0;
 
 			if (!oStorageUnit) {
 				return null;

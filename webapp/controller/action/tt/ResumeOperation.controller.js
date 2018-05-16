@@ -47,19 +47,21 @@ sap.ui.define([
 
 			fnResolve = function(oData) {
 				var oConfiramationNumber,
-					aRows;
+					aRows,
+					iExactlyOne = 1;
 
 				if (!oData.success) {
 					this.addUserMessage({
 						text: oData.lastErrorMessage
 					});
+					
 					return;
 				}
 
 				aRows = oData.d.results[0].Rowset.results[0].Row.results;
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
-				if (aRows.length === 1) {
+				if (aRows.length === iExactlyOne) {
 					oConfiramationNumber = aRows[0];
 				} else {
 					throw new Error(this.getTranslation("resumeOperation.messageText.resultIncomplete") + " @OpResume");
