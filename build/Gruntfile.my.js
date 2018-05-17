@@ -7,7 +7,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks("@sap/grunt-sapui5-bestpractice-build");
 	grunt.loadNpmTasks('grunt-text-replace');
 
-	grunt.file.write("GruntConfig.sap.json", JSON.stringify(grunt.config.get()));
+	grunt.file.write("build/GruntConfig.sap.json", JSON.stringify(grunt.config.get()));
 
 	var oConfig = {
 		"openui5_preload": {
@@ -86,7 +86,7 @@ module.exports = function(grunt) {
 
 	grunt.config.merge(oConfig);
 
-	grunt.file.write("GruntConfig.my.json", JSON.stringify(grunt.config.get()));
+	grunt.file.write("build/GruntConfig.my.json", JSON.stringify(grunt.config.get()));
 
 	grunt.registerTask("default", [
 		"clean",

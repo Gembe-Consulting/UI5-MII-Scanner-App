@@ -3,8 +3,8 @@
 All notable changes to this project will be documented in this file.
 
 ============================================================================================================
-git log --after="2018-04-28T19:55:00+02:00" --pretty=format:"%s%n%b" --reverse --no-merges | grep -v '^$' | grep -v -i '\[INTERNAL\]' | grep -v -i '\[CHORE\]' | grep -v -i '\[TEST\]' | grep -v -i '\[STYLE\]'> LATEST_FEATURES_FIXES.md
-git log --after="2018-04-28T19:55:00+02:00" --pretty=format:"%s%n%b" --reverse --no-merges | grep -v '^$' > LATEST_CHANGES.md
+git log --after="2018-04-28T19:55:00+02:00" --pretty=format:"%s%n%b" --reverse --no-merges | grep -v '^$' | grep -v -i '\[INTERNAL\]' | grep -v -i '\[CHORE\]' | grep -v -i '\[TEST\]' | grep -v -i '\[STYLE\]'> build/LATEST_FEATURES_FIXES.md
+git log --after="2018-04-28T19:55:00+02:00" --pretty=format:"%s%n%b" --reverse --no-merges | grep -v '^$' > build/LATEST_CHANGES.md
 ============================================================================================================
 
 [<TYPE>] (<scope>): <subject>
