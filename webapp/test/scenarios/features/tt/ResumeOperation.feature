@@ -50,7 +50,7 @@ Feature: Resume Operation
 		Then I cannot see saveButton in action.tt.ResumeOperation view
 		 And I can see dateTimeEntry with valueState 'None' in action.tt.ResumeOperation view
 		When I can enter a date 1 days and 280 minutes in the past into dateTimeEntry in action.tt.ResumeOperation view
-		Then I should see dateTimeEntry with date 1 days and 280 minutes in the past in action.tt.ResumeOperation view
+		Then I should see dateTimeEntry with date 0 days and 60 minutes in the past in action.tt.ResumeOperation view
 		Then I can see saveButton in action.tt.ResumeOperation view
 		When I enter '' into orderNumberInput in action.tt.ResumeOperation view
 		Then I cannot see saveButton in action.tt.ResumeOperation view
