@@ -3,3 +3,6 @@
 # others
 /dist/
 .che/project.json
+
+/Gruntfile.js.original
+/package.json.original
