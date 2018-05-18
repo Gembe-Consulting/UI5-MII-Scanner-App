@@ -1,9 +1,9 @@
 <mvc:View controllerName="com.mii.scanner.controller.nav.NavBaseController" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc">
-	<Page id="statusChangePage" title="{i18n>titleStatusChange}" showNavButton="true" navButtonPress="onNavBack">
+	<Page id="statusChangePage" title="{i18n>titleStatusChange}" showNavButton="true" navButtonPress="navigateBack">
 		<content>
 			<List mode="None" width="100%" class="sapUiSmallMarginTop" inset="{= !${device>/system/phone} }">
 				<items>
-					<CustomListItem id="startOperationItem" type="Navigation" press="onNavForward" tooltip="{i18n>itemLabelTextStartOperationTooltip}"
+					<CustomListItem id="startOperationItem" type="Navigation" press="navigateForward" tooltip="{i18n>itemLabelTextStartOperationTooltip}"
 						visible="{= !${device>/system/phone} }">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
@@ -18,7 +18,7 @@
 							<c:CustomData key="target" value="startOperation"/>
 						</customData>
 					</CustomListItem>
-					<CustomListItem id="interruptOperationItem" type="Navigation" press="onNavForward" tooltip="{i18n>itemLabelTextInterruptOperationTooltip}">
+					<CustomListItem id="interruptOperationItem" type="Navigation" press="navigateForward" tooltip="{i18n>itemLabelTextInterruptOperationTooltip}">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<c:Icon src="sap-icon://error" size="3rem" height="4rem" width="8rem" color="#FFAC00" alt="INTERRUPT"/>
@@ -32,7 +32,7 @@
 							<c:CustomData key="target" value="interruptOperation"/>
 						</customData>
 					</CustomListItem>
-					<CustomListItem id="resumeOperationItem" type="Navigation" press="onNavForward" tooltip="{i18n>itemLabelTextResumeOperationTooltip}">
+					<CustomListItem id="resumeOperationItem" type="Navigation" press="navigateForward" tooltip="{i18n>itemLabelTextResumeOperationTooltip}">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<c:Icon src="sap-icon://restart" size="3rem" height="4rem" width="8rem" color="#BB07FF" alt="RESUME"/>
@@ -46,7 +46,7 @@
 							<c:CustomData key="target" value="resumeOperation"/>
 						</customData>
 					</CustomListItem>
-					<CustomListItem id="finishOperationItem" type="Navigation" press="onNavForward" tooltip="{i18n>itemLabelTextFinishOperationTooltip}"
+					<CustomListItem id="finishOperationItem" type="Navigation" press="navigateForward" tooltip="{i18n>itemLabelTextFinishOperationTooltip}"
 						visible="{= !${device>/system/phone} }">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">

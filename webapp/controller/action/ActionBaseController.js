@@ -12,10 +12,11 @@ sap.ui.define([
 ], function(jQuery, momentjs, PageBaseController, MessageBox, MessageToast, MessageStrip, MessagePopover, MessageItem, Message, formatter) {
 	"use strict";
 	/* global moment:true */
-	
+
 	return PageBaseController.extend("com.mii.scanner.controller.action.ActionBaseController", {
 		formatter: formatter,
 
+		// TODO: move to scanner utility module
 		aScannerInputTypes: [{
 			defaultControlId: "storageUnitInput",
 			key: "LENUM",
@@ -279,6 +280,11 @@ sap.ui.define([
 			return oSource.setBusyIndicatorDelay(iNoDelay).setBusy(false);
 		},
 
+		/**
+		 * 
+		 */
+		// TODO: add jsdoc
+		// TODO: all test cases
 		getScannerInputType: function(sScannedString) {
 
 			return this.aScannerInputTypes.find(function(type) {
@@ -297,10 +303,14 @@ sap.ui.define([
 			});
 		},
 
+		// TODO: add jsdoc
+		// TODO: all test cases
 		getControlByScannerInputType: function(oInputType) {
 			return this._getIdByInputType(oInputType);
 		},
 
+		// TODO: add jsdoc
+		// TODO: all test cases
 		_getIdByInputType: function(oInputType) {
 			jQuery.sap.log.warning("Scanner-Input wurde als " + oInputType.name + " erkannt, der action Dialog stellt aber keine passende Methode '_getIdByInputType(oInputType)' zur Verfügung.");
 
@@ -308,6 +318,7 @@ sap.ui.define([
 
 		},
 
+		// TODO: add jsdoc
 		onClearFormPress: function(oEvent, bKeepMessageStrip) {
 			var oNewInitialData = jQuery.extend({}, this._oInitData),
 				oDataModel = this.getModel("data"),
@@ -328,6 +339,8 @@ sap.ui.define([
 			}
 		},
 
+		// TODO: add jsdoc
+		// TODO: all test cases
 		onClearQuantityInputPress: function(oEvent) {
 			var oQuantityInputControl = this.byId("quantityInput");
 
@@ -348,6 +361,8 @@ sap.ui.define([
 
 		},
 
+		// TODO: add jsdoc
+		// TODO: all test cases
 		_isDataModelInitial: function(oCurrentData, oInitialData) {
 			var iMaxDepth = 2;
 
@@ -367,7 +382,7 @@ sap.ui.define([
 				this.handleConfirmationMessageBoxPress(oEvent);
 			} else {
 				this.onClearFormPress();
-				this.onNavBack();
+				this.navigateBack();
 			}
 
 		},
@@ -437,14 +452,20 @@ sap.ui.define([
 		fnConfirmCancelAction: function(oAction) {
 			if (oAction === sap.m.MessageBox.Action.YES) {
 				this.onClearFormPress();
-				this.onNavBack();
+				this.navigateBack();
 			}
 		},
 
+		// TODO: add jsdoc
+		// TODO: all test cases
+		// TODO: move to Utility module
 		cleanScannedOrderNumberString: function(sOrderNumberString) {
 			return this.deleteLeadingZeros(sOrderNumberString).split("/")[0];
 		},
 
+		// TODO: add jsdoc
+		// TODO: all test cases
+		// TODO: move to Utility module
 		padStorageUnitNumber: function(sStorageUnitNumber) {
 			var iMaxLength = 20,
 				sCharToPad = "0";
@@ -452,6 +473,8 @@ sap.ui.define([
 			return jQuery.sap.padLeft(sStorageUnitNumber.toString(), sCharToPad, iMaxLength);
 		},
 
+		// TODO: add jsdoc
+		// TODO: all test cases
 		deleteLeadingZeros: function(vNumber) {
 			if (jQuery.type(vNumber) === "string") {
 				return vNumber.replace(/^0+/, "");

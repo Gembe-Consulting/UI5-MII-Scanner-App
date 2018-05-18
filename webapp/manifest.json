@@ -423,6 +423,7 @@
 				},
 				"notFound": {
 					"viewName": "NotFound",
+					"viewPath": "com.mii.scanner.view.nav",
 					"viewId": "notFound",
 					"transition": "slide",
 					"title": "{{manifest.routing.target.title.notFound}}"

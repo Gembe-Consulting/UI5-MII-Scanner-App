@@ -4,7 +4,10 @@ sap.ui.define([
 	"test/unit/controller/ActionBaseController",
 	"test/unit/controller/Login.controller",
 	"test/unit/controller/GoodsReceipt.controller",
-	"test/unit/controller/RollerConveyor.controller"
+	"test/unit/controller/RollerConveyor.controller",
+	"test/unit/controller/BaseController",
+	"test/unit/helper/Utilities",
+	"test/unit/helper/UserHandler"
 ], function() {
 	"use strict";
 });

@@ -1,5 +1,5 @@
 <mvc:View
-	controllerName="com.mii.scanner.controller.NotFound"
+	controllerName="com.mii.scanner.controller.nav.NotFound"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns="sap.m">
 

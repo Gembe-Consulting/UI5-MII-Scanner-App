@@ -91,6 +91,7 @@ sap.ui.define([
 			setTimeout(function() {
 				assert.strictEqual(oInput2.getValue(), sNewValue, "Value cleared after " + delay + "ms");
 				done();
+				oInput2.destroy();
 			}.bind(this), delay);
 			
 		});

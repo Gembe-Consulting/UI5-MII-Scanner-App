@@ -34,10 +34,9 @@ sap.ui.define([
 		 */
 		onLiveInput: function(oEvent) {
 			var sCurrentInput = oEvent.getParameter("value"),
-				oInput = oEvent.getSource(),
-				bMobile = this.getModel("device").getProperty("/browser/mobile");
+				oInput = oEvent.getSource();
 
-			if (bMobile && sCurrentInput.length !== 0) {
+			if (sap.ui.Device.system.phone && sCurrentInput.length !== 0) {
 				this.purgeInputAfterDelay(oInput, 250);
 			}
 		},
@@ -47,17 +46,19 @@ sap.ui.define([
 				sUserInput = oInputControl.getValue(),
 				oBundle = this.getResourceBundle(),
 				fnResolveHandler,
-				fnRejectHandler;
+				fnRejectHandler,
+				fnResetBusyView;
 
 			//prevent login, if user did not enter an username into login input
 			if (!sUserInput || sUserInput.length <= 0) {
 				return;
 			}
 
-			sap.ui.core.BusyIndicator.show(0);
-
 			// Reset value state
 			oInputControl.setValueState(sap.ui.core.ValueState.None);
+
+			// Set view to busy state. Note: method testUserLoginName will set a global busy indicator by its own
+			this.getView().setBusy(true);
 
 			/**
 			 * Remove user input
@@ -76,20 +77,23 @@ sap.ui.define([
 					.setValueState(sap.ui.core.ValueState.Error)
 					.setValueStateText(oBundle.getText("login.message.usernameIncorrect", [sUserInput]));
 			}.bind(this);
+			
+			fnResetBusyView=function(){
+				this.getView().setBusy(false);
+			}.bind(this);
 
 			/* The following logic relys on a Promise
 			 * A promise is an object which can be returned synchronously from an asynchronous function.
-			 * => this.getOwnerComponent().testUserLoginName() returns the promise
+			 * => this.getOwnerComponent()._oUserHandler.testUserLoginName() returns the promise
 			 * Promises define a .then() method which you use to pass handlers which can take the resolved or rejected value.
 			 * Because .then() always returns a new promise, it’s possible to chain promises with precise control 
 			 * over how and where errors are handled. 
 			 */
-			this.getOwnerComponent()
+			this.getOwnerComponent()._oUserHandler
 				.testUserLoginName(sUserInput)
 				.then(fnResolveHandler, fnRejectHandler)
 				.catch(jQuery.noop)
-				.then(this.getOwnerComponent().hideBusyIndicator); //ensure to always remove busy
-
+				.then(fnResetBusyView); 
 		}
 	});
 });

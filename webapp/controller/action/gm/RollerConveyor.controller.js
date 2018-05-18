@@ -167,7 +167,7 @@ sap.ui.define([
 
 				if (!oIllumData.success) {
 					bHasWarningLikeError = this._aWarningLikeFatalError.some(function(sMessage) {
-						return jQuery.inArray(sMessage, oIllumData.lastErrorMessage) !== notFound;
+						return oIllumData.lastErrorMessage.indexOf(sMessage) !== notFound;
 					});
 
 					if (bHasWarningLikeError) {
@@ -247,7 +247,7 @@ sap.ui.define([
 				if (!oIllumData.success) {
 
 					bHasWarningLikeError = this._aWarningLikeFatalError.some(function(sMessage) {
-						return jQuery.inArray(sMessage, oIllumData.lastErrorMessage) !== notFound;
+						return oIllumData.lastErrorMessage.indexOf(sMessage) !== notFound;
 					});
 
 					if (bHasWarningLikeError) {

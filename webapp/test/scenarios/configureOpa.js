@@ -22,7 +22,7 @@ sap.ui.define([
 	"use strict";
 
 	Opa5.extendConfig({
-		timeout: 7,
+		timeout: 20,
 		pollingInterval: 100,
 		arrangements: new Common(),
 		actions: new Opa5({
@@ -34,6 +34,8 @@ sap.ui.define([
 				Opa5.assert.strictEqual(!sap.ui.test.Opa.getContext().oDate, true, "Verified that oDate moment is initial before 'iCanEnterRelativeDate()'");
 				var oBaseDate = moment();
 				sap.ui.test.Opa.getContext().oDate = oBaseDate; // define for later use
+				
+				this.lastDate = oBaseDate.clone();
 
 				if (oOptions.direction === "future") {
 					sap.ui.test.Opa.getContext().oDate.add(oOptions.offset, oOptions.unit).add(oOptions.timeOffset, oOptions.timeUnit);
@@ -52,6 +54,11 @@ sap.ui.define([
 					success: function(oControl) {
 						Opa5.assert.strictEqual(sap.ui.test.Opa.getContext().oDate.isValid(), true, "Verified that oDate moment is valid");
 						Opa5.assert.ok(true, "Enter value " + sap.ui.test.Opa.getContext().oDate.format("DD.MM.YYYY, HH:mm:ss") + " into " + oControl.getId());
+						
+						if(oOptions.direction === "future"){
+							sap.ui.test.Opa.getContext().oDate = this.lastDate;
+						}
+						
 					},
 					errorMessage: "Could not obtain control"
 				});

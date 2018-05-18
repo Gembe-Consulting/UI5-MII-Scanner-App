@@ -1,9 +1,9 @@
 <mvc:View controllerName="com.mii.scanner.controller.nav.NavBaseController" xmlns="sap.m" xmlns:c="sap.ui.core" xmlns:mvc="sap.ui.core.mvc">
-	<Page id="goodsMovementPage" title="{i18n>titleGoodsMovement}" showNavButton="true" navButtonPress="onNavBack">
+	<Page id="goodsMovementPage" title="{i18n>titleGoodsMovement}" showNavButton="true" navButtonPress="navigateBack">
 		<content>
 			<List mode="None" width="100%" class="sapUiSmallMarginTop" inset="{= !${device>/system/phone} }">
 				<items>
-					<CustomListItem id="goodsReceiptItem" type="Navigation" press="onNavForward" tooltip="{i18n>itemLabelTextGoodsReceiptTooltip}">
+					<CustomListItem id="goodsReceiptItem" type="Navigation" press="navigateForward" tooltip="{i18n>itemLabelTextGoodsReceiptTooltip}">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<HBox width="8rem" justifyContent="Center">
@@ -20,7 +20,7 @@
 							<c:CustomData key="target" value="goodsReceipt"/>
 						</customData>
 					</CustomListItem>
-					<CustomListItem id="goodsIssueWithLEItem" type="Navigation" press="onNavForward" tooltip="{i18n>itemLabelTextGoodsIssueWithLETooltip}">
+					<CustomListItem id="goodsIssueWithLEItem" type="Navigation" press="navigateForward" tooltip="{i18n>itemLabelTextGoodsIssueWithLETooltip}">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<HBox width="8rem" justifyContent="Center">
@@ -38,7 +38,7 @@
 							<c:CustomData key="type" value="withLE"/>
 						</customData>
 					</CustomListItem>
-					<CustomListItem id="goodsIssueNonLEItem" type="Navigation" press="onNavForward" tooltip="{i18n>itemLabelTextGoodsIssueNonLETooltip}">
+					<CustomListItem id="goodsIssueNonLEItem" type="Navigation" press="navigateForward" tooltip="{i18n>itemLabelTextGoodsIssueNonLETooltip}">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<HBox width="8rem" justifyContent="Center">
@@ -56,7 +56,7 @@
 							<c:CustomData key="type" value="nonLE"/>
 						</customData>
 					</CustomListItem>
-					<CustomListItem id="rollerConveyorItem" type="Navigation" press="onNavForward" tooltip="{i18n>itemLabelTextRollerConveyorTooltip}">
+					<CustomListItem id="rollerConveyorItem" type="Navigation" press="navigateForward" tooltip="{i18n>itemLabelTextRollerConveyorTooltip}">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<HBox width="8rem" justifyContent="Center">
@@ -73,7 +73,7 @@
 							<c:CustomData key="target" value="rollerConveyor"/>
 						</customData>
 					</CustomListItem>
-					<CustomListItem id="stockTransferItem" type="Navigation" press="onNavForward" tooltip="{i18n>itemLabelTextStockTransferTooltip}">
+					<CustomListItem id="stockTransferItem" type="Navigation" press="navigateForward" tooltip="{i18n>itemLabelTextStockTransferTooltip}">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start">
 								<HBox width="8rem" justifyContent="Center">

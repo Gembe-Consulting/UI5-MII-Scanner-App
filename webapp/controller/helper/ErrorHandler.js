@@ -5,7 +5,7 @@ sap.ui.define([
 ], function(UI5Object, MessageBox, MessageToast) {
 	"use strict";
 
-	return UI5Object.extend("com.mii.scanner.controller.ErrorHandler", {
+	return UI5Object.extend("com.mii.scanner.controller.helper.ErrorHandler", {
 
 		/**
 		 * Handles application errors by automatically attaching to the model events and displaying errors when needed.
