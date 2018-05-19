@@ -1,8 +1,0 @@
-# ignore all . folders but include . files
-.*/
-# others
-/dist/
-.che/project.json
-
-/Gruntfile.js.original
-/package.json.original
