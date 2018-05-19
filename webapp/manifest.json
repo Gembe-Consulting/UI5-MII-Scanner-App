@@ -73,8 +73,7 @@
 				},
 				"sap.ui.unified": {
 					"minVersion": "1.54.0"
-				},
-				"mii.util": {}
+				}
 			}
 		},
 		"contentDensities": {
