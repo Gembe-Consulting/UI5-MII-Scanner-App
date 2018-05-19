@@ -61,7 +61,7 @@ sap.ui.define([
 				if (!oData.success) {
 
 					bHasWarningLikeError = this._aWarningLikeFatalError.some(function(sMessage) {
-						return jQuery.inArray(sMessage, oData.lastErrorMessage) !== notFound;
+						return oData.lastErrorMessage.indexOf(sMessage) !== notFound;
 					});
 
 					if (bHasWarningLikeError) {

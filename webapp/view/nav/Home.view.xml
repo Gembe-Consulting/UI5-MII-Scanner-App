@@ -3,7 +3,7 @@
 		<content>
 			<List mode="None" width="100%" class="sapUiSmallMarginTop" inset="{= ${device>/system/desktop} }">
 				<items>
-					<CustomListItem id="navGoodsMovementItem" type="Navigation" press="onNavForward" class="sapUiResponsiveMargin">
+					<CustomListItem id="navGoodsMovementItem" type="Navigation" press="navigateForward" class="sapUiResponsiveMargin">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start" class="sapUiResponsiveMargin">
 								<c:Icon src="sap-icon://product" size="3rem" height="5rem" width="8rem" color="#330066" alt="WABE"/>
@@ -17,7 +17,7 @@
 							<c:CustomData key="target" value="goodsMovement"/>
 						</customData>
 					</CustomListItem>
-					<CustomListItem id="navStatusChangeItem" type="Navigation" press="onNavForward" class="sapUiResponsiveMargin">
+					<CustomListItem id="navStatusChangeItem" type="Navigation" press="navigateForward" class="sapUiResponsiveMargin">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start" class="sapUiResponsiveMargin">
 								<c:Icon src="sap-icon://journey-change" size="3rem" height="5rem" width="8rem" color="#007700" alt="STATUS"/>
@@ -32,9 +32,9 @@
 						</customData>
 					</CustomListItem>
 					<!-- Start Dummy Spacer -->
-					<CustomListItem type="Inactive" class="sapUiResponsiveMargin" visible="{device>/browser/mobile}"/>
+					<CustomListItem type="Inactive" class="sapUiResponsiveMargin" visible="{device>/system/phone}"/>
 					<!-- End Dummy Spacer -->
-					<CustomListItem id="navLogoutItem" type="Active" press="onNavForward" class="sapUiResponsiveMargin" visible="{device>/browser/mobile}">
+					<CustomListItem id="navLogoutItem" type="Active" press="navigateForward" class="sapUiResponsiveMargin" visible="{device>/browser/mobile}">
 						<content>
 							<HBox alignItems="Center" justifyContent="Start" class="sapUiResponsiveMargin">
 								<c:Icon src="sap-icon://log" size="2rem" height="4rem" width="8rem" color="#ee0000" alt="LOGOUT"/>

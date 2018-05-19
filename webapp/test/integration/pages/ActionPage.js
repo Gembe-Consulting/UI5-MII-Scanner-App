@@ -18,7 +18,7 @@ sap.ui.require([
 					return this.waitFor({
 						id: "cancelButton",
 						viewName: "GoodsReceipt",
-						viewNamespace: "com.mii.scanner.view.action.",
+						viewNamespace: "com.mii.scanner.view.action.gm.",
 						actions: new Press(),
 						errorMessage: "Did not find the cancel button on page"
 					});
@@ -49,7 +49,7 @@ sap.ui.require([
 					return this.waitFor({
 						id: "cancelButton",
 						viewName: "GoodsReceipt",
-						viewNamespace: "com.mii.scanner.view.action.",
+						viewNamespace: "com.mii.scanner.view.action.gm.",
 						actions: new Press(),
 						errorMessage: "Did not find the cancel button on page"
 					});
@@ -75,7 +75,7 @@ sap.ui.require([
 					return this.waitFor({
 						id: "goodsReceiptPage",
 						viewName: "GoodsReceipt",
-						viewNamespace: "com.mii.scanner.view.action.",
+						viewNamespace: "com.mii.scanner.view.action.gm.",
 						success: function(oGRPage) {
 							Opa5.assert.ok(true, "Goods Receipt Action Page loaded.");
 						},
@@ -101,7 +101,7 @@ sap.ui.require([
 					return this.waitFor({
 						id: "cancelButton",
 						viewName: "StartOperation",
-						viewNamespace: "com.mii.scanner.view.action.",
+						viewNamespace: "com.mii.scanner.view.action.tt.",
 						actions: new Press(),
 						errorMessage: "Did not find the back nav button on page"
 					});
@@ -112,7 +112,7 @@ sap.ui.require([
 					return this.waitFor({
 						id: "startOperationPage",
 						viewName: "StartOperation",
-						viewNamespace: "com.mii.scanner.view.action.",
+						viewNamespace: "com.mii.scanner.view.action.tt.",
 						success: function(oSOPage) {
 							Opa5.assert.ok(true, "Start Operation Action Page loaded.");
 						},

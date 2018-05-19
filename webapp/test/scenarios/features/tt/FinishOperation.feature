@@ -69,28 +69,36 @@ Feature: Finish Operation
 		Then on the Finish Operation Page: I should see all input fields are initial
 		Then on the Finish Operation Page: I should see data model and view model are initial
 
+#Change ISTSTART for 1092697-0010 in GetOrderOperationQry.json || new Date(yyyy, mm-1, dd, 02, 41, 0, 0).getTime(); --> 1526604060000
 	Scenario: Should show error message if users enter order number that has been started after entry date
-		When I enter '25.04.2018, 16:40:00' into dateTimeEntry in action.tt.FinishOperation view
+#Change to current date:
+		When I enter '18.05.2018, 00:40:00' into dateTimeEntry in action.tt.FinishOperation view
 		 And I enter '1092697' into orderNumberInput in action.tt.FinishOperation view
 		 And I enter '10' into operationNumberInput in action.tt.FinishOperation view
-		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0010' zu Auftrag '1092697' wurde am 'Mittwoch, 25. April 2018 16:41' gestartet und kann daher nicht zum 'Mittwoch, 25. April 2018 16:40' beendet werden.' in action.tt.FinishOperation view
+#Change ISTSTART and current date
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0010' zu Auftrag '1092697' wurde am 'Freitag, 18. Mai 2018 00:41' gestartet und kann daher nicht zum 'Freitag, 18. Mai 2018 00:40' beendet werden.' in action.tt.FinishOperation view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Error' in action.tt.FinishOperation view
 		 And I can see dateTimeEntry with valueState 'Error' in action.tt.FinishOperation view
 		 And I cannot see saveButton in action.tt.FinishOperation view
-		When I enter '25.04.2018, 16:42:00' into dateTimeEntry in action.tt.FinishOperation view
+		When I can enter a date 0 days and 0 minutes in the past into dateTimeEntry in action.tt.FinishOperation view
+		Then I should see dateTimeEntry with date 0 days and 0 minutes in the past in action.tt.FinishOperation view
 		Then I can see saveButton in action.tt.FinishOperation view
 		 And I can see dateTimeEntry with valueState 'Success' in action.tt.FinishOperation view
 		 And messageStripContainer in action.tt.FinishOperation view contains no content
-		 
+
+#Change STR_ENDE for 1092698-0020 in GetOrderIncidentsQry.json|| new Date(yyyy, mm-1, dd, 02, 41, 0, 0).getTime(); --> 1526604060000
 	Scenario: Should show error message if users enter order number that has an closed incident after entry date
-		When I enter '26.04.2018, 16:40' into dateTimeEntry in action.tt.FinishOperation view
+#Change to current date
+		When I enter '18.05.2018, 00:40:00' into dateTimeEntry in action.tt.FinishOperation view
 		 And I enter '1092698' into orderNumberInput in action.tt.FinishOperation view
 		 And I enter '20' into operationNumberInput in action.tt.FinishOperation view
-		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0020' zu Auftrag '1092698' wurde am 'Donnerstag, 26. April 2018 16:41' aus einer Unterbrechung heraus fortgesetzt und kann daher nicht zum 'Donnerstag, 26. April 2018 16:40' beendet werden.' in action.tt.FinishOperation view
+#Change STR_ENDE and current date
+		Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Vorgang '0020' zu Auftrag '1092698' wurde am 'Freitag, 18. Mai 2018 00:41' aus einer Unterbrechung heraus fortgesetzt und kann daher nicht zum 'Freitag, 18. Mai 2018 00:40' beendet werden.' in action.tt.FinishOperation view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Error' in action.tt.FinishOperation view
 		 And I can see dateTimeEntry with valueState 'Error' in action.tt.FinishOperation view
 		 And I cannot see saveButton in action.tt.FinishOperation view
-		When I enter '26.04.2018, 16:42' into dateTimeEntry in action.tt.FinishOperation view
+		When I can enter a date 0 days and 0 minutes in the past into dateTimeEntry in action.tt.FinishOperation view
+		Then I should see dateTimeEntry with date 0 days and 0 minutes in the past in action.tt.FinishOperation view
 		Then I can see saveButton in action.tt.FinishOperation view
 		 And I can see dateTimeEntry with valueState 'Success' in action.tt.FinishOperation view
 		 And messageStripContainer in action.tt.FinishOperation view contains no content

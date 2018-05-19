@@ -69,5 +69,7 @@ sap.ui.require(["sap/ui/test/opaQunit"], function(opaTest) {
 
 		// Assertions
 		Then.onTheApp.shouldNavigateTo("Home");
+		
+		Given.iTeardownMyApp();
 	});
 });

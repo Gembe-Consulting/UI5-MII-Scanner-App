@@ -206,7 +206,7 @@ sap.ui.define([
 			}
 
 			oData.d.results[0].Rowset.results[0].Row.results = jQuery.grep(aStorageUnitList, function(oRow, index) {
-				return jQuery.inArray(sRessourceId, oRow.LENUM) > -1;
+				return oRow.LENUM.indexOf(sRessourceId) > -1;
 			});
 
 			return oData;

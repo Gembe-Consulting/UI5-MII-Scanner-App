@@ -1,5 +1,0 @@
-# ignore all . folders but include . files
-.*/
-# others
-/dist/
-.che/project.json

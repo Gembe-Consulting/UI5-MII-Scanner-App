@@ -3,14 +3,15 @@ sap.ui.define([
 	"jquery.sap.global",
 	"com/mii/scanner/libs/momentjs/moment",
 	"sap/ui/core/UIComponent",
+	"sap/m/MessageBox",
 	"sap/ui/Device",
 	"com/mii/scanner/model/models",
-	"com/mii/scanner/controller/ErrorHandler",
-	"sap/m/MessageBox"
-], function(jQuery, momentjs, UIComponent, Device, models, ErrorHandler, MessageBox) {
+	"com/mii/scanner/controller/helper/ErrorHandler",
+	"com/mii/scanner/controller/helper/UserHandler"
+], function(jQuery, momentjs, UIComponent, MessageBox, Device, models, ErrorHandler, UserHandler) {
 	"use strict";
 	/* global moment:true */
-	
+
 	return UIComponent.extend("com.mii.scanner.Component", {
 
 		metadata: {
@@ -32,157 +33,44 @@ sap.ui.define([
 			// initialize the error handler with the component
 			this._oErrorHandler = new ErrorHandler(this);
 
+			// initialize the user handler with the component
+			this._oUserHandler = new UserHandler(this);
+
 			// set the device model
 			this.setModel(models.createDeviceModel(), "device");
 
+			this.setupRouting(this.getRouter());
+			
 			this.setupSpaceAndTime();
 
 			this.setupScannerDetection();
 
-			this.setupRouting();
-
 			this.evaluateExternalCallingComponent();
 		},
 
-		/**
-		 * @return a promise: 
-		 *  - If resolved the user name was found in MII. 
-		 *  - If rejected, user was not found.
-		 * A promise can be:
-		 *	- fulfilled - The action relating to the promise succeeded
-		 *	- rejected - The action relating to the promise failed
-		 *	- pending - Hasn't fulfilled or rejected yet
-		 *	- settled - Has fulfilled or rejected
-		 * 
-		 * see https://scotch.io/tutorials/javascript-promises-for-dummies
-		 * 
-		 */
-		testUserLoginName: function(sUserInput) {
-			var sUserInputUpper = sUserInput ? sUserInput.toUpperCase() : "",
-				validateUserLoginName,
-				updateUserModel,
-				onLoginError;
-
-			this.showBusyIndicator();
-
-			validateUserLoginName = function(oLoginResult) {
-				var oUser;
-
-				try {
-					oUser = oLoginResult.d.results[0].Rowset.results[0].Row.results[0];
-				} catch (oError) {
-					jQuery.sap.log.error("Das Resultset enthält keine Benutzerdaten!", [oError], ["Component.testUserLoginName"]);
-
-					return Promise.reject(oError);
-				}
-
-				if (oUser && oUser.USERLOGIN === sUserInputUpper) {
-					return oUser;
-				}
-
-				return Promise.reject("Der zurückgegeben Username entspricht nicht der Benutzereingabe!", [], ["Component.testUserLoginName"]);
-
-			}.bind(this);
-
-			updateUserModel = function(oUser) {
-				this.getModel("user").setProperty("/", oUser);
-			}.bind(this);
-
-			onLoginError = function(oError) {
-				this.resetUserModel({});
-				this.hideBusyIndicator();
-				throw oError; //re-throw to inform Login about error
-			}.bind(this);
-
-			return this.getUserLoginName(sUserInputUpper)
-				.then( /*onFulfilled*/ validateUserLoginName)
-				.then( /*onFulfilled*/ updateUserModel)
-				.catch( /*onRejected*/ onLoginError)
-				.then( /*onFulfilled*/ this.hideBusyIndicator);
+		getUserHandler: function() {
+			return this._oUserHandler;
 		},
 
-		/**
-		 * @return a Promise containig user data {__metadata: {…}, USERLOGIN: string, USERNNAME: string || null, USERVNAME: string || null, RowId: int}
-		 * It may, or may not contain the user data. Its on the caller to check this.
-		 */
-		getUserLoginName: function(sUserInput) {
-			var oModel = this.getModel("user"),
-				oParam = {
-					"Param.1": sUserInput
-				};
-
-			return oModel.loadMiiData(oModel._sServiceUrl, oParam);
-		},
-
-		/** 
-		 * Checks if the current navigatin is allowed based on the user model
-		 */
-		isUserLoggedIn: function() {
-			var oModel = this.getModel("user");
-
-			//always return true if we are in debug mode
-			if (this._bDebugMode) {
-				oModel.setProperty("/USERLOGIN", "SUW_MII_DEBUG");
-
-				return true;
-			}
-
-			if (!oModel || !oModel.getProperty("/USERLOGIN") || oModel.getProperty("/USERLOGIN") === "") {
-				jQuery.sap.log.warning("User nicht angemeldet", "this.getModel('user') undefined or property USERLOGIN not given or empty.", this.toString());
-
-				return false;
-			}
-
-			return true;
-		},
-
-		discoverIllumLoginName: function discoverIllumLoginName() {
-			var oDiscoverdIllumLoginName,
-				bMobile = this.getModel("device").getProperty("/browser/mobile"),
-				sIllumLoginName;
-
-			oDiscoverdIllumLoginName = new Promise(function(resolve, reject) {
-				if (!bMobile) {
-					sIllumLoginName = $("#IllumLoginName").val();
-					if (sIllumLoginName) {
-						resolve(sIllumLoginName);
-
-						return;
-					}
-					reject(new Error("Could not read #IllumLoginName"));
-				}
-				reject(new Error("This is a mobile device, we are not allowed to read #IllumLoginName"));
-			});
-
-			return oDiscoverdIllumLoginName;
-		},
-
-		resetUserModel: function(oObject) {
-			var oEmpty = oObject || {};
-
-			return this.getModel("user").setProperty("/", oEmpty);
-		},
-
-		forceRedirectToLoginPage: function(oError) {
-			this.resetUserModel();
-			this.getRouter().navTo("forbidden", {}, true /*bReplace*/ );
-		},
-
-		setupRouting: function() {
+		setupRouting: function(oRouter) {
+			var fnResetUserModel, fnChangeTitle;
+			
 			// create the views based on the url/hash
-			this.getRouter().initialize();
+			oRouter.initialize();
+			
+			fnResetUserModel = function (oEvent) {
+				this._oUserHandler.resetUserModel();
+			};
+			
+			fnChangeTitle = function (oEvent) {
+				document.title = oEvent.getParameter("title");
+			};
 
 			// purge username from user modele, once login page is displayed
-			this.getRouter()
-				.getTarget("login")
-				.attachDisplay(function(oEvent) {
-					this.resetUserModel();
-				}.bind(this));
+			oRouter.getTarget("login").attachDisplay(jQuery.proxy(fnResetUserModel, this));
 
 			// set the browser page title based on navigation
-			this.getRouter().attachTitleChanged(function(oEvent) {
-				document.title = oEvent.getParameter("title");
-			});
+			oRouter.attachTitleChanged(fnChangeTitle);
 		},
 
 		evaluateExternalCallingComponent: function() {
@@ -215,18 +103,16 @@ sap.ui.define([
 		 * Only if current system is not a desktop device!
 		 */
 		setupScannerDetection: function() {
-			var bMobile = this.getModel("device").getProperty("/browser/mobile"),
+			var bIsDesktopDevice = this.getModel("device").getProperty("/system/desktop"),
 				iEnterKey = 13;
-			if (bMobile) {
+
+			if (!bIsDesktopDevice) {
 
 				jQuery(document).scannerDetection({
 					onComplete: function(sString) {
 						jQuery.sap.log.info("Input from Scanner: " + sString, "Event: onComplete", "ScannerDetection");
 					},
 					onError: function(sString) { // Callback after detection of a unsuccessfull scanning (scanned string in parameter)
-						//MessageBox.error("Das Lesen des Barcode entspricht icht den angegebenen Restriktionen.\nInhalt: \'" + sString + "\'", {
-						//	title: "Fehler beim Einlesen des Barcodes"
-						//});
 						jQuery.sap.log.error("Scan war nicht erfolgreich: " + sString, "Event: onError", "ScannerDetection");
 					},
 					onReceive: function(oEvent) { // Callback after receiving and processing a char (scanned char in parameter)
@@ -317,10 +203,6 @@ sap.ui.define([
 			var iDefaultDelay = 0;
 			iDelay = iDelay || iDefaultDelay;
 			sap.ui.core.BusyIndicator.show(iDelay);
-		},
-
-		_getDefaultRoutePattern: function(sRouteName) {
-			return this.getRouter().getRoute(sRouteName).getPattern();
 		}
 	});
 

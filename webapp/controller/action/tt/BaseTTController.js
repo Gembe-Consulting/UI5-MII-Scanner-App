@@ -170,14 +170,19 @@ sap.ui.define([
 			};
 
 			fnBuildMicroChart = function(oData) {
-				if (oData) {
+				if(!sap.ui.Device.system.desktop){
+					return Promise.resolve();
+				}
+				
+				var oChart = this.byId("processOrderChart");
+				
+				if (oData && oChart) {
 					var aInterruptions = oData.d.results["0"].Rowset.results["0"].Row.results,
 						oStartDate = this.getModel("data").getProperty("/ISTSTART"),
 						oEndDate = this.getModel("data").getProperty("/ISTENDE");
 
 					this.generateOperationTimeline(oStartDate, aInterruptions, oEndDate)
 						.then(function(aBars) {
-							var oChart = this.byId("processOrderChart");
 							oChart.removeAllBars();
 							aBars.forEach(function(element) {
 								oChart.addBar(element);
@@ -186,6 +191,8 @@ sap.ui.define([
 				}else{
 						this.byId("processOrderChart").removeAllBars();
 				}
+				
+				return {};
 			};
 
 			/* Perform service call, Hide Busy Indicator, Update View Controls */
@@ -222,13 +229,14 @@ sap.ui.define([
 		},
 
 		checkDateTimeEntryMinMaxContraints: function(oDateTimeEntryMoment, oDateTimeEntryControl) {
-			var minMoment = moment(this._oMinDate),
+			var minMoment = moment(this._oInitView.minDate),
 				maxMoment = moment();
 
 			if (oDateTimeEntryMoment.isBefore(minMoment, "day")) {
 				oDateTimeEntryControl.setValueState(sap.ui.core.ValueState.Error).setValueStateText("Eingabezeitpunkt ist zu klein. Eingabe nur ab '" + minMoment.format("LLL") + "' möglich.");
 				
-				return true;
+				return false;
+				
 			} else if (oDateTimeEntryMoment.isAfter(maxMoment)) {
 				oDateTimeEntryControl.setValueState(sap.ui.core.ValueState.Error).setValueStateText("Eingabezeitpunkt ist zu groß. Eingabe nur bis '" + maxMoment.format("LLL") + "' möglich.");
 				

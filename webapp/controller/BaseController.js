@@ -2,7 +2,7 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/core/routing/History",
 	"sap/ui/Device",
-	"./utilities"
+	"com/mii/scanner/controller/helper/Utilities"
 ], function(Controller, History, Device, Util) {
 	"use strict";
 
@@ -54,7 +54,7 @@ sap.ui.define([
 		 * @returns {string} The translation of sKey
 		 */
 		getTranslation: function(sKey, aParameters) {
-			if (typeof aParameters === "undefined" || aParameters === null) {
+			if (typeof aParameters === Util.undef || aParameters === null) {
 				return this.getResourceBundle().getText(sKey);
 			}
 			
@@ -108,8 +108,11 @@ sap.ui.define([
 		getComponent: function() {
 			return this.getOwnerComponent();
 		},
-
-		onNavForward: function(oEvent) {
+		
+		// TODO: JsDoc
+		/**
+		 */
+		navigateForward: function(oEvent) {
 			var sNavTarget = oEvent.getSource().data("target"),
 				sNavType = oEvent.getSource().data("type"),
 				oType = {};
@@ -124,24 +127,30 @@ sap.ui.define([
 
 			this.getRouter().navTo(sNavTarget, oType);
 		},
-
-		onNavBack: function() {
+		
+		// TODO: JsDoc
+		/**
+		 */
+		navigateBack: function() {
 			var sPreviousHash = History.getInstance().getPreviousHash(),
 				iBack = -1;
 
 			//The history contains a previous entry
-			if (typeof sPreviousHash !== "undefined") {
+			if (typeof sPreviousHash !== Util.undef) {
 				/* eslint-disable sap-no-history-manipulation */
 				window.history.go(iBack);
 				/* eslint-enable sap-no-history-manipulation */
 			} else {
 				// There is no history!
-				// Naviate to home page
+				// Naviate to home page, dont write history on mobile devices
 				this.getRouter().navTo("home", {}, !Device.system.phone);
 			}
 		},
-
-		onNavHome: function() {
+		
+		// TODO: JsDoc
+		/**
+		 */
+		navigateToHome: function() {
 			this.getRouter().navTo("home");
 		}
 	});

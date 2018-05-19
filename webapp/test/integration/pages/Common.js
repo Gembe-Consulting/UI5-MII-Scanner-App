@@ -29,8 +29,14 @@ sap.ui.define([
 					delay: 0,
 					mobile: false
 				};
-
+				
 				sUrlParameters = "serverDelay=" + oOptions.delay;
+				
+				if(oOptions.mobile){
+					sUrlParameters = sUrlParameters + "&xx-fakeOS=android&xx-test-mobile=true";
+				}
+
+				
 
 				this.iStartMyAppInAFrame(getFrameUrl(oOptions.hash, sUrlParameters));
 
@@ -42,13 +48,15 @@ sap.ui.define([
 			},
 
 			iUseDevice: function(sDevice) {
-				var bMobile = sDevice === "mobile" ? true : false;
+				var bMobile = (sDevice === "mobile" ? true : false);
 
 				return this.waitFor({
 					check: function() {
 						return this.hasAppStarted();
 					},
 					success: function() {
+						sap.ui.test.Opa5.getWindow().sap.ui.Device.system.desktop = !bMobile;
+						sap.ui.test.Opa5.getWindow().sap.ui.Device.system.phone = bMobile;
 						sap.ui.test.Opa5.getWindow().sap.ui.Device._update(bMobile);
 					},
 					autoWait: true,
