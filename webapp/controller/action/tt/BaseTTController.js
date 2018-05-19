@@ -399,7 +399,7 @@ sap.ui.define([
 
 					//Interruptions
 					aTimeLine = aTimeLine.concat(_.flattenDeep(aInterruptions.map(fnMicroChartBarFactory)));
-
+					
 					//last Interruption -> End
 					var lastInterruptionEnd = moment(aInterruptions[aInterruptions.length - 1].STR_ENDE).isValid() ? moment(aInterruptions[aInterruptions.length - 1].STR_ENDE) : moment();
 					var iLastLength = endMoment - lastInterruptionEnd;

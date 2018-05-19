@@ -291,6 +291,7 @@
 		"yield-star-spacing": 0
 	},
 	"globals": {
+		"_":true,
 		"com": true,
 		"oData": false,
 		"sakp": false,
