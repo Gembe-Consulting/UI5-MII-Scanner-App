@@ -6,8 +6,10 @@ sap.ui.define([
 	"com/mii/scanner/model/sapType",
 	"com/mii/scanner/model/formatter"
 ], function(jQuery, ActionBaseController, MessageBox, StackedBarMicroChartBar, sapType, formatter) {
+	"use strict";
+	/* global moment:true */
+	
 	return ActionBaseController.extend("com.mii.scanner.controller.action.tt.BaseTTController", {
-		/* globals moment */
 		sapType: sapType,
 		formatter: formatter,
 		oProcessOrderStatus: {

@@ -1,15 +1,17 @@
 sap.ui.define([
 	"jquery.sap.global",
+	"com/mii/scanner/libs/momentjs/moment",
 	"./BaseTTController",
 	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox",
 	"com/mii/scanner/model/sapType",
 	"com/mii/scanner/model/formatter"
-], function(jQuery, BaseTTController, JSONModel, MessageBox, sapType, formatter) {
+], function(jQuery, momentjs, BaseTTController, JSONModel, MessageBox, sapType, formatter) {
 	"use strict";
+	/* global moment:true */
 
 	return BaseTTController.extend("com.mii.scanner.controller.action.tt.FinishOperation", {
-		/* globals moment */
+
 		sapType: sapType,
 		formatter: formatter,
 
@@ -69,7 +71,9 @@ sap.ui.define([
 				}
 
 				this.addUserMessage({
-					text: this.getTranslation("finishOperation.messageText.postingSuccessfull", [oServiceData.orderNumber, oServiceData.operationNumber, moment(oServiceData.date).format("LLLL")]),
+					text: this.getTranslation("finishOperation.messageText.postingSuccessfull", [oServiceData.orderNumber, oServiceData.operationNumber,
+						moment(oServiceData.date).format("LLLL")
+					]),
 					type: sap.ui.core.MessageType.Success
 				});
 
@@ -133,7 +137,8 @@ sap.ui.define([
 			if (oFinishMoment.isBefore(oStartMoment)) {
 				this.removeAllUserMessages();
 				this.addUserMessage({
-					text: this.getTranslation("finishOperation.messageText.finishDateBeforeStartDate", [oData.AUFNR, oData.VORNR, oStartMoment.format("LLLL"), oFinishMoment.format("LLLL")])
+					text: this.getTranslation("finishOperation.messageText.finishDateBeforeStartDate", [oData.AUFNR, oData.VORNR, oStartMoment.format(
+						"LLLL"), oFinishMoment.format("LLLL")])
 				});
 				oDateTimeEntry.setValueState(sap.ui.core.ValueState.Error);
 				return false;
@@ -145,7 +150,9 @@ sap.ui.define([
 				if (oFinishMoment.isBefore(oLastResumeMoment)) {
 					this.removeAllUserMessages();
 					this.addUserMessage({
-						text: this.getTranslation("finishOperation.messageText.finishDateBeforeLastResumeDate", [oData.AUFNR, oData.VORNR, oLastResumeMoment.format("LLLL"), oFinishMoment.format("LLLL")])
+						text: this.getTranslation("finishOperation.messageText.finishDateBeforeLastResumeDate", [oData.AUFNR, oData.VORNR,
+							oLastResumeMoment.format("LLLL"), oFinishMoment.format("LLLL")
+						])
 					});
 					oDateTimeEntry.setValueState(sap.ui.core.ValueState.Error);
 					return false;
