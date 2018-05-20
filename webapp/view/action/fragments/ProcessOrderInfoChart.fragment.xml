@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.suite.ui.microchart" xmlns:m="sap.m">
-	<m:FlexBox height="100%" width="100%" justifyContent="Center" alignItems="Center" alignContent="Center">
-		<StackedBarMicroChart size="Responsive" press="onProcessOrderChartPress" precision="0" class="sapUiSmallMargin" id="processOrderChart">
+	<m:FlexBox id="processOrderChartContainer" height="100%" width="100%" justifyContent="Center" alignItems="Center" alignContent="Center">
+		<StackedBarMicroChart id="processOrderChart" size="Responsive" press="onProcessOrderChartPress" precision="0" class="sapUiSmallMargin">
 			<bars></bars>
 		</StackedBarMicroChart>
 	</m:FlexBox>
