@@ -1,4 +1,3 @@
-//jQuery.sap.registerModulePath("mii.util", "../ui5miiutilities/mii/util/");
 sap.ui.define([
 	"jquery.sap.global",
 	"com/mii/scanner/libs/momentjs/moment",

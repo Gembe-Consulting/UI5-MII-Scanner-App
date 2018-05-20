@@ -333,7 +333,9 @@ sap.ui.define([
 				var aTimeLine = [],
 					sDurationFormatPattern = "d [T] h [S] m [M]",
 					startMoment,
-					endMoment;
+					endMoment,
+					iEmpty = 0,
+					iOne = 1;
 
 				if (!oStartDate) {
 					reject(new Error("No start date provided"));
@@ -403,9 +405,9 @@ sap.ui.define([
 					aTimeLine = aTimeLine.concat(_.flattenDeep(aInterruptions.map(fnMicroChartBarFactory)));
 					
 					//last Interruption -> End
-					var lastInterruptionEnd = moment(aInterruptions[aInterruptions.length - 1].STR_ENDE).isValid() ? moment(aInterruptions[aInterruptions.length - 1].STR_ENDE) : moment();
+					var lastInterruptionEnd = moment(aInterruptions[aInterruptions.length - iOne].STR_ENDE).isValid() ? moment(aInterruptions[aInterruptions.length - iOne].STR_ENDE) : moment();
 					var iLastLength = endMoment - lastInterruptionEnd;
-					if (iLastLength > 0) {
+					if (iLastLength > iEmpty) {
 						aTimeLine.push(new StackedBarMicroChartBar({
 							valueColor: "Good",
 							value: iLastLength,
