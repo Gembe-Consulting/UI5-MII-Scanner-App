@@ -1,34 +1,34 @@
 {
 	"rulesExt": {
 		"space-before-blocks": {
-			"severity": "warning",
+			"severity": "info",
 			"category": "Stylistic Issue",
 			"helpUrl": "http://eslint.org/docs/rules/space-before-blocks"
 		},
 		"valid-jsdoc": {
-			"severity": "info",
+			"severity": "warning",
 			"category": "Possible Error",
 			"helpUrl": "http://eslint.org/docs/rules/valid-jsdoc"
 		},
 		"no-unreachable": {
-			"severity": "warning",
+			"severity": "error",
 			"category": "Possible Error",
 			"helpUrl": "http://eslint.org/docs/rules/no-unreachable"
 		},
 		"no-regex-spaces": {
-			"severity": "error",
+			"severity": "warning",
 			"category": "Possible Error",
 			"helpUrl": "http://eslint.org/docs/rules/no-regex-spaces"
 		},
 		"no-shadow": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Variable",
 			"helpUrl": "http://eslint.org/docs/rules/no-shadow"
 		},
 		"sap-no-localstorage": {
-			"severity": "error",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?a3c3668c943c4938b2d53015e2a4c66d.html"
+			"severity": "warning",
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-localstorage"
 		},
 		"no-mixed-requires": {
 			"severity": "warning",
@@ -42,18 +42,18 @@
 		},
 		"no-return-assign": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-return-assign"
 		},
 		"max-len": {
-			"severity": "info",
-			"category": "Best Practices",
+			"severity": "warning",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/max-len"
 		},
 		"sap-no-ui5base-prop": {
-			"severity": "error",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?cab220f7da6d44b0ae3638580ba39b5d.html"
+			"severity": "warning",
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-ui5base-prop"
 		},
 		"spaced-comment": {
 			"severity": "info",
@@ -67,17 +67,17 @@
 		},
 		"no-param-reassign": {
 			"severity": "info",
-			"category": "Best Practices",
+			"category": "Stylistic Issue",
 			"helpUrl": "http://eslint.org/docs/rules/no-param-reassign"
 		},
 		"sap-no-location-reload": {
-			"severity": "error",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?7d0dba71a2cb45ebb1959daba904ca99.html"
+			"severity": "warning",
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-location-reload"
 		},
 		"strict": {
 			"severity": "warning",
-			"category": "StrictMode",
+			"category": "Strict Mode",
 			"helpUrl": "http://eslint.org/docs/rules/strict"
 		},
 		"no-sync": {
@@ -91,38 +91,38 @@
 			"helpUrl": "http://eslint.org/docs/rules/eol-last"
 		},
 		"generator-star-spacing": {
-			"severity": "warning",
-			"category": "ECMAScript6",
+			"severity": "info",
+			"category": "ECMAScript 6",
 			"helpUrl": "http://eslint.org/docs/rules/generator-star-spacing"
 		},
 		"no-new-func": {
 			"severity": "error",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-new-func"
 		},
 		"constructor-super": {
-			"severity": "info",
-			"category": "ECMAScript6",
+			"severity": "error",
+			"category": "Possible Error",
 			"helpUrl": "http://eslint.org/docs/rules/constructor-super"
 		},
 		"no-eval": {
 			"severity": "error",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-eval"
 		},
 		"new-parens": {
-			"severity": "warning",
+			"severity": "error",
 			"category": "Stylistic Issue",
 			"helpUrl": "http://eslint.org/docs/rules/new-parens"
 		},
 		"yoda": {
-			"severity": "info",
-			"category": "Best Practices",
+			"severity": "warning",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/yoda"
 		},
 		"no-delete-var": {
 			"severity": "warning",
-			"category": "Possible Error",
+			"category": "Variable",
 			"helpUrl": "http://eslint.org/docs/rules/no-delete-var"
 		},
 		"no-ternary": {
@@ -132,8 +132,8 @@
 		},
 		"sap-usage-basemastercontroller": {
 			"severity": "warning",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?ab731565251e425da345a156f91def57.html"
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-usage-basemastercontroller"
 		},
 		"no-nested-ternary": {
 			"severity": "info",
@@ -147,11 +147,11 @@
 		},
 		"complexity": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/complexity"
 		},
 		"no-control-regex": {
-			"severity": "error",
+			"severity": "warning",
 			"category": "Possible Error",
 			"helpUrl": "http://eslint.org/docs/rules/no-control-regex"
 		},
@@ -162,28 +162,28 @@
 		},
 		"sap-no-ui5-prop-warning": {
 			"severity": "warning",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?4093e3188b884ff0aa2c58fef7fcc97b.html"
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-ui5-prop-warning"
 		},
 		"no-catch-shadow": {
 			"severity": "warning",
-			"category": "Possible Error",
+			"category": "Variable",
 			"helpUrl": "http://eslint.org/docs/rules/no-catch-shadow"
 		},
 		"no-iterator": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-iterator"
 		},
 		"no-with": {
 			"severity": "error",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-with"
 		},
 		"sap-no-absolute-component-path": {
-			"severity": "error",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?a6ceb98921b849ed9e75774e2e3094bc.html"
+			"severity": "warning",
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-absolute-component-path"
 		},
 		"no-spaced-func": {
 			"severity": "info",
@@ -191,8 +191,8 @@
 			"helpUrl": "http://eslint.org/docs/rules/no-spaced-func"
 		},
 		"curly": {
-			"severity": "info",
-			"category": "Best Practices",
+			"severity": "error",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/curly"
 		},
 		"no-debugger": {
@@ -201,18 +201,18 @@
 			"helpUrl": "http://eslint.org/docs/rules/no-debugger"
 		},
 		"comma-style": {
-			"severity": "warning",
+			"severity": "info",
 			"category": "Stylistic Issue",
 			"helpUrl": "http://eslint.org/docs/rules/comma-style"
 		},
 		"no-extend-native": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-extend-native"
 		},
 		"no-extra-parens": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-extra-parens"
 		},
 		"no-constant-condition": {
@@ -222,7 +222,7 @@
 		},
 		"no-redeclare": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-redeclare"
 		},
 		"one-var": {
@@ -232,7 +232,7 @@
 		},
 		"radix": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/radix"
 		},
 		"sort-vars": {
@@ -242,7 +242,7 @@
 		},
 		"no-new": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-new"
 		},
 		"no-obj-calls": {
@@ -251,23 +251,23 @@
 			"helpUrl": "http://eslint.org/docs/rules/no-obj-calls"
 		},
 		"sap-no-br-on-return": {
-			"severity": "error",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?b7d6ceb27b734fc48c5fd28bbd6346f7.html"
+			"severity": "warning",
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-br-on-return"
 		},
 		"sap-no-override-rendering": {
-			"severity": "error",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?375b9940702c4560be297388e7ba46e3.html"
+			"severity": "warning",
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-override-rendering"
 		},
 		"sap-no-override-storage-prototype": {
-			"severity": "error",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?34bfc0d136564b6fb0ab8684381062b4.html"
+			"severity": "warning",
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-override-storage-prototype"
 		},
 		"accessor-pairs": {
-			"severity": "info",
-			"category": "Best Practices",
+			"severity": "warning",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/accessor-pairs"
 		},
 		"handle-callback-err": {
@@ -276,7 +276,7 @@
 			"helpUrl": "http://eslint.org/docs/rules/handle-callback-err"
 		},
 		"space-before-function-paren": {
-			"severity": "warning",
+			"severity": "info",
 			"category": "Stylistic Issue",
 			"helpUrl": "http://eslint.org/docs/rules/space-before-function-paren"
 		},
@@ -287,27 +287,27 @@
 		},
 		"sap-no-proprietary-browser-api": {
 			"severity": "warning",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?edeb59094b544c98b130ee0802c08969.html"
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-proprietary-browser-api"
 		},
 		"sap-no-element-creation": {
-			"severity": "error",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?bcc8321a07d44e2caecf7c26048b7607.html"
+			"severity": "warning",
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-element-creation"
 		},
 		"dot-location": {
-			"severity": "info",
-			"category": "Best Practices",
+			"severity": "warning",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/dot-location"
 		},
 		"no-bitwise": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-bitwise"
 		},
 		"wrap-iife": {
-			"severity": "info",
-			"category": "Best Practices",
+			"severity": "warning",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/wrap-iife"
 		},
 		"comma-spacing": {
@@ -317,13 +317,13 @@
 		},
 		"no-floating-decimal": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-floating-decimal"
 		},
 		"sap-no-global-selection": {
 			"severity": "warning",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?eebc1cf8f9744b7d81d27d6f944e593e.html"
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-global-selection"
 		},
 		"no-underscore-dangle": {
 			"severity": "info",
@@ -341,18 +341,18 @@
 			"helpUrl": "http://eslint.org/docs/rules/no-restricted-modules"
 		},
 		"no-alert": {
-			"severity": "error",
-			"category": "Best Practices",
+			"severity": "warning",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-alert"
 		},
 		"sap-no-global-variable": {
-			"severity": "error",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?815d122757c24e74b268fb9e5d96ecd9.html"
+			"severity": "warning",
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-global-variable"
 		},
 		"no-script-url": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-script-url"
 		},
 		"func-style": {
@@ -361,24 +361,24 @@
 			"helpUrl": "http://eslint.org/docs/rules/func-style"
 		},
 		"max-depth": {
-			"severity": "info",
-			"category": "Best Practices",
+			"severity": "warning",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/max-depth"
 		},
 		"no-undefined": {
-			"severity": "warning",
+			"severity": "error",
 			"category": "Variable",
 			"helpUrl": "http://eslint.org/docs/rules/no-undefined"
 		},
 		"no-unexpected-multiline": {
-			"severity": "warning",
+			"severity": "error",
 			"category": "Possible Error",
 			"helpUrl": "http://eslint.org/docs/rules/no-unexpected-multiline"
 		},
 		"sap-no-dom-access": {
 			"severity": "warning",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?e9fc2bbf028f4ca78402e8f2b706563f.html"
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-dom-access"
 		},
 		"no-dupe-keys": {
 			"severity": "error",
@@ -387,18 +387,18 @@
 		},
 		"no-loop-func": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-loop-func"
 		},
 		"no-shadow-restricted-names": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Variable",
 			"helpUrl": "http://eslint.org/docs/rules/no-shadow-restricted-names"
 		},
 		"sap-no-jquery-device-api": {
-			"severity": "error",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?beddb5286d6a4249924161e1ba3af8fc.html"
+			"severity": "warning",
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-jquery-device-api"
 		},
 		"array-bracket-spacing": {
 			"severity": "info",
@@ -406,8 +406,8 @@
 			"helpUrl": "http://eslint.org/docs/rules/array-bracket-spacing"
 		},
 		"guard-for-in": {
-			"severity": "info",
-			"category": "Best Practices",
+			"severity": "warning",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/guard-for-in"
 		},
 		"no-process-exit": {
@@ -416,48 +416,48 @@
 			"helpUrl": "http://eslint.org/docs/rules/no-process-exit"
 		},
 		"vars-on-top": {
-			"severity": "warning",
-			"category": "Best Practices",
+			"severity": "error",
+			"category": "Possible Error",
 			"helpUrl": "http://eslint.org/docs/rules/vars-on-top"
 		},
 		"no-extra-semi": {
-			"severity": "warning",
-			"category": "Best Practices",
+			"severity": "error",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-extra-semi"
 		},
 		"sap-message-toast": {
 			"severity": "warning",
-			"category": "Design Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?5b3269859327434d887d66ec556628e5.html"
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-message-toast"
 		},
 		"no-native-reassign": {
 			"severity": "error",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-native-reassign"
 		},
 		"sap-no-global-define": {
-			"severity": "error",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?182ab2fee1b546b682f43a8342d92110.html"
+			"severity": "warning",
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-global-define"
 		},
 		"sap-ui5-no-private-prop": {
 			"severity": "warning",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?66833af014f54bf5bbb9fb31a355c089.html"
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-ui5-no-private-prop"
 		},
 		"no-process-env": {
 			"severity": "warning",
-			"category": "Node.js",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-process-env"
 		},
 		"comma-dangle": {
-			"severity": "warning",
+			"severity": "error",
 			"category": "Possible Error",
 			"helpUrl": "http://eslint.org/docs/rules/comma-dangle"
 		},
 		"no-else-return": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-else-return"
 		},
 		"no-array-constructor": {
@@ -477,42 +477,42 @@
 		},
 		"sap-no-location-usage": {
 			"severity": "warning",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?393341754fee4a8d8252cd8ab63d4482.html"
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-location-usage"
 		},
 		"no-multi-str": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-multi-str"
 		},
 		"object-shorthand": {
 			"severity": "warning",
-			"category": "ECMAScript6",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/object-shorthand"
 		},
 		"sap-no-encode-file-service": {
 			"severity": "warning",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?5b9448b55e904414b0a4e82e15de2a80.html"
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-encode-file-service"
 		},
 		"no-throw-literal": {
-			"severity": "info",
-			"category": "Best Practices",
+			"severity": "warning",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-throw-literal"
 		},
 		"sap-timeout-usage": {
 			"severity": "warning",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?c6dc4a756ae34861984b4ec56ada0974.html"
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-timeout-usage"
 		},
 		"no-var": {
 			"severity": "warning",
-			"category": "ECMAScript6",
+			"category": "ECMAScript 6",
 			"helpUrl": "http://eslint.org/docs/rules/no-var"
 		},
 		"consistent-return": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/consistent-return"
 		},
 		"no-func-assign": {
@@ -522,7 +522,7 @@
 		},
 		"no-self-compare": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-self-compare"
 		},
 		"operator-assignment": {
@@ -532,11 +532,11 @@
 		},
 		"no-new-wrappers": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-new-wrappers"
 		},
 		"padded-blocks": {
-			"severity": "warning",
+			"severity": "info",
 			"category": "Stylistic Issue",
 			"helpUrl": "http://eslint.org/docs/rules/padded-blocks"
 		},
@@ -552,32 +552,32 @@
 		},
 		"sap-no-history-manipulation": {
 			"severity": "warning",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?499b03d3fb8a427da8172fb29e90b11c.html"
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-history-manipulation"
 		},
 		"no-implied-eval": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-implied-eval"
 		},
 		"no-div-regex": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-div-regex"
 		},
 		"no-void": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-void"
 		},
 		"sap-no-dom-insertion": {
 			"severity": "warning",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?e9601b0b056c41b8a67a448075767941.html"
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-dom-insertion"
 		},
 		"no-extra-bind": {
-			"severity": "info",
-			"category": "Best Practices",
+			"severity": "warning",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-extra-bind"
 		},
 		"no-unneeded-ternary": {
@@ -587,7 +587,7 @@
 		},
 		"no-plusplus": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-plusplus"
 		},
 		"no-ex-assign": {
@@ -596,7 +596,7 @@
 			"helpUrl": "http://eslint.org/docs/rules/no-ex-assign"
 		},
 		"space-in-parens": {
-			"severity": "warning",
+			"severity": "info",
 			"category": "Stylistic Issue",
 			"helpUrl": "http://eslint.org/docs/rules/space-in-parens"
 		},
@@ -607,12 +607,12 @@
 		},
 		"default-case": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/default-case"
 		},
 		"no-lonely-if": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-lonely-if"
 		},
 		"no-inner-declarations": {
@@ -621,22 +621,22 @@
 			"helpUrl": "http://eslint.org/docs/rules/no-inner-declarations"
 		},
 		"max-statements": {
-			"severity": "info",
-			"category": "Best Practices",
+			"severity": "warning",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/max-statements"
 		},
 		"valid-typeof": {
-			"severity": "error",
+			"severity": "warning",
 			"category": "Possible Error",
 			"helpUrl": "http://eslint.org/docs/rules/valid-typeof"
 		},
 		"sap-no-navigator": {
-			"severity": "error",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?fbb12d08b6994c1fa39a6f9d55865f52.html"
+			"severity": "warning",
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-navigator"
 		},
 		"key-spacing": {
-			"severity": "warning",
+			"severity": "info",
 			"category": "Stylistic Issue",
 			"helpUrl": "http://eslint.org/docs/rules/key-spacing"
 		},
@@ -651,24 +651,24 @@
 			"helpUrl": "http://eslint.org/docs/rules/semi"
 		},
 		"no-empty-character-class": {
-			"severity": "warning",
+			"severity": "error",
 			"category": "Possible Error",
 			"helpUrl": "http://eslint.org/docs/rules/no-empty-character-class"
 		},
 		"no-empty": {
-			"severity": "warning",
-			"category": "Best Practices",
+			"severity": "error",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-empty"
 		},
 		"no-proto": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-proto"
 		},
 		"sap-forbidden-window-property": {
 			"severity": "warning",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?405a42f7628444a1ab370a4b53eb236e.html"
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-forbidden-window-property"
 		},
 		"no-new-require": {
 			"severity": "warning",
@@ -676,9 +676,9 @@
 			"helpUrl": "http://eslint.org/docs/rules/no-new-require"
 		},
 		"sap-no-hardcoded-url": {
-			"severity": "error",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?fa158d772a2a48bc9b1530713ac03bbd.html"
+			"severity": "warning",
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-hardcoded-url"
 		},
 		"object-curly-spacing": {
 			"severity": "info",
@@ -687,37 +687,37 @@
 		},
 		"no-continue": {
 			"severity": "info",
-			"category": "Stylistic Issues",
+			"category": "Stylistic Issue",
 			"helpUrl": "http://eslint.org/docs/rules/no-continue"
 		},
 		"sap-no-dynamic-style-insertion": {
-			"severity": "error",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?29ca097fdefb4d6fa08c762a6d8228f9.html"
+			"severity": "warning",
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-dynamic-style-insertion"
 		},
 		"no-cond-assign": {
-			"severity": "error",
+			"severity": "warning",
 			"category": "Possible Error",
 			"helpUrl": "http://eslint.org/docs/rules/no-cond-assign"
 		},
 		"computed-property-spacing": {
 			"severity": "info",
-			"category": "StrictMode",
+			"category": "Stylistic Issue",
 			"helpUrl": "http://eslint.org/docs/rules/computed-property-spacing"
 		},
 		"sap-cross-application-navigation": {
 			"severity": "warning",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?6de3ec7327e0432cae87fc83f06db827.html"
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-cross-application-navigation"
 		},
 		"sap-no-exec-command": {
-			"severity": "error",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?617f912454a547eab7f0cd48faab501c.html"
+			"severity": "warning",
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-exec-command"
 		},
 		"no-octal": {
 			"severity": "warning",
-			"category": "Possible Error",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-octal"
 		},
 		"no-new-object": {
@@ -731,9 +731,9 @@
 			"helpUrl": "http://eslint.org/docs/rules/func-names"
 		},
 		"sap-no-sessionstorage": {
-			"severity": "error",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?da1b89e518e843238375015e84e4df04.html"
+			"severity": "warning",
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-sessionstorage"
 		},
 		"no-trailing-spaces": {
 			"severity": "info",
@@ -762,22 +762,22 @@
 		},
 		"no-fallthrough": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-fallthrough"
 		},
 		"no-warning-comments": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-warning-comments"
 		},
 		"no-octal-escape": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-octal-escape"
 		},
 		"no-unused-vars": {
 			"severity": "warning",
-			"category": "Possible Error",
+			"category": "Variable",
 			"helpUrl": "http://eslint.org/docs/rules/no-unused-vars"
 		},
 		"no-sparse-arrays": {
@@ -786,34 +786,34 @@
 			"helpUrl": "http://eslint.org/docs/rules/no-sparse-arrays"
 		},
 		"operator-linebreak": {
-			"severity": "warning",
+			"severity": "info",
 			"category": "Stylistic Issue",
 			"helpUrl": "http://eslint.org/docs/rules/operator-linebreak"
 		},
 		"no-sequences": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-sequences"
 		},
 		"no-undef": {
 			"severity": "error",
-			"category": "Possible Error",
+			"category": "Variable",
 			"helpUrl": "http://eslint.org/docs/rules/no-undef"
 		},
 		"eqeqeq": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/eqeqeq"
 		},
 		"indent": {
-			"severity": "warning",
+			"severity": "info",
 			"category": "Stylistic Issue",
 			"helpUrl": "http://eslint.org/docs/rules/indent"
 		},
 		"sap-no-localhost": {
-			"severity": "info",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?e380312c1cba4bc58b3cd1d91ac7eab0.html"
+			"severity": "warning",
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-localhost"
 		},
 		"no-multi-spaces": {
 			"severity": "info",
@@ -821,9 +821,9 @@
 			"helpUrl": "http://eslint.org/docs/rules/no-multi-spaces"
 		},
 		"sap-no-hardcoded-color": {
-			"severity": "error",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?b8b7dca7caf342f590c21a5ef91e2f2b.html"
+			"severity": "warning",
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-hardcoded-color"
 		},
 		"new-cap": {
 			"severity": "info",
@@ -831,12 +831,12 @@
 			"helpUrl": "http://eslint.org/docs/rules/new-cap"
 		},
 		"no-console": {
-			"severity": "error",
+			"severity": "warning",
 			"category": "Possible Error",
 			"helpUrl": "http://eslint.org/docs/rules/no-console"
 		},
 		"no-multiple-empty-lines": {
-			"severity": "warning",
+			"severity": "info",
 			"category": "Stylistic Issue",
 			"helpUrl": "http://eslint.org/docs/rules/no-multiple-empty-lines"
 		},
@@ -846,28 +846,28 @@
 			"helpUrl": "http://eslint.org/docs/rules/max-nested-callbacks"
 		},
 		"sap-no-global-event": {
-			"severity": "error",
-			"category": "Fiori Architectural Guidelines",
-			"helpUrl": "https://help.hana.ondemand.com/webide/frameset.htm?ec4c8170ec4e42a4accbde5627883ed0.html"
+			"severity": "warning",
+			"category": "",
+			"helpUrl": "http://eslint.org/docs/rules/sap-no-global-event"
 		},
 		"no-extra-boolean-cast": {
-			"severity": "warning",
+			"severity": "error",
 			"category": "Possible Error",
 			"helpUrl": "http://eslint.org/docs/rules/no-extra-boolean-cast"
 		},
 		"block-scoped-var": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/block-scoped-var"
 		},
 		"no-labels": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-labels"
 		},
 		"no-eq-null": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-eq-null"
 		},
 		"no-path-concat": {
@@ -877,12 +877,12 @@
 		},
 		"no-label-var": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Variable",
 			"helpUrl": "http://eslint.org/docs/rules/no-label-var"
 		},
 		"no-use-before-define": {
 			"severity": "warning",
-			"category": "Possible Error",
+			"category": "Variable",
 			"helpUrl": "http://eslint.org/docs/rules/no-use-before-define"
 		},
 		"semi-spacing": {
@@ -891,23 +891,23 @@
 			"helpUrl": "http://eslint.org/docs/rules/semi-spacing"
 		},
 		"linebreak-style": {
-			"severity": "error",
-			"category": "Best Practices",
+			"severity": "info",
+			"category": "Stylistic Issue",
 			"helpUrl": "http://eslint.org/docs/rules/linebreak-style"
 		},
 		"max-params": {
-			"severity": "info",
-			"category": "Best Practices",
+			"severity": "warning",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/max-params"
 		},
 		"no-caller": {
 			"severity": "error",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-caller"
 		},
 		"no-lone-blocks": {
 			"severity": "warning",
-			"category": "Best Practices",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-lone-blocks"
 		},
 		"wrap-regex": {
@@ -916,18 +916,18 @@
 			"helpUrl": "http://eslint.org/docs/rules/wrap-regex"
 		},
 		"no-unused-expressions": {
-			"severity": "error",
-			"category": "Best Practices",
+			"severity": "warning",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/no-unused-expressions"
 		},
 		"dot-notation": {
-			"severity": "info",
-			"category": "Best Practices",
+			"severity": "warning",
+			"category": "Best Practice",
 			"helpUrl": "http://eslint.org/docs/rules/dot-notation"
 		},
 		"no-undef-init": {
-			"severity": "info",
-			"category": "Best Practices",
+			"severity": "warning",
+			"category": "Variable",
 			"helpUrl": "http://eslint.org/docs/rules/no-undef-init"
 		},
 		"brace-style": {
@@ -942,12 +942,12 @@
 		},
 		"prefer-const": {
 			"severity": "info",
-			"category": "ECMAScript6",
+			"category": "Stylistic Issue",
 			"helpUrl": "http://eslint.org/docs/rules/prefer-const"
 		},
 		"no-this-before-super": {
-			"severity": "info",
-			"category": "ECMAScript6",
+			"severity": "error",
+			"category": "Possible Error",
 			"helpUrl": "http://eslint.org/docs/rules/no-this-before-super"
 		},
 		"array-callback-return": {
@@ -1093,7 +1093,7 @@
 		"no-empty-function": {
 			"severity": "error",
 			"category": "Possible Error",
-			"helpUrl": "http://eslint.org/docs/rules/no-empty-function"
+			"helpUrl": "http://eslint.org/docs/rules/class"
 		},
 		"no-empty-pattern": {
 			"severity": "error",
@@ -1113,7 +1113,7 @@
 		"no-implicit-coercion": {
 			"severity": "error",
 			"category": "Possible Error",
-			"helpUrl": "http://eslint.org/docs/rules/no-implicit-coercio"
+			"helpUrl": "http://eslint.org/docs/rules/no-implicit-coercion"
 		},
 		"no-implicit-globals": {
 			"severity": "error",

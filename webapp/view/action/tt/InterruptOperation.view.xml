@@ -11,7 +11,7 @@
 			</Toolbar>
 		</customHeader>
 		<subHeader>
-			<Toolbar id="subheader">
+			<Toolbar id="subheader" visible="{= !${device>/system/phone} }">
 				<c:Fragment fragmentName="com.mii.scanner.view.action.fragments.ProcessOrderInfoChart" type="XML"/>
 			</Toolbar>
 		</subHeader>

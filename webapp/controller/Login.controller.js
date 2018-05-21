@@ -9,7 +9,8 @@ sap.ui.define([
 		 * Löscht die aktuelle Zeichenkette im Einagebfeld nach einer bestimmten Zeitspanne.
 		 */
 		purgeInputAfterDelay: function(oInput, iUseDelay) {
-			var iDelay = iUseDelay ? iUseDelay : 75, // default 75ms
+			var iDefaultDelay = 75,
+				iDelay = iUseDelay ? iUseDelay : iDefaultDelay, // default 75ms
 				_tsStart = jQuery.sap.now(),
 				_tsFinish = null;
 
@@ -34,10 +35,12 @@ sap.ui.define([
 		 */
 		onLiveInput: function(oEvent) {
 			var sCurrentInput = oEvent.getParameter("value"),
-				oInput = oEvent.getSource();
+				oInput = oEvent.getSource(),
+				iPurgeDelay = 250,
+				iEmpty = 0;
 
-			if (sap.ui.Device.system.phone && sCurrentInput.length !== 0) {
-				this.purgeInputAfterDelay(oInput, 250);
+			if (sap.ui.Device.system.phone && sCurrentInput.length !== iEmpty) {
+				this.purgeInputAfterDelay(oInput, iPurgeDelay);
 			}
 		},
 
@@ -47,10 +50,11 @@ sap.ui.define([
 				oBundle = this.getResourceBundle(),
 				fnResolveHandler,
 				fnRejectHandler,
-				fnResetBusyView;
+				fnResetBusyView,
+				iEmpty = 0;
 
 			//prevent login, if user did not enter an username into login input
-			if (!sUserInput || sUserInput.length <= 0) {
+			if (!sUserInput || sUserInput.length === iEmpty) {
 				return;
 			}
 

@@ -49,10 +49,12 @@ sap.ui.define([
 			this.setModel(new JSONModel(jQuery.extend({}, this._oInitData)), "data");
 
 			this.setModel(new JSONModel(jQuery.extend({}, this._oInitView)), "view");
-
-			this.getRouter()
-				.getRoute("goodsIssue")
-				.attachMatched(this._onRouteMatched, this);
+			
+			// this.getRouter()
+			// 	.getRoute("goodsIssue")
+			// 	.attachMatched(this._onRouteMatched, this);
+			
+			this.attachRouteMatched("goodsIssue", this._onRouteMatched);
 		},
 
 		onSave: function() {

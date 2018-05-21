@@ -32,7 +32,9 @@ sap.ui.define([
 			iCanEnterRelativeDate: function(oOptions) {
 
 				Opa5.assert.strictEqual(!sap.ui.test.Opa.getContext().oDate, true, "Verified that oDate moment is initial before 'iCanEnterRelativeDate()'");
+				/* eslint-disable no-undef */
 				var oBaseDate = moment();
+				/* eslint-enable no-undef */
 				sap.ui.test.Opa.getContext().oDate = oBaseDate; // define for later use
 				
 				this.lastDate = oBaseDate.clone();

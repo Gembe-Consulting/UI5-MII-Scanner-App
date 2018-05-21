@@ -1,4 +1,2 @@
-/build/**
-/dist/**
-/webapp/libs/**
-/webapp/test/**
+*/libs/*
+*/test/*

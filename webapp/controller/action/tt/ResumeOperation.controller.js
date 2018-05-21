@@ -117,7 +117,7 @@ sap.ui.define([
 			}
 
 			if (sOldComment) {
-				sResult = sResult + "\n" + "=====" + "\n" + sOldComment;
+				sResult = sResult + "\n=====\n" + sOldComment;
 			}
 
 			return sResult;
