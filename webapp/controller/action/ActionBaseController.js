@@ -94,6 +94,12 @@ sap.ui.define([
 				}
 			}, this);
 		},
+		
+		attachRouteMatched:function(sRoute, fnCallback){
+			this.getRouter()
+				.getRoute(sRoute)
+				.attachMatched(fnCallback, this);
+		},
 
 		handleBarcodeScanned: function(oEvent, oData) {
 			var sScannedString = oData.string,

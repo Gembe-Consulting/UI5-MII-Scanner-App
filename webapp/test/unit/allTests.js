@@ -7,7 +7,8 @@ sap.ui.define([
 	"test/unit/controller/RollerConveyor.controller",
 	"test/unit/controller/BaseController",
 	"test/unit/helper/Utilities",
-	"test/unit/helper/UserHandler"
+	"test/unit/helper/UserHandler",
+	"test/unit/controller/gm/GoodsIssueController"
 ], function() {
 	"use strict";
 });
