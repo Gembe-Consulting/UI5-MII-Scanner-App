@@ -151,6 +151,21 @@ sap.ui.define([
 		});
 	});
 
+	QUnit.test("Should Test 'testUserLoginName'", function(assert) {
+		assert.ok(false, "testUserLoginName: Implement me");
+	});
+
+	QUnit.test("Should Test 'getUserLoginName'", function(assert) {
+		assert.ok(false, "getUserLoginName: Implement me");
+	});
+
+	QUnit.test("Should Test 'resetUserModel'", function(assert) {
+		assert.ok(false, "resetUserModel: Implement me");
+	});
+	
+	QUnit.test("Should Test 'forceRedirectToLoginPage'", function(assert) {
+		assert.ok(false, "forceRedirectToLoginPage: Implement me");
+	});
 	/*
 		function startMockServer(iRespondAfter) {
 			// configure respond to requests delay
