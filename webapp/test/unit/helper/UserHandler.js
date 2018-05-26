@@ -163,9 +163,6 @@ sap.ui.define([
 		assert.ok(false, "resetUserModel: Implement me");
 	});
 	
-	QUnit.test("Should Test 'forceRedirectToLoginPage'", function(assert) {
-		assert.ok(false, "forceRedirectToLoginPage: Implement me");
-	});
 	/*
 		function startMockServer(iRespondAfter) {
 			// configure respond to requests delay
