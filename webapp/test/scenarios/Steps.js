@@ -54,7 +54,7 @@ sap.ui.define([
 			this.register(/^I start the app on '(.*?)' with '(.*?)' (error|type) '(.*?)'$/i,
 				function(sHash, sService, sTextOrType, sError, Given, When, Then) {
 
-					var bFatalError = jQuery.inArray("type", sTextOrType) === -1;
+					var bFatalError = sTextOrType.indexOf("type") === -1;
 
 					Given.iStartTheApp({
 						hash: sHash,
