@@ -68,9 +68,9 @@ sap.ui.define([
 		/**
 		 * Utility to send a bus event
 		 * @public
-		 * @param {string} channel Event channel
-		 * @param {string} event Event name
-		 * @param {object} data Event data
+		 * @param {string} sChannel Event channel
+		 * @param {object} oEvent Event name
+		 * @param {object} oData Event data
 		 */
 		sendEvent: function(sChannel, oEvent, oData) {
 			sap.ui.getCore().getEventBus().publish(sChannel, oEvent, oData);
@@ -79,10 +79,10 @@ sap.ui.define([
 		/**
 		 * Utility to subscribe to a channel and event
 		 * @public
-		 * @param {string} channel Event channel
-		 * @param {string} event Event name
-		 * @param {object} handler Event handler
-		 * @param {object} listener Event listener
+		 * @param {string} sChannel Event channel
+		 * @param {object} oEvent Event name
+		 * @param {object} oHandler Event handler
+		 * @param {object} oListener Event listener
 		 */
 		subscribe: function(sChannel, oEvent, oHandler, oListener) {
 			sap.ui.getCore().getEventBus().subscribe(sChannel, oEvent, oHandler, oListener);
@@ -91,10 +91,10 @@ sap.ui.define([
 		/**
 		 * Utility to unsubscribe to a channel and event
 		 * @public
-		 * @param {string} channel Event channel
-		 * @param {string} event Event name
-		 * @param {object} handler Event handler
-		 * @param {object} listener Event listener
+		 * @param {string} sChannel Event channel
+		 * @param {object} oEvent Event name
+		 * @param {object} oHandler Event handler
+		 * @param {object} oListener Event listener
 		 */
 		unsubscribe: function(sChannel, oEvent, oHandler, oListener) {
 			sap.ui.getCore().getEventBus().unsubscribe(sChannel, oEvent, oHandler, oListener);
@@ -109,8 +109,10 @@ sap.ui.define([
 			return this.getOwnerComponent();
 		},
 		
-		// TODO: JsDoc
 		/**
+		 * Navigates to a target given by oEvents custom data.
+		 * @public
+		 * @param {ControlEvent} oEvent event fired by control
 		 */
 		navigateForward: function(oEvent) {
 			var sNavTarget = oEvent.getSource().data("target"),
@@ -128,8 +130,11 @@ sap.ui.define([
 			this.getRouter().navTo(sNavTarget, oType);
 		},
 		
-		// TODO: JsDoc
 		/**
+		 * Navigates back in browser history. 
+		 * If no history is found, navigates to "home" target, 
+		 * writing a new history entry on desktop devices but not on mobile devices.
+		 * @public
 		 */
 		navigateBack: function() {
 			var sPreviousHash = History.getInstance().getPreviousHash(),
@@ -147,8 +152,9 @@ sap.ui.define([
 			}
 		},
 		
-		// TODO: JsDoc
 		/**
+		 * Navigates to "home" target.
+		 * @public
 		 */
 		navigateToHome: function() {
 			this.getRouter().navTo("home");
