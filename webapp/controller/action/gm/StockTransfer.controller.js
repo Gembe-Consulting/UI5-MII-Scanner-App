@@ -14,7 +14,9 @@ sap.ui.define([
 
 		formatter: formatter,
 
-		_aWarningLikeFatalError: ["EZMII_MESSAGES030:", "EZMII_MESSAGES031:", "EZMII_MESSAGES032:", "EZMII_MESSAGES033:", "EZMII_MESSAGES034:"],
+		_aWarningLikeFatalError: ["EZMII_MESSAGES030:", "EZMII_MESSAGES031:", "EZMII_MESSAGES032:", "EZMII_MESSAGES033:",
+			"EZMII_MESSAGES034:"
+		],
 
 		_oInitData: {
 			//user input data
@@ -89,19 +91,28 @@ sap.ui.define([
 
 			fnResolveStockTransfer = function(oData) {
 				var oStorageUnitNumber,
-					aRows = oData.d.results[0].Rowset.results[0].Row.results,
+					aRows,
 					oDataModel = this.getModel("data"),
 					sSuccessMessage,
 					iExactlyOne = 1;
 
+				try {
+					aRows = oData.d.results[0].Rowset.results[0].Row.results;
+				} catch (oError) {
+					aRows = [];
+				}
+
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
-				if (aRows.length === iExactlyOne) {
+				if (oData.success && aRows.length === iExactlyOne) {
 					oStorageUnitNumber = aRows[0];
 
 					if (bPerformGoodsReceipt) {
-						sSuccessMessage = this.getTranslation("stockTransfer.messageText.postingWithGoodsReceiptSuccessfull", [oDataModel.getProperty("/storageUnit"), oDataModel.getProperty("/storageBin")]);
+						sSuccessMessage = this.getTranslation("stockTransfer.messageText.postingWithGoodsReceiptSuccessfull", [oDataModel.getProperty(
+							"/storageUnit"), oDataModel.getProperty("/storageBin")]);
 					} else {
-						sSuccessMessage = this.getTranslation("stockTransfer.messageText.postingSuccessfull", [oDataModel.getProperty("/storageUnit"), oDataModel.getProperty("/storageBin")]);
+						sSuccessMessage = this.getTranslation("stockTransfer.messageText.postingSuccessfull", [oDataModel.getProperty("/storageUnit"),
+							oDataModel.getProperty("/storageBin")
+						]);
 					}
 
 					this.addUserMessage({
@@ -109,6 +120,8 @@ sap.ui.define([
 						type: sap.ui.core.MessageType.Success
 					}, true);
 
+				}else if(!oData.success){
+					throw new Error(oData.lastErrorMessage + " @BwA 999");
 				} else {
 					throw new Error(this.getTranslation("stockTransfer.messageText.resultIncomplete") + " @BwA 999");
 				}
@@ -118,23 +131,23 @@ sap.ui.define([
 			}.bind(this);
 
 			fnRejectGoodsReceipt = function(oError) {
-				MessageBox.error(oError.message, {
-					title: this.getTranslation("error.miiTransactionErrorText")
+				this.addUserMessage({
+					text: this.getTranslation("error.miiTransactionErrorText", ["GoodsMovementCreate @BwA 101"])
 				});
 				throw oError; //re-throw
 			}.bind(this);
 
 			fnRejectStockTransfer = function(oError) {
-				MessageBox.error(oError.message, {
-					title: this.getTranslation("error.miiTransactionErrorText")
+				this.addUserMessage({
+					text: this.getTranslation("error.miiTransactionErrorText", ["GoodsMovementCreate @BwA 999"])
 				});
 				throw oError; //re-throw
 			}.bind(this);
 
 			fnReject = function(oError) {
 				this.addUserMessage({
-					text: oError.message
-				});
+					text: oError.responseText || oError.message
+				}, true /* keep */);
 			}.bind(this);
 
 			if (bPerformGoodsReceipt) {
@@ -236,7 +249,8 @@ sap.ui.define([
 		 * - Quntity has been entered and is not zero
 		 */
 		isInputDataValid: function(oData) {
-			return !!oData.storageBin && !!oData.storageUnit && !!oData.LENUM && !!oData.entryQuantity && oData.entryQuantity !== "" && !this.formatter.isEmptyStorageUnit(oData.entryQuantity);
+			return !!oData.storageBin && !!oData.storageUnit && !!oData.LENUM && !!oData.entryQuantity && oData.entryQuantity !== "" && !this.formatter
+				.isEmptyStorageUnit(oData.entryQuantity);
 		},
 
 		_isGoodsReceiptRequired: function() {
@@ -267,8 +281,14 @@ sap.ui.define([
 					},
 					oDataModel = this.getModel("data"),
 					bMergeData = true,
-					aRows = oData.d.results[0].Rowset.results[0].Row.results,
+					aRows,
 					iExactlyOne = 1;
+
+				try {
+					aRows = oData.d.results[0].Rowset.results[0].Row.results;
+				} catch (oError) {
+					aRows = [];
+				}
 
 				if (aRows.length === iExactlyOne) {
 					oStorageUnit = aRows[0];
@@ -294,9 +314,13 @@ sap.ui.define([
 			}.bind(this);
 
 			fnReject = function(oError) {
-				MessageBox.error(oError.message, {
-					title: this.getTranslation("error.miiTransactionErrorText", ["StorageUnitNumberRead"])
+				this.addUserMessage({
+					text: this.getTranslation("error.miiTransactionErrorText", ["StorageUnitNumberRead"])
 				});
+				this.addUserMessage({
+					text: oError.responseText || oError.message
+				}, true);
+				oSource.setValueState(sap.ui.core.ValueState.Error).setValue("");
 			}.bind(this);
 
 			/* Perform service call, Hide Busy Indicator, Update View Controls */
