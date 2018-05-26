@@ -14,9 +14,7 @@ sap.ui.define([
 	"test/unit/controller/gm/BaseGMController",
 	"test/unit/controller/tt/StartOperation.controller",
 	"test/unit/controller/tt/FinishOperation.controller",
-	"test/unit/controller/tt/InterruptOperation.controller",
-	"test/unit/controller/tt/ResumeOperation.controller",
-	"test/unit/others/Component"
+	"test/unit/controller/tt/InterruptOperation.controller"
 ], function() {
 	"use strict";
 });
