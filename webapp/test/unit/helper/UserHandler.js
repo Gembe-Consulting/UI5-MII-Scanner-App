@@ -7,7 +7,8 @@ sap.ui.define([
 	"sap/ui/thirdparty/sinon-qunit"
 ], function(UserHandler, ManagedObject, JSONModel, MockServer) {
 	"use strict";
-
+	/* eslint-disable */
+	
 	QUnit.module("UserHandler", {
 
 		beforeEach: function() {

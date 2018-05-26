@@ -4,6 +4,7 @@ sap.ui.define([
 	"com/mii/scanner/model/sapType"
 ], function(Input, JSONModel, sapType) {
 	"use strict";
+	/* eslint-disable */
 
 	/* Create e.g. an SAPUI5 control which you need for your tests
        Alternatively you can do this also in the  method of a module 

@@ -2,6 +2,7 @@ sap.ui.define([
 	"com/mii/scanner/controller/helper/Utilities"
 ], function(Util) {
 	"use strict";
+	/* eslint-disable */
 
 	QUnit.module("Utilities", {
 		beforeEach: function() {},

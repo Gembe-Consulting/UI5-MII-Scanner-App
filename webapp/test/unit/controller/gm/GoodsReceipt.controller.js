@@ -3,7 +3,8 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel"
 ], function(GoodsReceiptController, JSONModel) {
 	"use strict";
-
+	/* eslint-disable */
+	
 	QUnit.module("Create and post Goods Receipts", {
 
 		beforeEach: function() {

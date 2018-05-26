@@ -9,7 +9,8 @@ sap.ui.define([
 	"sap/ui/thirdparty/sinon-qunit"
 ], function(GoodsIssueController, ManagedObject, Control, Element, View, Controller /*, sinon, sinonQunit*/ ) {
 	"use strict";
-
+	/* eslint-disable */
+	
 	QUnit.module("GoodsIssueController", {
 
 		beforeEach: function() {
