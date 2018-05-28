@@ -348,7 +348,7 @@ sap.ui.define([
 				startMoment = moment(oStartDate);
 				endMoment = moment(oEndDate);
 
-				if (!aInterruptions) {
+				if (!aInterruptions || aInterruptions.length === iEmpty) {
 					var iDuration = endMoment - startMoment,
 						MS_TO_MIN = 3600;
 					
