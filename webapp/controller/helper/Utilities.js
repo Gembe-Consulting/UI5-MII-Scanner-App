@@ -5,14 +5,16 @@ sap.ui.define([], function() {
 	var Util = {};
 	
 	Util.undef = "undefined";
+	Util.empty = "";
+	Util.blank = " ";
 
-	Util.padLeadingZero = function padLeadingZero(sValue, iLength) {
+	Util.padLeadingZeros = function padLeadingZeros(sValue, iLength) {
 		var sCharToPad = "0";
 
 		return jQuery.sap.padLeft(sValue.toString(), sCharToPad, iLength);
 	};
 
-	Util.deleteLeadingZeros = function deleteLeadingZeros(sValue) {
+	Util.trimLeadingZeros = function trimLeadingZeros(sValue) {
 		if (jQuery.type(sValue) === "string") {
 			return sValue.replace(/^0+/, "");
 		}

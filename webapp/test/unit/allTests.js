@@ -1,5 +1,6 @@
 sap.ui.define([
 	"test/unit/model/sapType",
+	"test/unit/model/type/CustomTypes",
 	"test/unit/model/formatter",
 	"test/unit/helper/Utilities",
 	"test/unit/helper/UserHandler",
