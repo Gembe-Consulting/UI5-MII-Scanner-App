@@ -212,7 +212,8 @@ sap.ui.define([
 
 		assert.throws(function() {
 				vornrType.validateValue("XYZ1");
-			},/Geben Sie einen Wert ein, der mit /, "raised ValidateException (not a number)"
+			},
+			new sap.ui.model.ValidateException("Vorgangsnummer 'XYZ1' ist nicht gültig"), "raised ValidateException (not a number)"
 		);	
 		
 		assert.throws(function() {

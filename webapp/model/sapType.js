@@ -75,7 +75,7 @@ sap.ui.define([
 		}, {
 			minLength: 4,
 			maxLength: 4,
-			search: /^[0123456789]{4,4}$/
+			numericOnly: true
 		}),
 
 		MEINS: new UnitOfMeasureType({

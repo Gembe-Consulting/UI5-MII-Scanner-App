@@ -20,10 +20,14 @@ sap.ui.define([
 		constructor: function() {
 			StringType.apply(this, arguments);
 			this.sName = "OperationNumber";
+
+			if (typeof this.oConstraints.numericOnly === Util.undef) {
+				this.oConstraints.numericOnly = true;
+			}
 		}
 
 	});
-	
+
 	OperationNumberType.prototype.formatValue = function(sValue, sInternalType) {
 		if (typeof sValue === Util.undef || sValue === null || sValue === Util.blank) {
 			return "";
@@ -31,7 +35,7 @@ sap.ui.define([
 
 		return sValue;
 	};
-	
+
 	OperationNumberType.prototype.parseValue = function(oValue, sInternalType) {
 		var sValue = StringType.prototype.parseValue.apply(this, arguments);
 
@@ -41,12 +45,32 @@ sap.ui.define([
 			return this.oFormatOptions.emptyString;
 		}
 
-		if (this.oFormatOptions.padWithChar && sValue !== Util.empty  && sValue !== Util.blank) {
+		if (this.oFormatOptions.padWithChar && sValue !== Util.empty && sValue !== Util.blank) {
 			sValue = jQuery.sap.padLeft(oValue, this.oFormatOptions.padWithChar, this.oConstraints.maxLength);
 		}
 
 		return sValue;
 	};
 
+	OperationNumberType.prototype.validateValue = function(sValue) {
+		var aViolatedConstraints = [],
+			aMessages = [],
+			iNoLength = 0;
+
+		if (this.oConstraints.numericOnly) {
+			if (!jQuery.isNumeric(sValue)) {
+				aViolatedConstraints.push("isNumeric");
+				aMessages.push("Vorgangsnummer '" + sValue + "' ist nicht gültig");
+			}
+		}
+
+		if (aViolatedConstraints.length > iNoLength) {
+			throw new ValidateException(aMessages.join(". "), aViolatedConstraints);
+		}
+
+		StringType.prototype.validateValue.apply(this, arguments);
+
+	};
+	
 	return OperationNumberType;
 });
