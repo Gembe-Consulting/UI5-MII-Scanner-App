@@ -402,6 +402,7 @@ sap.ui.define([
 					}).setTooltip(startMoment.format("LLL") + " > " + firstInterruptionStart.format("LLL") + " -- In Betrieb [" + moment.duration(iFirstLength).format(sDurationFormatPattern) + "]"));
 
 					//Interruptions
+					/*global _*/
 					aTimeLine = aTimeLine.concat(_.flattenDeep(aInterruptions.map(fnMicroChartBarFactory)));
 					
 					//last Interruption -> End

@@ -452,6 +452,7 @@ sap.ui.define([
 		getRessourceOfDummyStorageUnit: function(sStorageUnitNumber) {
 			var sRessource,
 				oRessource,
+				/*global Map*/
 				mRessource = new Map(),
 				iLENUMLength = 20,
 				iStartRessourcePart = 1,
