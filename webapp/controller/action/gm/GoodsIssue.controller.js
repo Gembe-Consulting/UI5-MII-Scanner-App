@@ -49,11 +49,11 @@ sap.ui.define([
 			this.setModel(new JSONModel(jQuery.extend({}, this._oInitData)), "data");
 
 			this.setModel(new JSONModel(jQuery.extend({}, this._oInitView)), "view");
-			
+
 			// this.getRouter()
 			// 	.getRoute("goodsIssue")
 			// 	.attachMatched(this._onRouteMatched, this);
-			
+
 			this.attachRouteMatched("goodsIssue", this._onRouteMatched);
 		},
 
@@ -66,15 +66,21 @@ sap.ui.define([
 			fnResolve = function(oData) {
 				var oDataModel = this.getModel("data");
 
-				this.addUserMessage({
-					text: this.getTranslation("goodsIssue.messageText.goodsIssuePostingSuccessfull", [oDataModel.getProperty("/orderNumber")]),
-					type: sap.ui.core.MessageType.Success
-				});
+				if (oData.success) {
+					this.addUserMessage({
+						text: this.getTranslation("goodsIssue.messageText.goodsIssuePostingSuccessfull", [oDataModel.getProperty("/orderNumber")]),
+						type: sap.ui.core.MessageType.Success
+					});
+				} else {
+					this.addUserMessage({
+						text: oData.lastErrorMessage
+					});
+				}
 			}.bind(this);
 
 			fnReject = function(oError) {
-				MessageBox.error(oError.responseText || oError.message, {
-					title: this.getTranslation("error.miiTransactionErrorText", ["GoodsMovementCreate: 261"])
+				this.addUserMessage({
+					text: this.getTranslation("error.miiTransactionErrorText", ["GoodsMovementCreate: 261"])
 				});
 			}.bind(this);
 
@@ -200,9 +206,11 @@ sap.ui.define([
 			var fZero = 0.0;
 			switch (this.getModel("view").getProperty("/type")) {
 				case "withLE":
-					return !!oData.entryQuantity && oData.entryQuantity > fZero && oData.entryQuantity !== "" && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageUnit;
+					return !!oData.entryQuantity && oData.entryQuantity > fZero && oData.entryQuantity !== "" && !!oData.unitOfMeasure && !!oData.orderNumber &&
+						!!oData.storageUnit;
 				case "nonLE":
-					return !!oData.entryQuantity && oData.entryQuantity > fZero && oData.entryQuantity !== "" && !!oData.unitOfMeasure && !!oData.orderNumber && !!oData.storageLocation && !!oData.materialNumber;
+					return !!oData.entryQuantity && oData.entryQuantity > fZero && oData.entryQuantity !== "" && !!oData.unitOfMeasure && !!oData.orderNumber &&
+						!!oData.storageLocation && !!oData.materialNumber;
 				default:
 					return false;
 			}
@@ -248,7 +256,9 @@ sap.ui.define([
 
 					if (oDataModel.getProperty("/unitOfMeasure") && oDataModel.getProperty("/unitOfMeasure") !== oOrderComponent.EINHEIT) {
 						this.addUserMessage({
-							text: this.getTranslation("goodsIssue.messageText.orderComponentHasDeviatingUnitOfMeasure", [oOrderComponent.EINHEIT, oDataModel.getProperty("/unitOfMeasure")])
+							text: this.getTranslation("goodsIssue.messageText.orderComponentHasDeviatingUnitOfMeasure", [oOrderComponent.EINHEIT,
+								oDataModel.getProperty("/unitOfMeasure")
+							])
 						});
 						oSource.setValueState(sap.ui.core.ValueState.Error);
 					} else {
@@ -258,9 +268,12 @@ sap.ui.define([
 					oDataModel.setProperty("/unitOfMeasure", sComponentUnitOfMeasure);
 
 					// update entry quantity by remaining open quantity, but only if users did not enter a quantity beforhand
-					if (this.getModel("view").getProperty("/type") === "nonLE" && (!oDataModel.getProperty("/entryQuantity") || oDataModel.getProperty("/entryQuantity") === "")) {
+					if (this.getModel("view").getProperty("/type") === "nonLE" && (!oDataModel.getProperty("/entryQuantity") || oDataModel.getProperty(
+							"/entryQuantity") === "")) {
 						oDataModel.setProperty("/entryQuantity", oOrderComponent.BDMNG - oOrderComponent.ENMNG);
-						this.byId("quantityInput").setTooltip(this.getTranslation("goodsIssue.tooltip.remainingQuantity", [oOrderComponent.BDMNG - oOrderComponent.ENMNG, oOrderComponent.BDMNG, oOrderComponent.ENMNG]));
+						this.byId("quantityInput").setTooltip(this.getTranslation("goodsIssue.tooltip.remainingQuantity", [oOrderComponent.BDMNG -
+							oOrderComponent.ENMNG, oOrderComponent.BDMNG, oOrderComponent.ENMNG
+						]));
 					} else {
 						this.byId("quantityInput").setTooltip("");
 					}
@@ -276,12 +289,13 @@ sap.ui.define([
 			}.bind(this);
 
 			fnReject = function(oError) {
-				MessageBox.error(oError.responseText || oError.message, {
-					title: this.getTranslation("error.miiTransactionErrorText", ["OrderComponentRead"]),
-					contentWidth: "500px"
+				this.addUserMessage({
+					text: this.getTranslation("error.miiTransactionErrorText", ["OrderComponentRead"])
 				});
+				this.addUserMessage({
+					text: oError.responseText || oError.message
+				}, true);
 				oSource.setValueState(sap.ui.core.ValueState.Error).setValue("");
-
 			}.bind(this);
 
 			this.requestOrderComponentInfoService(sOrderNumber, sMaterialNumber)
@@ -344,7 +358,9 @@ sap.ui.define([
 					if (this.formatter.isPastDate(oStorageUnit.VFDAT)) {
 						oExpirationDateFormatted = moment(oStorageUnit.VFDAT, "MM-DD-YYYY");
 						this.addUserMessage({
-							text: this.getTranslation("goodsIssue.messageText.storageUnitHasPastExpirationDate", [oStorageUnit.CHARG, oExpirationDateFormatted.format("L")]),
+							text: this.getTranslation("goodsIssue.messageText.storageUnitHasPastExpirationDate", [oStorageUnit.CHARG,
+								oExpirationDateFormatted.format("L")
+							]),
 							type: sap.ui.core.MessageType.Warning
 						});
 						oSource.setValueState(sap.ui.core.ValueState.Warning);
@@ -384,10 +400,12 @@ sap.ui.define([
 			}.bind(this);
 
 			fnReject = function(oError) {
-				MessageBox.error(oError.responseText || oError.message, {
-					title: this.getTranslation("error.miiTransactionErrorText", ["StorageUnitNumberRead"]),
-					contentWidth: "500px"
+				this.addUserMessage({
+					text: this.getTranslation("error.miiTransactionErrorText", ["StorageUnitNumberRead"])
 				});
+				this.addUserMessage({
+					text: oError.responseText || oError.message
+				}, true);
 				oSource.setValueState(sap.ui.core.ValueState.Error).setValue("");
 				this.getModel("view").setProperty("/bStorageUnitValid", false);
 			}.bind(this);
@@ -457,10 +475,12 @@ sap.ui.define([
 			}.bind(this);
 
 			fnReject = function(oError) {
-				MessageBox.error(oError.responseText || oError.message, {
-					title: this.getTranslation("error.miiTransactionErrorText", ["OrderHeaderNumberRead"]),
-					contentWidth: "500px"
+				this.addUserMessage({
+					text: this.getTranslation("error.miiTransactionErrorText", ["OrderHeaderNumberRead"])
 				});
+				this.addUserMessage({
+					text: oError.responseText || oError.message
+				}, true);
 				oSource.setValueState(sap.ui.core.ValueState.Error).setValue("");
 				this.getModel("view").setProperty("/bOrderNumberValid", false);
 			}.bind(this);

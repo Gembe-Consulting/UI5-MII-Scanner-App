@@ -70,25 +70,28 @@ sap.ui.define([
 				}
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
-				if (aRows.length === iExactlyOne) {
+				if (oData.success && aRows.length === iExactlyOne) {
 					oStorageUnitNumber = aRows[0];
 					this.addUserMessage({
-						text: this.getTranslation("goodsReceipt.messageText.goodsReceiptPostingSuccessfull", [this.deleteLeadingZeros(oStorageUnitNumber.LENUM)]),
+						text: this.getTranslation("goodsReceipt.messageText.goodsReceiptPostingSuccessfull", [this.deleteLeadingZeros(
+							oStorageUnitNumber.LENUM)]),
 						type: sap.ui.core.MessageType.Success
+					});
+				} else if (!oData.success) {
+					this.addUserMessage({
+						text: oData.lastErrorMessage
 					});
 				} else {
 					this.addUserMessage({
-						text: this.getTranslation("goodsReceipt.messageText.resultIncomplete"),
-						type: sap.ui.core.MessageType.Error
+						text: this.getTranslation("goodsReceipt.messageText.resultIncomplete")
 					});
 				}
 			}.bind(this);
 
 			/* Prepare error callback */
 			fnReject = function(oError) {
-				MessageBox.error(oError.responseText || oError.message, {
-					title: this.getTranslation("error.miiTransactionErrorText", ["GoodsMovementCreate: 101"]),
-					contentWidth: "500px"
+				this.addUserMessage({
+					text: this.getTranslation("error.miiTransactionErrorText", ["GoodsMovementCreate: 101"])
 				});
 			}.bind(this);
 
@@ -214,8 +217,9 @@ sap.ui.define([
 
 		isInputDataValid: function(oData) {
 			var fEmpty = 0;
-			
-			return !!oData.AUFNR && !!oData.SOLLME && oData.SOLLME > fEmpty && oData.SOLLME !== "" && !!oData.MEINH && !!oData.LGORT && ((!!oData.LENUM && oData.LGORT === this._sStorageLocationWarehouse) || (!oData.LENUM && oData.LGORT !== this._sStorageLocationWarehouse));
+
+			return !!oData.AUFNR && !!oData.SOLLME && oData.SOLLME > fEmpty && oData.SOLLME !== "" && !!oData.MEINH && !!oData.LGORT && ((!!
+				oData.LENUM && oData.LGORT === this._sStorageLocationWarehouse) || (!oData.LENUM && oData.LGORT !== this._sStorageLocationWarehouse));
 		},
 
 		onStorageUnitNumberChange: function(oEvent) {
@@ -282,10 +286,12 @@ sap.ui.define([
 
 			/* Prepare error callback */
 			fnReject = function(oError) {
-				MessageBox.error(oError.responseText || oError.message, {
-					title: this.getTranslation("error.miiTransactionErrorText", ["StorageUnitNumberRead"]),
-					contentWidth: "500px"
+				this.addUserMessage({
+					text: this.getTranslation("error.miiTransactionErrorText", ["StorageUnitNumberRead"])
 				});
+				this.addUserMessage({
+					text: oError.responseText || oError.message
+				}, true);
 				oSource.setValueState(sap.ui.core.ValueState.Error).setValue("");
 				this.getModel("view").setProperty("/bStorageUnitValid", false);
 			}.bind(this);
@@ -353,10 +359,12 @@ sap.ui.define([
 
 			/* Prepare error callback */
 			fnReject = function(oError) {
-				MessageBox.error(oError.responseText || oError.message, {
-					title: this.getTranslation("error.miiTransactionErrorText", ["OrderHeaderNumberRead"]),
-					contentWidth: "500px"
+				this.addUserMessage({
+					text: this.getTranslation("error.miiTransactionErrorText", ["OrderHeaderNumberRead"])
 				});
+				this.addUserMessage({
+					text: oError.responseText || oError.message
+				}, true);
 				oSource.setValueState(sap.ui.core.ValueState.Error).setValue("");
 				this.getModel("view").setProperty("/bStorageUnitValid", false);
 			}.bind(this);

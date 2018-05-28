@@ -48,7 +48,6 @@ Feature: Stock Transfer
 		 And I can see storageUnitInput with valueState 'Success' in action.gm.StockTransfer view
 		 And I can see quantityInput with editable being 'true' in action.gm.StockTransfer view
 		 And I can see quantityInput with value '' in action.gm.StockTransfer view
-#		 And I can see quantityInput has focus in action.gm.StockTransfer view
 		 And I can see clearQuantityInputIcon in action.gm.StockTransfer view
 		When I click on clearFormButton in action.gm.StockTransfer view
 		Then I can see storageUnitInput with valueState 'None' in action.gm.StockTransfer view

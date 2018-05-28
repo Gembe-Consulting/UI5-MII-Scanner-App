@@ -3,7 +3,7 @@ sap.ui.define([
 		"sap/m/Input"
 	], function(LoginController, Input) {
 		"use strict";
-		
+		/* eslint-disable */
 			
 		QUnit.module("Prevent Login with keyboard entry", {
 

@@ -2,6 +2,7 @@ sap.ui.define([
 	"com/mii/scanner/model/formatter"
 ], function(formatter) {
 	"use strict";
+	/* eslint-disable */
 
 	QUnit.module("Test formatter function 'isPastDate(sDate, sFormat)'", {
 

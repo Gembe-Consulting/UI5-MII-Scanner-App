@@ -2,7 +2,8 @@ sap.ui.define([
 	"com/mii/scanner/controller/BaseController"
 ], function(BaseController) {
 	"use strict";
-
+	/* eslint-disable */
+	
 	QUnit.module("BaseController", {
 
 		beforeEach: function() {
@@ -14,7 +15,7 @@ sap.ui.define([
 		}
 	});
 
-	QUnit.test("Should have description", function(assert) {
-		assert.ok(false, "Implement me");
+	QUnit.test("BaseController Should be implemented", function(assert) {
+		assert.ok(!!this.BaseController, "BaseController is implemented");
 	});
 });

@@ -15,7 +15,7 @@ sap.ui.require([
 	"use strict";
 	Opa5.extendConfig({
 		arrangements: new Common(),
-		timeout: 10,
+		timeout: 30,
 		pollingInterval: 15,		
 		viewNamespace: "com.mii.scanner.view.",
 		autoWait: true

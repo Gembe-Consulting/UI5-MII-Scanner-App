@@ -54,7 +54,7 @@ sap.ui.define([
 			this.register(/^I start the app on '(.*?)' with '(.*?)' (error|type) '(.*?)'$/i,
 				function(sHash, sService, sTextOrType, sError, Given, When, Then) {
 
-					var bFatalError = jQuery.inArray("type", sTextOrType) === -1;
+					var bFatalError = sTextOrType.indexOf("type") === -1;
 
 					Given.iStartTheApp({
 						hash: sHash,
@@ -120,7 +120,13 @@ sap.ui.define([
 					});
 				}
 			);
-
+			
+			this.register(/^I ignore the min date constraint in (.+) view$/i,
+				function(sViewName, Given, When, Then) {
+					Given.disableMinDateConstraint(sViewName);
+				}
+			);
+			
 			oGenericSteps.register(
 				this, /* GherkinSteps */
 				opa, /* oOpaInstance */

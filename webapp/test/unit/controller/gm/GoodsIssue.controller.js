@@ -9,7 +9,8 @@ sap.ui.define([
 	"sap/ui/thirdparty/sinon-qunit"
 ], function(GoodsIssueController, ManagedObject, Control, Element, View, Controller /*, sinon, sinonQunit*/ ) {
 	"use strict";
-
+	/* eslint-disable */
+	
 	QUnit.module("GoodsIssueController", {
 
 		beforeEach: function() {
@@ -73,8 +74,8 @@ sap.ui.define([
 		assert.ok(this.oGoodsIssueController, "GoodsIssue Controller is implemented");
 		assert.ok(!!oDataModel, "Data Model is implemented");
 		assert.ok(!!oViewModel, "View Model is implemented");
-		assert.strictEqual(this.oGoodsIssueController._oInitData, oExpectedData, "Main Data is inital");
-		assert.strictEqual(this.oGoodsIssueController._oInitViewData, oExpectedViewData, "View data is inital");
-		assert.strictEqual(this.oGoodsIssueController._aDisallowedStorageLocations, oExpectedDisallowedSLocs, "Disallowed storage locations are: " + oExpectedDisallowedSLocs.join(", "));
+		assert.deepEqual(this.oGoodsIssueController._oInitData, oExpectedData, "Main Data is inital");
+		assert.deepEqual(this.oGoodsIssueController._oInitView, oExpectedViewData, "View data is inital");
+		assert.deepEqual(this.oGoodsIssueController._aDisallowedStorageLocations, oExpectedDisallowedSLocs, "Disallowed storage locations are: " + oExpectedDisallowedSLocs.join(", "));
 	});
 });

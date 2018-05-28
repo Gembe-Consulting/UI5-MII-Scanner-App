@@ -10,6 +10,24 @@ sap.ui.define([
 ], function(FloatType, IntegerType, StringType, StorageLocationType, StorageUnitNumberType, UnitOfMeasureType, ProcessOrderNumberType, OperationNumberType) {
 	"use strict";
 
+	/** FAQ **
+	 * see https://sapui5.hana.ondemand.com/sdk/#/topic/07e4b920f5734fd78fdaa236f26236d8
+	 * 
+	 * What is formatting?
+	 * Data is stored in the Model in a format for the data source (internal format). Formatting is making the data readable for the user, 
+	 * describing how to display data on the UI (external format). 
+	 * Model -> UI
+	 * 
+	 * What is parsing
+	 * User enter data in their readable format, thus parsing converts data to the internal format for the data source.
+	 * UI -> Model
+	 * 
+	 * What is validating?
+	 * Validating is comparing the user input against constraints - how the data should look like. 
+	 * UI -> Model
+	 * 
+	 */
+
 	return {
 
 		QUAN: new FloatType({
@@ -24,27 +42,31 @@ sap.ui.define([
 		}),
 
 		LENUM: new StorageUnitNumberType({
-			emptyString: null // defines what empty string is parsed as and what is formatted as empty string
+			emptyString: null, // defines what empty string is parsed as and what is formatted as empty string
+			hideLeadingZeros: true // formatting hides leading zeros
 		}, {
 			minLength: 10,
-			maxLength: 20
+			maxLength: 20,
+			numericOnly: true // only number allowed
 		}),
 
 		LGORT: new StorageLocationType({
-			toUpperCase: true,
+			toUpperCase: true, // converts input to upper case 
 			emptyString: null // defines what empty string is parsed as and what is formatted as empty string
 		}, {
 			minLength: 4,
 			maxLength: 4,
-			exludedStorageLocations: ["VG01"]
+			exludedStorageLocations: ["VG01"] // throws an validation exception if entered
 		}),
 
 		AUFNR: new ProcessOrderNumberType({
-			emptyString: null // defines what empty string is parsed as and what is formatted as empty string
+			emptyString: null, // defines what empty string is parsed as and what is formatted as empty string
+			hideLeadingZeros: true // formatting hides leading zeros
 		}, {
 			minLength: 7,
 			maxLength: 12,
-			startsWith: "1"
+			startsWith: "1",
+			numericOnly: true // only number allowed
 		}),
 
 		VORNR: new OperationNumberType({
@@ -52,7 +74,8 @@ sap.ui.define([
 			emptyString: null // defines what empty string is parsed as and what is formatted as empty string
 		}, {
 			minLength: 4,
-			maxLength: 4
+			maxLength: 4,
+			numericOnly: true
 		}),
 
 		MEINS: new UnitOfMeasureType({

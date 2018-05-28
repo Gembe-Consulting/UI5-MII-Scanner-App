@@ -2,6 +2,7 @@ sap.ui.define([
 	"com/mii/scanner/controller/action/ActionBaseController"
 ], function(ActionBaseController) {
 	"use strict";
+	/* eslint-disable */
 
 	QUnit.module("Detect barcode scanner Input Type", {
 
@@ -91,4 +92,8 @@ sap.ui.define([
 		});
 	});
 
+	QUnit.test("Should test all scannable types!", 1, function(assert) {
+		assert.ok(false, "Implement test!");
+	});
+	
 });

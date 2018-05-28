@@ -67,6 +67,18 @@ sap.ui.define([
 			},
 
 			//You can have some utility functionality for all Page Objects deriving from it
+			
+			disableMinDateConstraint:function(sViewName){
+				return this.waitFor({
+					id: "dateTimeEntry",
+					controlType: "sap.m.DateTimePicker",
+					viewName: sViewName,
+					success: function(oDateTimePicker) {
+						oDateTimePicker.setMinDate(new Date(0));
+					},
+					errorMessage: "Could not disable min-Date constraint"
+				});
+			},
 
 			iShouldSeeTheSaveButton: function(sViewName, bEnabledState) {
 				return this.waitFor({

@@ -7,7 +7,8 @@ sap.ui.define([
 	"sap/ui/thirdparty/sinon-qunit"
 ], function(UserHandler, ManagedObject, JSONModel, MockServer) {
 	"use strict";
-
+	/* eslint-disable */
+	
 	QUnit.module("UserHandler", {
 
 		beforeEach: function() {
@@ -150,6 +151,18 @@ sap.ui.define([
 		});
 	});
 
+	QUnit.test("Should Test 'testUserLoginName'", function(assert) {
+		assert.ok(false, "testUserLoginName: Implement me");
+	});
+
+	QUnit.test("Should Test 'getUserLoginName'", function(assert) {
+		assert.ok(false, "getUserLoginName: Implement me");
+	});
+
+	QUnit.test("Should Test 'resetUserModel'", function(assert) {
+		assert.ok(false, "resetUserModel: Implement me");
+	});
+	
 	/*
 		function startMockServer(iRespondAfter) {
 			// configure respond to requests delay

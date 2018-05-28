@@ -15,15 +15,14 @@ Feature: Show selected Fatal Error as Warning
 		 And I can see the sap.m.MessageStrip control deeply nested inside messageStripContainer with type 'Success' in action.gm.StockTransfer view
 		 
 	@Stock Transfer
-	Scenario: [UML] Should show error message box, if goods receipt failed with fatal error ECO001: Some other shit happend.
+	Scenario: [UML] Should show error message, if goods receipt failed with fatal error ECO001: Some other shit happend.
 	   Given I start the app on '/UML' with 'GoodsMovementCreateXac' error 'ECO001: Some other shit happend.'
 		When I enter '00000000109330000113' into storageUnitInput in action.gm.StockTransfer view
 		 And I press ARROW_DOWN + ALT at storageBinSelection in action.gm.StockTransfer view
 		 And I click on 4th item of storageBinSelection items in action.gm.StockTransfer view
 		 And I enter '300,000' into quantityInput in action.gm.StockTransfer view
 		 And I click on saveButton in action.gm.StockTransfer view
-		Then on the Stock Transfer Page: I close the message box
-		Then messageStripContainer in action.gm.StockTransfer view contains 1 content
+		Then messageStripContainer in action.gm.StockTransfer view contains 2 content
 		Then I can see the sap.m.MessageStrip control deeply nested inside messageStripContainer with text 'ECO001: Some other shit happend. @BwA 101' in action.gm.StockTransfer view
 		 And I can see the sap.m.MessageStrip control deeply nested inside messageStripContainer with type 'Error' in action.gm.StockTransfer view
 		 
@@ -49,7 +48,6 @@ Feature: Show selected Fatal Error as Warning
 		 And I click on 1st item of storageBinSelection items in action.gm.RollerConveyor view
 		 And I enter '300,000' into quantityInput in action.gm.RollerConveyor view
 		 And I click on saveButton in action.gm.RollerConveyor view
-		Then on the Roller Conveyor Page: I close the message box
 		Then messageStripContainer in action.gm.RollerConveyor view contains 1 content
 		Then I can see the sap.m.MessageStrip control deeply nested inside messageStripContainer with text 'ECO001: Some other shit happend. @BwA 101' in action.gm.RollerConveyor view
 		 And I can see the sap.m.MessageStrip control deeply nested inside messageStripContainer with type 'Error' in action.gm.RollerConveyor view
@@ -74,7 +72,6 @@ Feature: Show selected Fatal Error as Warning
 		 And I enter '300,000' into quantityInput in action.gm.RollerConveyor view
 		 And I enter 'KG' into unitOfMeasureInput in action.gm.RollerConveyor view
 		 And I click on saveButton in action.gm.RollerConveyor view
-		Then on the Roller Conveyor Page: I close the message box
-		Then messageStripContainer in action.gm.RollerConveyor view contains 1 content
+		Then messageStripContainer in action.gm.RollerConveyor view contains 2 content
 		Then I can see the sap.m.MessageStrip control deeply nested inside messageStripContainer with text 'ECO001: Some other shit happend. @BwA 555' in action.gm.RollerConveyor view
 		 And I can see the sap.m.MessageStrip control deeply nested inside messageStripContainer with type 'Error' in action.gm.RollerConveyor view

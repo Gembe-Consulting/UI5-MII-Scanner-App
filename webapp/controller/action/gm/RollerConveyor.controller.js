@@ -14,7 +14,9 @@ sap.ui.define([
 		sapType: sapType,
 		formatter: formatter,
 
-		_aWarningLikeFatalError: ["EZMII_MESSAGES030:", "EZMII_MESSAGES031:", "EZMII_MESSAGES032:", "EZMII_MESSAGES033:", "EZMII_MESSAGES034:"],
+		_aWarningLikeFatalError: ["EZMII_MESSAGES030:", "EZMII_MESSAGES031:", "EZMII_MESSAGES032:", "EZMII_MESSAGES033:",
+			"EZMII_MESSAGES034:"
+		],
 
 		mapStorageBinToRessource: [{
 			BEUM: "00248110"
@@ -60,7 +62,6 @@ sap.ui.define([
 		onSave: function(oEvent) {
 			var oDataModel = this.getModel("data"),
 				oData = oDataModel.getData(),
-				oBundle = this.getResourceBundle(),
 				doPosting, //Promise
 				fnSuccess,
 				fnError,
@@ -104,12 +105,9 @@ sap.ui.define([
 
 			// function to call on error of createStockTransfer or on any pre-chained promise
 			fnError = function(oError) {
-				MessageBox.error(oError.message, {
-					title: oError.name + oBundle.getText("error.miiTransactionErrorText", [oError.serviceName])
-				});
 				that.addUserMessage({
-					text: oError.message
-				});
+					text: oError.responseText || oError.message
+				}, true /* keep existing */ );
 			};
 
 			doPosting.then(this._createStockTransfer.bind(this)) // Umbuchung auf Rollenbahn
@@ -180,14 +178,18 @@ sap.ui.define([
 					}
 				}
 
-				aRows = oIllumData.d.results[0].Rowset.results[0].Row.results;
+				try {
+					aRows = oIllumData.d.results[0].Rowset.results[0].Row.results;
+				} catch (oError) {
+					aRows = [];
+				}
 
 				/* Check if oIllumData contains required results: extract value, evaluate value, set UI, set model data */
 				if (aRows.length === iExactlyOne) {
 					oRow = aRows[0];
 					oData.storageUnit = oRow.LENUM;
 				} else {
-					throw new Error("Die Transaktion hat keine LE zurückgegeben.");
+					throw new Error("Die Transaktion hat keine LE zurückgegeben" + " @BwA 101");
 				}
 
 				this.addMessageManagerMessage("Wareneingang für Palette " + oRow.LENUM + " erfolgreich.");
@@ -197,8 +199,8 @@ sap.ui.define([
 			}.bind(this);
 
 			fnReject = function(oError) {
-				MessageBox.error(oError.message, {
-					title: oError.name
+				this.addUserMessage({
+					text: this.getTranslation("error.miiTransactionErrorText", ["GoodsMovementCreate @BwA 101"])
 				});
 				throw oError; //re-throw
 			}.bind(this);
@@ -260,14 +262,18 @@ sap.ui.define([
 					}
 				}
 
-				aRows = oIllumData.d.results[0].Rowset.results[0].Row.results;
+				try {
+					aRows = oIllumData.d.results[0].Rowset.results[0].Row.results;
+				} catch (oError) {
+					aRows = [];
+				}
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
 				if (aRows.length === iExactlyOne) {
 					oRow = aRows[0];
 					oData.storageUnit = oRow.LENUM;
 				} else {
-					throw new Error("Die Transaktion hat keine LE zurückgegeben.");
+					throw new Error("Die Transaktion hat keine LE zurückgegeben" + " @BwA 555");
 				}
 
 				this.addMessageManagerMessage("Wareneingang für Palette " + oRow.LENUM + " erfolgreich.");
@@ -277,13 +283,14 @@ sap.ui.define([
 			}.bind(this);
 
 			fnReject = function(oError) {
-				MessageBox.error(oError.message, {
-					title: oError.name
+				this.addUserMessage({
+					text: this.getTranslation("error.miiTransactionErrorText", ["GoodsMovementRollerConveyorCreate @BwA 555"])
 				});
 				throw oError; //re-throw
 			}.bind(this);
 
-			sendGoodsReceiptRollerConveyorPromise = oGoodsReceiptRollerConveyorModel.loadMiiData(oGoodsReceiptRollerConveyorModel._sServiceUrl, oParam);
+			sendGoodsReceiptRollerConveyorPromise = oGoodsReceiptRollerConveyorModel.loadMiiData(oGoodsReceiptRollerConveyorModel._sServiceUrl,
+				oParam);
 
 			return sendGoodsReceiptRollerConveyorPromise.then(fnResolve, fnReject);
 		},
@@ -326,9 +333,10 @@ sap.ui.define([
 			}.bind(this);
 
 			fnReject = function(oError) {
-				MessageBox.error(oError.message, {
-					title: oError.name
+				this.addUserMessage({
+					text: this.getTranslation("error.miiTransactionErrorText", ["StorageUnitCreate"])
 				});
+				throw oError; //re-throw
 			}.bind(this);
 
 			sendStockTransferPromise = oStorageUnitCreateModel.loadMiiData(oStorageUnitCreateModel._sServiceUrl, oParam);
@@ -359,17 +367,26 @@ sap.ui.define([
 
 			fnResolve = function(oIllumData) {
 				var oResult = oIllumData.d.results["0"],
+					aRows,
 					oRow,
 					iExactlyOne = 1;
 
-				if (oResult.Rowset.results["0"].Row.results.length === iExactlyOne) {
-					oRow = oResult.Rowset.results["0"].Row.results["0"];
+				try {
+					aRows = oResult.Rowset.results["0"].Row.results;
+				} catch (oError) {
+					aRows = [];
+				}
+
+				if (oIllumData.success && aRows.length === iExactlyOne) {
+					oRow = aRows["0"];
 					oData.orderNumber = oRow.AUFNR;
 					oData.operationNumber = oRow.VORNR;
 					oData.ressourceId = oRow.ARBID;
 
+				} else if (!oIllumData.success) {
+					throw new Error(oIllumData.lastErrorMessage);
 				} else {
-					throw new Error("Der aktuell laufende Prozessauftrag auf Ressource " + sRessource + " konnte nicht eindeutig bestimmt werden.");
+					throw new Error(this.getTranslation("rollerConveyor.messageText.currentOrderNotFound", [sRessource]));
 				}
 
 				this.addMessageManagerMessage("Auf Ressource " + sRessource + " läuft Prozessauftrag " + oRow.AUFNR);
@@ -379,8 +396,8 @@ sap.ui.define([
 			}.bind(this);
 
 			fnReject = function(oError) {
-				MessageBox.error(oError.message, {
-					title: oError.name
+				this.addUserMessage({
+					text: this.getTranslation("error.miiTransactionErrorText", ["CurrentProcessOrderRead"])
 				});
 				throw oError; //re-throw
 			}.bind(this);
@@ -435,6 +452,7 @@ sap.ui.define([
 		getRessourceOfDummyStorageUnit: function(sStorageUnitNumber) {
 			var sRessource,
 				oRessource,
+				/*global Map*/
 				mRessource = new Map(),
 				iLENUMLength = 20,
 				iStartRessourcePart = 1,
@@ -484,8 +502,9 @@ sap.ui.define([
 
 		isInputDataValid: function(oData) {
 			var fEmpty = 0;
-			
-			return !!oData.storageUnit && !!oData.storageBin && !!oData.storageBinId && oData.entryQuantity > fEmpty && oData.entryQuantity !== "" && !!oData.unitOfMeasure;
+
+			return !!oData.storageUnit && !!oData.storageBin && !!oData.storageBinId && oData.entryQuantity > fEmpty && oData.entryQuantity !==
+				"" && !!oData.unitOfMeasure;
 		},
 
 		findRessourceOfStorageBin: function(sStorageBin) {
@@ -528,62 +547,67 @@ sap.ui.define([
 			this.showControlBusyIndicator(oSource);
 
 			fnResolve = function(oData) {
-				var oStorageUnit,
+				var oStorageUnit = {
+						LENUM: null
+					},
 					aResultList,
 					bStorageUnitValid,
 					iExactlyOne = 1;
 
 				try {
-
 					aResultList = oData.d.results[0].Rowset.results[0].Row.results;
+				} catch (oError) {
+					aResultList = [];
+				}
 
-					if (aResultList.length === iExactlyOne) {
-						oStorageUnit = this._formatStorageUnitData(oData.d.results[0].Rowset.results[0].Row.results[0]);
-						oSource.setValueState(sap.ui.core.ValueState.Success);
-						bStorageUnitValid = true;
-					} else {
-						this.addUserMessage({
-							text: oBundle.getText("rollerConveyor.messageText.storageUnitNotFound", [sStorageUnitNumber])
-						});
-						oSource.setValueState(sap.ui.core.ValueState.Error);
-						bStorageUnitValid = false;
-					}
-
-					if (bStorageUnitValid) {
-						oDataModel.setData(oStorageUnit, true /*bMerge*/ );
-
-						//remap some properties
-						oDataModel.setProperty("/unitOfMeasure", oStorageUnit.MEINH);
-						oDataModel.setProperty("/orderNumber", oStorageUnit.AUFNR);
-
-						if (!this.formatter.isEmptyStorageUnit(oStorageUnit.ISTME)) {
-							oDataModel.setProperty("/entryQuantity", oStorageUnit.ISTME);
-						} else {
-							oDataModel.setProperty("/entryQuantity", null);
-						}
-					}
-
-				} catch (sError) {
-					MessageBox.error(oBundle.getText("rollerConveyor.errorMessageText.storageUnit"), {
-						title: sError
+				if (aResultList.length === iExactlyOne) {
+					oStorageUnit = this._formatStorageUnitData(oData.d.results[0].Rowset.results[0].Row.results[0]);
+					oSource.setValueState(sap.ui.core.ValueState.Success);
+					bStorageUnitValid = true;
+				} else {
+					this.addUserMessage({
+						text: oBundle.getText("rollerConveyor.messageText.storageUnitNotFound", [sStorageUnitNumber])
 					});
 					oSource.setValueState(sap.ui.core.ValueState.Error);
 					bStorageUnitValid = false;
-				} finally {
-					this.getModel("view").setProperty("/bStorageUnitValid", bStorageUnitValid);
-					this.updateViewControls(oDataModel.getData());
 				}
+
+				oDataModel.setData(oStorageUnit, true /*bMerge*/ );
+
+				if (bStorageUnitValid) {
+					//remap some properties
+					oDataModel.setProperty("/unitOfMeasure", oStorageUnit.MEINH);
+					oDataModel.setProperty("/orderNumber", oStorageUnit.AUFNR);
+
+					if (!this.formatter.isEmptyStorageUnit(oStorageUnit.ISTME)) {
+						oDataModel.setProperty("/entryQuantity", oStorageUnit.ISTME);
+					} else {
+						oDataModel.setProperty("/entryQuantity", null);
+					}
+				}
+
+				this.getModel("view").setProperty("/bStorageUnitValid", bStorageUnitValid);
 
 			}.bind(this);
 
 			fnReject = function(oError) {
-				MessageBox.error(oBundle.getText("rollerConveyor.storageUnit.errorMessageText"));
+				this.addUserMessage({
+					text: this.getTranslation("error.miiTransactionErrorText", ["StorageUnitNumberRead"])
+				});
+				this.addUserMessage({
+					text: oError.responseText || oError.message
+				}, true);
+				oSource.setValueState(sap.ui.core.ValueState.Error).setValue("");
+				this.getModel("view").setProperty("/bStorageUnitValid", false);
 			}.bind(this);
 
 			this.requestStorageUnitInfoService(sStorageUnitNumber)
 				.then(fnResolve, fnReject)
 				.then(function() {
 					this.hideControlBusyIndicator(oSource);
+				}.bind(this))
+				.then(function() {
+					this.updateViewControls(this.getModel("data").getData());
 				}.bind(this));
 
 			return true;
@@ -619,13 +643,19 @@ sap.ui.define([
 
 			if (oData.bIsLastUnit) {
 				//Letzte Palette '900248110' erfolgreich von BEUMER an Rollenbahn gemeldet
-				sSuccessMessage = this.getTranslation("rollerConveyor.messageText.lastUnitPostingSuccess", [sStorageUnitNumber, sStorageBinItemText]); //"Letzte Palette '" + oData.storageUnit + "' erfolgreich von " + oData.storageBin + " an Rollenbahn gemeldet";
+				sSuccessMessage = this.getTranslation("rollerConveyor.messageText.lastUnitPostingSuccess", [sStorageUnitNumber,
+					sStorageBinItemText
+				]); //"Letzte Palette '" + oData.storageUnit + "' erfolgreich von " + oData.storageBin + " an Rollenbahn gemeldet";
 			} else if (oData.bIsEmptyUnit) {
 				//Palette '109330000015' erfolgreich eingebucht und von ROLLTOR an Rollenbahn gemeldet
-				sSuccessMessage = this.getTranslation("rollerConveyor.messageText.currentUnitWithGoodsReceiptPostingSuccess", [sStorageUnitNumber, sStorageBinItemText]); //"Palette '" + oData.storageUnit + "' erfolgreich eingebucht und von " + oData.storageBin + " an Rollenbahn gemeldet";
+				sSuccessMessage = this.getTranslation("rollerConveyor.messageText.currentUnitWithGoodsReceiptPostingSuccess", [sStorageUnitNumber,
+					sStorageBinItemText
+				]); //"Palette '" + oData.storageUnit + "' erfolgreich eingebucht und von " + oData.storageBin + " an Rollenbahn gemeldet";
 			} else {
 				//Palette '109330000015' erfolgreich von STAPLER an Rollenbahn gemeldet
-				sSuccessMessage = this.getTranslation("rollerConveyor.messageText.currentUnitPostingSuccess", [sStorageUnitNumber, sStorageBinItemText]); //"Palette '" + oData.storageUnit + "' erfolgreich von " + oData.storageBin + " an Rollenbahn gemeldet";
+				sSuccessMessage = this.getTranslation("rollerConveyor.messageText.currentUnitPostingSuccess", [sStorageUnitNumber,
+					sStorageBinItemText
+				]); //"Palette '" + oData.storageUnit + "' erfolgreich von " + oData.storageBin + " an Rollenbahn gemeldet";
 			}
 
 			return sSuccessMessage;
