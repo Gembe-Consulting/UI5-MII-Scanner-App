@@ -22,7 +22,7 @@ sap.ui.define([
 	"use strict";
 
 	Opa5.extendConfig({
-		timeout: 20,
+		timeout: 30,
 		pollingInterval: 100,
 		arrangements: new Common(),
 		actions: new Opa5({
