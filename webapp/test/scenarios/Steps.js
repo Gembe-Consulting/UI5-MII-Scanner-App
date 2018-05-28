@@ -120,7 +120,13 @@ sap.ui.define([
 					});
 				}
 			);
-
+			
+			this.register(/^I ignore the min date constraint in (.+) view$/i,
+				function(sViewName, Given, When, Then) {
+					Given.disableMinDateConstraint(sViewName);
+				}
+			);
+			
 			oGenericSteps.register(
 				this, /* GherkinSteps */
 				opa, /* oOpaInstance */

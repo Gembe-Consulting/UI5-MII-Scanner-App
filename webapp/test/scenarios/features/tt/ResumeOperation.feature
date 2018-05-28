@@ -89,6 +89,7 @@ Feature: Resume Operation
 #Change STR_BEGINN for 1092710-0011 ID:4032 in GetOrderIncidentsQry.json || new Date(yyyy, mm-1, dd, 02, 41, 0, 0).getTime(); --> 1526604060000
 	Scenario: Should show error message if users enter order number with current interruption that has been started after entry date
 #Change to current date:
+	   Given I ignore the min date constraint in action.tt.InterruptOperation view
 		When I enter '18.05.2018, 00:40:00' into dateTimeEntry in action.tt.ResumeOperation view
 		 And I enter '1092710' into orderNumberInput in action.tt.ResumeOperation view
 		 And I enter '11' into operationNumberInput in action.tt.ResumeOperation view

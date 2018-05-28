@@ -72,6 +72,7 @@ Feature: Finish Operation
 #Change ISTSTART for 1092697-0010 in GetOrderOperationQry.json || new Date(yyyy, mm-1, dd, 02, 41, 0, 0).getTime(); --> 1526604060000
 	Scenario: Should show error message if users enter order number that has been started after entry date
 #Change to current date:
+	   Given I ignore the min date constraint in action.tt.InterruptOperation view
 		When I enter '18.05.2018, 00:40:00' into dateTimeEntry in action.tt.FinishOperation view
 		 And I enter '1092697' into orderNumberInput in action.tt.FinishOperation view
 		 And I enter '10' into operationNumberInput in action.tt.FinishOperation view
@@ -89,6 +90,7 @@ Feature: Finish Operation
 #Change STR_ENDE for 1092698-0020 in GetOrderIncidentsQry.json|| new Date(yyyy, mm-1, dd, 02, 41, 0, 0).getTime(); --> 1526604060000
 	Scenario: Should show error message if users enter order number that has an closed incident after entry date
 #Change to current date
+	   Given I ignore the min date constraint in action.tt.InterruptOperation view
 		When I enter '18.05.2018, 00:40:00' into dateTimeEntry in action.tt.FinishOperation view
 		 And I enter '1092698' into orderNumberInput in action.tt.FinishOperation view
 		 And I enter '20' into operationNumberInput in action.tt.FinishOperation view
