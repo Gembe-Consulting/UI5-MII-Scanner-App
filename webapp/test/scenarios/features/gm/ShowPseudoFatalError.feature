@@ -11,8 +11,8 @@ Feature: Show selected Fatal Error as Warning
 		Then messageStripContainer in action.gm.StockTransfer view contains 2 content
 		Then I can see the sap.m.MessageStrip control deeply nested inside messageStripContainer with text 'Retr.Buchung: BWART 261 mit Material 123456-789 und Auftrag 1093300 fehlgeschlagen.' in action.gm.StockTransfer view
 		 And I can see the sap.m.MessageStrip control deeply nested inside messageStripContainer with type 'Warning' in action.gm.StockTransfer view
-		 And I can see the sap.m.MessageStrip control deeply nested inside messageStripContainer with text 'Wareneingang von Palette '109330000113' und Umlagerung nach Lagerplatz 'S31' wurde erfolgreich gebucht!' in action.gm.StockTransfer view
-		 And I can see the sap.m.MessageStrip control deeply nested inside messageStripContainer with type 'Success' in action.gm.StockTransfer view
+#		 And I can see the sap.m.MessageStrip control deeply nested inside messageStripContainer with text 'Wareneingang von Palette '109330000113' und Umlagerung nach Lagerplatz 'S31' wurde erfolgreich gebucht!' in action.gm.StockTransfer view
+#		 And I can see the sap.m.MessageStrip control deeply nested inside messageStripContainer with type 'Success' in action.gm.StockTransfer view
 		 
 	@Stock Transfer
 	Scenario: [UML] Should show error message, if goods receipt failed with fatal error ECO001: Some other shit happend.
