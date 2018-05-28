@@ -65,7 +65,7 @@ sap.ui.define([
 		}, {
 			minLength: 7,
 			maxLength: 12,
-			startsWith: "000001",
+			startsWith: "1",
 			numericOnly: true // only number allowed
 		}),
 

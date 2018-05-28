@@ -18,8 +18,8 @@ sap.ui.define([
 	QUnit.test("LENUM formatValue", function(assert) {
 		var lenumType = sapType.LENUM;
 
-		assert.equal(lenumType.formatValue(sStorageUnitNumberLong, "string"), sStorageUnitNumberShort, "format test LENUM long -> short");
-		assert.equal(lenumType.formatValue(sStorageUnitNumberShort, "string"), sStorageUnitNumberShort, "format test LENUM short -> short");
+		assert.equal(lenumType.formatValue(sStorageUnitNumberLong, "string"), sStorageUnitNumberShort, "format test LENUM long");
+		assert.equal(lenumType.formatValue(sStorageUnitNumberShort, "string"), sStorageUnitNumberShort, "format test LENUM short");
 		assert.equal(lenumType.formatValue("", "string"), "", "format test LENUM empty");
 		assert.equal(lenumType.formatValue(" ", "string"), "", "format test LENUM blank");
 		assert.equal(lenumType.formatValue(null, "string"), "", "format test LENUM null");
@@ -29,8 +29,8 @@ sap.ui.define([
 	QUnit.test("LENUM parseValue", function(assert) {
 		var lenumType = sapType.LENUM;
 
-		assert.equal(lenumType.parseValue(sStorageUnitNumberLong, "string"), sStorageUnitNumberLong, "parse test LENUM long -> long");
-		assert.equal(lenumType.parseValue(sStorageUnitNumberShort, "string"), sStorageUnitNumberLong, "parse test LENUM short -> long");
+		assert.equal(lenumType.parseValue(sStorageUnitNumberLong, "string"), sStorageUnitNumberShort, "parse test LENUM long");
+		assert.equal(lenumType.parseValue(sStorageUnitNumberShort, "string"), sStorageUnitNumberShort, "parse test LENUM short");
 		assert.equal(lenumType.parseValue(sStorageUnitNumberPale, "string"), sStorageUnitNumberPale, "parse test dummy LENUM Palettierer");
 		assert.equal(lenumType.parseValue(sStorageUnitNumberBeum, "string"), sStorageUnitNumberBeum, "parse test dummy LENUM Beumer");
 		assert.equal(lenumType.parseValue("", "string"), null, "parse test LENUM empty");
@@ -152,7 +152,7 @@ sap.ui.define([
 	QUnit.test("AUFNR parseValue", function(assert) {
 		var aufnrType = sapType.AUFNR;
 		
-		assert.equal(aufnrType.parseValue("1234567", "string"), "000001234567", "parse test AUFNR '1234567' -> '000001234567'");
+		assert.equal(aufnrType.parseValue("1234567", "string"), "1234567", "parse test AUFNR '1234567' -> '1234567'");
 		assert.equal(aufnrType.parseValue("", "string"), null, "parse test AUFNR empty");
 		assert.equal(aufnrType.parseValue(" ", "string"), null, "parse test AUFNR blank");
 	});
@@ -160,13 +160,12 @@ sap.ui.define([
 	QUnit.test("AUFNR validateValue", function(assert) {
 		var aufnrType = sapType.AUFNR;
 
-		aufnrType.validateValue("000001093300");
+		aufnrType.validateValue("1093300");
 		assert.ok(true, "Process Order Number 000001093300 validated");
 
 		assert.throws(function() {
 				aufnrType.validateValue("2093300");
-			},
-			new sap.ui.model.ValidateException("Geben Sie einen Wert ein, der mit \"000001\" beginnt"), "raised ValidateException (not starting with '1')"
+			},/Geben Sie einen Wert ein, der mit \"1\" beginnt/, "raised ValidateException (not starting with '1')"
 		);
 		
 		assert.throws(function() {
@@ -177,13 +176,11 @@ sap.ui.define([
 		
 		assert.throws(function() {
 				aufnrType.validateValue("00000110933000");
-			},
-			new sap.ui.model.ValidateException("Geben Sie einen Wert mit maximal 12 Zeichen ein"), "raised ValidateException (too long)"
+			},/Geben Sie einen Wert mit maximal 12 Zeichen ein/, "raised ValidateException (too long)"
 		);
 		assert.throws(function() {
 				aufnrType.validateValue("000001");
-			},
-			new sap.ui.model.ValidateException("Geben Sie einen Wert mit mindestens 7 Zeichen ein"), "raised ValidateException (too short)"
+			},/Geben Sie einen Wert mit mindestens 7 Zeichen ein/, "raised ValidateException (too short)"
 		);
 	});
 

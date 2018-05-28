@@ -53,9 +53,9 @@ sap.ui.define([
 			return this.oFormatOptions.emptyString;
 		}
 
-		// prefix leading zeros to store them in the model, if format options trim them
+		// remove leading zeros
 		if (this.oFormatOptions.hideLeadingZeros) {
-			sValue = Util.padLeadingZeros(sValue, this.oConstraints.maxLength);
+			sValue = Util.trimLeadingZeros(sValue);
 		}
 	
 		return sValue;

@@ -278,7 +278,7 @@ sap.ui.define([
 		type: sapType.LENUM,
 		value: "00000000109330000015",
 		expectedOutput: "109330000015",
-		expectedModelValue: "00000000109330000015",
+		expectedModelValue: "109330000015",
 		expectedModelTypeof: "string",
 		expectedValueState: "None"
 	});
@@ -287,7 +287,7 @@ sap.ui.define([
 		type: sapType.LENUM,
 		value: "109330000015",
 		expectedOutput: "109330000015",
-		expectedModelValue: "00000000109330000015",
+		expectedModelValue: "109330000015",
 		expectedModelTypeof: "string",
 		expectedValueState: "None"
 	});
@@ -296,9 +296,9 @@ sap.ui.define([
 	
 	setModelPropertyTestCase("Should handle long LENUM", {
 		type: sapType.LENUM,
-		value: "00000000109330000015",
+		value: "109330000015",
 		expectedOutput: "109330000015",
-		expectedModelValue: "00000000109330000015",
+		expectedModelValue: "109330000015",
 		expectedModelTypeof: "string",
 		expectedValueState: "None"
 	});
@@ -310,7 +310,7 @@ sap.ui.define([
 		value: "00000000109330000015",
 		expectedOutput: "109330000015",
 		invalidValue: "ABC4567890",
-		expectedModelValue: "00000000109330000015",
+		expectedModelValue: "109330000015",
 		expectedValueState: "None"
 	})
 
@@ -320,7 +320,7 @@ sap.ui.define([
 		type: sapType.AUFNR,
 		value: "000001234567",
 		expectedOutput: "1234567",
-		expectedModelValue: "000001234567",
+		expectedModelValue: "1234567",
 		expectedModelTypeof: "string",
 		expectedValueState: "None"
 	});
@@ -329,7 +329,7 @@ sap.ui.define([
 		type: sapType.AUFNR,
 		value: "1234567",
 		expectedOutput: "1234567",
-		expectedModelValue: "000001234567",
+		expectedModelValue: "1234567",
 		expectedModelTypeof: "string",
 		expectedValueState: "None"
 	});
@@ -338,9 +338,9 @@ sap.ui.define([
 	
 	setModelPropertyTestCase("Should handle long AUFNR", {
 		type: sapType.AUFNR,
-		value: "000001234567",
+		value: "1234567",
 		expectedOutput: "1234567",
-		expectedModelValue: "000001234567",
+		expectedModelValue: "1234567",
 		expectedModelTypeof: "string",
 		expectedValueState: "None"
 	});
@@ -352,7 +352,7 @@ sap.ui.define([
 		value: "1234567",
 		expectedOutput: "1234567",
 		invalidValue: "2234567",
-		expectedModelValue: "000001234567",
+		expectedModelValue: "1234567",
 		expectedValueState: "None"
 	})
 
