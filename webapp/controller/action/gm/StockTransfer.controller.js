@@ -103,7 +103,7 @@ sap.ui.define([
 				}
 
 				/* Check if oData contains required results: extract value, evaluate value, set UI, set model data */
-				if (oData.success && aRows.length === iExactlyOne) {
+				if (aRows.length === iExactlyOne) {
 					oStorageUnitNumber = aRows[0];
 
 					if (bPerformGoodsReceipt) {
