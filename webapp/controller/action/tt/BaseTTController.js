@@ -366,7 +366,7 @@ sap.ui.define([
 							endOfInterruption = moment(oInterruption.STR_ENDE).isValid() ? moment(oInterruption.STR_ENDE) : moment(),
 							length = endOfInterruption - startOfInterruption,
 							oNextBar,
-							iOne = 1;
+							iOffset = 1;
 
 						oBar = new StackedBarMicroChartBar({
 							valueColor: "Error",
@@ -374,7 +374,7 @@ sap.ui.define([
 							displayValue: moment.duration(length).format(sDurationFormatPattern)
 						}).setTooltip(startOfInterruption.format("LLL") + " > " + endOfInterruption.format("LLL") + " -- " + oInterruption.STRCODE + ": " + oInterruption.STR_TXT + " [" + moment.duration(length).format(sDurationFormatPattern) + "]");
 
-						var oNextIntervall = interruptions[index + iOne];
+						var oNextIntervall = interruptions[index + iOffset];
 
 						if (oNextIntervall) {
 							var endOfNextRunning = moment(oNextIntervall.STR_BEGINN);
