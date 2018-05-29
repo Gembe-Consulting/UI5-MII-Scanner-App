@@ -60,6 +60,30 @@ Feature: Roller Conveyor
 		Then I can see storageBinSelection with valueState 'Success' in action.gm.RollerConveyor view
 		Then I can see saveButton in action.gm.RollerConveyor view
 
+	Scenario: Should handle invalid storage unit number
+		When I enter '00000000109330000015' into storageUnitInput in action.gm.RollerConveyor view
+		 And I press ARROW_DOWN + ALT at storageBinSelection in action.gm.RollerConveyor view
+		 And I click on first item of storageBinSelection items in action.gm.RollerConveyor view
+		 And I enter '100,123' into quantityInput in action.gm.RollerConveyor view
+		Then I can see saveButton with enabled being 'true' in action.gm.RollerConveyor view
+		When I enter 'some-invalid-lenum' into storageUnitInput in action.gm.RollerConveyor view
+		Then on the Roller Conveyor Page: I should see the save button is disabled
+		Then I can see storageUnitInput with valueState 'Error' in action.gm.RollerConveyor view
+		 And I can see storageUnitInput with valueStateText 'Palettennummer 'some-invalid-lenum' ist nicht gültig' in action.gm.RollerConveyor view
+
+	Scenario: Should handle invalid storage bin
+		When I enter '00000000109330000016' into storageUnitInput in action.gm.RollerConveyor view
+		 And I press ARROW_DOWN + ALT at storageBinSelection in action.gm.RollerConveyor view
+		 And I click on 3rd item of storageBinSelection items in action.gm.RollerConveyor view
+		Then I can see saveButton with enabled being 'true' in action.gm.RollerConveyor view
+		When I enter 'FOO' into storageBinSelection in action.gm.RollerConveyor view
+		Then on the Roller Conveyor Page: I should see the save button is disabled
+		When I press ARROW_DOWN + ALT at storageBinSelection in action.gm.RollerConveyor view
+		 And I click on 1st item of storageBinSelection items in action.gm.RollerConveyor view
+		Then I can see saveButton with enabled being 'true' in action.gm.RollerConveyor view
+		When I enter '' into storageBinSelection in action.gm.RollerConveyor view
+		Then on the Roller Conveyor Page: I should see the save button is disabled
+		 
 	@lastLE
 	Scenario: Should display info message if last storage unit has been entered
 		When I enter '90000000000000000000' into storageUnitInput in action.gm.RollerConveyor view

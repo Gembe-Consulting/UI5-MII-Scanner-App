@@ -63,6 +63,9 @@ Feature: Stock Transfer
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Palette '00000000123456789000' nicht gefunden.' in action.gm.StockTransfer view
 		 And I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with type 'Error' in action.gm.StockTransfer view
 
+	@wip
+	Scenario: Should handle invalid storage unit number
+	
 	Scenario: User clears the input form
 		When I enter '00000000109330000013' into storageUnitInput in action.gm.StockTransfer view
 		When I enter '10,000' into quantityInput in action.gm.StockTransfer view

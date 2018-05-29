@@ -62,6 +62,9 @@ sap.ui.define([
 	};
 
 	StorageUnitNumberType.prototype.validateValue = function(sValue) {
+		if(sValue === null){
+			return;
+		}
 		var aViolatedConstraints = [],
 			aMessages = [],
 			iNoLength = 0;

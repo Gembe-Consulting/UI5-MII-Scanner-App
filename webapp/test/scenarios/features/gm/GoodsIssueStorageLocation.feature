@@ -59,7 +59,63 @@ Feature: Goods Issue without LE
 		Then I can see orderNumberInput with valueState 'Error' in action.gm.GoodsIssue view
 	 	Then I can see the first sap.m.MessageStrip control directly nested inside messageStripContainer with text starting with 'Prozessauftrag '1000001' nicht gefunden.' in action.gm.GoodsIssue view
 	 	Then on the Goods Issue Page: I should see the save button is disabled
-	 	
+
+	Scenario: Should handle invalid process order number
+		When I enter '1234567' into orderNumberInput in action.gm.GoodsIssue view
+		 And I enter '1200666-004' into materialNumberInput in action.gm.GoodsIssue view
+		 And I enter '10' into quantityInput in action.gm.GoodsIssue view
+		 And I enter 'rb01' into storageLocationInput in action.gm.GoodsIssue view
+		Then I can see saveButton with enabled being 'true' in action.gm.GoodsIssue view
+		When I enter 'invalidaufnr' into orderNumberInput in action.gm.GoodsIssue view
+		Then on the Goods Issue Page: I should see the save button is disabled
+		Then I can see orderNumberInput with valueState 'Error' in action.gm.GoodsIssue view
+		 
+	Scenario: Should handle invalid storage location
+		When I enter '1234567' into orderNumberInput in action.gm.GoodsIssue view
+		 And I enter '1200666-004' into materialNumberInput in action.gm.GoodsIssue view
+		 And I enter '10' into quantityInput in action.gm.GoodsIssue view
+		 And I enter 'rb01' into storageLocationInput in action.gm.GoodsIssue view
+		Then I can see saveButton with enabled being 'true' in action.gm.GoodsIssue view
+		When I enter '' into storageLocationInput in action.gm.GoodsIssue view
+		Then on the Goods Issue Page: I should see the save button is disabled
+		Then I can see storageLocationInput with valueState 'Error' in action.gm.GoodsIssue view
+		
+	Scenario: Should handle invalid material number	
+		When I enter '1234567' into orderNumberInput in action.gm.GoodsIssue view
+		 And I enter '1200666-004' into materialNumberInput in action.gm.GoodsIssue view
+		 And I enter '10' into quantityInput in action.gm.GoodsIssue view
+		 And I enter 'rb01' into storageLocationInput in action.gm.GoodsIssue view
+		Then I can see saveButton with enabled being 'true' in action.gm.GoodsIssue view
+		When I enter '' into materialNumberInput in action.gm.GoodsIssue view
+		Then on the Goods Issue Page: I should see the save button is disabled
+		Then I can see materialNumberInput with valueState 'Error' in action.gm.GoodsIssue view
+		
+	Scenario: Should handle invalid quantity
+		When I enter '1234567' into orderNumberInput in action.gm.GoodsIssue view
+		 And I enter '1200666-004' into materialNumberInput in action.gm.GoodsIssue view
+		 And I enter '10' into quantityInput in action.gm.GoodsIssue view
+		 And I enter 'rb01' into storageLocationInput in action.gm.GoodsIssue view
+		Then I can see saveButton with enabled being 'true' in action.gm.GoodsIssue view
+		When I enter '' into quantityInput in action.gm.GoodsIssue view
+		Then on the Goods Issue Page: I should see the save button is disabled
+		Then I can see quantityInput with valueState 'Error' in action.gm.GoodsIssue view
+		When I enter '123' into quantityInput in action.gm.GoodsIssue view
+		Then I can see saveButton with enabled being 'true' in action.gm.GoodsIssue view
+		Then I can see quantityInput with valueState 'None' in action.gm.GoodsIssue view
+		When I enter 'foo' into quantityInput in action.gm.GoodsIssue view
+		Then on the Goods Issue Page: I should see the save button is disabled
+		Then I can see quantityInput with valueState 'Error' in action.gm.GoodsIssue view
+		
+	Scenario: Should handle invalid unit of measure
+		When I enter '1234567' into orderNumberInput in action.gm.GoodsIssue view
+		 And I enter '1200666-004' into materialNumberInput in action.gm.GoodsIssue view
+		 And I enter '10' into quantityInput in action.gm.GoodsIssue view
+		 And I enter 'rb01' into storageLocationInput in action.gm.GoodsIssue view
+		Then I can see saveButton with enabled being 'true' in action.gm.GoodsIssue view
+		When I enter '' into materialNumberInput in action.gm.GoodsIssue view
+		Then on the Goods Issue Page: I should see the save button is disabled
+		Then I can see materialNumberInput with valueState 'Error' in action.gm.GoodsIssue view
+		
 	Scenario: Should init data model and input fields if users clear form
 		When I enter '1234567' into orderNumberInput in action.gm.GoodsIssue view
 		 And I enter '1200666-004' into materialNumberInput in action.gm.GoodsIssue view

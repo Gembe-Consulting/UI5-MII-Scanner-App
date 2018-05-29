@@ -59,6 +59,13 @@ Feature: Interrupt Operation
 		Then I should see dateTimeEntry with date 2 days and 180 minutes in the past in action.tt.InterruptOperation view
 		Then I can see saveButton in action.tt.InterruptOperation view
 		
+	@wip
+	Scenario: Should handle invalid order number or operation number
+	@wip
+	Scenario: Should handle invalid date time entry
+	@wip
+	Scenario: Should handle invalid reason selection
+	
 	Scenario: Should show error message if users enter invalid order number (not existing or wrong status)
 		When I enter '1000001' into orderNumberInput in action.tt.InterruptOperation view
 		 And I enter '0001' into operationNumberInput in action.tt.InterruptOperation view

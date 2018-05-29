@@ -51,6 +51,38 @@ Feature: Goods Issue with LE
 		When I click on clearFormButton in action.gm.GoodsIssue view
 		Then on the Goods Issue Page: I should see the save button is disabled
 
+	Scenario: Should handle invalid storage unit number
+		When I enter '00000000109330000004' into storageUnitInput in action.gm.GoodsIssue view
+		 And I enter '1093300' into orderNumberInput in action.gm.GoodsIssue view
+		Then I can see saveButton with enabled being 'true' in action.gm.GoodsIssue view
+		When I enter 'some-invalid-lenum' into storageUnitInput in action.gm.GoodsIssue view
+		Then on the Goods Issue Page: I should see the save button is disabled
+		Then I can see storageUnitInput with valueState 'Error' in action.gm.GoodsIssue view
+		 And I can see storageUnitInput with valueStateText 'Palettennummer 'some-invalid-lenum' ist nicht gültig' in action.gm.GoodsIssue view
+		When I enter '00000000109330000004' into storageUnitInput in action.gm.GoodsIssue view
+		Then I can see saveButton with enabled being 'true' in action.gm.GoodsIssue view
+		 And I can see storageUnitInput with valueState 'Success' in action.gm.GoodsIssue view
+		When I enter '' into storageUnitInput in action.gm.GoodsIssue view
+		Then on the Goods Issue Page: I should see the save button is disabled
+		Then I can see storageUnitInput with valueState 'Error' in action.gm.GoodsIssue view
+		 And I can see storageUnitInput with valueStateText 'Palettennummer '' ist nicht gültig' in action.gm.GoodsIssue view
+
+	Scenario: Should handle invalid process order number
+		When I enter '00000000109330000004' into storageUnitInput in action.gm.GoodsIssue view
+		 And I enter '1093300' into orderNumberInput in action.gm.GoodsIssue view
+		Then I can see saveButton with enabled being 'true' in action.gm.GoodsIssue view
+		When I enter 'invalidaufnr' into orderNumberInput in action.gm.GoodsIssue view
+		Then on the Goods Issue Page: I should see the save button is disabled
+		Then I can see orderNumberInput with valueState 'Error' in action.gm.GoodsIssue view
+		 And I can see orderNumberInput with valueStateText 'Auftragsnummer 'invalidaufnr' ist nicht gültig' in action.gm.GoodsIssue view
+		When I enter '1093300' into orderNumberInput in action.gm.GoodsIssue view
+		Then I can see saveButton with enabled being 'true' in action.gm.GoodsIssue view
+		 And I can see orderNumberInput with valueState 'Success' in action.gm.GoodsIssue view
+		When I enter '' into orderNumberInput in action.gm.GoodsIssue view
+		Then on the Goods Issue Page: I should see the save button is disabled
+		Then I can see orderNumberInput with valueState 'Error' in action.gm.GoodsIssue view
+		 And I can see orderNumberInput with valueStateText 'Auftragsnummer '' ist nicht gültig' in action.gm.GoodsIssue view
+		 
 	Scenario: Should init data model and input fields if users clear form
 		When I enter '00000000109330000004' into storageUnitInput in action.gm.GoodsIssue view
 		When I enter '1093300' into orderNumberInput in action.gm.GoodsIssue view

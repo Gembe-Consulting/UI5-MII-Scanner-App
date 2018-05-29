@@ -42,7 +42,7 @@ sap.ui.define([
 		}),
 
 		LENUM: new StorageUnitNumberType({
-			emptyString: null, // defines what empty string is parsed as and what is formatted as empty string
+			emptyString: "", // defines what empty string is parsed as and what is formatted as empty string
 			hideLeadingZeros: true // formatting hides leading zeros
 		}, {
 			minLength: 10,
@@ -52,7 +52,7 @@ sap.ui.define([
 
 		LGORT: new StorageLocationType({
 			toUpperCase: true, // converts input to upper case 
-			emptyString: null // defines what empty string is parsed as and what is formatted as empty string
+			emptyString: "" // defines what empty string is parsed as and what is formatted as empty string
 		}, {
 			minLength: 4,
 			maxLength: 4,
@@ -60,7 +60,7 @@ sap.ui.define([
 		}),
 
 		AUFNR: new ProcessOrderNumberType({
-			emptyString: null, // defines what empty string is parsed as and what is formatted as empty string
+			emptyString: "", // defines what empty string is parsed as and what is formatted as empty string
 			hideLeadingZeros: true // formatting hides leading zeros
 		}, {
 			minLength: 7,
@@ -71,7 +71,7 @@ sap.ui.define([
 
 		VORNR: new OperationNumberType({
 			padWithChar: "0", // defines the character that is used to pad to max length
-			emptyString: null // defines what empty string is parsed as and what is formatted as empty string
+			emptyString: "" // defines what empty string is parsed as and what is formatted as empty string
 		}, {
 			minLength: 4,
 			maxLength: 4,
@@ -80,7 +80,7 @@ sap.ui.define([
 
 		MEINS: new UnitOfMeasureType({
 			toUpperCase: true,
-			emptyString: null // defines what empty string is parsed as and what is formatted as empty string
+			emptyString: "" // defines what empty string is parsed as and what is formatted as empty string
 		}, {
 			minLength: 1,
 			maxLength: 4

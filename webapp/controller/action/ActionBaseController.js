@@ -72,14 +72,18 @@ sap.ui.define([
 
 			this.getView().attachValidationError(function(oEvent) {
 				this.updateViewControls(this.getModel("data").getData()); //this.getModel("view").setProperty("/bValid", false)
+				jQuery.sap.log.error("ValidationError", "User-Input could not be validated!", this.toString(), oEvent);
 			}.bind(this));
-			// this.getView().attachParseError(function(oEvent) {
-			// 	this.updateViewControls(this.getModel("data").getData()); //this.getModel("view").setProperty("/bValid", false)
-			// }.bind(this));
-			// this.getView().attachFormatError(function(oEvent) {
-			// 	this.updateViewControls(this.getModel("data").getData()); //this.getModel("view").setProperty("/bValid", false)
-			// }.bind(this));
-
+			this.getView().attachParseError(function(oEvent) {
+				jQuery.sap.log.error("ParseError", "User-Input could not be parsed!", this.toString(), oEvent);
+			}.bind(this));
+			this.getView().attachFormatError(function(oEvent) {
+				jQuery.sap.log.error("FormatError", "Model-Data could not be formatted!", this.toString(), oEvent);
+			}.bind(this));
+			this.getView().attachValidationSuccess(function(oEvent) {
+				jQuery.sap.log.info("ValidationSuccess", "User-Input successfully validated!", this.toString(), oEvent);
+			}.bind(this));
+			
 			this.getView().addEventDelegate({
 				"onBeforeShow": function(oEvent) {
 					jQuery(document).on("scannerDetectionComplete", this.handleBarcodeScanned.bind(this));

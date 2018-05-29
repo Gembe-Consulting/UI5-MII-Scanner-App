@@ -503,8 +503,7 @@ sap.ui.define([
 		isInputDataValid: function(oData) {
 			var fEmpty = 0;
 
-			return !!oData.storageUnit && !!oData.storageBin && !!oData.storageBinId && oData.entryQuantity > fEmpty && oData.entryQuantity !==
-				"" && !!oData.unitOfMeasure;
+			return !!oData.storageUnit && !!oData.storageBin && !!oData.storageBinId && oData.entryQuantity > fEmpty && !!oData.entryQuantity  && !!oData.unitOfMeasure;
 		},
 
 		findRessourceOfStorageBin: function(sStorageBin) {
@@ -520,9 +519,12 @@ sap.ui.define([
 				oBundle = this.getResourceBundle(),
 				fnResolve,
 				fnReject;
+				
+			this.removeAllUserMessages();
 
 			/* check if current input is valid */
 			if (this.controlHasValidationError(oSource)) {
+				this.getModel("view").setProperty("/bValid", false);
 				return false;
 			}
 
@@ -628,7 +630,7 @@ sap.ui.define([
 		onStorageBinSelectionChange: function(oEvent) {
 			var oSource = oEvent.getSource(),
 				oSelectedItem = oSource.getSelectedItem(),
-				sStorageBinId = oSelectedItem.data("storageBinId"),
+				sStorageBinId = oSelectedItem ? oSelectedItem.data("storageBinId") : null,
 				oDataModel = this.getModel("data");
 
 			oDataModel.setProperty("/storageBinId", sStorageBinId);

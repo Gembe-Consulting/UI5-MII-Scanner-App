@@ -207,7 +207,7 @@ sap.ui.define([
 			switch (this.getModel("view").getProperty("/type")) {
 				case "withLE":
 					return !!oData.entryQuantity && oData.entryQuantity > fZero && oData.entryQuantity !== "" && !!oData.unitOfMeasure && !!oData.orderNumber &&
-						!!oData.storageUnit;
+						!!oData.storageUnit && !!oData.LENUM;
 				case "nonLE":
 					return !!oData.entryQuantity && oData.entryQuantity > fZero && oData.entryQuantity !== "" && !!oData.unitOfMeasure && !!oData.orderNumber &&
 						!!oData.storageLocation && !!oData.materialNumber;
@@ -316,11 +316,15 @@ sap.ui.define([
 		onStorageUnitInputChange: function(oEvent) {
 			var oSource = oEvent.getSource(),
 				sStorageUnitNumber = oEvent.getParameter("value"),
+				oDataModel = this.getModel("data"),
 				fnResolve,
 				fnReject;
-
+			
+			this.removeAllUserMessages();
+			
 			/* check if current input is valid */
 			if (this.controlHasValidationError(oSource)) {
+				this.getModel("view").setProperty("/bValid", false);
 				return;
 			}
 
@@ -333,13 +337,13 @@ sap.ui.define([
 
 			fnResolve = function(oData) {
 				var oStorageUnit = {
-						LENUM: null
+						LENUM: null,
+						storageUnit: sStorageUnitNumber
 					},
 					aRows,
 					bStorageUnitValid = true,
 					bMergeData = true,
 					oExpirationDateFormatted,
-					oDataModel = this.getModel("data"),
 					iExactlyOne = 1,
 					iExactlyZero = 0;
 
@@ -374,8 +378,6 @@ sap.ui.define([
 						bStorageUnitValid = false;
 					}
 
-					// merge data from storage unit with main model
-					oDataModel.setData(oStorageUnit, bMergeData);
 					// map data from storage unit to main model if neccessary
 					oDataModel.setProperty("/storageUnit", oStorageUnit.LENUM);
 					oDataModel.setProperty("/storageLocation", oStorageUnit.LGORT);
@@ -396,6 +398,9 @@ sap.ui.define([
 				}
 
 				this.getModel("view").setProperty("/bStorageUnitValid", bStorageUnitValid);
+				
+				// merge data from storage unit with main model
+				oDataModel.setData(oStorageUnit, bMergeData);
 
 			}.bind(this);
 
@@ -417,7 +422,7 @@ sap.ui.define([
 					this.hideControlBusyIndicator(oSource);
 				}.bind(this))
 				.then(function() {
-					this.updateViewControls(this.getModel("data").getData());
+					this.updateViewControls(oDataModel.getData());
 				}.bind(this));
 		},
 
@@ -429,6 +434,7 @@ sap.ui.define([
 
 			/* check if current input is valid */
 			if (this.controlHasValidationError(oSource)) {
+				this.getModel("view").setProperty("/bValid", false);
 				return;
 			}
 

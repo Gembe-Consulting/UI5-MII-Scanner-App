@@ -44,7 +44,12 @@ Feature: Finish Operation
 		When I can enter a date 4 days and 0 minutes in the past into dateTimeEntry in action.tt.FinishOperation view
 		Then I should see dateTimeEntry with date 4 days and 0 minutes in the past in action.tt.FinishOperation view
 		Then I can see saveButton in action.tt.FinishOperation view
-		
+	
+	@wip
+	Scenario: Should handle invalid order number or operation number
+	@wip
+	Scenario: Should handle invalid date time entry
+	
 	Scenario: Should show error message if users enter invalid order number (not existing or wrong status)
 		When I enter '1000001' into orderNumberInput in action.tt.FinishOperation view
 		 And I enter '10' into operationNumberInput in action.tt.FinishOperation view

@@ -45,6 +45,11 @@ Feature: Start Operation
 		Then I should see dateTimeEntry with date 1 days and 0 minutes in the past in action.tt.StartOperation view
 		Then I can see saveButton in action.tt.StartOperation view
 	
+	@wip
+	Scenario: Should handle invalid order number or operation number
+	@wip
+	Scenario: Should handle invalid date time entry
+	
 	Scenario: Should show error message if users enter invalid order number
 		When I enter '1000001' into orderNumberInput in action.tt.StartOperation view
 		 And I enter '10' into operationNumberInput in action.tt.StartOperation view

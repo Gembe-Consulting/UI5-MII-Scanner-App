@@ -64,7 +64,72 @@ Feature: Goods Receipt
 		Then on the Goods Receipt Page: I should see the save button is enabled
 		When I enter '1000001' into orderNumberInput in action.gm.GoodsReceipt view
 		Then on the Goods Receipt Page: I should see the save button is disabled
-		
+	
+	Scenario: Users enter invalid storage unit number
+		When I enter '00000000109330000001' into storageUnitInput in action.gm.GoodsReceipt view
+		Then I can see saveButton with enabled being 'true' in action.gm.GoodsReceipt view
+		When I enter 'some-invalid-lenum' into storageUnitInput in action.gm.GoodsReceipt view
+		Then on the Goods Receipt Page: I should see the save button is disabled
+		Then I can see storageUnitInput with valueState 'Error' in action.gm.GoodsReceipt view
+		 And I can see storageUnitInput with valueStateText 'Palettennummer 'some-invalid-lenum' ist nicht gültig' in action.gm.GoodsReceipt view
+		When I enter '00000000109330000001' into storageUnitInput in action.gm.GoodsReceipt view
+		Then I can see saveButton with enabled being 'true' in action.gm.GoodsReceipt view
+		When I enter '' into storageUnitInput in action.gm.GoodsReceipt view
+		Then on the Goods Receipt Page: I should see the save button is disabled
+		Then I can see storageUnitInput with valueState 'Error' in action.gm.GoodsReceipt view
+		 And I can see storageUnitInput with valueStateText 'Palettennummer '' ist nicht gültig' in action.gm.GoodsReceipt view
+		 
+	Scenario: Users enter invalid order number
+		When I enter '1093300' into orderNumberInput in action.gm.GoodsReceipt view
+		 And I enter '600,000' into quantityInput in action.gm.GoodsReceipt view
+		 And I enter 'kg' into unitOfMeasureInput in action.gm.GoodsReceipt view
+		 And I enter '4711' into storageLocationInput in action.gm.GoodsReceipt view
+		Then I can see saveButton with enabled being 'true' in action.gm.GoodsReceipt view
+		When I enter 'invalidaufnr' into orderNumberInput in action.gm.GoodsReceipt view
+		Then on the Goods Receipt Page: I should see the save button is disabled
+		Then I can see orderNumberInput with valueState 'Error' in action.gm.GoodsReceipt view
+		 And I can see orderNumberInput with valueStateText 'Auftragsnummer 'invalidaufnr' ist nicht gültig' in action.gm.GoodsReceipt view
+		When I enter '1093300' into orderNumberInput in action.gm.GoodsReceipt view
+		Then I can see orderNumberInput with valueState 'Success' in action.gm.GoodsReceipt view
+		 And I can see saveButton with enabled being 'true' in action.gm.GoodsReceipt view
+		When I enter '' into orderNumberInput in action.gm.GoodsReceipt view
+		Then on the Goods Receipt Page: I should see the save button is disabled
+		Then I can see orderNumberInput with valueState 'Error' in action.gm.GoodsReceipt view
+		 And I can see orderNumberInput with valueStateText 'Auftragsnummer '' ist nicht gültig' in action.gm.GoodsReceipt view
+	
+	Scenario: Users enter invalid storage location
+		When I enter '1093300' into orderNumberInput in action.gm.GoodsReceipt view
+		 And I enter '600,000' into quantityInput in action.gm.GoodsReceipt view
+		 And I enter 'kg' into unitOfMeasureInput in action.gm.GoodsReceipt view
+		 And I enter '4711' into storageLocationInput in action.gm.GoodsReceipt view
+		Then I can see saveButton with enabled being 'true' in action.gm.GoodsReceipt view
+		When I enter '' into storageLocationInput in action.gm.GoodsReceipt view
+		Then on the Goods Receipt Page: I should see the save button is disabled
+		Then I can see storageLocationInput with valueState 'Error' in action.gm.GoodsReceipt view
+		 And I can see storageLocationInput with valueStateText 'Geben Sie einen Wert mit mindestens 4 Zeichen ein' in action.gm.GoodsReceipt view
+	
+	Scenario: Users enter invalid unit of measure
+		When I enter '1093300' into orderNumberInput in action.gm.GoodsReceipt view
+		 And I enter '600,000' into quantityInput in action.gm.GoodsReceipt view
+		 And I enter 'kg' into unitOfMeasureInput in action.gm.GoodsReceipt view
+		 And I enter '4711' into storageLocationInput in action.gm.GoodsReceipt view
+		Then I can see saveButton with enabled being 'true' in action.gm.GoodsReceipt view
+		When I enter '' into unitOfMeasureInput in action.gm.GoodsReceipt view
+		Then on the Goods Receipt Page: I should see the save button is disabled
+		Then I can see unitOfMeasureInput with valueState 'Error' in action.gm.GoodsReceipt view
+		 And I can see unitOfMeasureInput with valueStateText 'Geben Sie einen Wert mit mindestens 1 Zeichen ein' in action.gm.GoodsReceipt view
+	
+	Scenario: Users enter invalid quantity
+		When I enter '1093300' into orderNumberInput in action.gm.GoodsReceipt view
+		 And I enter '600,000' into quantityInput in action.gm.GoodsReceipt view
+		 And I enter 'kg' into unitOfMeasureInput in action.gm.GoodsReceipt view
+		 And I enter '4711' into storageLocationInput in action.gm.GoodsReceipt view
+		Then I can see saveButton with enabled being 'true' in action.gm.GoodsReceipt view
+		When I enter '' into quantityInput in action.gm.GoodsReceipt view
+		Then on the Goods Receipt Page: I should see the save button is disabled
+		Then I can see quantityInput with valueState 'Error' in action.gm.GoodsReceipt view
+		 And I can see quantityInput with valueStateText starting with 'Geben Sie eine Zahl größer oder gleich' in action.gm.GoodsReceipt view
+		 
 	Scenario: Should propose unit of measure if users enter storage location not equal 1000
 		When I enter 'RB01' into storageLocationInput in action.gm.GoodsReceipt view
 		Then I can see unitOfMeasureInput with value 'KG' in action.gm.GoodsReceipt view

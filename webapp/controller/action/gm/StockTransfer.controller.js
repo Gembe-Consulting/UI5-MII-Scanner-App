@@ -249,8 +249,7 @@ sap.ui.define([
 		 * - Quntity has been entered and is not zero
 		 */
 		isInputDataValid: function(oData) {
-			return !!oData.storageBin && !!oData.storageUnit && !!oData.LENUM && !!oData.entryQuantity && oData.entryQuantity !== "" && !this.formatter
-				.isEmptyStorageUnit(oData.entryQuantity);
+			return !!oData.storageBin && !!oData.storageUnit && !!oData.LENUM && !!oData.entryQuantity && !!oData.entryQuantity && !this.formatter.isEmptyStorageUnit(oData.entryQuantity);
 		},
 
 		_isGoodsReceiptRequired: function() {
@@ -262,9 +261,12 @@ sap.ui.define([
 				sStorageUnitNumber = oEvent.getParameter("value"),
 				fnResolve,
 				fnReject;
+				
+			this.removeAllUserMessages();
 
 			/* check if current input is valid */
 			if (this.controlHasValidationError(oSource)) {
+				this.getModel("view").setProperty("/bValid", false);
 				return;
 			}
 

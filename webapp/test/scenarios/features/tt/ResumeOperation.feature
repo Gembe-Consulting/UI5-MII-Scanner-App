@@ -57,6 +57,11 @@ Feature: Resume Operation
 		When I enter '1092710' into orderNumberInput in action.tt.ResumeOperation view
 		Then I can see saveButton in action.tt.ResumeOperation view
 
+	@wip
+	Scenario: Should handle invalid order number or operation number
+	@wip
+	Scenario: Should handle invalid date time entry
+	
 	Szenario: Should handle user comment
 		When I enter '1092715' into orderNumberInput in action.tt.ResumeOperation view
 		 And I enter '1002' into operationNumberInput in action.tt.ResumeOperation view

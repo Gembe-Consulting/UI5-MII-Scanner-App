@@ -218,21 +218,25 @@ sap.ui.define([
 		isInputDataValid: function(oData) {
 			var fEmpty = 0;
 
-			return !!oData.AUFNR && !!oData.SOLLME && oData.SOLLME > fEmpty && oData.SOLLME !== "" && !!oData.MEINH && !!oData.LGORT && ((!!
+			return !!oData.AUFNR && !!oData.SOLLME && oData.SOLLME > fEmpty && !!oData.SOLLME && !!oData.MEINH && !!oData.LGORT && ((!!
 				oData.LENUM && oData.LGORT === this._sStorageLocationWarehouse) || (!oData.LENUM && oData.LGORT !== this._sStorageLocationWarehouse));
 		},
 
 		onStorageUnitNumberChange: function(oEvent) {
 			var oSource = oEvent.getSource(),
+				oDataModel = this.getModel("data"),
 				sStorageUnitNumber = oEvent.getParameter("value"),
 				fnResolve,
 				fnReject;
-
-			/* check if current input is valid */
+			
+			this.removeAllUserMessages();
+			
+			/* check if current input is valid, if not: set modified initial data object and refresh UI*/
 			if (this.controlHasValidationError(oSource)) {
+				this.getModel("view").setProperty("/bValid", false);
 				return;
 			}
-
+			
 			/* Prepare UI: busy, value states, log messages */
 			this.showControlBusyIndicator(oSource);
 			oSource.setValueState(sap.ui.core.ValueState.None);
@@ -242,12 +246,11 @@ sap.ui.define([
 
 			/* Prepare success callback */
 			fnResolve = function(oData) {
-				var oStorageUnit = {
-						LENUM: null
+				var aRows,
+					oStorageUnit = {
+						LENUM: sStorageUnitNumber
 					},
-					aRows,
 					bStorageUnitValid = true,
-					oDataModel = this.getModel("data"),
 					iExactlyOne = 1,
 					fEmpty = 0;
 
@@ -276,6 +279,7 @@ sap.ui.define([
 					});
 					oSource.setValueState(sap.ui.core.ValueState.Error);
 					bStorageUnitValid = false;
+					oStorageUnit = jQuery.extend({}, this._oInitData, oStorageUnit);
 				}
 
 				this.getModel("view").setProperty("/bStorageUnitValid", bStorageUnitValid);
@@ -315,6 +319,7 @@ sap.ui.define([
 
 			/* check if current input is valid */
 			if (this.controlHasValidationError(oSource)) {
+				this.getModel("view").setProperty("/bValid", false);
 				return;
 			}
 

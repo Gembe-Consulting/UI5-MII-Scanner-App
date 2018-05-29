@@ -18,23 +18,23 @@ sap.ui.define([
 	QUnit.test("LENUM formatValue", function(assert) {
 		var lenumType = sapType.LENUM;
 
-		assert.equal(lenumType.formatValue(sStorageUnitNumberLong, "string"), sStorageUnitNumberShort, "format test LENUM long");
-		assert.equal(lenumType.formatValue(sStorageUnitNumberShort, "string"), sStorageUnitNumberShort, "format test LENUM short");
-		assert.equal(lenumType.formatValue("", "string"), "", "format test LENUM empty");
-		assert.equal(lenumType.formatValue(" ", "string"), "", "format test LENUM blank");
-		assert.equal(lenumType.formatValue(null, "string"), "", "format test LENUM null");
-		assert.equal(lenumType.formatValue(undefined, "string"), "", "format test LENUM undefined");
+		assert.strictEqual(lenumType.formatValue(sStorageUnitNumberLong, "string"), sStorageUnitNumberShort, "format test LENUM long");
+		assert.strictEqual(lenumType.formatValue(sStorageUnitNumberShort, "string"), sStorageUnitNumberShort, "format test LENUM short");
+		assert.strictEqual(lenumType.formatValue("", "string"), "", "format test LENUM empty");
+		assert.strictEqual(lenumType.formatValue(" ", "string"), "", "format test LENUM blank");
+		assert.strictEqual(lenumType.formatValue(null, "string"), "", "format test LENUM null");
+		assert.strictEqual(lenumType.formatValue(undefined, "string"), "", "format test LENUM undefined");
 	});
 
 	QUnit.test("LENUM parseValue", function(assert) {
 		var lenumType = sapType.LENUM;
 
-		assert.equal(lenumType.parseValue(sStorageUnitNumberLong, "string"), sStorageUnitNumberShort, "parse test LENUM long");
-		assert.equal(lenumType.parseValue(sStorageUnitNumberShort, "string"), sStorageUnitNumberShort, "parse test LENUM short");
-		assert.equal(lenumType.parseValue(sStorageUnitNumberPale, "string"), sStorageUnitNumberPale, "parse test dummy LENUM Palettierer");
-		assert.equal(lenumType.parseValue(sStorageUnitNumberBeum, "string"), sStorageUnitNumberBeum, "parse test dummy LENUM Beumer");
-		assert.equal(lenumType.parseValue("", "string"), null, "parse test LENUM empty");
-		assert.equal(lenumType.parseValue(" ", "string"), null, "parse test LENUM blank");
+		assert.strictEqual(lenumType.parseValue(sStorageUnitNumberLong, "string"), sStorageUnitNumberShort, "parse test LENUM long");
+		assert.strictEqual(lenumType.parseValue(sStorageUnitNumberShort, "string"), sStorageUnitNumberShort, "parse test LENUM short");
+		assert.strictEqual(lenumType.parseValue(sStorageUnitNumberPale, "string"), sStorageUnitNumberPale, "parse test dummy LENUM Palettierer");
+		assert.strictEqual(lenumType.parseValue(sStorageUnitNumberBeum, "string"), sStorageUnitNumberBeum, "parse test dummy LENUM Beumer");
+		assert.strictEqual(lenumType.parseValue("", "string"), "", "parse test LENUM empty");
+		assert.strictEqual(lenumType.parseValue(" ", "string"), "", "parse test LENUM blank");
 	});
 
 	QUnit.test("LENUM validateValue", function(assert) {
@@ -82,18 +82,18 @@ sap.ui.define([
 	QUnit.test("LGORT formatValue", function(assert) {
 		var lgortType = sapType.LGORT;
 
-		assert.equal(lgortType.formatValue("", "string"), "", "format test LGORT empty");
-		assert.equal(lgortType.formatValue(" ", "string"), "", "format test LGORT blank");
-		assert.equal(lgortType.formatValue(null, "string"), "", "format test LGORT null");
-		assert.equal(lgortType.formatValue(undefined, "string"), "", "format test LGORT undefined");
+		assert.strictEqual(lgortType.formatValue("", "string"), "", "format test LGORT empty");
+		assert.strictEqual(lgortType.formatValue(" ", "string"), "", "format test LGORT blank");
+		assert.strictEqual(lgortType.formatValue(null, "string"), "", "format test LGORT null");
+		assert.strictEqual(lgortType.formatValue(undefined, "string"), "", "format test LGORT undefined");
 	});
 
 	QUnit.test("LGORT parseValue", function(assert) {
 		var lgortType = sapType.LGORT;
 		
-		assert.equal(lgortType.parseValue("vg01", "string"), "VG01", "parse test LGORT to upper case");
-		assert.equal(lgortType.parseValue(" ", "string"), null, "parse test LGORT blank");
-		assert.equal(lgortType.parseValue("", "string"), null, "parse test LGORT empty");
+		assert.strictEqual(lgortType.parseValue("vg01", "string"), "VG01", "parse test LGORT to upper case");
+		assert.strictEqual(lgortType.parseValue(" ", "string"), "", "parse test LGORT blank");
+		assert.strictEqual(lgortType.parseValue("", "string"), "", "parse test LGORT empty");
 	});
 
 	QUnit.test("LGORT validateValue", function(assert) {
@@ -142,19 +142,19 @@ sap.ui.define([
 	QUnit.test("AUFNR formatValue", function(assert) {
 		var aufnrType = sapType.AUFNR;
 
-		assert.equal(aufnrType.formatValue("000001234567", "string"), "1234567", "format test AUFNR '000001234567' -> '1234567'");
-		assert.equal(aufnrType.formatValue("", "string"), "", "format test AUFNR empty");
-		assert.equal(aufnrType.formatValue(" ", "string"), "", "format test AUFNR blank");
-		assert.equal(aufnrType.formatValue(null, "string"), "", "format test AUFNR null");
-		assert.equal(aufnrType.formatValue(undefined, "string"), "", "format test AUFNR undefined");
+		assert.strictEqual(aufnrType.formatValue("000001234567", "string"), "1234567", "format test AUFNR '000001234567' -> '1234567'");
+		assert.strictEqual(aufnrType.formatValue("", "string"), "", "format test AUFNR empty");
+		assert.strictEqual(aufnrType.formatValue(" ", "string"), "", "format test AUFNR blank");
+		assert.strictEqual(aufnrType.formatValue(null, "string"), "", "format test AUFNR null");
+		assert.strictEqual(aufnrType.formatValue(undefined, "string"), "", "format test AUFNR undefined");
 	});
 
 	QUnit.test("AUFNR parseValue", function(assert) {
 		var aufnrType = sapType.AUFNR;
 		
-		assert.equal(aufnrType.parseValue("1234567", "string"), "1234567", "parse test AUFNR '1234567' -> '1234567'");
-		assert.equal(aufnrType.parseValue("", "string"), null, "parse test AUFNR empty");
-		assert.equal(aufnrType.parseValue(" ", "string"), null, "parse test AUFNR blank");
+		assert.strictEqual(aufnrType.parseValue("1234567", "string"), "1234567", "parse test AUFNR '1234567' -> '1234567'");
+		assert.strictEqual(aufnrType.parseValue("", "string"), "", "parse test AUFNR empty");
+		assert.strictEqual(aufnrType.parseValue(" ", "string"), "", "parse test AUFNR blank");
 	});
 
 	QUnit.test("AUFNR validateValue", function(assert) {
@@ -189,19 +189,19 @@ sap.ui.define([
 	QUnit.test("VORNR formatValue", function(assert) {
 		var vornrType = sapType.VORNR;
 
-		assert.equal(vornrType.formatValue("0012", "string"), "0012", "format test VORNR '0012' -> '0012'");
-		assert.equal(vornrType.formatValue("", "string"), "", "format test VORNR empty");
-		assert.equal(vornrType.formatValue(" ", "string"), "", "format test VORNR blank");
-		assert.equal(vornrType.formatValue(null, "string"), "", "format test VORNR null");
-		assert.equal(vornrType.formatValue(undefined, "string"), "", "format test VORNR undefined");
+		assert.strictEqual(vornrType.formatValue("0012", "string"), "0012", "format test VORNR '0012' -> '0012'");
+		assert.strictEqual(vornrType.formatValue("", "string"), "", "format test VORNR empty");
+		assert.strictEqual(vornrType.formatValue(" ", "string"), "", "format test VORNR blank");
+		assert.strictEqual(vornrType.formatValue(null, "string"), "", "format test VORNR null");
+		assert.strictEqual(vornrType.formatValue(undefined, "string"), "", "format test VORNR undefined");
 	});
 
 	QUnit.test("VORNR parseValue", function(assert) {
 		var vornrType = sapType.VORNR;
 		
-		assert.equal(vornrType.parseValue("12", "string"), "0012", "parse test VORNR '12' -> '0012'");
-		assert.equal(vornrType.parseValue("", "string"), null, "parse test VORNR empty");
-		assert.equal(vornrType.parseValue(" ", "string"), null, "parse test VORNR blank");
+		assert.strictEqual(vornrType.parseValue("12", "string"), "0012", "parse test VORNR '12' -> '0012'");
+		assert.strictEqual(vornrType.parseValue("", "string"), "", "parse test VORNR empty");
+		assert.strictEqual(vornrType.parseValue(" ", "string"), "", "parse test VORNR blank");
 	});
 
 	QUnit.test("VORNR validateValue", function(assert) {
