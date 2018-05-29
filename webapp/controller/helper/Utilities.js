@@ -8,6 +8,10 @@ sap.ui.define([], function() {
 	Util.empty = "";
 	Util.blank = " ";
 
+	Util.containsNonNumericChars = function containsNonNumericChars(sValue){
+		return /[^$\d]/.test(sValue);
+	};
+
 	Util.padLeadingZeros = function padLeadingZeros(sValue, iLength) {
 		var sCharToPad = "0";
 

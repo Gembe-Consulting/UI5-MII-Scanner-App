@@ -9,6 +9,24 @@ sap.ui.define([
 		afterEach: function() {}
 	});
 
+	QUnit.test("Should Test Utility constants", 6, function(assert) {
+
+		assert.strictEqual(Util.blank, " ", "Util.blank is ' '");
+		assert.strictEqual(Util.blank.length, 1, "Util.blank length is 1");
+		assert.strictEqual(Util.empty, "", "Util.empty is ''");
+		assert.strictEqual(Util.empty.length, 0, "Util.empty length is 0");
+		assert.strictEqual(Util.undef, "undefined", "Util.undef is equal to 'undefined'");
+		assert.strictEqual(Util.undef, typeof undefined, "Util.undef is equal to typeof undefined");
+	});	
+	
+	QUnit.test("Should Test containsNonNumericChars", 4, function(assert) {
+
+		assert.strictEqual(Util.containsNonNumericChars("0123456789"), false, "'0123456789' does not contain non-numeric chars");
+		assert.strictEqual(Util.containsNonNumericChars("100010-123"), true, "'100010-123' contains non-numeric chars");
+		assert.strictEqual(Util.containsNonNumericChars("1.2"), true, "'1.2' contains non-numeric chars");
+		assert.strictEqual(Util.containsNonNumericChars("ABC"), true, "'ABC' contains non-numeric chars");
+	});	
+
 	QUnit.test("Should Test padLeadingZeros", 3, function(assert) {
 		var sFoo = "foo",
 			iBar = 123;
